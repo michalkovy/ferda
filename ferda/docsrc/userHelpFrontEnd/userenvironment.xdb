@@ -36,6 +36,15 @@
     <!--
     <revhistory>
 		<revision>
+			<revnumber>2.6</revnumber>
+			<date>2008-09-23</date>
+			<revdescription>
+				<para>
+					Completed changes to network archive
+				</para>
+			<revdescription>
+		</revision>
+		<revision>
 			<revnumber>2.5</revnumber>
 			<date>2007-09-18</date>
 			<revdescription>
@@ -43,7 +52,7 @@
 					Added work with the network archive
 				</para>
 			<revdescription>
-		</revisio>
+		</revision>
 		<revision>
 			<revnumber>2.4</revnumber>
 			<date>2007-05-11</date>
@@ -696,8 +705,34 @@
 		<title>Network Archive</title>
 		<para>
 			The Network Archive is a component that stores boxes between individual runs of
-			the FrontEnd. They are stored inside the instalation of Ferda. 
+			the FrontEnd. They are stored inside the instalation of Ferda and are accessible from
+			all FrontEnd environments that run on this instalation. It is a collection of boxes (with 
+			all their sub-boxes, boxes connected both directly and indirectly to that box). Each box is
+			uniquely identified with a label. The boxes added to the archive are displayed in the 
+			network archive component. 
 		</para>
+		<para>
+			Visual representation of the network archive
+			<mediaobject>
+			  <imageobject>
+				<imagedata fileref="environmentNetworkArchive.png" format="PNG" />
+			  </imageobject>
+			</mediaobject>
+		  </para>		
+		<section>
+		<title>User work with the network archive</title>
+		<itemizedlist mark="bullet">
+			<listitem>
+				<formalpara>
+					<title>Removing box from the network archive</title>
+					<para>
+						When user wants to remove a box (and all its sub-boxes) from the network archive,
+						he clicks on the corresponding item in the context menu and box is removed.
+					</para>
+				</formalpara>
+			</listitem>
+		</itemizedlist>
+      </section>
 	</section>
     <section>
       <title>Progress Bars</title>
@@ -822,6 +857,9 @@
             </listitem>
             <listitem>
               <para>Validating a box</para>
+            </listitem>
+            <listitem>
+              <para>Adding a box to network archive</para>
             </listitem>
             <listitem>
               <para>Modules for interaction</para>
@@ -1138,6 +1176,16 @@
                 This context menu item unpacks all layers of boxes that are
                 connected to all the sockets of the box. There is also a keyboard
                 shortcut <emphasis>Ctrl+U</emphasis>
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Adding a box to a network archive</title>
+              <para>
+				User adds a selected box and its sub boxes to the network archive. 
+				There is also a keyboard
+                shortcut <emphasis>Ctrl+R</emphasis>.
               </para>
             </formalpara>
           </listitem>
