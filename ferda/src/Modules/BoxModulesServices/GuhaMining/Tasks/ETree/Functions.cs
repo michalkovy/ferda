@@ -508,9 +508,23 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
 
             //processing of the results
             Common.SetResultInfo(_boxModule, resultInfo);
+
+            string newResult;
+            using (System.IO.StreamReader sr = new System.IO.StreamReader(result))
+            {
+                newResult = sr.ReadToEnd();
+            }
+
             _cachedSerializableResultInfo = SerializableResultInfo.Deserialize(resultInfo);
-            result = ChangeAttribute2ColumnNames(result);
-            Common.SetResult(_boxModule, result);
+            //result = ChangeAttribute2ColumnNames(result);
+            //Common.SetResult(_boxModule, result);
+
+            newResult = ChangeAttribute2ColumnNames(newResult);
+            using (System.IO.StreamWriter sw = new System.IO.StreamWriter(result))
+            {
+                sw.Write(newResult);
+            }
+            Common.SetResult(_boxModule, result); //stary result, protoze se uklada jenom cesta
         }
     }
 }
