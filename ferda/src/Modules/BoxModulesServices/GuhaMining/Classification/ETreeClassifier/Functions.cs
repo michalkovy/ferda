@@ -298,7 +298,14 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
                     SockETree,
                     MiningTaskFunctionsPrxHelper.checkedCast,
                     true);
-            string result = taskPrx.GetResult(out stat);
+            //string result = taskPrx.GetResult(out stat);
+            string resultPath = taskPrx.GetResult(out stat);
+            string result;
+
+            using (System.IO.StreamReader sr = new System.IO.StreamReader(resultPath))
+            {
+                result = sr.ReadToEnd();
+            }
 
             //deserializing the result
             DecisionTreeResult res;
