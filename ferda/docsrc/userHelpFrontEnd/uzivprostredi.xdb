@@ -26,6 +26,15 @@
     <!--
     <revhistory>
     <revision>
+      <revnumber>4.4</revnumber>
+      <date>2009-09-23</revnumber>
+      <revdescription>
+        <para>
+          Přidání síťového archivu - komplet
+        </para>
+      </revdescription>
+    </revision>
+    <revision>
       <revnumber>4.3</revnumber>
       <date>2007-05-11</revnumber>
       <revdescription>
@@ -875,6 +884,40 @@
 		  </para>
 		</section>
 		<section>
+			<title>Síťový archiv</title>
+			<para>
+				Síťový archiv je komponenta, která ukládá krabičky mezi jednotlivými spuštěními FrontEndu. Krabičky jsou
+				uloženy uvnitř instalace Ferdy a jsou dostupné ze všech prostředí FrontEnd, které běží na této instalaci. Je
+				to kolekce krabiček (se všemi jejich podkrabičkami, tedy krabičkami zapojenými přímo nebo nepřímo do
+				dané krabičky. Každá krabička je unikátně identifikovaná jejím názvem. Krabičky přidané do síťového archivu
+				jsou zobrazeny v komponeně síťového archivu. 
+			</para>
+			<para>
+				Zobrazení archivu
+				<mediaobject>
+				  <imageobject>
+					<imagedata fileref="environmentNetworkArchiveCZ.png" format="PNG" />
+				  </imageobject>
+				</mediaobject>
+			</para>
+		<section>
+		<title>Uživatelská práce se síťovým archivem</title>
+		<itemizedlist mark="bullet">
+			<listitem>
+				<formalpara>
+					<title>Odebrání krabičky ze síťového archivu</title>
+					<para>
+						When user wants to remove a box (and all its sub-boxes) from the network archive,
+						he clicks on the corresponding item in the context menu and box is removed.
+						Jestliže chce uživatel odebrat krabičku (a všechny její podkrabičky) ze síťového archivu,
+						klikne na danou položku v kontextovém menu síťového archivu a položka je odebrána. 
+					</para>
+				</formalpara>
+			</listitem>
+		</itemizedlist>
+      </section>
+		</section>
+		<section>
       <title>Progress Bary</title>
       <para>
         Vždy, když krabička provádí dlouhotrvající akci (obvykle spouštění 
@@ -1000,10 +1043,13 @@
               <para>Odstranění krabiček z archivu</para>
             </listitem>
             <listitem>
-              <para>Validace krabičky</para>
+				<para>Přidání krabičky do síťového archivu</para>
             </listitem>
-						<listitem>
+			<listitem>
               <para>Moduly pro interakci</para>
+            </listitem>            
+            <listitem>
+              <para>Validace krabičky</para>
             </listitem>
 						<listitem>
               <para>Navrhované krabičky na vytvoření</para>
@@ -1020,7 +1066,7 @@
             <listitem>
               <para>Rozbalení všech vrstev všech zapojení krabičky</para>
             </listitem>
-					</itemizedlist>
+			</itemizedlist>
 				</section>
 				<section>
 					<title>Akce pomocí kontextového menu nad zásuvkou</title>
@@ -1203,6 +1249,16 @@
                 </emphasis>. Systém následně vytvoří krabičku skupina, všechny označené
                 krabičky do ní zapojí a následně skryje. Klávesová zkratka pro tuto akci
                 je <emphasis>Ctrl+G</emphasis>.
+              </para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Přidání krabičky do síťového archivu</title>
+              <para>
+				Uživatel přidá označenou krabičku do síťového archivu pomocí kontextové 
+				položky po označení krabičky. Může také použít klávesovou zkratku 
+				<emphasis>Ctrl+R</emphasis>.
               </para>
             </formalpara>
           </listitem>
