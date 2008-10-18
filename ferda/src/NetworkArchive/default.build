@@ -2,7 +2,7 @@
 <project name="Ferda Network Archive" default="build" basedir=".">
 	<description>Ferda Network Archive</description>
 	<target name="build" description="Build Network Archive" depends="create-common-assemblyinfo">
-		<csc target="library" output="${path::combine(build.dir,'FerdaNetworkArchive.dll')}" doc="${path::combine(build.dir,'FerdaNetworArchive.xml')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" output="${path::combine(build.dir,'FerdaNetworkArchive.dll')}" doc="${path::combine(build.dir,'FerdaNetworArchive.xml')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaNetworkArchive.snk">
 			<nowarn>
 				<warning number="1591"/>
 			</nowarn>
@@ -23,7 +23,7 @@
 		</csc>
 	</target>
 	<target name="build.NetworkArchiveBase" description="Build Network Archive Base">
-		<csc target="library" output="${path::combine(build.dir,'FerdaNetworkArchiveBase.dll')}" doc="${path::combine(build.dir,'FerdaNetworArchiveBase.xml')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" output="${path::combine(build.dir,'FerdaNetworkArchiveBase.dll')}" doc="${path::combine(build.dir,'FerdaNetworkArchiveBase.xml')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaNetworkArchiveBase.snk">
 			<nowarn>
 				<warning number="1591"/>
 			</nowarn>
