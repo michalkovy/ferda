@@ -36,7 +36,7 @@
 				</resgen>
 			</if>
 		</if>
-		<csc target="winexe" define="${defines}" output="${path::combine(build.dir,'FerdaFrontEnd.exe')}" doc="${path::combine(build.dir,'FerdaFrontEnd.xml')}" debug="${debug}" optimize="${optimize}" win32icon="FerdaFrontEnd.ico">
+		<csc target="winexe" define="${defines}" output="${path::combine(build.dir,'FerdaFrontEnd.exe')}" doc="${path::combine(build.dir,'FerdaFrontEnd.xml')}" debug="${debug}" optimize="${optimize}" win32icon="FerdaFrontEnd.ico" keyfile="FerdaFrontEnd.snk">
 			<sources>
 				<include name="**.cs" />
 				<exclude name="AddIns/**.cs" />
