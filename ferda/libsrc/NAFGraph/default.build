@@ -31,6 +31,7 @@
 				<include name="UI/*.cs" />
 				<include name="Utils/*.cs" />
 				<include name="Utils/Controls/*.cs" />
+				<include name="Utils/Maths/*.cs" />
 
 				<!-- <include name="NAFGraph/**.cs" /> -->
 			</sources>
@@ -51,8 +52,9 @@
 				<include name="System.Windows.Forms.dll" />
 				<include name="System.XML.dll" />
 				
-				<!-- Tohle se bude jeste taky predelavat na spravnou cestu-->				
+				<!-- Tohle se bude jeste taky predelavat na spravnou cestu				
 				<include name="${path::combine(lib.dir,'NetronMaths.dll')}" />
+				-->
 			</references>
 			
 		</csc>
