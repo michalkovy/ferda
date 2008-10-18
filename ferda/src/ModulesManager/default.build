@@ -2,7 +2,7 @@
 <project name="Ferda Modules Manager" default="build" basedir=".">
 	<description>Ferda Modules Manager</description>
 	<target name="build" description="Build Modules Manager" depends="create-common-assemblyinfo">
-		<csc target="library" output="${path::combine(build.dir,'FerdaModulesManager.dll')}" doc="${path::combine(build.dir,'FerdaModulesManager.xml')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" output="${path::combine(build.dir,'FerdaModulesManager.dll')}" doc="${path::combine(build.dir,'FerdaModulesManager.xml')}" debug="${debug}" optimize="${optimize}" keyfile="ModulesManager.snk">
 			<nowarn>
 				<warning number="1591"/>
 			</nowarn>
