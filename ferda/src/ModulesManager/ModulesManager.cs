@@ -56,8 +56,17 @@ namespace Ferda {
 				//ClassesFactory classesFactory = new ClassesFactory();
 				//ClassesFactory.addFactoryToCommunicator(communicator, classesFactory);
 				Debug.WriteLine("Creating adapter...");
-				Ice.ObjectAdapter adapter =
-                communicator.createObjectAdapter("ModulesManager");
+
+                Ice.ObjectAdapter adapter;
+                try
+                {
+                    adapter = communicator.createObjectAdapter("ModulesManager");
+                }
+                catch (Exception e) 
+                {
+                    adapter = communicator.createObjectAdapter("ModulesManager");
+                }
+
 				Debug.WriteLine("Activating adapter...");
 				adapter.activate();
 				Debug.WriteLine("Creating helper of modules manager...");
