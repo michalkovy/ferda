@@ -7,7 +7,7 @@
 		<if test="${framework::get-target-framework()!='mono-2.0'}">
 			<property name="defines" value=""/>
 		</if>
-		<csc target="library" define="${defines}" output="${path::combine(build.dir,'NAFGraph.dll')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" define="${defines}" output="${path::combine(build.dir,'NAFGraph.dll')}" debug="${debug}" optimize="${optimize}" keyfile="NAFGraph.snk">
 			<nowarn>
 				<warning number="618"/>
 			</nowarn> 
