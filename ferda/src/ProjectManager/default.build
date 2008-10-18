@@ -2,7 +2,7 @@
 <project name="Ferda Project Manager" default="build" basedir=".">
 	<description>Ferda Project Manager</description>
 	<target name="build" description="Build Project Manager" depends="create-common-assemblyinfo">
-		<csc target="library" output="${path::combine(build.dir,'FerdaProjectManager.dll')}" doc="${path::combine(build.dir,'FerdaProjectManager.xml')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" output="${path::combine(build.dir,'FerdaProjectManager.dll')}" doc="${path::combine(build.dir,'FerdaProjectManager.xml')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaProjectManager.snk">
 			<nowarn>
 				<warning number="1591"/>
 			</nowarn>
@@ -26,7 +26,7 @@
 		</csc>
 	</target>
 	<target name="build.ProjectBase" description="Build Project Base">
-		<csc target="library" output="${path::combine(build.dir,'FerdaProjectBase.dll')}" doc="${path::combine(build.dir,'FerdaProjectBase.xml')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" output="${path::combine(build.dir,'FerdaProjectBase.dll')}" doc="${path::combine(build.dir,'FerdaProjectBase.xml')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaProjectBase.snk">
 			<nowarn>
 				<warning number="1591"/>
 			</nowarn>
