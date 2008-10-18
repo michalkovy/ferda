@@ -2,7 +2,7 @@
 <project name="Ferda FrontEnd AddIns" default="build" basedir=".">
 	<description>Builds the user interface add ins for the Ferda system</description>
 	<target name="buildmain">
-		<csc target="library" output="${path::combine(build.dir,'FrontEndAddInHelper.dll')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" output="${path::combine(build.dir,'FrontEndAddInHelper.dll')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaFrontEndAddInHelper.snk">
 			<sources>
 				<include name="IOwnerOfAddIn.cs"/>
 				<include name="IAddInMain.cs"/>
