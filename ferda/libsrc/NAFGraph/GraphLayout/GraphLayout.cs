@@ -6,7 +6,8 @@ using System.Threading;
 using System.Diagnostics;
 using Netron.GraphLib.UI;
 using Netron.GraphLib.Interfaces;
-using Netron.Maths;
+//using Netron.Maths;
+
 namespace Netron.GraphLib
 {
 	/// <summary>
@@ -21,9 +22,9 @@ namespace Netron.GraphLib
 		protected Size CanvasSize ;
 		protected ShapeCollection nodes=null;
 		protected ArrayList edges=null;
-		protected virtual NetronVector GraphCenter()
+		protected virtual Maths.NetronVector GraphCenter()
 		{
-			return new NetronVector(0,0,0);
+			return new Maths.NetronVector(0,0,0);
 		}
 		/// <summary>
 		/// Gets or sets the mSite to which the layout belongs
