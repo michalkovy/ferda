@@ -12,7 +12,7 @@
 			</resources>
 		</csc>
 		-->
-		<csc target="library" output="${path::combine(build.dir,'DockDotNET.dll')}" debug="${debug}" optimize="${optimize}">
+		<csc target="library" output="${path::combine(build.dir,'DockDotNET.dll')}" debug="${debug}" optimize="${optimize}" keyfile="DockDotNET.snk">
 			<sources>
 				<include name="*.cs" />
 			</sources>
