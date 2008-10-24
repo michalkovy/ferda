@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?define bin.dir = "..\bin" ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="0ff6bcee-e9bb-4501-a7dd-4d05dea6f16c" Name="FerdaInstaller" Language="1033" Version="1.0.0.0" Manufacturer="FerdaInstaller" UpgradeCode="bbdaee35-e2dd-4411-8de4-5d4198313889">
+		<Package InstallerVersion="200" Compressed="yes" />
+
+		<Media Id="1" Cabinet="FerdaInstaller.cab" EmbedCab="yes" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLLOCATION" Name="Ferda">
+          <Directory Id="DB" Name="db"/>
+          <Directory Id="FRONTEND" Name="FrontEnd"/>
+          <Directory Id="SERVER" Name="Server"/>
+				</Directory>
+			</Directory>
+		</Directory>
+
+    <DirectoryRef Id="FRONTEND">
+      <Component Id="AddInsCommon.dll" Guid="{95F73BDF-4788-46c9-8D38-475E9F240FB8}">
+        <File Id="AddInsCommon.dll" Source="$(var.bin.dir)\FrontEnd\AddInsCommon.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="SERVER">
+      <Component Id="box.xsd" Guid="{64A9D06C-7A6B-46ec-B363-E2702E835309}">
+        <File Id="box.xsd" Source="$(var.bin.dir)\Server\box.xsd" KeyPath="yes" Checksum="no"/>
+      </Component>
+      <Component Id="boxes.xsd" Guid="{D270567E-CC32-4f0e-A51F-0CB68C4264E2}">
+        <File Id="boxes.xsd" Source="$(var.bin.dir)\Server\boxes.xsd" KeyPath="yes" Checksum="no"/>
+      </Component>
+      <Component Id="boxesLocalization.xsd" Guid="{B904E702-BE8E-4edf-8E78-E2A416EE650A}">
+        <File Id="boxesLocalization.xsd" Source="$(var.bin.dir)\Server\boxesLocalization.xsd" KeyPath="yes" Checksum="no"/>
+      </Component>
+      <Component Id="boxLocalization.xsd" Guid="{CA8AD5C1-16FC-4d43-9EFD-6331C5213DF4}">
+        <File Id="boxLocalization.xsd" Source="$(var.bin.dir)\Server\boxLocalization.xsd" KeyPath="yes" Checksum="no"/>
+      </Component>
+      <Component Id="CvsReader.dll" Guid="{578A6AC7-EDE0-4462-845D-4529C9434B45}">
+        <File Id="CvsReader.dll" Source="$(var.bin.dir)\Server\CvsReader.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaAttribute.dll" Guid="{B12F561E-B336-4946-96CC-2D24BDDF8068}">
+        <File Id="FerdaAttribute.dll" Source="$(var.bin.dir)\Server\FerdaAttribute.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaBase.dll" Guid="{C67DE0DF-F3A1-41ea-B919-CE87A54A71FD}">
+        <File Id="FerdaBase.dll" Source="$(var.bin.dir)\Server\FerdaBase.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaBasicBoxes.dll" Guid="{BBF07B52-02A5-4ae1-BE61-7A3A05380445}">
+        <File Id="FerdaBasicBoxes.dll" Source="$(var.bin.dir)\Server\FerdaBasicBoxes.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaBoxInterfaces.dll" Guid="{2061D60A-B674-490e-88FD-697CD6A506CD}">
+        <File Id="FerdaBoxInterfaces.dll" Source="$(var.bin.dir)\Server\FerdaBoxInterfaces.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaData.dll" Guid="{61532228-A6F5-4923-88DA-BA1EA1C6C1C9}">
+        <File Id="FerdaData.dll" Source="$(var.bin.dir)\Server\FerdaData.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaDataPreparationBoxes.dll" Guid="{901F90DB-E414-474e-A6F8-F4CD0A9BBF9B}">
+        <File Id="FerdaDataPreparationBoxes.dll" Source="$(var.bin.dir)\Server\FerdaDataPreparationBoxes.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaGuhaMiningBoxes.dll" Guid="{5F621E2B-E5E5-4291-A21F-72413D9D3FB1}">
+        <File Id="FerdaGuhaMiningBoxes.dll" Source="$(var.bin.dir)\Server\FerdaGuhaMiningBoxes.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaHelpers.dll" Guid="{B1C356BB-CF8F-4bbf-8E1D-3C68CC52914F}">
+        <File Id="FerdaHelpers.dll" Source="$(var.bin.dir)\Server\FerdaHelpers.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaLanguageBoxes.dll" Guid="{16DAA65F-5391-42e3-B555-C3867343F80C}">
+        <File Id="FerdaLanguageBoxes.dll" Source="$(var.bin.dir)\Server\FerdaLanguageBoxes.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaMath.dll" Guid="{D3E43DEA-C2A1-4655-A440-C7753B1DDBE6}">
+        <File Id="FerdaMath.dll" Source="$(var.bin.dir)\Server\FerdaMath.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaMiningProcessor.dll" Guid="{AE01D1C5-4D0B-4ad6-9A93-3F2C495165B1}">
+        <File Id="FerdaMiningProcessor.dll" Source="$(var.bin.dir)\Server\FerdaMiningProcessor.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaNetworkArchive.dll" Guid="{C4A7739C-81B5-4b51-9EB8-782A3F3A1B8A}">
+        <File Id="FerdaNetworkArchive.dll" Source="$(var.bin.dir)\Server\FerdaNetworkArchive.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaNetworkArchiveBase.dll" Guid="{0D96D33C-DAFA-466d-B0F0-EE677C2F506A}">
+        <File Id="FerdaNetworkArchiveBase.dll" Source="$(var.bin.dir)\Server\FerdaNetworkArchiveBase.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaOntologyRelatedBoxes.dll" Guid="{685BD40A-E45B-497d-80E0-DDD7E876F856}">
+        <File Id="FerdaOntologyRelatedBoxes.dll" Source="$(var.bin.dir)\Server\FerdaOntologyRelatedBoxes.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaProjectBase.dll" Guid="{7DA96D6A-5761-4da9-BA4E-BABE69A98B29}">
+        <File Id="FerdaProjectBase.dll" Source="$(var.bin.dir)\Server\FerdaProjectBase.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaSampleBoxes.dll" Guid="{C8CFAA5D-FFFD-4cdb-86EC-C7682E0C35AB}">
+        <File Id="FerdaSampleBoxes.dll" Source="$(var.bin.dir)\Server\FerdaSampleBoxes.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaServerBase.dll" Guid="{1457D861-1FB8-40eb-B73E-A23940FD0B57}">
+        <File Id="FerdaServerBase.dll" Source="$(var.bin.dir)\Server\FerdaServerBase.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="FerdaWizards.dll" Guid="{40ED698A-3BBC-40bf-888D-8C095CB237EB}">
+        <File Id="FerdaWizards.dll" Source="$(var.bin.dir)\Server\FerdaWizards.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="Glacier2.dll" Guid="{02DAEFF4-A68C-4264-8EE1-75CED1E25FDB}">
+        <File Id="Glacier2.dll" Source="$(var.bin.dir)\Server\Glacier2.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="Ice.dll" Guid="{4D0D1B4C-931F-4752-8083-240884C60980}">
+        <File Id="Ice.dll" Source="$(var.bin.dir)\Server\Ice.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="IceBox.dll" Guid="{7D5B99B2-34DA-4511-A1B3-4289384AA15E}">
+        <File Id="IceBox.dll" Source="$(var.bin.dir)\Server\IceBox.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="IceGrid.dll" Guid="{22037239-433C-4cf8-B147-8C9C7D72CF6F}">
+        <File Id="IceGrid.dll" Source="$(var.bin.dir)\Server\IceGrid.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+    </DirectoryRef>
+
+		<Feature Id="ProductFeature" Title="Ferda" Level="1">
+      <Feature Id="FrontEnd" Title="FrontEnd" Level="2">
+        <ComponentRef Id="AddInsCommon.dll" />
+        <Feature Id="PlugIns" Title="Plug-Ins" Level="3"/>
+      </Feature>
+      <Feature Id="Server" Title="Server" Level="2">
+        <ComponentRef Id="box.xsd" />
+        <ComponentRef Id="boxes.xsd"/>
+        <ComponentRef Id="boxesLocalization.xsd"/>
+        <ComponentRef Id="boxLocalization.xsd"/>
+        <ComponentRef Id="CvsReader.dll"/>
+        <ComponentRef Id="FerdaAttribute.dll"/>
+        <ComponentRef Id="FerdaBase.dll"/>
+        <ComponentRef Id="FerdaBoxInterfaces.dll"/>
+        <ComponentRef Id="FerdaData.dll"/>
+        <ComponentRef Id="FerdaHelpers.dll"/>
+        <ComponentRef Id="FerdaMath.dll"/>
+        <ComponentRef Id="FerdaMiningProcessor.dll"/>
+        <ComponentRef Id="FerdaProjectBase.dll"/>
+        <ComponentRef Id="FerdaServerBase.dll"/>
+        <ComponentRef Id="FerdaWizards.dll"/>
+        <ComponentRef Id="Glacier2.dll"/>
+        <ComponentRef Id="Ice.dll"/>
+        <ComponentRef Id="IceBox.dll"/>
+        <ComponentRef Id="IceGrid.dll"/>
+        <Feature Id="Modules" Title="Modules" Level="3">
+          <Feature Id="BasicBoxes" Title="Basic Boxes" Level="4">
+            <ComponentRef Id="FerdaBasicBoxes.dll"/>
+          </Feature>
+          <Feature Id="FerdaDataPreparationBoxes" Title="Data Preparation Boxes" Level="4">
+            <ComponentRef Id="FerdaDataPreparationBoxes.dll"/>
+          </Feature>
+          <Feature Id="FerdaGuhaMiningBoxes" Title="Guha Mining Boxes" Level="4">
+            <ComponentRef Id="FerdaGuhaMiningBoxes.dll"/>
+          </Feature>
+          <Feature Id="FerdaLanguageBoxes" Title="Ferda Language Boxes" Level="4">
+            <ComponentRef Id="FerdaLanguageBoxes.dll"/>
+          </Feature>
+          <Feature Id="FerdaOntologyRelatedBoxes" Title="Ontology Related Boxes" Level="4">
+            <ComponentRef Id="FerdaOntologyRelatedBoxes.dll"/>
+          </Feature>
+          <Feature Id="FerdaSampleBoxes" Title="Sample Boxes" Level="4">
+            <ComponentRef Id="FerdaSampleBoxes.dll"/>
+          </Feature>
+        </Feature>
+        <Feature Id="NetworkArchive" Title="Network Archive" Level="3">
+          <ComponentRef Id="FerdaNetworkArchiveBase.dll"/>
+          <ComponentRef Id="FerdaNetworkArchive.dll"/>
+        </Feature>
+      </Feature>
+		</Feature>
+	</Product>
+</Wix>
