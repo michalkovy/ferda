@@ -8,7 +8,7 @@
     <IceGridApplicationXmlFilePath>application.xml</IceGridApplicationXmlFilePath>
     <SentenceForWait>Server: changed server `0' state to `Inactive' ]</SentenceForWait>
     <ServersToStop />
-    <IceBinPath />
+    <IceBinPath>..\Server</IceBinPath>
     <LocalePrefs>
       <string>en-US</string>
       <string>cs-CZ</string>

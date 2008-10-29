@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <project name="Ferda" default="all" basedir=".">
 	<description>projekt Ferda</description>
 	<property name="default.build" value="default.build"/>
@@ -23,8 +23,10 @@
 	<property name="ice.dir" value="c:\Ice-3.3.0\" unless="${property::exists('ice.dir')}"/>
 	<if test="${not(directory::exists(ice.dir))}" >
 		<property name="ice.dir" value="c:\Ice-3.3.0-VC90\" />
-	</if>	
+	</if>
+	<property name="64bit" value="false" unless="${property::exists('64bit')}"/>
 	<property name="installer.dir" value="${path::get-full-path('installer')}"/>
+	<property name="installerWiX.dir" value="${path::get-full-path('installerWiX')}"/>
 	<target name="clean" description="Smaže build">
 		<nant buildfile="${path::combine(slice.dir,default.build)}" target="clean">
 			<properties>
@@ -187,7 +189,34 @@
 				<include name="IceGrid.dll"/>
 				<include name="Glacier2.dll"/>
 				<include name="IceBox.dll"/>
-				<include name="lispMinerGens/*"/>
+				<include name="iceboxnet.exe"/>
+			</fileset>
+		</copy>
+		<property name="input.dir" value="${path::combine(ice.dir,'bin')}"/>
+		<copy todir="${frontendbin.dir}">
+			<fileset basedir="${input.dir}">
+				<include name="bzip2.dll"/>
+			</fileset>
+		</copy>
+		<copy todir="${serverbin.dir}">
+			<fileset basedir="${input.dir}">
+				<include name="bzip2.dll"/>
+				<include name="freeze33.dll"/>
+				<include name="glacier233.dll"/>
+				<include name="ice33.dll"/>
+				<include name="icebox33.dll"/>
+				<include name="icegrid33.dll"/>
+				<include name="icegridnode.exe"/>
+				<include name="icepatch233.dll"/>
+				<include name="icessl33.dll"/>
+				<include name="icestorm33.dll"/>
+				<include name="icestormservice33.dll"/>
+				<include name="iceutil33.dll"/>
+				<include name="icexml33.dll"/>
+				<include name="libdb46.dll"/>
+				<include name="libeay32.dll"/>
+				<include name="libexpat.dll"/>
+				<include name="ssleay32.dll"/>
 			</fileset>
 		</copy>
 		<call target="boxconfig" verbose="true"/>
@@ -413,6 +442,13 @@
 		<call target="src"/>
 		<call target="config"/>
 		<nant buildfile="${path::combine(installer.dir,default.build)}" target="installer"/>
+	</target>
+	<target name="installerWiX" depends="uninstall,clean">
+		<property name="debug" value="None"/>
+		<property name="optimize" value="true"/>
+		<call target="src"/>
+		<call target="config"/>
+		<nant buildfile="${path::combine(installerWiX.dir,default.build)}" target="installer"/>
 	</target>
 	<target name="runiceboxnet">
 		<copy todir="${serverbin.dir}">
