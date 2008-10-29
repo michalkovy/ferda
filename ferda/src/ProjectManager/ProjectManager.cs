@@ -181,9 +181,9 @@ namespace Ferda.ProjectManager {
         /// <param name="iceGridApplicationXmlFilePath">The ice grid application XML file path.</param>
         public void StartIceGrid(string icePath, bool iceGridAsService, string iceGridWorkingDirectory, string iceGridApplicationXmlFilePath)
         {
+            if (icePath == null) icePath = "";
             if (iceGridAsService) {
                 process = new Process();
-	            if(icePath==null) icePath = "";
 	            process.StartInfo.FileName = System.IO.Path.Combine(icePath,"icegridnode.exe");
 	            process.StartInfo.Arguments = "--start FerdaIceGridNode";
 	            process.StartInfo.RedirectStandardOutput = true;
@@ -215,8 +215,8 @@ namespace Ferda.ProjectManager {
             {
                 waitForStart = true;
 	            process = new Process();
-	            process.StartInfo.FileName = "icegridnode";
-              process.StartInfo.Arguments = "--Ice.Config=config --IceGrid.Registry.Data=registry --IceGrid.Node.Data=node --deploy \"" + iceGridApplicationXmlFilePath + "\"";
+                process.StartInfo.FileName = System.IO.Path.Combine(icePath, "icegridnode");
+                process.StartInfo.Arguments = "--Ice.Config=config --IceGrid.Registry.Data=registry --IceGrid.Node.Data=node --deploy \"" + iceGridApplicationXmlFilePath + "\"";
 	            process.StartInfo.RedirectStandardOutput = true;
 	            process.StartInfo.RedirectStandardError = true;
 							process.StartInfo.RedirectStandardInput = true;
