@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <project name="Ferda" default="all" basedir=".">
 	<description>projekt Ferda</description>
 	<property name="default.build" value="default.build"/>
@@ -190,6 +190,8 @@
 				<include name="Glacier2.dll"/>
 				<include name="IceBox.dll"/>
 				<include name="iceboxnet.exe"/>
+				<include name="Ice.jar"/>
+				<include name="OWL_API"/>
 			</fileset>
 		</copy>
 		<if test="${plat64bit}">
