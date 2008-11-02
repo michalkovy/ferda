@@ -199,6 +199,12 @@
 				<include name="System.Data.SQLite.lib"/>
 			</fileset>
 		</copy>
+		<copy todir="${frontendbin.dir}" overwrite="true">
+			<fileset basedir="${input.dir}">
+				<include name="System.Data.SQLite.dll"/>
+				<include name="System.Data.SQLite.lib"/>
+			</fileset>
+		</copy>
 	</target>
 	<target name="copyPlatformIndependent">
 		<copy todir="${frontendbin.dir}">
@@ -383,10 +389,16 @@
 		<property name="optimize" value="true"/>
 		<call target="srcAndCopy"/>
 		<call target="config"/>
+		<if test="${plat64bit}">
+			<property name="platform" value="x64"/>
+		</if>
+		<if test="${not(plat64bit)}">
+			<property name="platform" value="x86"/>
+		</if>
 		<loadtasks assembly="${path::combine(lib.dir,'NAntContrib/NAnt.Contrib.Tasks.dll')}"/>
 		<msbuild project="${path::combine(installerWiX.dir,'FerdaInstaller.wixproj')}">
 			<property name="Configuration" value="Release"/>
-			<property name="OutputName" value="ferda_install"/>
+			<property name="InstallerPlatform" value="${platform}"/>
 		</msbuild>
 	</target>
 	<target name="runiceboxnet">
