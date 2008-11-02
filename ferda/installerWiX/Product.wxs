@@ -88,7 +88,9 @@
 							<File Id="FrontEndAddInHelper.dll" Name="FrontEndAddInHelper.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\FrontEndAddInHelper.dll"/>
 						</Component>
 						<Component Id="FrontEndConfig.xml" Guid="{C9F346D2-529B-48D2-B154-7CD35E1CBF19}">
-							<File Id="FrontEndConfig.xml" Name="FrontEndConfig.xml" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\FrontEndConfig.xml"/>
+							<File Id="FrontEndConfig.xml" Name="FrontEndConfig.xml" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\FrontEndConfig.xml">
+                <Permission User="Everyone" GenericAll="yes" />
+							</File>
 						</Component>
 						<Component Id="Glacier2.dll_1" Guid="{06E90FB0-BD49-4C9C-AF1C-D36EFD4878EC}">
 							<File Id="Glacier2.dll_1" Name="Glacier2.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\Glacier2.dll"/>
@@ -105,6 +107,11 @@
 						<Component Id="NAFGraph.dll" Guid="{FE78D5D9-55F5-4179-8848-9EC9A6C67270}">
 							<File Id="NAFGraph.dll" Name="NAFGraph.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\NAFGraph.dll"/>
 						</Component>
+            <Component Id="recent.xml" Guid="{13A349DD-CAF5-42eb-A23B-1CB24E704C67}">
+              <File Id="recent.xml" Name="recent.xml" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\recent.xml">
+                <Permission User="Everyone" GenericAll="yes" />
+              </File>
+            </Component>
 						<Component Id="socket.bmp" Guid="{D53FDD26-93F4-4C76-B705-8ABD95D3B3CB}">
 							<File Id="socket.bmp" Name="socket.bmp" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\socket.bmp"/>
 						</Component>
@@ -440,6 +447,11 @@
 						<Component Id="libexpat.dll" Guid="{B7969D8C-A8F3-4C01-98DD-6A948032F013}">
 							<File Id="libexpat.dll" Name="libexpat.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\libexpat.dll"/>
 						</Component>
+            <Component Id="NetworkArchive.xml" Guid="{5B559E8C-1690-4944-9B9F-5A735951E79A}">
+              <File Id="NetworkArchive.xml" Name="NetworkArchive.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\NetworkArchive.xml" >
+                <Permission User="Everyone" GenericAll="yes" />
+              </File>
+            </Component>
 						<Component Id="ssleay32.dll" Guid="{632B3959-B900-404D-8E5F-55E45B5ECF08}">
 							<File Id="ssleay32.dll" Name="ssleay32.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\ssleay32.dll"/>
 						</Component>
@@ -1917,6 +1929,7 @@
 			<ComponentRef Id="IceBox.dll_1"/>
 			<ComponentRef Id="IceGrid.dll_1"/>
 			<ComponentRef Id="NAFGraph.dll"/>
+      <ComponentRef Id="recent.xml" />
 			<ComponentRef Id="socket.bmp"/>
 			<ComponentRef Id="TeeChart.Lite.dll"/>
 			<ComponentRef Id="TeeChart.Lite.Languages.dll"/>
@@ -2024,6 +2037,7 @@
 			<ComponentRef Id="libdb46.dll"/>
 			<ComponentRef Id="libeay32.dll"/>
 			<ComponentRef Id="libexpat.dll"/>
+      <ComponentRef Id="NetworkArchive.xml" />
 			<ComponentRef Id="ssleay32.dll"/>
 			<ComponentRef Id="BoxConfig.xml_1"/>
 			<ComponentRef Id="boxDesign.svg_1"/>
