@@ -171,10 +171,9 @@
 			<parameter name="index"/>
 			<parameter name="endpoints" default="tcp:udp"/>
 			<parameter name="pwd" default="${application.distrib}"/>
-			<parameter name="owlapipath"/>
-			<parameter name="icepath"/>
+    		<parameter name="classpath" />
 			<icebox id="${index}" exe="java" activation="on-demand" pwd="${pwd}">
-			  <env>CLASSPATH=${pwd};${icepath};${owlapipath}\owlapi-api.jar;${owlapipath}\owlapi-apibinding.jar;${owlapipath}\owlapi-oboparser.jar;${owlapipath}\owlapi-krssparser.jar;${owlapipath}\owlapi-functionalparser.jar;${owlapipath}\owlapi-owlxmlparser.jar;${owlapipath}\owlapi-rdfxmlparser.jar;${owlapipath}\owlapi-impl.jar;${owlapipath}\owlapi-rdfxmlrenderer.jar;${owlapipath}\owlapi-owlxmlrenderer.jar;${owlapipath}\owlapi-functionalrenderer.jar;${owlapipath}\owlapi-rdfapi.jar;%CLASSPATH%</env>
+			  <env>CLASSPATH=${classpath}</env>
         <option>IceBox.Server</option>
         <service-instance template="FerdaServiceTemplate" name="FerdaOntologyRelated" entry="Ferda.OntologyRelated.Service" endpoints="${endpoints}"/>
 				<property name="Ice.MessageSizeMax" value="409600"/>
@@ -187,7 +186,7 @@
 		
 		<node name="localhost">
 			<server-instance template="FerdaServerTemplate" index="0" pwd="..\Server" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
-			<server-instance template="FerdaServerTemplateJava" index="1" pwd="set in ferda.build" icepath="set in ferda.build" owlapipath="set in ferda.build" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
+			<server-instance template="FerdaServerTemplateJava" index="1" pwd="..\Server\OWLParser" classpath="..\Server\OWLParser;..\Server\Ice.jar;..\Server\OWL_API\owlapi-api.jar;..\Server\OWL_API\owlapi-apibinding.jar;..\Server\OWL_API\owlapi-oboparser.jar;..\Server\OWL_API\owlapi-krssparser.jar;..\Server\OWL_API\owlapi-functionalparser.jar;..\Server\OWL_API\owlapi-owlxmlparser.jar;..\Server\OWL_API\owlapi-rdfxmlparser.jar;..\Server\OWL_API\owlapi-impl.jar;..\Server\OWL_API\owlapi-rdfxmlrenderer.jar;..\Server\OWL_API\owlapi-owlxmlrenderer.jar;..\Server\OWL_API\owlapi-functionalrenderer.jar;..\Server\OWL_API\owlapi-rdfapi.jar;%CLASSPATH%" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
 		</node>
 		
 	</application>
