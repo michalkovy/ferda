@@ -61,6 +61,9 @@
 						<Component Id="FerdaData.dll_1" Guid="{AE67AAB7-3A8D-4F48-87C3-0C4A8778975B}">
 							<File Id="FerdaData.dll_1" Name="FerdaData.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\FerdaData.dll"/>
 						</Component>
+						<Component Id="FerdaFrontEnd.config" Guid="{27E5E541-F80A-4f73-B0C0-B221BF7E3071}">
+							<File Id="FerdaFrontEnd.config" Name="FerdaFrontEnd.config" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\FerdaFrontEnd.config"/>
+						</Component>
 						<Component Id="FerdaFrontEnd.exe" Guid="{C8D7D9E9-E6BB-4E81-B32E-2C8500CBCD55}">
 							<File Id="FerdaFrontEnd.exe" Name="FerdaFrontEnd.exe" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\FerdaFrontEnd.exe"/>
 						</Component>
@@ -2006,6 +2009,7 @@
 			<ComponentRef Id="FerdaBase.dll_1"/>
 			<ComponentRef Id="FerdaBoxInterfaces.dll_1"/>
 			<ComponentRef Id="FerdaData.dll_1"/>
+			<ComponentRef Id="FerdaFrontEnd.config"/>
 			<ComponentRef Id="FerdaFrontEnd.exe"/>
 			<ComponentRef Id="FerdaFrontEnd.ico"/>
 			<ComponentRef Id="FerdaFrontEnd.svg"/>
