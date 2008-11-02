@@ -418,6 +418,9 @@
 						<Component Id="icebox33.dll" Guid="{A01AB078-16A9-4D6E-9CE3-1CA942AD65DC}">
 							<File Id="icebox33.dll" Name="icebox33.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icebox33.dll"/>
 						</Component>
+						<Component Id="iceboxnet.config" Guid="{DA93D016-EDE2-4f9a-84CE-1E56ACA33113}">
+							<File Id="iceboxnet.config" Name="iceboxnet.config" KeyPath="yes" Source="$(var.bin.dir)\Server\iceboxnet.config"/>
+						</Component>
 						<Component Id="iceboxnet.exe" Guid="{2CE3B557-0AFC-4E7E-8F71-AF7876CF6FD3}">
 							<File Id="iceboxnet.exe" Name="iceboxnet.exe" KeyPath="yes" Source="$(var.bin.dir)\Server\iceboxnet.exe"/>
 						</Component>
@@ -464,6 +467,12 @@
 						</Component>
 						<Component Id="ssleay32.dll" Guid="{632B3959-B900-404D-8E5F-55E45B5ECF08}">
 							<File Id="ssleay32.dll" Name="ssleay32.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\ssleay32.dll"/>
+						</Component>
+						<Component Id="System.Data.SQLite.dll" Guid="{2D9F717C-5B35-48c9-9EB4-47348C62B6EA}">
+							<File Id="System.Data.SQLite.dll" Name="System.Data.SQLite.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\System.Data.SQLite.dll"/>
+						</Component>
+						<Component Id="System.Data.SQLite.lib" Guid="{669411C6-73E5-4bf7-9736-E5D9D61102A4}">
+							<File Id="System.Data.SQLite.lib" Name="System.Data.SQLite.lib" KeyPath="yes" Source="$(var.bin.dir)\Server\System.Data.SQLite.lib"/>
 						</Component>
 						<Directory Id="BoxModulesServices" Name="BoxModulesServices">
 							<Directory Id="DataPreparation" Name="DataPreparation">
@@ -2110,6 +2119,7 @@
 			<ComponentRef Id="ice33.dll"/>
 			<ComponentRef Id="IceBox.dll_2"/>
 			<ComponentRef Id="icebox33.dll"/>
+			<ComponentRef Id="iceboxnet.config"/>
 			<ComponentRef Id="iceboxnet.exe"/>
 			<ComponentRef Id="IceGrid.dll_2"/>
 			<ComponentRef Id="icegrid33.dll"/>
@@ -2125,6 +2135,8 @@
 			<ComponentRef Id="libexpat.dll"/>
 			<ComponentRef Id="NetworkArchive.xml"/>
 			<ComponentRef Id="ssleay32.dll"/>
+			<ComponentRef Id="System.Data.SQLite.dll"/>
+			<ComponentRef Id="System.Data.SQLite.lib"/>
 			<ComponentRef Id="BoxConfig.xml_1"/>
 			<ComponentRef Id="boxDesign.svg_1"/>
 			<ComponentRef Id="boxIcon.ico_1"/>
