@@ -186,7 +186,7 @@
 		</server-template>
 		
 		<node name="localhost">
-			<server-instance template="FerdaServerTemplate" index="0" pwd="bin/Server" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
+			<server-instance template="FerdaServerTemplate" index="0" pwd="..\Server" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
 			<server-instance template="FerdaServerTemplateJava" index="1" pwd="set in ferda.build" icepath="set in ferda.build" owlapipath="set in ferda.build" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
 		</node>
 		
