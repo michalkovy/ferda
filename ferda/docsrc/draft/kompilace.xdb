@@ -19,6 +19,15 @@
     <!--
     <revhistory>
       <revision>
+        <revnumber>1.5</revnumber>
+        <date>2008-11-01</date>
+        <revdescription>
+          <para>
+            Updatenutá verze Ice, odstranené info o GAC a přidané info o WiX instalátoru
+          </para>
+        </revdescription>
+      </revision>    
+      <revision>
         <revnumber>1.4</revnumber>
         <date>2007-01-18</date>
         <revdescription>
@@ -79,7 +88,7 @@
     <para>
       Buď lze stáhnout zdrojové soubory ze Sourceforge (<ulink url="http://ferda.sourceforge.net">http://ferda.sourceforge.net</ulink>) 
       či lze stáhnout zdrojové soubory ze subversion repository umístněné na adrese
-      <code>https://svn.sourceforge.net/svnroot/ferda</code>.
+      <ulink url="https://svn.sourceforge.net/svnroot/ferda">https://svn.sourceforge.net/svnroot/ferda</ulink>.
     </para>
   </section>
 
@@ -92,28 +101,27 @@
       <ulink url="http://nant.sourceforge.net">NAnt</ulink>(v součastné verzi je podporovaná verze  0.85)
 
       a
-      <ulink url="http://www.zeroc.com">Ice</ulink> (součastná verze Ferdy běží na Ice 3.2.1).
+      <ulink url="http://www.zeroc.com">Ice</ulink> (součastná verze Ferdy běží na Ice 3.3.0).
       Pro kompilaci části v Javě (týkající se ontologií) je třeba mít nainstalovaný 
       Java SDK.
       Po nainstalování NAntu a Ice je třeba dát
       Ice a NAnt bin adresář do proměnné prostředí PATH (pro Javu i adresář SDK). Dále je třeba v souboru
       ferda.build nastavit proměnnou ice.dir na adresář Ice.
-      Protože se dll knihovny Ferdy automaticky přidávají do GAC (Global Assembly Cache), je třeba
-      mít pro správné fungování NAnt skriptů v proměnné PATH také příkaz gacutil, který přidává
-      knihovny do GAC (typická cesta je například "c:\Program
-      Files\Microsoft Visual Studio 8\SDK\v2.0\Bin\").
     </para>
     <para>
      Pro kompilaci dokumentace je nutné mít v proměnné PATH cestu k procesoru xslt šablon (podporovaná 
      možnost je xsltproc.exe). Dále pro generování PDF souborů je potřeba mít nainstalovaný XSL FO procesor
-     a mít ho v PAHT (podporovaná možnost je XEP).
+     a mít ho v PATH (podporovaná možnost je XEP).
+    </para>
+    <para>
+		Pro vytvoření instalátoru je zapotřebí stáhnout si instalační program WiX (<ulink url="http://wix.sourceforge.net/">http://wix.sourceforge.net/</ulink>). 
     </para>
   </section>
 
   <section>
     <title>Kompilace Fedy</title>
 
-    <para>Pro první zkompilování Ferdy je třeba v hlavním adresáři Ferda zadat příkaz <code>nant refresh</code>.</para>
+    <para>Pro první zkompilování Ferdy je třeba v hlavním adresáři Ferda zadat příkaz <classname>nant refresh</classname>.</para>
 
     <para>
       Dále jsou k dispozici příkazy
@@ -126,7 +134,7 @@
       </listitem>
       <listitem>
         <para>
-          <classname>nant src</classname> (zkomiluje znovu Ferdu)
+          <classname>nant srcAndCopy</classname> (zkomiluje znovu Ferdu)
         </para>
       </listitem>
       <listitem>
@@ -167,6 +175,11 @@
       <listitem>
         <para>
           <classname>nant programdoc</classname> (vytvoří dokumentaci z komentářů v kódu, v současné době nefuntuje:) )
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <classname>nant WiXInstaller</classname> (vytvoří instalační balíček. Lze upřesnit volbu plat64bit, která určuje cílovou platformu pro kopírování). 
         </para>
       </listitem>
     </itemizedlist>
