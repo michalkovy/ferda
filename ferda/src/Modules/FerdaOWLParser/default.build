@@ -4,11 +4,6 @@
 	<target name="build" description="Build Ferda OWL Parser">
     <echo message="Compiling Java OntologyParser..."/>
     <mkdir dir="${path::combine(serverbin.dir,'OWLParser')}"/>
-    <property name="iceDir" value="C:/Ice-3.3.0/lib" />
-    <!-- The Ice 3.3.0 for Visual Studio 2008 -->
-    <if test="${not(directory::exists(iceDir))}" >
-		<property name="iceDir" value="C:/Ice-3.3.0-VC90/lib" />
-    </if>
     <exec program="javac">
       <arg value="-d" />
       <arg value="${path::combine(serverbin.dir,'OWLParser')}" />
@@ -17,11 +12,9 @@
       <arg value="-classpath" />
       <arg>
           <path>
-              <pathelement file="OWL_API_src/owlapi-api.jar" />
-              <pathelement file="OWL_API_src/owlapi-apibinding.jar" />
-              <pathelement file="${path::combine(iceDir,'Ice.jar')}" />
-              <!--<pathelement file="C:/Ice-3.3.0/lib/Ice.jar" />
-               "{path::combine(ice.dir, 'lib', 'Ice.jar')}" -->
+              <pathelement file="${path::combine(lib.dir, 'OWL_API/owlapi-api.jar')}" />
+              <pathelement file="${path::combine(lib.dir, 'OWL_API/owlapi-apibinding.jar')}" />
+              <pathelement file="${path::combine(lib.dir,'Ice.jar')}" />
           </path>
       </arg>
       <arg path="Ferda/OntologyRelated/OWLParserI.java" />
