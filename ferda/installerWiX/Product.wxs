@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?define bin.dir = "..\bin" ?>
+<?if $(sys.BUILDARCH) = x64 ?>
+  <?define ProgramFiles.dir = "ProgramFiles64Folder" ?>
+<?else?>
+  <?define ProgramFiles.dir = "ProgramFilesFolder" ?>  
+<?endif ?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Product Id="0ff6bcee-e9bb-4501-a7dd-4d05dea6f16c" Name="Ferda " Language="1033" Version="2.5.0.0" Manufacturer="Ferda Team" UpgradeCode="bbdaee35-e2dd-4411-8de4-5d4198313889">
 		<Package InstallerVersion="200" Compressed="yes"/>
 		<Property Id="ALLUSERS" Value="1"/>
 		<Media Id="1" Cabinet="Ferda.cab" EmbedCab="yes"/>
 		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
+			<Directory Id="$(var.ProgramFiles.dir)">
 				<Directory Id="INSTALLLOCATION" Name="Ferda">
 					<Directory Id="db" Name="db">
 						<Component Id="application.xml" Guid="{67629C66-142A-4D4A-A334-94958D54D6D6}">
@@ -61,8 +66,8 @@
 						<Component Id="FerdaData.dll_1" Guid="{AE67AAB7-3A8D-4F48-87C3-0C4A8778975B}">
 							<File Id="FerdaData.dll_1" Name="FerdaData.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\FerdaData.dll"/>
 						</Component>
-						<Component Id="FerdaFrontEnd.config" Guid="{27E5E541-F80A-4f73-B0C0-B221BF7E3071}">
-							<File Id="FerdaFrontEnd.config" Name="FerdaFrontEnd.config" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\FerdaFrontEnd.config"/>
+						<Component Id="FerdaFrontEnd.exe.config" Guid="{27E5E541-F80A-4f73-B0C0-B221BF7E3071}">
+							<File Id="FerdaFrontEnd.exe.config" Name="FerdaFrontEnd.exe.config" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\FerdaFrontEnd.exe.config"/>
 						</Component>
 						<Component Id="FerdaFrontEnd.exe" Guid="{C8D7D9E9-E6BB-4E81-B32E-2C8500CBCD55}">
 							<File Id="FerdaFrontEnd.exe" Name="FerdaFrontEnd.exe" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\FerdaFrontEnd.exe"/>
@@ -124,6 +129,12 @@
 						</Component>
 						<Component Id="socket.bmp" Guid="{D53FDD26-93F4-4C76-B705-8ABD95D3B3CB}">
 							<File Id="socket.bmp" Name="socket.bmp" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\socket.bmp"/>
+						</Component>
+						<Component Id="System.Data.SQLite.dll_1" Guid="{F3C822D0-A91D-11DD-8998-07CB56D89593}">
+							<File Id="System.Data.SQLite.dll_1" Name="System.Data.SQLite.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\System.Data.SQLite.dll"/>
+						</Component>
+						<Component Id="System.Data.SQLite.lib_1" Guid="{898BC5BA-A91E-11DD-97DA-48CF56D89593}">
+							<File Id="System.Data.SQLite.lib_1" Name="System.Data.SQLite.lib" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\System.Data.SQLite.lib"/>
 						</Component>
 						<Component Id="TeeChart.Lite.dll" Guid="{6D22BE62-5E10-454E-A7F1-50444F9F3EFD}">
 							<File Id="TeeChart.Lite.dll" Name="TeeChart.Lite.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\TeeChart.Lite.dll"/>
@@ -421,8 +432,8 @@
 						<Component Id="icebox33.dll" Guid="{A01AB078-16A9-4D6E-9CE3-1CA942AD65DC}">
 							<File Id="icebox33.dll" Name="icebox33.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icebox33.dll"/>
 						</Component>
-						<Component Id="iceboxnet.config" Guid="{DA93D016-EDE2-4f9a-84CE-1E56ACA33113}">
-							<File Id="iceboxnet.config" Name="iceboxnet.config" KeyPath="yes" Source="$(var.bin.dir)\Server\iceboxnet.config"/>
+						<Component Id="iceboxnet.exe.config" Guid="{DA93D016-EDE2-4f9a-84CE-1E56ACA33113}">
+							<File Id="iceboxnet.exe.config" Name="iceboxnet.exe.config" KeyPath="yes" Source="$(var.bin.dir)\Server\iceboxnet.exe.config"/>
 						</Component>
 						<Component Id="iceboxnet.exe" Guid="{2CE3B557-0AFC-4E7E-8F71-AF7876CF6FD3}">
 							<File Id="iceboxnet.exe" Name="iceboxnet.exe" KeyPath="yes" Source="$(var.bin.dir)\Server\iceboxnet.exe"/>
@@ -471,11 +482,11 @@
 						<Component Id="ssleay32.dll" Guid="{632B3959-B900-404D-8E5F-55E45B5ECF08}">
 							<File Id="ssleay32.dll" Name="ssleay32.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\ssleay32.dll"/>
 						</Component>
-						<Component Id="System.Data.SQLite.dll" Guid="{2D9F717C-5B35-48c9-9EB4-47348C62B6EA}">
-							<File Id="System.Data.SQLite.dll" Name="System.Data.SQLite.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\System.Data.SQLite.dll"/>
+						<Component Id="System.Data.SQLite.dll_2" Guid="{2D9F717C-5B35-48c9-9EB4-47348C62B6EA}">
+							<File Id="System.Data.SQLite.dll_2" Name="System.Data.SQLite.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\System.Data.SQLite.dll"/>
 						</Component>
-						<Component Id="System.Data.SQLite.lib" Guid="{669411C6-73E5-4bf7-9736-E5D9D61102A4}">
-							<File Id="System.Data.SQLite.lib" Name="System.Data.SQLite.lib" KeyPath="yes" Source="$(var.bin.dir)\Server\System.Data.SQLite.lib"/>
+						<Component Id="System.Data.SQLite.lib_2" Guid="{669411C6-73E5-4bf7-9736-E5D9D61102A4}">
+							<File Id="System.Data.SQLite.lib_2" Name="System.Data.SQLite.lib" KeyPath="yes" Source="$(var.bin.dir)\Server\System.Data.SQLite.lib"/>
 						</Component>
 						<Directory Id="BoxModulesServices" Name="BoxModulesServices">
 							<Directory Id="DataPreparation" Name="DataPreparation">
@@ -2009,8 +2020,8 @@
 			<ComponentRef Id="FerdaBase.dll_1"/>
 			<ComponentRef Id="FerdaBoxInterfaces.dll_1"/>
 			<ComponentRef Id="FerdaData.dll_1"/>
-			<ComponentRef Id="FerdaFrontEnd.config"/>
 			<ComponentRef Id="FerdaFrontEnd.exe"/>
+			<ComponentRef Id="FerdaFrontEnd.exe.config"/>
 			<ComponentRef Id="FerdaFrontEnd.ico"/>
 			<ComponentRef Id="FerdaFrontEnd.svg"/>
 			<ComponentRef Id="FerdaHelpers.dll_1"/>
@@ -2030,6 +2041,8 @@
 			<ComponentRef Id="NAFGraph.dll"/>
 			<ComponentRef Id="recent.xml"/>
 			<ComponentRef Id="socket.bmp"/>
+			<ComponentRef Id="System.Data.SQLite.dll_1"/>
+			<ComponentRef Id="System.Data.SQLite.lib_1"/>
 			<ComponentRef Id="TeeChart.Lite.dll"/>
 			<ComponentRef Id="TeeChart.Lite.Languages.dll"/>
 			<ComponentRef Id="DatabaseInfo.dll"/>
@@ -2123,8 +2136,8 @@
 			<ComponentRef Id="ice33.dll"/>
 			<ComponentRef Id="IceBox.dll_2"/>
 			<ComponentRef Id="icebox33.dll"/>
-			<ComponentRef Id="iceboxnet.config"/>
 			<ComponentRef Id="iceboxnet.exe"/>
+			<ComponentRef Id="iceboxnet.exe.config"/>
 			<ComponentRef Id="IceGrid.dll_2"/>
 			<ComponentRef Id="icegrid33.dll"/>
 			<ComponentRef Id="icegridnode.exe"/>
@@ -2139,8 +2152,8 @@
 			<ComponentRef Id="libexpat.dll"/>
 			<ComponentRef Id="NetworkArchive.xml"/>
 			<ComponentRef Id="ssleay32.dll"/>
-			<ComponentRef Id="System.Data.SQLite.dll"/>
-			<ComponentRef Id="System.Data.SQLite.lib"/>
+			<ComponentRef Id="System.Data.SQLite.dll_2"/>
+			<ComponentRef Id="System.Data.SQLite.lib_2"/>
 			<ComponentRef Id="BoxConfig.xml_1"/>
 			<ComponentRef Id="boxDesign.svg_1"/>
 			<ComponentRef Id="boxIcon.ico_1"/>

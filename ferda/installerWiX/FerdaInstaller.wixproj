@@ -1,23 +1,20 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <InstallerPlatform Condition=" '$(InstallerPlatform)' == '' ">x86</InstallerPlatform>
     <ProductVersion>3.0</ProductVersion>
     <ProjectGuid>{e80466c5-5b91-4ee9-8a8d-7351122e8170}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName Condition=" '$(OutputName)' == '' ">FerdaInstaller</OutputName>
+    <OutputName Condition=" '$(OutputName)' == '' ">ferda_install_$(InstallerPlatform)</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets</WixTargetsPath>
+    <WixVariables Condition=" '$(WixVariables)' == '' ">=</WixVariables>
     <IncludeSearchPaths></IncludeSearchPaths>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DefineConstants>Debug</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
