@@ -2,8 +2,8 @@
 <?define bin.dir = "..\bin" ?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Product Id="0ff6bcee-e9bb-4501-a7dd-4d05dea6f16c" Name="Ferda " Language="1033" Version="2.5.0.0" Manufacturer="Ferda Team" UpgradeCode="bbdaee35-e2dd-4411-8de4-5d4198313889">
-    <Package InstallerVersion="200" Compressed="yes"/>
-    <Property Id="ALLUSERS" Value="1" />
+		<Package InstallerVersion="200" Compressed="yes"/>
+		<Property Id="ALLUSERS" Value="1"/>
 		<Media Id="1" Cabinet="Ferda.cab" EmbedCab="yes"/>
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
@@ -17,17 +17,17 @@
 						</Component>
 						<Directory Id="node" Name="node">
 							<Component Id="Component_1" Guid="{7580711D-056F-493D-A197-9F3D985EC3C4}" KeyPath="yes">
-                <CreateFolder>
-                  <Permission User="Everyone" GenericAll="yes" />
-                </CreateFolder>  
+								<CreateFolder>
+									<Permission User="Everyone" GenericAll="yes"/>
+								</CreateFolder>
 							</Component>
 						</Directory>
 						<Directory Id="registry" Name="registry">
 							<Component Id="Component_2" Guid="{E157A877-2943-4E81-B38D-2C227D6D2D44}" KeyPath="yes">
-                <CreateFolder>
-                  <Permission User="Everyone" GenericAll="yes" />
-                </CreateFolder>
-              </Component>
+								<CreateFolder>
+									<Permission User="Everyone" GenericAll="yes"/>
+								</CreateFolder>
+							</Component>
 						</Directory>
 					</Directory>
 					<Directory Id="FrontEnd" Name="FrontEnd">
@@ -93,7 +93,7 @@
 						</Component>
 						<Component Id="FrontEndConfig.xml" Guid="{C9F346D2-529B-48D2-B154-7CD35E1CBF19}">
 							<File Id="FrontEndConfig.xml" Name="FrontEndConfig.xml" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\FrontEndConfig.xml">
-                <Permission User="Everyone" GenericAll="yes" />
+								<Permission User="Everyone" GenericAll="yes"/>
 							</File>
 						</Component>
 						<Component Id="Glacier2.dll_1" Guid="{06E90FB0-BD49-4C9C-AF1C-D36EFD4878EC}">
@@ -111,11 +111,11 @@
 						<Component Id="NAFGraph.dll" Guid="{FE78D5D9-55F5-4179-8848-9EC9A6C67270}">
 							<File Id="NAFGraph.dll" Name="NAFGraph.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\NAFGraph.dll"/>
 						</Component>
-            <Component Id="recent.xml" Guid="{13A349DD-CAF5-42eb-A23B-1CB24E704C67}">
-              <File Id="recent.xml" Name="recent.xml" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\recent.xml">
-                <Permission User="Everyone" GenericAll="yes" />
-              </File>
-            </Component>
+						<Component Id="recent.xml" Guid="{13A349DD-CAF5-42eb-A23B-1CB24E704C67}">
+							<File Id="recent.xml" Name="recent.xml" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\recent.xml">
+								<Permission User="Everyone" GenericAll="yes"/>
+							</File>
+						</Component>
 						<Component Id="socket.bmp" Guid="{D53FDD26-93F4-4C76-B705-8ABD95D3B3CB}">
 							<File Id="socket.bmp" Name="socket.bmp" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\socket.bmp"/>
 						</Component>
@@ -403,6 +403,9 @@
 						<Component Id="Ice.dll_2" Guid="{AF54AA7C-09A9-4ED2-9648-E73C62F15595}">
 							<File Id="Ice.dll_2" Name="Ice.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\Ice.dll"/>
 						</Component>
+						<Component Id="Ice.jar" Guid="{4DF5B2C5-DB8D-4fb4-A693-68DB542A569A}">
+							<File Id="Ice.jar" Name="Ice.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\Ice.jar"/>
+						</Component>
 						<Component Id="ice33.dll" Guid="{6217056E-9DBF-40AA-91D3-FD97827DA79B}">
 							<File Id="ice33.dll" Name="ice33.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\ice33.dll"/>
 						</Component>
@@ -451,11 +454,11 @@
 						<Component Id="libexpat.dll" Guid="{B7969D8C-A8F3-4C01-98DD-6A948032F013}">
 							<File Id="libexpat.dll" Name="libexpat.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\libexpat.dll"/>
 						</Component>
-            <Component Id="NetworkArchive.xml" Guid="{5B559E8C-1690-4944-9B9F-5A735951E79A}">
-              <File Id="NetworkArchive.xml" Name="NetworkArchive.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\NetworkArchive.xml" >
-                <Permission User="Everyone" GenericAll="yes" />
-              </File>
-            </Component>
+						<Component Id="NetworkArchive.xml" Guid="{5B559E8C-1690-4944-9B9F-5A735951E79A}">
+							<File Id="NetworkArchive.xml" Name="NetworkArchive.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\NetworkArchive.xml">
+								<Permission User="Everyone" GenericAll="yes"/>
+							</File>
+						</Component>
 						<Component Id="ssleay32.dll" Guid="{632B3959-B900-404D-8E5F-55E45B5ECF08}">
 							<File Id="ssleay32.dll" Name="ssleay32.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\ssleay32.dll"/>
 						</Component>
@@ -1837,6 +1840,64 @@
 								</Directory>
 							</Directory>
 						</Directory>
+						
+						<Directory Id="OWL_API" Name="OWL_API">
+							<Component Id="commons_lang_2.2.jar" Guid="{E8620105-A171-4FCF-8B88-C97DB48998D5}">
+								<File Id="commons_lang_2.2.jar" Name="commons-lang-2.2.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\commons-lang-2.2.jar" />
+							</Component>
+							<Component Id="license.txt" Guid="{61209ED4-BB8C-465F-981F-263BD8460FE4}">
+								<File Id="license.txt" Name="license.txt" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\license.txt" />
+							</Component>
+							<Component Id="owlapi_api.jar" Guid="{EEC98EEA-A83C-4CD4-889E-C6453E247AC5}">
+								<File Id="owlapi_api.jar" Name="owlapi-api.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-api.jar" />
+							</Component>
+							<Component Id="owlapi_apibinding.jar" Guid="{37941734-F7A9-4E3D-AECB-0A446ACB40BF}">
+								<File Id="owlapi_apibinding.jar" Name="owlapi-apibinding.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-apibinding.jar" />
+							</Component>
+							<Component Id="owlapi_debugging.jar" Guid="{CB202D90-CA4D-4D75-8015-177276A15AF0}">
+								<File Id="owlapi_debugging.jar" Name="owlapi-debugging.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-debugging.jar" />
+							</Component>
+							<Component Id="owlapi_dig1_1.jar" Guid="{4F304245-0421-4340-853A-B3D57E9E4A61}">
+								<File Id="owlapi_dig1_1.jar" Name="owlapi-dig1_1.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-dig1_1.jar" />
+							</Component>
+							<Component Id="owlapi_functionalparser.jar" Guid="{D015BB15-574E-4958-83B4-3BE6A1178C6F}">
+								<File Id="owlapi_functionalparser.jar" Name="owlapi-functionalparser.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-functionalparser.jar" />
+							</Component>
+							<Component Id="owlapi_functionalrenderer.jar" Guid="{F8CB9555-E2F5-4FE8-9A57-5CCA658C5673}">
+								<File Id="owlapi_functionalrenderer.jar" Name="owlapi-functionalrenderer.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-functionalrenderer.jar" />
+							</Component>
+							<Component Id="owlapi_impl.jar" Guid="{C4894361-B3F7-41F7-961C-B53E4BC8A537}">
+								<File Id="owlapi_impl.jar" Name="owlapi-impl.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-impl.jar" />
+							</Component>
+							<Component Id="owlapi_krssparser.jar" Guid="{57D0CE3B-7CCB-44EA-8752-8924A941E4A1}">
+								<File Id="owlapi_krssparser.jar" Name="owlapi-krssparser.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-krssparser.jar" />
+							</Component>
+							<Component Id="owlapi_oboparser.jar" Guid="{5D7CD5EC-6A8E-4B89-A339-1B78F446C5C3}">
+								<File Id="owlapi_oboparser.jar" Name="owlapi-oboparser.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-oboparser.jar" />
+							</Component>
+							<Component Id="owlapi_owlxmlparser.jar" Guid="{CDC2DB1B-C3E3-4897-AAA6-8E0989AD8F13}">
+								<File Id="owlapi_owlxmlparser.jar" Name="owlapi-owlxmlparser.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-owlxmlparser.jar" />
+							</Component>
+							<Component Id="owlapi_owlxmlrenderer.jar" Guid="{43AE3CD8-DC9F-4284-B13D-D34A905D444F}">
+								<File Id="owlapi_owlxmlrenderer.jar" Name="owlapi-owlxmlrenderer.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-owlxmlrenderer.jar" />
+							</Component>
+							<Component Id="owlapi_rdfapi.jar" Guid="{06A3D6D5-4F06-4B8A-9948-6D37C57052E8}">
+								<File Id="owlapi_rdfapi.jar" Name="owlapi-rdfapi.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-rdfapi.jar" />
+							</Component>
+							<Component Id="owlapi_rdfxmlparser.jar" Guid="{B44D8EF2-7875-4A9B-9F7F-002526C1A502}">
+								<File Id="owlapi_rdfxmlparser.jar" Name="owlapi-rdfxmlparser.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-rdfxmlparser.jar" />
+							</Component>
+							<Component Id="owlapi_rdfxmlrenderer.jar" Guid="{735E0239-469A-4531-A33F-FD3ECD309008}">
+								<File Id="owlapi_rdfxmlrenderer.jar" Name="owlapi-rdfxmlrenderer.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-rdfxmlrenderer.jar" />
+							</Component>
+							<Component Id="owlapi_util.jar" Guid="{1280580E-B357-460B-B610-586A76D02E4C}">
+								<File Id="owlapi_util.jar" Name="owlapi-util.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\owlapi-util.jar" />
+							</Component>
+							<Component Id="README.txt" Guid="{05235A76-CC85-47F5-8447-2F90DC4939C9}">
+								<File Id="README.txt" Name="README.txt" KeyPath="yes" Source="$(var.bin.dir)\Server\OWL_API\README.txt" />
+							</Component>
+						</Directory>
+						
 						<Directory Id="OWLParser" Name="OWLParser">
 							<Directory Id="Ferda" Name="Ferda">
 								<Directory Id="OntologyRelated_2" Name="OntologyRelated">
@@ -1903,6 +1964,24 @@
 			</Directory>
 		</Directory>
 		<Feature Id="ProductFeature" Title="Ferda" Level="1">
+			<ComponentRef Id="commons_lang_2.2.jar"/>
+			<ComponentRef Id="license.txt"/>
+			<ComponentRef Id="owlapi_api.jar"/>
+			<ComponentRef Id="owlapi_apibinding.jar"/>
+			<ComponentRef Id="owlapi_debugging.jar"/>
+			<ComponentRef Id="owlapi_dig1_1.jar"/>
+			<ComponentRef Id="owlapi_functionalparser.jar"/>
+			<ComponentRef Id="owlapi_functionalrenderer.jar"/>
+			<ComponentRef Id="owlapi_impl.jar"/>
+			<ComponentRef Id="owlapi_krssparser.jar"/>
+			<ComponentRef Id="owlapi_oboparser.jar"/>
+			<ComponentRef Id="owlapi_owlxmlparser.jar"/>
+			<ComponentRef Id="owlapi_owlxmlrenderer.jar"/>
+			<ComponentRef Id="owlapi_rdfapi.jar"/>
+			<ComponentRef Id="owlapi_rdfxmlparser.jar"/>
+			<ComponentRef Id="owlapi_rdfxmlrenderer.jar"/>
+			<ComponentRef Id="owlapi_util.jar"/>
+			<ComponentRef Id="README.txt"/>
 			<ComponentRef Id="application.xml"/>
 			<ComponentRef Id="config_1"/>
 			<ComponentRef Id="Component_1"/>
@@ -1930,10 +2009,11 @@
 			<ComponentRef Id="FrontEndConfig.xml"/>
 			<ComponentRef Id="Glacier2.dll_1"/>
 			<ComponentRef Id="Ice.dll_1"/>
+			<ComponentRef Id="Ice.jar"/>
 			<ComponentRef Id="IceBox.dll_1"/>
 			<ComponentRef Id="IceGrid.dll_1"/>
 			<ComponentRef Id="NAFGraph.dll"/>
-      <ComponentRef Id="recent.xml" />
+			<ComponentRef Id="recent.xml"/>
 			<ComponentRef Id="socket.bmp"/>
 			<ComponentRef Id="TeeChart.Lite.dll"/>
 			<ComponentRef Id="TeeChart.Lite.Languages.dll"/>
@@ -2041,7 +2121,7 @@
 			<ComponentRef Id="libdb46.dll"/>
 			<ComponentRef Id="libeay32.dll"/>
 			<ComponentRef Id="libexpat.dll"/>
-      <ComponentRef Id="NetworkArchive.xml" />
+			<ComponentRef Id="NetworkArchive.xml"/>
 			<ComponentRef Id="ssleay32.dll"/>
 			<ComponentRef Id="BoxConfig.xml_1"/>
 			<ComponentRef Id="boxDesign.svg_1"/>
