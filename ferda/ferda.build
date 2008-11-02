@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <project name="Ferda" default="all" basedir=".">
 	<description>projekt Ferda</description>
 	<property name="default.build" value="default.build"/>
@@ -62,8 +62,7 @@
 			</fileset>
 		</delete>
 	</target>
-	<target name="programdoc" depends="src,programdoconly">
-	</target>
+	<target name="programdoc" depends="srcAndCopy,programdoconly"/>
 	<target name="programdoconly">
 		<uptodate property="help.uptodate">
 			<targetfiles>
@@ -154,24 +153,42 @@
 			</properties>
 		</nant>
 	</target>
-	<target name="slice">
-		<nant buildfile="${path::combine(slice.dir,default.build)}">
-			<properties>
-				<property name="build.dir" value="${src.dir}"/>
-			</properties>
-		</nant>
+	<target name="srcAndCopy" depends="src,boxconfig,copyPlatformIndependent,copyPlatformDependent"/>
+	<target name="copyPlatformDependent">
+		<if test="${plat64bit}">
+			<property name="input.dir" value="${path::combine(ice.dir,'bin\x64')}"/>
+		</if>
+		<if test="${not(plat64bit)}">
+			<property name="input.dir" value="${path::combine(ice.dir,'bin')}"/>
+		</if>
+		<copy todir="${frontendbin.dir}" overwrite="true">
+			<fileset basedir="${input.dir}">
+				<include name="bzip2.dll"/>
+			</fileset>
+		</copy>
+		<copy todir="${serverbin.dir}" overwrite="true">
+			<fileset basedir="${input.dir}">
+				<include name="bzip2.dll"/>
+				<include name="freeze33.dll"/>
+				<include name="glacier233.dll"/>
+				<include name="ice33.dll"/>
+				<include name="icebox33.dll"/>
+				<include name="icegrid33.dll"/>
+				<include name="icegridnode.exe"/>
+				<include name="icepatch233.dll"/>
+				<include name="icessl33.dll"/>
+				<include name="icestorm33.dll"/>
+				<include name="icestormservice33.dll"/>
+				<include name="iceutil33.dll"/>
+				<include name="icexml33.dll"/>
+				<include name="libdb46.dll"/>
+				<include name="libeay32.dll"/>
+				<include name="libexpat.dll"/>
+				<include name="ssleay32.dll"/>
+			</fileset>
+		</copy>
 	</target>
-	<target name="src" depends="slice">
-		<mkdir dir="${bin.dir}"/>
-		<mkdir dir="${frontendbin.dir}"/>
-		<mkdir dir="${serverbin.dir}"/>
-		<nant buildfile="${path::combine(libsrc.dir,'default.build')}" target="build">
-			<properties>
-				<property name="build.dir" value="${frontendbin.dir}"/>
-				<property name="serverbin.dir" value="${serverbin.dir}"/>
-			</properties>
-		</nant>
-		<nant buildfile="${path::combine(src.dir,'default.build')}"/>
+	<target name="copyPlatformIndependent">
 		<copy todir="${frontendbin.dir}">
 			<fileset basedir="lib">
 				<include name="Ice.dll"/>
@@ -194,39 +211,25 @@
 				<include name="OWL_API"/>
 			</fileset>
 		</copy>
-		<if test="${plat64bit}">
-			<property name="input.dir" value="${path::combine(ice.dir,'bin\x64')}"/>
-		</if>
-		<if test="${not(plat64bit)}">
-			<property name="input.dir" value="${path::combine(ice.dir,'bin')}"/>
-		</if>
-		<copy todir="${frontendbin.dir}">
-			<fileset basedir="${input.dir}">
-				<include name="bzip2.dll"/>
-			</fileset>
-		</copy>
-		<copy todir="${serverbin.dir}">
-			<fileset basedir="${input.dir}">
-				<include name="bzip2.dll"/>
-				<include name="freeze33.dll"/>
-				<include name="glacier233.dll"/>
-				<include name="ice33.dll"/>
-				<include name="icebox33.dll"/>
-				<include name="icegrid33.dll"/>
-				<include name="icegridnode.exe"/>
-				<include name="icepatch233.dll"/>
-				<include name="icessl33.dll"/>
-				<include name="icestorm33.dll"/>
-				<include name="icestormservice33.dll"/>
-				<include name="iceutil33.dll"/>
-				<include name="icexml33.dll"/>
-				<include name="libdb46.dll"/>
-				<include name="libeay32.dll"/>
-				<include name="libexpat.dll"/>
-				<include name="ssleay32.dll"/>
-			</fileset>
-		</copy>
-		<call target="boxconfig" verbose="true"/>
+	</target>
+	<target name="slice">
+		<nant buildfile="${path::combine(slice.dir,default.build)}">
+			<properties>
+				<property name="build.dir" value="${src.dir}"/>
+			</properties>
+		</nant>
+	</target>
+	<target name="src" depends="slice">
+		<mkdir dir="${bin.dir}"/>
+		<mkdir dir="${frontendbin.dir}"/>
+		<mkdir dir="${serverbin.dir}"/>
+		<nant buildfile="${path::combine(libsrc.dir,'default.build')}" target="build">
+			<properties>
+				<property name="build.dir" value="${frontendbin.dir}"/>
+				<property name="serverbin.dir" value="${serverbin.dir}"/>
+			</properties>
+		</nant>
+		<nant buildfile="${path::combine(src.dir,'default.build')}"/>
 	</target>
 	<target name="config">
 		<mkdir dir="${bin.dir}/db"/>
@@ -237,23 +240,8 @@
 				<include name="**"/>
 			</fileset>
 		</copy>
-		<xmlpoke file="bin/db/application.xml" xpath="/icegrid/application[@name = 'FerdaModulesApplication']/node[@name = 'localhost']/server-instance[@template = 'FerdaServerTemplateJava']/@pwd" value="${path::get-full-path('bin/Server/OWLParser')}"/>
-		<xmlpoke file="bin/db/application.xml" xpath="/icegrid/application[@name = 'FerdaModulesApplication']/node[@name = 'localhost']/server-instance[@template = 'FerdaServerTemplateJava']/@owlapipath" value="${path::get-full-path('src/Modules/FerdaOWLParser/OWL_API_src')}"/>
-		<xmlpoke file="bin/db/application.xml" xpath="/icegrid/application[@name = 'FerdaModulesApplication']/node[@name = 'localhost']/server-instance[@template = 'FerdaServerTemplateJava']/@icepath" value="${ice.dir}/lib/ice.jar"/>
-		<!-- <delete failonerror="false">
-			<fileset basedir="${bin.dir}/db/node">
-				<include name="**" />
-				<exclude name="." />
-			</fileset>
-		</delete>
-		<delete failonerror="false">
-			<fileset basedir="${bin.dir}/db/registry">
-				<include name="**" />
-				<exclude name="." />
-			</fileset>
-		</delete> -->
 	</target>
-	<target name="test" depends="src,config">
+	<target name="test" depends="srcAndCopy,config">
 		<nant buildfile="${path::combine(test.dir,'default.build')}">
 			<properties>
 				<property name="build.dir" value="${bin.dir}"/>
@@ -274,7 +262,7 @@
 			</properties>
 		</nant>
 	</target>
-	<target name="all" description="Vytvoří Ferdu" depends="slice,src,config,doc"/>
+	<target name="all" description="Vytvoří Ferdu" depends="slice,srcAndCopy,config,doc"/>
 	<target name="install" description="Installs Ferda">
 	</target>
 	<target name="gridinstall" description="Installs Ferda For More Nodes">
@@ -302,7 +290,7 @@
 			<arg value="application add 'bin\db\application.xml'"/>
 		</exec>
 	</target>
-	<target name="fullinstall" depends="src,config,install"/>
+	<target name="fullinstall" depends="srcAndCopy,config,install"/>
 	<target name="uninstall" description="Uninstalls Ferda">
 	</target>
 	<target name="griduninstall" description="Uninstalls Ferda">
@@ -372,16 +360,20 @@
 	<target name="installer" depends="uninstall,clean">
 		<property name="debug" value="None"/>
 		<property name="optimize" value="true"/>
-		<call target="src"/>
+		<call target="srcAndCopy"/>
 		<call target="config"/>
 		<nant buildfile="${path::combine(installer.dir,default.build)}" target="installer"/>
 	</target>
 	<target name="installerWiX" depends="uninstall,clean">
 		<property name="debug" value="None"/>
 		<property name="optimize" value="true"/>
-		<call target="src"/>
+		<call target="srcAndCopy"/>
 		<call target="config"/>
-		<nant buildfile="${path::combine(installerWiX.dir,default.build)}" target="installer"/>
+		<loadtasks assembly="${path::combine(lib.dir,'NAntContrib/NAnt.Contrib.Tasks.dll')}"/>
+		<msbuild project="${path::combine(installerWiX.dir,'FerdaInstaller.wixproj')}">
+			<property name="Configuration" value="Release"/>
+			<property name="OutputName" value="ferda_install"/>
+		</msbuild>
 	</target>
 	<target name="runiceboxnet">
 		<copy todir="${serverbin.dir}">
