@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <project name="Ferda" default="all" basedir=".">
 	<description>projekt Ferda</description>
 	<property name="default.build" value="default.build"/>
@@ -187,6 +187,18 @@
 				<include name="ssleay32.dll"/>
 			</fileset>
 		</copy>
+		<if test="${plat64bit}">
+			<property name="input.dir" value="${path::combine(lib.dir,'x64')}"/>
+		</if>
+		<if test="${not(plat64bit)}">
+			<property name="input.dir" value="${lib.dir}"/>
+		</if>
+		<copy todir="${serverbin.dir}" overwrite="true">
+			<fileset basedir="${input.dir}">
+				<include name="System.Data.SQLite.dll"/>
+				<include name="System.Data.SQLite.lib"/>
+			</fileset>
+		</copy>
 	</target>
 	<target name="copyPlatformIndependent">
 		<copy todir="${frontendbin.dir}">
@@ -207,6 +219,8 @@
 				<include name="Glacier2.dll"/>
 				<include name="IceBox.dll"/>
 				<include name="iceboxnet.exe"/>
+                <include name="System.Data.SQLite.dll"/>
+				<include name="System.Data.SQLite.lib"/>
 				<include name="Ice.jar"/>
 				<include name="OWL_API/*"/>
 			</fileset>
