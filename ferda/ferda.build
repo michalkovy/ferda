@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <project name="Ferda" default="all" basedir=".">
 	<description>projekt Ferda</description>
 	<property name="default.build" value="default.build"/>
@@ -317,6 +317,16 @@
 		<call target="gacrefreshpom" verbose="true"/>
 		<property name="gacAddFile" value="CvsReader"/>
 		<call target="gacrefreshpom" verbose="true"/>
+		<property name="gacAddFile" value="FerdaProjectBase"/>
+		<call target="gacrefreshpom" verbose="true"/>
+		<property name="gacAddFile" value="FerdaNetworkArchiveBase"/>
+		<call target="gacrefreshpom" verbose="true"/>
+		<property name="gacAddFile" value="FerdaNetworkArchive"/>
+		<call target="gacrefreshpom" verbose="true"/>
+    <!--
+		<property name="gacAddFile" value="FerdaModulesManager"/>
+		<call target="gacrefreshpom" verbose="true"/>
+    -->
 	</target>
 	<target name="gridinstall" description="Installs Ferda For More Nodes">
 		<exec program="icegridnode">
@@ -371,6 +381,16 @@
 		<call target="gacuninstall" verbose="true"/>
 		<property name="file" value="CvsReader"/>
 		<call target="gacuninstall" verbose="true"/>
+		<property name="file" value="FerdaProjectBase"/>
+		<call target="gacuninstall" verbose="true"/>
+		<property name="file" value="FerdaNetworkArchiveBase"/>
+		<call target="gacuninstall" verbose="true"/>
+		<property name="file" value="FerdaNetworkArchive"/>
+		<call target="gacuninstall" verbose="true"/>
+    <!--
+		<property name="file" value="FerdaModulesManager"/>
+		<call target="gacuninstall" verbose="true"/>
+    -->
 	</target>
 	<target name="griduninstall" description="Uninstalls Ferda">
 		<exec program="icegridnode" failonerror="false">
