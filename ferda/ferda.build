@@ -21,10 +21,10 @@
 	<property name="snapshot.dir" value="${path::combine(directory::get-current-directory(),'snapshot')}" unless="${property::exists('snapshot.dir')}"/>
 	<property name="docs.build.file" value="docs/docs.build"/>
 	<property name="ice.dir" value="c:\Ice-3.3.0\" unless="${property::exists('ice.dir')}"/>
-	<if test="${not(directory::exists(ice.dir))}" >
-		<property name="ice.dir" value="c:\Ice-3.3.0-VC90\" />
+	<if test="${not(directory::exists(ice.dir))}">
+		<property name="ice.dir" value="c:\Ice-3.3.0-VC90\"/>
 	</if>
-	<property name="64bit" value="false" unless="${property::exists('64bit')}"/>
+	<property name="plat64bit" value="false" unless="${property::exists('plat64bit')}"/>
 	<property name="installer.dir" value="${path::get-full-path('installer')}"/>
 	<property name="installerWiX.dir" value="${path::get-full-path('installerWiX')}"/>
 	<target name="clean" description="Smaže build">
@@ -56,9 +56,9 @@
 		-->
 		<delete failonerror="false">
 			<fileset>
-				<include name="${bin.dir}/FrontEnd/**" />
-				<include name="${bin.dir}/Server/**" />
-		    <include name="${bin.dir}/db/**" />
+				<include name="${bin.dir}/FrontEnd/**"/>
+				<include name="${bin.dir}/Server/**"/>
+				<include name="${bin.dir}/db/**"/>
 			</fileset>
 		</delete>
 	</target>
@@ -141,16 +141,16 @@
 				<property name="sablonaDocBookXhtml" value="${path::get-full-path('stylesheets/docbook/xhtml/docbook.xsl')}" unless="${property::exists('sablonaDocBookXhtml')}"/>
 				<property name="use.xsltproc" value="true" unless="${property::exists('use.xsltproc')}"/>
 				<property name="sablonaDocBookPDF" value="${path::get-full-path('stylesheets/docbook/pdf/docbook.xslt')}" unless="${property::exists('sablonaDocBookPDF')}"/>
-				<property name="use.xep" value="true" unless="${property::exists('use.xep')}"/>				
+				<property name="use.xep" value="true" unless="${property::exists('use.xep')}"/>
 			</properties>
 		</nant>
-		<nant buildfile="${docsrc.dir}/include.build" target="boxConfigDocumentation" >
+		<nant buildfile="${docsrc.dir}/include.build" target="boxConfigDocumentation">
 			<properties>
-				<property name="build.dir" value="${doc.dir}" />
-				<property name="use.xsltproc" value="true" unless="${property::exists('use.xsltproc')}" />
-				<property name="boxConfig" value="${src.dir}/Modules/BoxModulesServices/boxes.xml" />
-				<property name="boxLocalization" value="${src.dir}/Modules/BoxModulesServices/boxesLocalization.en-US.xml" />
-				<property name="use.xep" value="true" unless="${property::exists('use.xep')}"/>	
+				<property name="build.dir" value="${doc.dir}"/>
+				<property name="use.xsltproc" value="true" unless="${property::exists('use.xsltproc')}"/>
+				<property name="boxConfig" value="${src.dir}/Modules/BoxModulesServices/boxes.xml"/>
+				<property name="boxLocalization" value="${src.dir}/Modules/BoxModulesServices/boxesLocalization.en-US.xml"/>
+				<property name="use.xep" value="true" unless="${property::exists('use.xep')}"/>
 			</properties>
 		</nant>
 	</target>
@@ -192,7 +192,12 @@
 				<include name="iceboxnet.exe"/>
 			</fileset>
 		</copy>
-		<property name="input.dir" value="${path::combine(ice.dir,'bin')}"/>
+		<if test="${plat64bit}">
+			<property name="input.dir" value="${path::combine(ice.dir,'bin\x64')}"/>
+		</if>
+		<if test="${not(plat64bit)}">
+			<property name="input.dir" value="${path::combine(ice.dir,'bin')}"/>
+		</if>
 		<copy todir="${frontendbin.dir}">
 			<fileset basedir="${input.dir}">
 				<include name="bzip2.dll"/>
