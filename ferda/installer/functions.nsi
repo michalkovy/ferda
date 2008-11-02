@@ -1,5 +1,7 @@
 !ifndef _AddToPath_nsh
 !define _AddToPath_nsh
+
+!define ALL_USERS
  
 !verbose 3
 !include "WinMessages.NSH"
