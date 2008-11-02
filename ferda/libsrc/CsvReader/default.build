@@ -14,6 +14,11 @@
 				<include name="System.XML.dll" />
 			</references>
 		</csc>
+		<copy todir="${frontendbin.dir}">
+			<fileset basedir="${serverbin.dir}">
+				<include name="CvsReader.*"/>
+			</fileset>
+		</copy>		
 	</target>
 	<target name="clean">
 		<delete failonerror="false">
