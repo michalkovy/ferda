@@ -1,11 +1,11 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>3.0</ProductVersion>
     <ProjectGuid>{e80466c5-5b91-4ee9-8a8d-7351122e8170}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>FerdaInstaller</OutputName>
+    <OutputName Condition=" '$(OutputName)' == '' ">FerdaInstaller</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets</WixTargetsPath>
     <IncludeSearchPaths></IncludeSearchPaths>
