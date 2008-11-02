@@ -221,27 +221,6 @@
 		</copy>
 		<call target="boxconfig" verbose="true"/>
 	</target>
-	<target name="gacrefreshpom">
-		<property name="file.dll" value="${gacAddFile}.dll"/>
-		<property name="file" value="${gacAddFile}"/>
-		<call target="gacrefresh" verbose="true"/>
-	</target>
-	<target name="gacrefresh">
-		<exec program="gacutil" failonerror="false" verbose="false">
-			<arg value="/u"/>
-			<arg value="${file}"/>
-		</exec>
-		<exec program="gacutil" workingdir="${bin.dir}/Server">
-			<arg value="/i"/>
-			<arg value="${file.dll}"/>
-		</exec>
-	</target>
-	<target name="gacuninstall">
-		<exec program="gacutil" failonerror="false" verbose="false">
-			<arg value="/u"/>
-			<arg value="${file}"/>
-		</exec>
-	</target>
 	<target name="config">
 		<mkdir dir="${bin.dir}/db"/>
 		<mkdir dir="${bin.dir}/db/node"/>
@@ -290,42 +269,6 @@
 	</target>
 	<target name="all" description="Vytvoří Ferdu" depends="slice,src,config,doc"/>
 	<target name="install" description="Installs Ferda">
-		<property name="gacAddFile" value="FerdaServerBase"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="FerdaSampleBoxes"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="FerdaMiningProcessor"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="FerdaMath"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="FerdaHelpers"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="FerdaGuhaMiningBoxes"/>
-		<call target="gacrefreshpom" verbose="true"/>		
-		<property name="gacAddFile" value="FerdaDataPreparationBoxes"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="FerdaData"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="FerdaBoxInterfaces"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="FerdaBasicBoxes"/>
-		<call target="gacrefreshpom" verbose="true"/>		
-		<property name="gacAddFile" value="FerdaBase"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="FerdaAttribute"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="CvsReader"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="FerdaProjectBase"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="FerdaNetworkArchiveBase"/>
-		<call target="gacrefreshpom" verbose="true"/>
-		<property name="gacAddFile" value="FerdaNetworkArchive"/>
-		<call target="gacrefreshpom" verbose="true"/>
-    <!--
-		<property name="gacAddFile" value="FerdaModulesManager"/>
-		<call target="gacrefreshpom" verbose="true"/>
-    -->
 	</target>
 	<target name="gridinstall" description="Installs Ferda For More Nodes">
 		<exec program="icegridnode">
@@ -354,42 +297,6 @@
 	</target>
 	<target name="fullinstall" depends="src,config,install"/>
 	<target name="uninstall" description="Uninstalls Ferda">
-		<property name="file" value="FerdaServerBase"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="FerdaSampleBoxes"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="FerdaMiningProcessor"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="FerdaMath"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="FerdaHelpers"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="FerdaGuhaMiningBoxes"/>
-		<call target="gacuninstall" verbose="true"/>		
-		<property name="file" value="FerdaDataPreparationBoxes"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="FerdaData"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="FerdaBoxInterfaces"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="FerdaBasicBoxes"/>
-		<call target="gacuninstall" verbose="true"/>		
-		<property name="file" value="FerdaBase"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="FerdaAttribute"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="CvsReader"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="FerdaProjectBase"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="FerdaNetworkArchiveBase"/>
-		<call target="gacuninstall" verbose="true"/>
-		<property name="file" value="FerdaNetworkArchive"/>
-		<call target="gacuninstall" verbose="true"/>
-    <!--
-		<property name="file" value="FerdaModulesManager"/>
-		<call target="gacuninstall" verbose="true"/>
-    -->
 	</target>
 	<target name="griduninstall" description="Uninstalls Ferda">
 		<exec program="icegridnode" failonerror="false">

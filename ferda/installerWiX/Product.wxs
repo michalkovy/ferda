@@ -17,13 +17,17 @@
 						</Component>
 						<Directory Id="node" Name="node">
 							<Component Id="Component_1" Guid="{7580711D-056F-493D-A197-9F3D985EC3C4}" KeyPath="yes">
-								<CreateFolder/>
+                <CreateFolder>
+                  <Permission User="Everyone" GenericAll="yes" />
+                </CreateFolder>  
 							</Component>
 						</Directory>
 						<Directory Id="registry" Name="registry">
 							<Component Id="Component_2" Guid="{E157A877-2943-4E81-B38D-2C227D6D2D44}" KeyPath="yes">
-								<CreateFolder/>
-							</Component>
+                <CreateFolder>
+                  <Permission User="Everyone" GenericAll="yes" />
+                </CreateFolder>
+              </Component>
 						</Directory>
 					</Directory>
 					<Directory Id="FrontEnd" Name="FrontEnd">

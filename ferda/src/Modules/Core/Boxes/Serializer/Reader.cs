@@ -68,7 +68,7 @@ namespace Ferda.Modules.Boxes.Serializer
                 UnreferencedObjectEventHandler(serializer_UnreferencedObject);
 
             // A FileStream is needed to read the XML document.
-            FileStream fs = new FileStream(fileName, FileMode.Open);
+            FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             // Use the Deserialize method to restore the object's state with
             // data from the XML document.
             object result = serializer.Deserialize(fs);
