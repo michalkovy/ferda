@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <project name="Ferda" default="all" basedir=".">
 	<description>projekt Ferda</description>
 	<property name="default.build" value="default.build"/>
@@ -59,6 +59,8 @@
 				<include name="${bin.dir}/FrontEnd/**"/>
 				<include name="${bin.dir}/Server/**"/>
 				<include name="${bin.dir}/db/**"/>
+				<include name="${installerWiX.dir}/bin/**" />
+				<include name="${installerWiX.dir}/obj/**" />
 			</fileset>
 		</delete>
 	</target>
@@ -225,7 +227,7 @@
 				<include name="Glacier2.dll"/>
 				<include name="IceBox.dll"/>
 				<include name="iceboxnet.exe"/>
-                <include name="System.Data.SQLite.dll"/>
+				<include name="System.Data.SQLite.dll"/>
 				<include name="System.Data.SQLite.lib"/>
 				<include name="Ice.jar"/>
 				<include name="OWL_API/*"/>
