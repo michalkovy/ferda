@@ -436,18 +436,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             resultInfo = SerializableResultInfo.Serialize(miningProcessor.ResultInfo);
             string result = DecisionTreeResult.Serialize(miningProcessor.Result);
-            //if (result.Length > 1023000)
-            //{
-            //    throw Modules.Exceptions.BoxRuntimeError(null, "Mining processor - ETree task",
-            //        "The length of Ice message exceeded. Please try to lower the hypotheses count or to set the quantifiers more strictly.");
-            //}
-            //return result;
-
-            using (System.IO.StreamWriter sw = new System.IO.StreamWriter("C:/result.xml"))
+            if (result.Length > 1023000)
             {
-                sw.Write(result);
+                throw Modules.Exceptions.BoxRuntimeError(null, "Mining processor - ETree task",
+                    "The length of Ice message exceeded. Please try to lower the hypotheses count or to set the quantifiers more strictly.");
             }
-            return "C:/result.xml";
+            return result;
         }
 
         #endregion

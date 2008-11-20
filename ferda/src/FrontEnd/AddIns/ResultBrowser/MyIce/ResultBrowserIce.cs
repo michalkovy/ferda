@@ -158,14 +158,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             //getting the serialized task result (in order to avoid tasks with no results)
             string statistics = String.Empty;
-            //string serializedResult = taskProxy1.GetResult(out statistics);
-            string path = taskProxy1.GetResult(out statistics);
-            string serializedResult;
-
-            using (System.IO.StreamReader sr = new System.IO.StreamReader(path))
-            {
-                serializedResult = sr.ReadToEnd();
-            }
+            string serializedResult = taskProxy1.GetResult(out statistics);
 
             if (string.IsNullOrEmpty(serializedResult))
             {
