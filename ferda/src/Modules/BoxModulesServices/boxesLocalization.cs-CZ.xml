@@ -11349,4 +11349,22 @@
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
+	<BoxLocalization>
+  <Identifier>SemanticWeb.PMMLBuilder</Identifier>
+  <Label>Sestavení PMML</Label>
+  <Hint>Sestaví PMML na základě výsledku úlohy</Hint>
+  <Categories>
+    <Category>
+      <Name>SemanticWeb</Name>
+     <Label>Sémantický web</Label>
+    </Category>
+  </Categories>
+  <Sockets>
+    <Socket>
+      <Name>IntSocket</Name>
+      <Label>Sample socket</Label>
+      <Hint>An integer socket</Hint>
+    </Socket>
+  </Sockets>
+</BoxLocalization>
 </BoxesLocalization>

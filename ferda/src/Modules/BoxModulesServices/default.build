@@ -3,7 +3,7 @@
 <project name="Ferda Modules" default="build" basedir=".">
 	<description>Ferda Modules</description>
 	<target name="build" description="Build Module Services" 
-         depends="FerdaSampleBoxes,FerdaDataPreparationBoxes,FerdaBasicBoxes,FerdaLanguageBoxes,FerdaGuhaMiningBoxes,FerdaWizards,FerdaOntologyRelatedBoxes">
+         depends="FerdaSampleBoxes,FerdaDataPreparationBoxes,FerdaBasicBoxes,FerdaLanguageBoxes,FerdaGuhaMiningBoxes,FerdaWizards,FerdaOntologyRelatedBoxes,FerdaSemanticWebBoxes">
 		<mkdir dir="${build.dir}/BoxModulesServices"/>
 		<copy todir="${build.dir}/BoxModulesServices">
 			<fileset>
@@ -158,33 +158,57 @@
     </csc>
   </target>
   <target name="FerdaOntologyRelatedBoxes" depends="FerdaDataPreparationBoxes">
-  <csc target="library" 
-       output="${path::combine(build.dir,'FerdaOntologyRelatedBoxes.dll')}" 
-       doc="${path::combine(build.dir,'FerdaOntologyRelatedBoxes.xml')}" 
-       debug="${debug}" optimize="${optimize}"> keyfile="FerdaOntologyRelatedBoxes.snk"
-    <nowarn>
-      <warning number="1591"/>
-    </nowarn>
-    <sources>
-      <include name="OntologyRelated/**.cs"/>
-      <exclude name="OntologyRelated/**/generated/**.cs"/>
-    </sources>
-    <references>
-      <include name="${path::combine(build.dir,'FerdaDataPreparationBoxes.dll')}"/>
-      <include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+	  <csc target="library" 
+		   output="${path::combine(build.dir,'FerdaOntologyRelatedBoxes.dll')}" 
+		   doc="${path::combine(build.dir,'FerdaOntologyRelatedBoxes.xml')}" 
+		   debug="${debug}" optimize="${optimize}"> keyfile="FerdaOntologyRelatedBoxes.snk"
+		<nowarn>
+		  <warning number="1591"/>
+		</nowarn>
+		<sources>
+		  <include name="OntologyRelated/**.cs"/>
+		  <exclude name="OntologyRelated/**/generated/**.cs"/>
+		</sources>
+		<references>
+		  <include name="${path::combine(build.dir,'FerdaDataPreparationBoxes.dll')}"/>
+		  <include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
 			<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 			<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 			<include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
 			<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
-      <include name="${path::combine(lib.dir,'Ice.dll')}"/>
-      <include name="${path::combine(lib.dir,'IceBox.dll')}"/>
-      <include name="System.dll"/>
-      <include name="System.Data.dll"/>
-      <include name="System.Xml.dll"/>
-      <include name="System.Windows.Forms.dll"/>
-    </references>
-  </csc>
+		  <include name="${path::combine(lib.dir,'Ice.dll')}"/>
+		  <include name="${path::combine(lib.dir,'IceBox.dll')}"/>
+		  <include name="System.dll"/>
+		  <include name="System.Data.dll"/>
+		  <include name="System.Xml.dll"/>
+		  <include name="System.Windows.Forms.dll"/>
+		</references>
+	  </csc>
   </target>
+	<target name="FerdaSemanticWebBoxes">
+	  <csc target="library" 
+		   output="${path::combine(build.dir,'FerdaSemanticWebBoxes.dll')}" 
+		   doc="${path::combine(build.dir,'FerdaSemanticWebBoxes.xml')}" 
+		   debug="${debug}" optimize="${optimize}">
+		<nowarn>
+		  <warning number="1591"/>
+		</nowarn>
+		<sources>
+		  <include name="SemanticWeb/**.cs"/>
+		  <exclude name="SemanticWeb/**/generated/**.cs"/>
+		</sources>
+		<references>
+		  <include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+		  <include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+		  <include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
+		  <include name="${path::combine(lib.dir,'Ice.dll')}"/>
+		  <include name="${path::combine(lib.dir,'IceBox.dll')}"/>
+		  <include name="System.dll"/>
+		  <include name="System.Data.dll"/>
+		  <include name="System.Xml.dll"/>
+		</references>
+	  </csc>
+	</target>
 	<target name="clean">
 		<!-- Nothing to do ... build directory is deleted -->
 	</target>

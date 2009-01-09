@@ -23,7 +23,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated
         /// <summary>
         /// Says that this service has property boxes
         /// </summary>
-        
+            
         //část kódu z jiného Service.cs - je to relevantní? nebo smazat?
         //protected override bool havePropertyBoxes
         //{

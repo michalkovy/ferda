@@ -20588,4 +20588,23 @@
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</Box>
+	<Box>
+		<Identifier>SemanticWeb.PMMLBuilder</Identifier>
+		<IconPath>boxIcon.ico</IconPath>
+		<DesignPath>boxDesign.svg</DesignPath>
+		<Categories>
+			<string>SemanticWeb</string>
+		</Categories>
+	  <Sockets>
+		<Socket>
+		<Name>IntSocket</Name>
+		<SocketTypes>
+		<BoxType>
+		  <FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
+		</BoxType>
+		</SocketTypes>
+		  <MoreThanOne>false</MoreThanOne>
+		</Socket>
+	  </Sockets>		
+	</Box>
 </Boxes>

@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample2008", "Sample\Sample
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wizards2008", "Wizards\Wizards2008.csproj", "{2EB18AFB-16F5-4E02-AD18-D436DE3C2D00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticWeb2008", "SemanticWeb\SemanticWeb2008.csproj", "{2BB6FBC2-F098-4714-9390-F9FF3743450F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{2EB18AFB-16F5-4E02-AD18-D436DE3C2D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EB18AFB-16F5-4E02-AD18-D436DE3C2D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EB18AFB-16F5-4E02-AD18-D436DE3C2D00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BB6FBC2-F098-4714-9390-F9FF3743450F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BB6FBC2-F098-4714-9390-F9FF3743450F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BB6FBC2-F098-4714-9390-F9FF3743450F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BB6FBC2-F098-4714-9390-F9FF3743450F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
