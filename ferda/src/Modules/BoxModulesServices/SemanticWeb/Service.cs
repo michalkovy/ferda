@@ -1,8 +1,8 @@
-// Sample.cs - Sample IceBox service
+﻿// Sample.cs - Sample IceBox service
 //
-// Author: Tomáš Kuchař <tomas.kuchar@gmail.com>
+// Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2005 Tomáš Kuchař
+// Copyright (c) 2009 Martin Ralbovský
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,23 +18,21 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+using Ice;
 
-using Ferda.Modules.Boxes.Sample.BodyMassIndex;
-
-namespace Ferda.Modules.Boxes.Sample
+namespace Ferda.Modules.Boxes.SemanticWeb
 {
     /// <summary>
-    /// Sample IceBox service with BodyMassIndex box 
+    /// Sample IceBox service
     /// </summary>
     public class Service : FerdaServiceI
     {
-        /// <summary>
-        /// Registers box to ice object adapter
-        /// </summary>
-        protected override void registerBoxes()
-        {
-            registerBox(BodyMassIndexBoxInfo.typeIdentifier, new BodyMassIndexBoxInfo());
-            // if more boxes should be provided by this service, register them here ...
-        }
+      /// <summary>
+      /// Registers box to ice object adapter
+      /// </summary>
+      protected override void registerBoxes()
+      {
+          registerBox(PMMLBuilder.BoxInfo.typeIdentifier, new PMMLBuilder.BoxInfo());
+      }
     }
 }

@@ -50,6 +50,10 @@
 			<object identity="Wizards.WizardAction" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="Wizards.WizardGenerated" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
+		<replica-group id="FerdaSemanticWebBoxesReplicaAdapter">
+			<load-balancing type="round-robin" n-replicas="1"/>
+			<object identity="SemanticWeb.PMMLBuilder" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+		</replica-group>
 		<replica-group id="FerdaGuhaMiningBoxesReplicaAdapter">
 			<load-balancing type="round-robin" n-replicas="1"/>
 			<object identity="GuhaMining.FixedAtom" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
@@ -146,6 +150,7 @@
 				<service-instance template="FerdaServiceTemplate" name="FerdaNetworkArchive" entry="FerdaNetworkArchive.dll:Ferda.NetworkArchive.Service" endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate" name="FerdaWizards" entry="FerdaWizards.dll:Ferda.Modules.Boxes.Wizards.Service" endpoints="${endpoints}"/>
 				<service-instance template="FerdaServiceTemplate" name="FerdaOntologyRelatedBoxes" entry="FerdaOntologyRelatedBoxes.dll:Ferda.Modules.Boxes.OntologyRelated.Service" endpoints="${endpoints}"/>
+				<service-instance template="FerdaServiceTemplate" name="FerdaSemanticWebBoxes" entry="FerdaSemanticWebBoxes.dll:Ferda.Modules.Boxes.SemanticWeb.Service" endpoints="${endpoints}"/>
 				<property name="Ice.MessageSizeMax" value="131072"/>
 				<property name="Ice.ThreadPool.Server.Size" value="10"/>
 				<property name="Ice.ThreadPool.Server.SizeMax" value="1000"/>
@@ -162,20 +167,18 @@
 				<property name="IceBox.InheritProperties=1" value="1"/>
 			</icebox>
 		</server-template>
-		
 		<replica-group id="FerdaOntologyRelatedReplicaAdapter">
 			<object identity="Ferda.OntologyRelated.OWLParser" type="::Ferda::OntologyRelated::OWLParser"/>
 		</replica-group>
-		
-    <server-template id="FerdaServerTemplateJava">
+		<server-template id="FerdaServerTemplateJava">
 			<parameter name="index"/>
 			<parameter name="endpoints" default="tcp:udp"/>
 			<parameter name="pwd" default="${application.distrib}"/>
-    		<parameter name="classpath" />
+			<parameter name="classpath"/>
 			<icebox id="${index}" exe="java" activation="on-demand" pwd="${pwd}">
-			  <env>CLASSPATH=${classpath}</env>
-        <option>IceBox.Server</option>
-        <service-instance template="FerdaServiceTemplate" name="FerdaOntologyRelated" entry="Ferda.OntologyRelated.Service" endpoints="${endpoints}"/>
+				<env>CLASSPATH=${classpath}</env>
+				<option>IceBox.Server</option>
+				<service-instance template="FerdaServiceTemplate" name="FerdaOntologyRelated" entry="Ferda.OntologyRelated.Service" endpoints="${endpoints}"/>
 				<property name="Ice.MessageSizeMax" value="131072"/>
 				<property name="Ice.ThreadPool.Server.Size" value="10"/>
 				<property name="Ice.ThreadPool.Server.SizeMax" value="1000"/>
@@ -183,11 +186,9 @@
 				<!--<property name="IceBox.UseSharedCommunicator.FerdaOntologyRelated" value="0"/>-->
 			</icebox>
 		</server-template>
-		
 		<node name="localhost">
 			<server-instance template="FerdaServerTemplate" index="0" pwd="..\Server" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
 			<server-instance template="FerdaServerTemplateJava" index="1" pwd="..\Server\OWLParser" classpath="..\Server\OWLParser;..\Server\Ice.jar;..\Server\OWL_API\owlapi-api.jar;..\Server\OWL_API\owlapi-apibinding.jar;..\Server\OWL_API\owlapi-oboparser.jar;..\Server\OWL_API\owlapi-krssparser.jar;..\Server\OWL_API\owlapi-functionalparser.jar;..\Server\OWL_API\owlapi-owlxmlparser.jar;..\Server\OWL_API\owlapi-rdfxmlparser.jar;..\Server\OWL_API\owlapi-impl.jar;..\Server\OWL_API\owlapi-rdfxmlrenderer.jar;..\Server\OWL_API\owlapi-owlxmlrenderer.jar;..\Server\OWL_API\owlapi-functionalrenderer.jar;..\Server\OWL_API\owlapi-rdfapi.jar;%CLASSPATH%" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
 		</node>
-		
 	</application>
 </icegrid>
