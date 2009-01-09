@@ -447,7 +447,7 @@ module Ferda
     };
   };
 };
-#endif;
+#endif
       </programlisting>
 			<para>
         První zakomentovaná část kódu popisuje slice (který má v podstatě syntaxi
