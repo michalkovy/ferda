@@ -35,6 +35,13 @@
 		<date>2007-07-23</date>
 		<revremark>Přidal jsem do tvorby knihovny použití sdíleného komunikátoru</revremark>
 		</revision>
+		<revision>
+			<revnumber>1.2</revnumber>
+			<date>2009-01-09</date>
+			<revremark>
+				Aktualizace nových verzí produktů
+			<revremark>
+		</revision>
     </revhistory>
     -->
 	</articleinfo>
@@ -61,7 +68,7 @@
 			<para>
         Instalační balíček Ice je volně ke stažení na adrese 
         <ulink url="http://www.zeroc.com">http://www.zeroc.com</ulink>.
-        Ferda používá verzi 3.1.1.
+        Ferda používá verzi 3.3.0.
       </para>
 		</section>
 		<section>
@@ -74,7 +81,7 @@
       </para>
 		</section>
 		<section>
-			<title>.NET 2.0 a Visual Studio</title>
+			<title>.NET a Visual Studio</title>
 			<para>
         Ačkoli middleware Ice podporuje řadu programovacích jazyků, tvůrci Ferdy
         si vybrali a doporučují jazyk C#. V tomto dokumentu budeme dále
@@ -83,14 +90,14 @@
         implementace Mono.
       </para>
 			<para>
-        Ferda používá .NET Framework verze 2. Můžete si ji stáhnout i s SDK na adrese
+        Ferda používá .NET Framework verze 2 (a vyšší). Můžete si ji stáhnout i s SDK na adrese
         <ulink url="http://www.microsoft.com/downloads">www.microsoft.com/downloads</ulink>.
         Doporučujeme ji však používat i s vývojovým softwarem Microsoft Visual Studio
-        2005. Tento software je však komerční.
+        2005 či 2008. Tento software je však komerční.
       </para>
 			<para>
         Alternativou ke komerčnímu Visual Studiu je volně dostupný Visual C# Express 
-        Edition 2005 taktéž od Microsoftu, ke stažení na 
+        Edition 2005 (2008) taktéž od Microsoftu, ke stažení na 
         <ulink url="http://msdn.microsoft.com/vstudio/express/visualcsharp/">
           zde
         </ulink>. Dále je k dispozici open source nástroj SharpDevelop na adrese
@@ -101,7 +108,7 @@
           systému Linux. 
           Pro tuto platformu však v součastné době nejsou doimplementovány části Windows.Form,
           tudíž uživatelské prostředí pod Monem nebude běhat. Doporučujeme proto 
-          .NET verzi 2.
+          .NET verzi 2 a vyšší.
       </para>
 		</section>
 	</section>
