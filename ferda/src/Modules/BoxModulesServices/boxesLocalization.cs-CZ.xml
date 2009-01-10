@@ -11359,11 +11359,23 @@
      <Label>Sémantický web</Label>
     </Category>
   </Categories>
+  <Actions>
+			<Action>
+				<Name>SavePMMLToFile</Name>
+				<Label>Uložit PMML do souboru</Label>
+				<Hint>Uloží PMML do souboru uvedeného ve vlastnosti X</Hint>
+			</Action>
+		</Actions>
   <Sockets>
+	<Socket>
+		<Name>PMMLFile</Name>
+		<Label>PMML soubor</Label>
+		<Hint>Umístění PMML souboru</Hint>
+	</Socket>
     <Socket>
-      <Name>IntSocket</Name>
-      <Label>Sample socket</Label>
-      <Hint>An integer socket</Hint>
+      <Name>4FTTask</Name>
+      <Label>4FT úloha</Label>
+      <Hint>4FT úloha ze které se vytvoří PMML</Hint>
     </Socket>
   </Sockets>
 </BoxLocalization>

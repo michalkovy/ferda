@@ -22,6 +22,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ferda.Modules.Boxes;
+using Ferda.Guha.MiningProcessor;
+using Ferda.Guha.MiningProcessor.Results;
 
 namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 {
@@ -99,6 +101,68 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
         {
             return null;
+        }
+
+        /// <summary>
+        /// Validates the box
+        /// </summary>
+        /// <param name="boxModule">box instance to be validated</param>
+        public override void Validate(BoxModuleI boxModule)
+        {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+
+            //the PMML file should not be emtpy string
+            if (Func.PMMLFile == string.Empty)
+            {
+                BoxRuntimeError error = new BoxRuntimeError(null,
+                    "The PMML file location should not be an empty string");
+                throw error;
+            }
+
+            //the box must be connected to a 4FT task and the task must have generated hypotheses
+            Result result = Func.GetResult();
+            if (result == null)
+            {
+                BoxRuntimeError error = new BoxRuntimeError(null,
+    "A task needs to be run in order to create PMML.");
+                throw error;
+            }
+
+            if (result.TaskTypeEnum != TaskTypeEnum.FourFold)
+            {
+                BoxRuntimeError error = new BoxRuntimeError(null,
+    "Currently, only the results of 4FT tasks are supported");
+                throw error;
+            }
+
+
+        }
+
+        /// <summary>
+        /// Executes (runs) action specified by <c>actionName</c>.
+        /// </summary>
+        /// <param name="actionName">Name of the action.</param>
+        /// <param name="boxModule">The Box module.</param>
+        /// <exception cref="T:Ferda.Modules.NameNotExistError">
+        /// Thrown if action named <c>actionName</c> doesn`t exist.
+        /// </exception>
+        /// <exception cref="T:Ferda.Modules.BoxRuntimeError">
+        /// Thrown if any runtime error occured while executing the action.
+        /// </exception>
+        public override void RunAction(string actionName, BoxModuleI boxModule)
+        {
+            Validate(boxModule);
+
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+
+            switch (actionName)
+            {
+                case "SavePMMLToFile":
+                    Func.SavePMMLToFile();
+                    break;
+                default:
+                    throw Exceptions.NameNotExistError(null, actionName);
+            }
         }
 
         #region Type Identifier
