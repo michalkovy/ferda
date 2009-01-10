@@ -11384,11 +11384,23 @@
 		 <Label>Semantic Web</Label>
 		</Category>
 	  </Categories>
+  <Actions>
+			<Action>
+				<Name>SavePMMLToFile</Name>
+				<Label>Saves PMML to File</Label>
+				<Hint>Saves PMML to file specified in property X</Hint>
+			</Action>
+		</Actions>
 	  <Sockets>
 		<Socket>
-		  <Name>IntSocket</Name>
-		  <Label>Sample socket</Label>
-		  <Hint>An integer socket</Hint>
+			<Name>PMMLFile</Name>
+			<Label>PMML file</Label>
+			<Hint>PMML file location</Hint>
+		</Socket>
+		<Socket>
+      <Name>4FTTask</Name>
+      <Label>4FT Task</Label>
+      <Hint>4FT task from which PMML is created</Hint>
 		</Socket>
 	  </Sockets>
 	</BoxLocalization>
