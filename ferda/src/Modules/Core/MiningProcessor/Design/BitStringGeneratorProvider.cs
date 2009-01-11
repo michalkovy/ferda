@@ -42,10 +42,21 @@ namespace Ferda.Guha.MiningProcessor.Design
     interface BitStringGeneratorProvider
     {
         /// <summary>
-        /// Retunrs a bit string generator for the given attribute
+        /// Returns a bit string generator for the given attribute
         /// </summary>
-        /// <param name="attributeId">Identification of the attribute</param>
+        /// <param name="attributeId">
+        /// NOTE - when working with Boolean attributes, the parameter
+        /// refers to the GUID of the 
+        /// </param>
         /// <returns>Bit string generator</returns>
         public BitStringGenerator GetBitStringGenerator(Guid attributeId);
+
+        /// <summary>
+        /// Returns all the bit string generators of this provider. It can be
+        /// itself for attributes or atom settings or all connected generators
+        /// for tasks, conjunctions or disjunctions
+        /// </summary>
+        /// <returns></returns>
+        public BitStringGenerator[] GetBitStringGenerators();
     }
 }

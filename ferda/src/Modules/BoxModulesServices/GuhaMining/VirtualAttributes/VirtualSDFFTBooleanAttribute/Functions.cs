@@ -310,6 +310,19 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         }
 
         /// <summary>
+        /// Returns the proxy of all the bit string generators of this box. In case
+        /// of Virtual attribute, it is just itself. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Proxy of all the bit string generators</returns>
+        public override BitStringGeneratorPrx[] GetBitStringGenerators(Current current__)
+        {
+            BitStringGeneratorPrx[] result = new BitStringGeneratorPrx[1];
+            result[0] = BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions());
+            return result;
+        }
+
+        /// <summary>
         /// Gets entity setting
         /// </summary>
         /// <param name="fallOnError">Whether to fall on error</param>

@@ -291,6 +291,18 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         }
 
         /// <summary>
+        /// Returns the proxies of all the bit string generators of this box. In case
+        /// of GUHA task, it the generators of all the Boolean and categorial attributes
+        /// together. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Proxy of all the bit string generators</returns>
+        public override BitStringGeneratorPrx[] GetBitStringGenerators(Current current__)
+        {
+            return Common.GetBitStringGenerators(_boxModule, this);
+        }
+
+        /// <summary>
         /// Gets the ID of the table that is beeing mined for a box module
         /// </summary>
         /// <param name="current__">ICE stuff</param>

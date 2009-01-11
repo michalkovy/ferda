@@ -696,6 +696,54 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         }
 
         /// <summary>
+        /// Returns all the bit string generators of the given task box module
+        /// </summary>
+        /// <param name="boxModule">Task box module</param>
+        /// <param name="taskFunctions">Information about the task</param>
+        /// <returns>All bit string generators of given task box module</returns>
+        public static BitStringGeneratorPrx[] GetBitStringGenerators(
+            BoxModuleI boxModule, ITask taskFunctions)
+        {
+            List<BitStringGeneratorPrx> result = new List<BitStringGeneratorPrx>();
+            BooleanAttributeSettingFunctionsPrx prx;
+            string[] socketsNames;
+
+            //Boolean attributes
+            socketsNames = taskFunctions.GetBooleanAttributesSocketNames();
+            if (socketsNames != null && socketsNames.Length > 0)
+            {
+                foreach (string s in socketsNames)
+                {
+                    if (String.IsNullOrEmpty(s))
+                        continue;
+
+                    prx = GetBooleanAttributePrx(boxModule, s, false);
+
+                    if (prx == null)
+                        continue;
+
+                    result.AddRange(prx.GetBitStringGenerators());
+                }
+            }
+
+            //categorial attributes
+            socketsNames = taskFunctions.GetBooleanAttributesSocketNames();
+            if (socketsNames != null && socketsNames.Length > 0)
+            {
+                foreach (string s in socketsNames)
+                {
+                    if (String.IsNullOrEmpty(s))
+                        continue;
+
+                    List<BitStringGeneratorPrx> prxs = GetCategorialAttributePrxs(boxModule, s, false, true);
+                    result.AddRange(prxs);
+                }
+            }
+
+            return result.ToArray();
+        }
+
+        /// <summary>
         /// Gets the bit string generator for a given attribute.
         /// see <see cref="T:Ferda.Guha.MiningProcessor.BitStringGenerator"/>
         /// </summary>
@@ -750,6 +798,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                 }
             return null;
         }
+
         /// <summary>
         /// Returns pairs of attributes and their identification for a given task
         /// box module. 

@@ -51,7 +51,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// <summary>
         /// The PMML string
         /// </summary>
-        private string PMML = null;
+        protected string PMML = null;
 
         #endregion
 
