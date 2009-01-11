@@ -109,6 +109,7 @@ module Ferda {
 					long GetMaxBitStringCount()
 						throws Ferda::Modules::BoxRuntimeError;						
 				};
+				sequence<BitStringGenerator*> BitStringGeneratorSeq;
 
 				// BOOLEAN ATTRIBUTE SETTING ENTITIES
 
@@ -197,6 +198,8 @@ module Ferda {
 				interface BitStringGeneratorProvider
 				{
 					idempotent BitStringGenerator* GetBitStringGenerator(Ferda::Modules::GuidStruct attributeId)
+						throws Ferda::Modules::BoxRuntimeError;
+					idempotent BitStringGeneratorSeq GetBitStringGenerators()
 						throws Ferda::Modules::BoxRuntimeError;
 				};
 
@@ -349,7 +352,7 @@ module Ferda {
 				
 				interface ETreeClassifierFunctions
 				{
-				  nonmutating string HelloWorld();
+				  idempotent string HelloWorld();
         };
 		};
 	};

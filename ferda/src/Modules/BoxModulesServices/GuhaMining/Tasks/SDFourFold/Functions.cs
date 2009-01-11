@@ -93,6 +93,18 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDFourFold
         }
 
         /// <summary>
+        /// Returns the proxies of all the bit string generators of this box. In case
+        /// of GUHA task, it the generators of all the Boolean and categorial attributes
+        /// together. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Proxy of all the bit string generators</returns>
+        public override BitStringGeneratorPrx[] GetBitStringGenerators(Current current__)
+        {
+            return Common.GetBitStringGenerators(_boxModule, this);
+        }
+
+        /// <summary>
         /// Returns the proxies of quantifiers connected to the box. Every quantifier in
         /// Ferda implements the same interface and thus one function can retrieve proxies
         /// for quantifiers for all task types.

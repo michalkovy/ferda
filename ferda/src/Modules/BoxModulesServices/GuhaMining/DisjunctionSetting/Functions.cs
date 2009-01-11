@@ -234,6 +234,25 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
         }
 
         /// <summary>
+        /// Returns the proxy of all the bit string generators of this box. In case
+        /// of Disjunction, it the generators of all the operands together. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Proxy of all the bit string generators</returns>
+        public override BitStringGeneratorPrx[] GetBitStringGenerators(Current current__)
+        {
+            List<BitStringGeneratorPrx> result = new List<BitStringGeneratorPrx>();
+            List<BooleanAttributeSettingFunctionsPrx> subFormulas =
+                GetBooleanAttributeSettingFunctionsPrxs(true);
+            foreach (BooleanAttributeSettingFunctionsPrx prx in subFormulas)
+            {
+                result.AddRange(prx.GetBitStringGenerators());
+            }
+
+            return result.ToArray();
+        }
+
+        /// <summary>
         /// Gets the ID of the table that is beeing mined.
         /// </summary>
         /// <param name="current__">ICE stuff</param>

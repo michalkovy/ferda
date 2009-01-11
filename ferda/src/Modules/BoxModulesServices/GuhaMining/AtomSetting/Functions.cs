@@ -329,6 +329,19 @@ namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
         }
 
         /// <summary>
+        /// Returns the proxy of all the bit string generators of this box. In case
+        /// of Atom setting, it is just itself. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Proxy of all the bit string generators</returns>
+        public override BitStringGeneratorPrx[] GetBitStringGenerators(Current current__)
+        {
+            BitStringGeneratorPrx[] result = new BitStringGeneratorPrx[1];
+            result[0] = GetBitStringGeneratorPrx(true);
+            return result;
+        }
+
+        /// <summary>
         /// Gets the ID of the table that is beeing mined.
         /// </summary>
         /// <param name="current__">ICE stuff</param>

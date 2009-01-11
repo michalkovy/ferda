@@ -234,6 +234,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
         }
 
         /// <summary>
+        /// Returns the proxy of all the bit string generators of this box. In case
+        /// of Sign, it is the generators from the connected predecessor. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Proxy of all the bit string generators</returns>
+        public override BitStringGeneratorPrx[] GetBitStringGenerators(Current current__)
+        {
+            return GetBitStringGeneratorPrx(true).GetBitStringGenerators();
+        }
+
+        /// <summary>
         /// Gets the ID of the table that is beeing mined.
         /// </summary>
         /// <param name="current__">ICE stuff</param>

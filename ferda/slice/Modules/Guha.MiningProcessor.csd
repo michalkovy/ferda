@@ -133,6 +133,7 @@
       <Name>BitStringGeneratorProvider</Name>
       <Access>Public</Access>
       <Member type="Method">BitStringGenerator GetBitSTringGenerator()</Member>
+      <Member type="Method">BitStringGenerator[] GetBitStringGenerators()</Member>
     </Entity>
     <Entity type="Interface">
       <Name>BooleanAttributeSettingFunctions</Name>
@@ -439,7 +440,7 @@
     </Shape>
     <Shape>
       <Location left="323" top="698" />
-      <Size width="268" height="90" />
+      <Size width="268" height="99" />
     </Shape>
     <Shape>
       <Location left="751" top="864" />
