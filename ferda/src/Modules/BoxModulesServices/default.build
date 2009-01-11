@@ -185,7 +185,7 @@
 		</references>
 	  </csc>
   </target>
-	<target name="FerdaSemanticWebBoxes">
+	<target name="FerdaSemanticWebBoxes" depends="FerdaGuhaMiningBoxes">
 	  <csc target="library" 
 		   output="${path::combine(build.dir,'FerdaSemanticWebBoxes.dll')}" 
 		   doc="${path::combine(build.dir,'FerdaSemanticWebBoxes.xml')}" 

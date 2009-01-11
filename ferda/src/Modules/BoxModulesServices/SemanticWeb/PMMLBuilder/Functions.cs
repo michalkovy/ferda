@@ -27,6 +27,7 @@ using System.Reflection;
 using System.Xml;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.Results;
+using Ferda.Guha.Data;
 
 namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 {
@@ -298,21 +299,80 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 
             xmlWriter.WriteStartElement("DataDictionary");
 
-            //Number of fileds attribute
-            GuidAttributeNamePair[] attrNames = taskPrx.GetAttributeNames();
-            xmlWriter.WriteAttributeString("numberOfFields", attrNames.Length.ToString());
+            //Number of fields attribute
+            BitStringGeneratorPrx[] bsg = taskPrx.GetBitStringGenerators();
+            xmlWriter.WriteAttributeString("numberOfFields", bsg.Length.ToString());
 
-            foreach (GuidAttributeNamePair attribute in attrNames)
+            /// !!! Tady bude mozna jeste casem nutne zavest kontrolu disjunktnosti proxin,
+            /// ale zatim bych to neresil
+
+            foreach (BitStringGeneratorPrx generator in bsg)
             {
                 xmlWriter.WriteStartElement("DataField");
-                xmlWriter.WriteAttributeString("name", attribute.attributeName);
-
-                BitStringGeneratorPrx bsg = taskPrx.GetBitStringGenerator(attribute.id);
+                xmlWriter.WriteAttributeString("name",GetAttributeName(generator));
+                xmlWriter.WriteAttributeString("optype",GetPMMLOptype(generator));
                 xmlWriter.WriteEndElement();//DataField
             }
 
             xmlWriter.WriteEndElement(); //DataDictionary
             return xmlWriter;
+        }
+
+        /// <summary>
+        /// Returns name of an attribute depending on its GUID
+        /// </summary>
+        /// <param name="prx">Bit string generator proxy (attribute name
+        /// provider)</param>
+        /// <returns>Name of the attribute</returns>
+        protected string GetAttributeName(BitStringGeneratorPrx prx)
+        {
+            GuidAttributeNamePair[] listOfPairs = prx.GetAttributeNames();
+            foreach (GuidAttributeNamePair pair in listOfPairs)
+            {
+                if (pair.id == prx.GetAttributeId())
+                {
+                    return pair.attributeName;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Returns a PMML OPTYPE (type of the data) from Ferda's
+        /// cardinality information
+        /// </summary>
+        /// <param name="prx">Bit string generator proxy</param>
+        /// <returns>PMML type of the data</returns>
+        protected string GetPMMLOptype(BitStringGeneratorPrx prx)
+        {
+            CardinalityEnum card = prx.GetAttributeCardinality();
+            switch (card)
+            {
+                case CardinalityEnum.Cardinal:
+                    return "continuous";
+                case CardinalityEnum.Nominal:
+                    return "categorical";
+                case CardinalityEnum.Ordinal:
+                    return "ordinal";
+                case CardinalityEnum.OrdinalCyclic:
+                    return "ordinal";
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Retrieves column proxy from the BitStringGeneratorPrx in
+        /// parameter.
+        /// NOTE that this method works well only for the Boolean
+        /// attribute bit string generators (atom, fixed set).
+        /// </summary>
+        /// <param name="prx">BitStringGenerator</param>
+        /// <returns></returns>
+        protected string GetColumnPrx()
+        {
+            return null;
         }
 
         #endregion
