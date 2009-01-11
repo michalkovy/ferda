@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- edited with XMLSpy v2008 rel. 2 sp1 (http://www.altova.com) by Martin Ralbovsky (University of Economics) -->
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by Martin Ralbovsky (University of Economics) -->
 <BoxesLocalization xsi:schemaLocation="http://ferda.is-a-geek.net ../Core/Boxes/boxesLocalization.xsd" xmlns="http://ferda.is-a-geek.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://ferda.is-a-geek.net">
 	<BoxLocalization>
 		<Identifier>DataPreparation.DataSource.Database</Identifier>
@@ -2701,7 +2701,6 @@
 			</PropertyCategory>
 		</PropertyCategories>
 	</BoxLocalization>
-	
 	<BoxLocalization>
 		<Identifier>GuhaMining.Classification.ETreeClassifier</Identifier>
 		<Label>ETree klasifikátor</Label>
@@ -2766,8 +2765,7 @@
 				<Label>Matice záměn</Label>
 			</PropertyCategory>
 		</PropertyCategories>
-	</BoxLocalization>	
-	
+	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>GuhaMining.Quantifiers.FourFold.DoubleImplicational.DoubleFoundedImplication</Identifier>
 		<Label>Double Founded Implication</Label>
@@ -11350,33 +11348,38 @@
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
-  <Identifier>SemanticWeb.PMMLBuilder</Identifier>
-  <Label>Sestavení PMML</Label>
-  <Hint>Sestaví PMML na základě výsledku úlohy</Hint>
-  <Categories>
-    <Category>
-      <Name>SemanticWeb</Name>
-     <Label>Sémantický web</Label>
-    </Category>
-  </Categories>
-  <Actions>
+		<Identifier>SemanticWeb.PMMLBuilder</Identifier>
+		<Label>Sestavení PMML</Label>
+		<Hint>Sestaví PMML na základě výsledku úlohy</Hint>
+		<Categories>
+			<Category>
+				<Name>SemanticWeb</Name>
+				<Label>Sémantický web</Label>
+			</Category>
+		</Categories>
+		<Actions>
 			<Action>
 				<Name>SavePMMLToFile</Name>
 				<Label>Uložit PMML do souboru</Label>
 				<Hint>Uloží PMML do souboru uvedeného ve vlastnosti X</Hint>
 			</Action>
 		</Actions>
-  <Sockets>
-	<Socket>
-		<Name>PMMLFile</Name>
-		<Label>PMML soubor</Label>
-		<Hint>Umístění PMML souboru</Hint>
-	</Socket>
-    <Socket>
-      <Name>4FTTask</Name>
-      <Label>4FT úloha</Label>
-      <Hint>4FT úloha ze které se vytvoří PMML</Hint>
-    </Socket>
-  </Sockets>
-</BoxLocalization>
+		<Sockets>
+			<Socket>
+				<Name>PMMLFile</Name>
+				<Label>PMML soubor</Label>
+				<Hint>Umístění PMML souboru</Hint>
+			</Socket>
+			<Socket>
+				<Name>4FTTask</Name>
+				<Label>4FT úloha</Label>
+				<Hint>4FT úloha ze které se vytvoří PMML</Hint>
+			</Socket>
+			<Socket>
+				<Name>Author</Name>
+				<Label>Autor</Label>
+				<Hint>Zde zadejte autora PMML dokumentu</Hint>
+			</Socket>
+		</Sockets>
+	</BoxLocalization>
 </BoxesLocalization>

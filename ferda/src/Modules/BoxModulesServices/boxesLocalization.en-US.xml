@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- edited with XMLSpy v2008 rel. 2 sp1 (http://www.altova.com) by Martin Ralbovsky (University of Economics) -->
+<!-- edited with XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) by Martin Ralbovsky (University of Economics) -->
 <BoxesLocalization xsi:schemaLocation="http://ferda.is-a-geek.net ../Core/Boxes/boxesLocalization.xsd" xmlns="http://ferda.is-a-geek.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://ferda.is-a-geek.net">
 	<BoxLocalization>
 		<Identifier>DataPreparation.DataSource.Database</Identifier>
@@ -11375,33 +11375,38 @@
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
-	  <Identifier>SemanticWeb.PMMLBuilder</Identifier>
-	  <Label>PMML Builder</Label>
-	  <Hint> PMML na základě výsledku úlohy</Hint>
-	  <Categories>
-		<Category>
-		  <Name>SemanticWeb</Name>
-		 <Label>Semantic Web</Label>
-		</Category>
-	  </Categories>
-  <Actions>
+		<Identifier>SemanticWeb.PMMLBuilder</Identifier>
+		<Label>PMML Builder</Label>
+		<Hint> PMML na základě výsledku úlohy</Hint>
+		<Categories>
+			<Category>
+				<Name>SemanticWeb</Name>
+				<Label>Semantic Web</Label>
+			</Category>
+		</Categories>
+		<Actions>
 			<Action>
 				<Name>SavePMMLToFile</Name>
 				<Label>Saves PMML to File</Label>
 				<Hint>Saves PMML to file specified in property X</Hint>
 			</Action>
 		</Actions>
-	  <Sockets>
-		<Socket>
-			<Name>PMMLFile</Name>
-			<Label>PMML file</Label>
-			<Hint>PMML file location</Hint>
-		</Socket>
-		<Socket>
-      <Name>4FTTask</Name>
-      <Label>4FT Task</Label>
-      <Hint>4FT task from which PMML is created</Hint>
-		</Socket>
-	  </Sockets>
+		<Sockets>
+			<Socket>
+				<Name>PMMLFile</Name>
+				<Label>PMML file</Label>
+				<Hint>PMML file location</Hint>
+			</Socket>
+			<Socket>
+				<Name>4FTTask</Name>
+				<Label>4FT Task</Label>
+				<Hint>4FT task from which PMML is created</Hint>
+			</Socket>
+			<Socket>
+				<Name>Author</Name>
+				<Label>Author</Label>
+				<Hint>Fill author of the document here</Hint>
+			</Socket>
+		</Sockets>
 	</BoxLocalization>
 </BoxesLocalization>
