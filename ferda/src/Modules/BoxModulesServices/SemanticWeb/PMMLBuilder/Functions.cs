@@ -1,8 +1,8 @@
 ﻿// Functions.cs - Function objects for the PMML Builder box
 //
-// Author: Martin Zeman <martin.zeman@email.cz>
+// Author: Martin Ralbovský <martin.ralbovsky@gmail.cz>
 //
-// Copyright (c) 2007 Martin Zeman
+// Copyright (c) 2007 Martin Ralbovský
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Text;
 using Ice;
 using System.IO;
+using System.Reflection;
 using System.Xml;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.Results;
@@ -56,11 +57,25 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 
         #region Properties
 
+        /// <summary>
+        /// The path where the PMML file should be saved
+        /// </summary>
         public string PMMLFile
         {
             get
             {
                 return boxModule.GetPropertyString(SockPMMLFile);
+            }
+        }
+
+        /// <summary>
+        /// Author of the PMML report
+        /// </summary>
+        public string Author
+        {
+            get
+            {
+                return boxModule.GetPropertyString(SockAuthor);
             }
         }
 
@@ -77,6 +92,11 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// Name of the socket determining the 4FT task
         /// </summary>
         public const string Sock4FTTask = "4FTTask";
+
+        /// <summary>
+        /// Name of the socket determining the author of the PMML report
+        /// </summary>
+        public const string SockAuthor = "Author";
 
         #endregion
 
@@ -211,18 +231,88 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
             //The Header element
             xmlWriter.WriteStartElement("Header");
             xmlWriter.WriteAttributeString("copyright", "Copyright (c) KIZI UEP");
-
+            xmlWriter.WriteStartElement("Extension");
+            xmlWriter.WriteAttributeString("name", "author");
+            xmlWriter.WriteAttributeString("value", Author);
+            xmlWriter.WriteEndElement();
+            xmlWriter.WriteStartElement("Application");
+            xmlWriter.WriteAttributeString("name", "Ferda");
+            //The version of the Ferda system in the PMML corresponds to the 
+            //FerdaSemanticWebBoxes.dll assembly.
+            Assembly ass = Assembly.GetExecutingAssembly();
+            xmlWriter.WriteAttributeString("version", ass.GetName().Version.ToString());
+            xmlWriter.WriteEndElement(); //Application
+            xmlWriter.WriteElementString("Annotation", "Exported to PMML using the Ferda software");
             xmlWriter.WriteEndElement(); //Header
 
-            //Write sub-elements
-            //xmlWriter.WriteElementString("title", "Unreal Tournament 2003");
-            //xmlWriter.WriteElementString("title", "C&C: Renegade");
-            //xmlWriter.WriteElementString("title", "Dr. Seuss's ABC");
+            xmlWriter = CreateDataDictionary(xmlWriter);
+            xmlWriter = CreateTransformationDictionary(xmlWriter);
+            xmlWriter = CreateAssociationModel(xmlWriter);
 
             xmlWriter.WriteEndElement(); //PMML
 
             xmlWriter.Close();
             return strWriter.ToString();
+        }
+
+        /// <summary>
+        /// Creates and fills the AssociationModel element of the PMML
+        /// </summary>
+        /// <param name="xmlWriter">Here the content is written</param>
+        /// <returns>Writer with added content association model</returns>
+        protected XmlTextWriter CreateAssociationModel(XmlTextWriter xmlWriter)
+        {
+            xmlWriter.WriteStartElement("AssociationModel");
+
+
+            xmlWriter.WriteEndElement();
+            return xmlWriter;
+        }
+        
+        /// <summary>
+        /// Creates and fills the TransformationDictionary element of the PMML
+        /// </summary>
+        /// <param name="xmlWriter">Here the content is written</param>
+        /// <returns>Writer with added content transformation dictionary</returns>
+        protected XmlTextWriter CreateTransformationDictionary(XmlTextWriter xmlWriter)
+        {
+            xmlWriter.WriteStartElement("TransformationDictionary");
+
+            xmlWriter.WriteEndElement();
+            return xmlWriter;
+        }
+
+        /// <summary>
+        /// Creates and fills the DataDictionary element of the PMML
+        /// </summary>
+        /// <param name="xmlWriter">Here the content is written</param>
+        /// <returns>Writer with added content data dictionary`</returns>
+        protected XmlTextWriter CreateDataDictionary(XmlTextWriter xmlWriter)
+        {
+            MiningTaskFunctionsPrx taskPrx =
+                SocketConnections.GetPrx<MiningTaskFunctionsPrx>(
+                    boxModule,
+                    Sock4FTTask,
+                    MiningTaskFunctionsPrxHelper.checkedCast,
+                    true);
+
+            xmlWriter.WriteStartElement("DataDictionary");
+
+            //Number of fileds attribute
+            GuidAttributeNamePair[] attrNames = taskPrx.GetAttributeNames();
+            xmlWriter.WriteAttributeString("numberOfFields", attrNames.Length.ToString());
+
+            foreach (GuidAttributeNamePair attribute in attrNames)
+            {
+                xmlWriter.WriteStartElement("DataField");
+                xmlWriter.WriteAttributeString("name", attribute.attributeName);
+
+                BitStringGeneratorPrx bsg = taskPrx.GetBitStringGenerator(attribute.id);
+                xmlWriter.WriteEndElement();//DataField
+            }
+
+            xmlWriter.WriteEndElement(); //DataDictionary
+            return xmlWriter;
         }
 
         #endregion
