@@ -727,7 +727,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
             }
 
             //categorial attributes
-            socketsNames = taskFunctions.GetBooleanAttributesSocketNames();
+            socketsNames = taskFunctions.GetCategorialAttributesSocketNames();
             if (socketsNames != null && socketsNames.Length > 0)
             {
                 foreach (string s in socketsNames)
