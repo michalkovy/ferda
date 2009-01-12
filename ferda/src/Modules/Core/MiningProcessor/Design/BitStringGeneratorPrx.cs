@@ -44,6 +44,17 @@ namespace Ferda.Guha.MiningProcessor.Design
     public class BitStringGeneratorPrx : AttributeNameProvider
     {
         /// <summary>
+        /// Returns information from the column about the values and frequencies
+        /// of the column. This fucntion was added to the Slice desing for
+        /// the PMML support.
+        /// </summary>
+        /// <returns>ValuesAndFrequencies structure</returns>
+        public ValuesAndFrequencies GetColumnValuesAndFrequencies()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Returns the identification of the attribute.
         /// </summary>
         public Guid AttributeGuid
@@ -93,7 +104,7 @@ namespace Ferda.Guha.MiningProcessor.Design
         /// </summary>
         /// <param name="categoryId">Category identification
         /// (name of the category)</param>
-        /// <returns></returns>
+        /// <returns>BitString</returns>
         public BitStringIce GetBitString(string categoryId)
         {
             throw new NotImplementedException();

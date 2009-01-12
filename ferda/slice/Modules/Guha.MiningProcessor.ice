@@ -75,6 +75,9 @@ module Ferda {
 
 				interface BitStringGenerator extends AttributeNameProvider
 				{
+				  Ferda::Guha::Data::ValuesAndFrequencies GetColumnValuesAndFrequencies()
+				    throws Ferda::Modules::BoxRuntimeError;
+				
 					Ferda::Modules::GuidStruct GetAttributeId()
 						throws Ferda::Modules::BoxRuntimeError;
 

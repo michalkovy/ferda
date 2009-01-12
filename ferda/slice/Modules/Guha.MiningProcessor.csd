@@ -42,6 +42,7 @@
       <Member type="Method">Ferda.Modules.IntSeq GetCountVector()</Member>
       <Member type="Method">bool GetNextBitString()</Member>
       <Member type="Method">Long GetMaxBitStringCount()</Member>
+      <Member type="Method">Ferda.Guha.Data.ValuesAndFrequencies GetColumnValuesAndFrequencies()</Member>
     </Entity>
     <Entity type="Enum">
       <Name>ImportanceEnum</Name>
@@ -383,8 +384,8 @@
       <Size width="283" height="93" />
     </Shape>
     <Shape>
-      <Location left="395" top="429" />
-      <Size width="342" height="223" />
+      <Location left="394" top="432" />
+      <Size width="429" height="235" />
     </Shape>
     <Shape>
       <Location left="703" top="18" />
@@ -399,11 +400,11 @@
       <Size width="264" height="144" />
     </Shape>
     <Shape>
-      <Location left="818" top="536" />
+      <Location left="897" top="559" />
       <Size width="137" height="193" />
     </Shape>
     <Shape>
-      <Location left="1007" top="491" />
+      <Location left="1109" top="514" />
       <Size width="230" height="141" />
     </Shape>
     <Shape>
@@ -443,11 +444,11 @@
       <Size width="268" height="99" />
     </Shape>
     <Shape>
-      <Location left="751" top="864" />
+      <Location left="793" top="864" />
       <Size width="212" height="115" />
     </Shape>
     <Shape>
-      <Location left="751" top="1030" />
+      <Location left="840" top="1030" />
       <Size width="334" height="70" />
     </Shape>
     <Shape>
