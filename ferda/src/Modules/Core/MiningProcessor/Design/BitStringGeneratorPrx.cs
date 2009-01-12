@@ -44,6 +44,19 @@ namespace Ferda.Guha.MiningProcessor.Design
     public class BitStringGeneratorPrx : AttributeNameProvider
     {
         /// <summary>
+        /// Returns serialized attribute <see cref="Ferda.Guha.Attribute"/>.
+        /// This fucntion was added to the Slice desing for
+        /// the PMML support - it was removed from 
+        /// <see cref="Ferda.Modules.Boxes.DataPreparation.AttributeFunctions"/>
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Serialized attribute</returns>
+        public override string getAttribute(Current current__)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Returns information from the column about the values and frequencies
         /// of the column. This fucntion was added to the Slice desing for
         /// the PMML support.

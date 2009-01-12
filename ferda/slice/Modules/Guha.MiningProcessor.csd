@@ -43,6 +43,7 @@
       <Member type="Method">bool GetNextBitString()</Member>
       <Member type="Method">Long GetMaxBitStringCount()</Member>
       <Member type="Method">Ferda.Guha.Data.ValuesAndFrequencies GetColumnValuesAndFrequencies()</Member>
+      <Member type="Method">string getAttribute()</Member>
     </Entity>
     <Entity type="Enum">
       <Name>ImportanceEnum</Name>
@@ -385,7 +386,7 @@
     </Shape>
     <Shape>
       <Location left="394" top="432" />
-      <Size width="429" height="235" />
+      <Size width="429" height="252" />
     </Shape>
     <Shape>
       <Location left="703" top="18" />

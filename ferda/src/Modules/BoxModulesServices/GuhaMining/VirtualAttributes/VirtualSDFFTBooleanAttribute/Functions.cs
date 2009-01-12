@@ -503,6 +503,16 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
             throw new BoxRuntimeError("Virtual SD4FT attribute", "The function GetColumnValuesAndFrequencies is not supported.");
         }
 
+        /// <summary>
+        /// Returns serialized attribute <see cref="Ferda.Guha.Attribute"/>.
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Serialized attribute</returns>
+        public override string getAttribute(Current current__)
+        {
+            throw new BoxRuntimeError("Virtual SD4FT attribute", "The function getAttribute is not supported.");
+        }
+
         public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, string detailIdColumn, Current current__)
         {
             throw new Exception("The method or operation is not implemented.");

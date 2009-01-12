@@ -111,8 +111,6 @@ module Ferda {
 					};
 					
 					interface AttributeFunctions extends Ferda::Guha::MiningProcessor::BitStringGenerator {
-						idempotent	string getAttribute()
-							throws Ferda::Modules::BoxRuntimeError;
 						// Returns the names of the categories and their frequencies
 						idempotent Ferda::Guha::Data::ValuesAndFrequencies getCategoriesAndFrequencies()
 							throws Ferda::Modules::BoxRuntimeError;

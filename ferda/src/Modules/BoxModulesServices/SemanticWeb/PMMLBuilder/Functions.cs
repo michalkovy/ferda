@@ -279,6 +279,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         {
             xmlWriter.WriteStartElement("TransformationDictionary");
 
+
             xmlWriter.WriteEndElement();
             return xmlWriter;
         }
@@ -311,6 +312,22 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                 xmlWriter.WriteStartElement("DataField");
                 xmlWriter.WriteAttributeString("name",GetAttributeName(generator));
                 xmlWriter.WriteAttributeString("optype",GetPMMLOptype(generator));
+                ValuesAndFrequencies vaf = generator.GetColumnValuesAndFrequencies();
+                xmlWriter.WriteAttributeString("dataType", 
+                    DBDataTypeToPMMLDataType(vaf.dataType));
+
+                foreach (ValueFrequencyPair pair in vaf.data)
+                {
+                    xmlWriter.WriteStartElement("Value");
+                    xmlWriter.WriteAttributeString("value", pair.value);
+                    xmlWriter.WriteStartElement("Extension");
+                    xmlWriter.WriteAttributeString("name", "Frequency");
+                    xmlWriter.WriteAttributeString("value", pair.frequency.ToString());
+                    xmlWriter.WriteAttributeString("extender", pair.value);
+                    xmlWriter.WriteEndElement();//Extension
+                    xmlWriter.WriteEndElement();//Value
+                }
+
                 xmlWriter.WriteEndElement();//DataField
             }
 
@@ -363,16 +380,45 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         }
 
         /// <summary>
-        /// Retrieves column proxy from the BitStringGeneratorPrx in
-        /// parameter.
-        /// NOTE that this method works well only for the Boolean
-        /// attribute bit string generators (atom, fixed set).
+        /// Switches the Ferda.Data database type to PMML one
         /// </summary>
-        /// <param name="prx">BitStringGenerator</param>
-        /// <returns></returns>
-        protected string GetColumnPrx()
+        /// <param name="datatype">Ferda.Data database type</param>
+        /// <returns>PMML data type</returns>
+        protected string DBDataTypeToPMMLDataType(DbDataTypeEnum datatype)
         {
-            return null;
+            switch (datatype)
+            {
+                case DbDataTypeEnum.BooleanType:
+                    return "integer";
+                case DbDataTypeEnum.DateTimeType:
+                    return "dateTime";
+                case DbDataTypeEnum.DecimalType:
+                    return "float";
+                case DbDataTypeEnum.DoubleType:
+                    return "double";
+                case DbDataTypeEnum.FloatType:
+                    return "float";
+                case DbDataTypeEnum.IntegerType:
+                    return "integer";
+                case DbDataTypeEnum.LongIntegerType:
+                    return "integer";
+                case DbDataTypeEnum.ShortIntegerType:
+                    return "integer";
+                case DbDataTypeEnum.StringType:
+                    return "string";
+                case DbDataTypeEnum.TimeType:
+                    return "time";
+                case DbDataTypeEnum.UnknownType:
+                    return "string";
+                case DbDataTypeEnum.UnsignedIntegerType:
+                    return "integer";
+                case DbDataTypeEnum.UnsignedLongIntegerType:
+                    return "integer";
+                case DbDataTypeEnum.UnsignedShortIntegerType:
+                    return "integer";
+                default:
+                    return null;
+            }
         }
 
         #endregion
