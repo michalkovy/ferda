@@ -484,7 +484,6 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
             return MaxNumberOfHypotheses;
         }
 
-
         #region Not implemented
 
         public override BitStringIce GetBitString(string categoryId, Current current__)
@@ -492,7 +491,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
             throw new Exception("The method or operation is not implemented.");
         }
 
-
+        /// <summary>
+        /// Returns information from the column about the values and frequencies
+        /// of the column. This fucntion was added to the Slice desing for
+        /// the PMML support.
+        /// </summary>
+        /// <param name="current__"></param>
+        /// <returns>ValuesAndFrequencies structure</returns>
+        public override ValuesAndFrequencies GetColumnValuesAndFrequencies(Current current__)
+        {
+            throw new BoxRuntimeError("Virtual SD4FT attribute", "The function GetColumnValuesAndFrequencies is not supported.");
+        }
 
         public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, string detailIdColumn, Current current__)
         {

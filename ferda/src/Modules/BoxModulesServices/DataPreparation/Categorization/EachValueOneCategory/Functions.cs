@@ -677,6 +677,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return GetCategoriesAndFrequencies(true);
         }
 
+        /// <summary>
+        /// Returns cardinality of the attribute (nominal/ordinal/cyclic ordinal/cardinal).
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Attribute cardinality</returns>
         public override CardinalityEnum GetAttributeCardinality(Current current__)
         {
             if (Guha.Data.Common.CompareCardinalityEnums(
@@ -695,11 +700,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return Cardinality;
         }
 
+        /// <summary>
+        /// Returns the identification of the attribute.
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Identification of the attribute</returns>
         public override GuidStruct GetAttributeId(Current current__)
         {
             return Guid;
         }
 
+        /// <summary>
+        /// Gets attribute names
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Attribute names</returns>
         public override GuidAttributeNamePair[] GetAttributeNames(Current current__)
         {
             return new GuidAttributeNamePair[]
@@ -708,21 +723,55 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 };
         }
 
+        /// <summary>
+        /// Returns a bit string for category in the 
+        /// <paramref name="categoryId"/> parameter.
+        /// </summary>
+        /// <param name="categoryId">Category identification
+        /// (name of the category)</param>
+        /// <returns>BitString</returns>
         public override BitStringIce GetBitString(string categoryId, Current current__)
         {
             return GetBitString(categoryId, true);
         }
 
+        /// <summary>
+        /// Gets identificators of categories. Names of the categories are used
+        /// as their identificators. The <see cref="Ferda.Guha.Attribute"/> class
+        /// ensures, that the names of categories are unique.
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Identificators of categories</returns>
         public override string[] GetCategoriesIds(Current current__)
         {
             return GetCategoriesIds(true);
         }
 
+        /// <summary>
+        /// Returns numerical values of the categories. These numerical
+        /// values can be returned only for the <c>ordinal, cyclic ordinal
+        /// and cardinal</c> attributes. Otherwise, <c>null</c> or
+        /// <c>double[0]</c> is returned
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>
+        /// Numerical values of the categories. These numerical
+        /// values can be returned only for the <c>ordinal, cyclic ordinal
+        /// and cardinal</c> attributes. Otherwise, <c>null</c> or
+        /// <c>double[0]</c> is returned
+        /// </returns>
         public override double[] GetCategoriesNumericValues(Current current__)
         {
             return GetCategoriesNumericValues(true);
         }
 
+        /// <summary>
+        /// Returns identification (category name) of a
+        /// category that contains missing information.
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Missing information category name
+        /// </returns>
         public override string[] GetMissingInformationCategoryId(Current current__)
         {
             if (String.IsNullOrEmpty(XCategory))
@@ -731,6 +780,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 return new string[] { XCategory };
         }
 
+        /// <summary>
+        /// Gets source datatable id
+        /// </summary>
+        /// <param name="current__">ICEstuff</param>
+        /// <returns></returns>
         public override string GetSourceDataTableId(Current current__)
         {
             ColumnFunctionsPrx prx = GetColumnFunctionsPrx(true);
@@ -739,6 +793,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return null;
         }
 
+        /// <summary>
+        /// Returns a count vector for this attribute, given the master data table name,
+        /// master and detial key columns. It is used for virtual hypotheses attributes.
+        /// The count vector is an array of integers 
+        /// representing for each item in the master data table how many records are
+        /// in the detail data table corresponding to the item. 
+        /// More information can
+        /// be found in <c>svnroot/publications/diplomky/Kuzmos/diplomka.pdf</c> or
+        /// in <c>svnroot/publications/Icde08/ICDE.pdf</c>.
+        /// </summary>
+        /// <param name="masterIdColumn">ID of the master data table</param>
+        /// <param name="masterDatatableName">Name of the master data table</param>
+        /// <param name="detailIdColumn">Detail data table ID column</param>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>a count vector</returns>
         public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, string detailIdColumn, Current current__)
         {
             string detailId = String.Empty;
@@ -758,15 +827,47 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             return result;
         }
 
+        /// <summary>
+        /// Gets next bit string of the virtual hypotheses attribute. The virtual
+        /// hypotheses attribute does not know the exact number of bit strings
+        /// to be generated by the miner. Therefore it returns only the next
+        /// bit strings.
+        /// More information can
+        /// be found in <c>svnroot/publications/diplomky/Kuzmos/diplomka.pdf</c> or
+        /// in <c>svnroot/publications/Icde08/ICDE.pdf</c>.
+        /// </summary>
+        /// <param name="skipFirstN"></param>
+        /// <param name="bitString">Bit string to be returned</param>
+        /// <returns>True iff there is a next bit string in the output
+        /// <paramref name="bitString"/></returns>
+        /// <param name="current__">ICE stuff</param>
         public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
         {
             bitString = new BitStringIceWithCategoryId();
             return false;
         }
 
+        /// <summary>
+        /// Returns maximal number of bit strings (verfications) that a 
+        /// virtual hypotheses attribute can generate. The number is usually
+        /// set via a property in the corresponding virtual attribute box.
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Maximal number of bit strings</returns>
         public override long GetMaxBitStringCount(Current current__)
         {
             return 0;
+        }
+
+        /// <summary>
+        /// Returns information from the column about the values and frequencies
+        /// of the column. This fucntion was added to the Slice desing for
+        /// the PMML support.
+        /// </summary>
+        /// <returns>ValuesAndFrequencies structure</returns>
+        public override ValuesAndFrequencies GetColumnValuesAndFrequencies(Current current__)
+        {
+            return GetColumnFunctionsPrx(true).getDistinctsAndFrequencies();
         }
 
         #endregion
