@@ -202,6 +202,7 @@
 		  <include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
 		  <include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
 		  <include name="${path::combine(build.dir,'FerdaMiningProcessor.dll')}"/>
+		  <include name="${path::combine(build.dir,'FerdaAttribute.dll')}"/>
 		  <include name="${path::combine(lib.dir,'Ice.dll')}"/>
 		  <include name="${path::combine(lib.dir,'IceBox.dll')}"/>
 		  <include name="System.dll"/>
