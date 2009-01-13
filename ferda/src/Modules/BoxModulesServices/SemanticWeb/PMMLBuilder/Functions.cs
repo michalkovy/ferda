@@ -28,6 +28,7 @@ using System.Xml;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.Results;
 using Ferda.Guha.Data;
+using Ferda.Guha.Attribute;
 
 namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 {
@@ -53,6 +54,11 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// The PMML string
         /// </summary>
         protected string PMML = null;
+
+        /// <summary>
+        /// The cached bit string generators of the connected 4FT task
+        /// </summary>
+        private BitStringGeneratorPrx[] _bsg = null;
 
         #endregion
 
@@ -279,6 +285,40 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         {
             xmlWriter.WriteStartElement("TransformationDictionary");
 
+            //assuming _bsg is not null (was initialized)
+            foreach (BitStringGeneratorPrx generator in _bsg)
+            {
+                xmlWriter.WriteStartElement("DerivedField");
+                xmlWriter.WriteAttributeString("optype", GetPMMLOptype(generator));
+                ValuesAndFrequencies vaf = generator.GetColumnValuesAndFrequencies();
+                xmlWriter.WriteAttributeString("dataType",
+                    DBDataTypeToPMMLDataType(vaf.dataType));
+
+                //deserializing attribute
+                Attribute<IComparable> attr =
+                    Ferda.Guha.Attribute.Serializer.RetypeAttributeSerializable(
+                        generator.getAttribute(), vaf.dataType);
+                if (attr.ContainsIntervals())
+                {
+                    xmlWriter.WriteStartElement("Discretize");
+                    xmlWriter.WriteAttributeString("field", GetAttributeName(generator));
+
+                    foreach (Category<IComparable> category in attr.Values)
+                    {
+                        xmlWriter.WriteStartElement("DiscretizeBin");
+                        xmlWriter.WriteEndElement();//DiscretizeBin
+                    }
+
+                    xmlWriter.WriteEndElement();//Discretize
+                }
+                else
+                {
+                    xmlWriter.WriteStartElement("MapValues");
+                    xmlWriter.WriteEndElement();//MapValues
+                }
+
+                xmlWriter.WriteEndElement();//DerivedField
+            }
 
             xmlWriter.WriteEndElement();
             return xmlWriter;
@@ -297,17 +337,17 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                     Sock4FTTask,
                     MiningTaskFunctionsPrxHelper.checkedCast,
                     true);
+            _bsg = taskPrx.GetBitStringGenerators();
 
             xmlWriter.WriteStartElement("DataDictionary");
 
             //Number of fields attribute
-            BitStringGeneratorPrx[] bsg = taskPrx.GetBitStringGenerators();
-            xmlWriter.WriteAttributeString("numberOfFields", bsg.Length.ToString());
+            xmlWriter.WriteAttributeString("numberOfFields", _bsg.Length.ToString());
 
             /// !!! Tady bude mozna jeste casem nutne zavest kontrolu disjunktnosti proxin,
             /// ale zatim bych to neresil
 
-            foreach (BitStringGeneratorPrx generator in bsg)
+            foreach (BitStringGeneratorPrx generator in _bsg)
             {
                 xmlWriter.WriteStartElement("DataField");
                 xmlWriter.WriteAttributeString("name",GetAttributeName(generator));

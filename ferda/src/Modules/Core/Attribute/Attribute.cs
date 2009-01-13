@@ -107,6 +107,8 @@ namespace Ferda.Guha.Attribute
 
         /// <summary>
         /// Gets a value indicating whether intervals are allowed.
+        /// The property does not say anything about if there are any 
+        /// intervals in the attribute, not just enumerations. 
         /// </summary>
         /// <value><c>true</c> if intervals are allowed; otherwise, <c>false</c>.</value>
         public bool IntervalsAllowed
@@ -854,6 +856,25 @@ namespace Ferda.Guha.Attribute
                 result.Add(pair.Value);
             }
             return result;
+        }
+
+        /// <summary>
+        /// Determines if the attribute contains any intervals. This 
+        /// information is useful for creation of PMML document about this
+        /// attribute
+        /// </summary>
+        /// <returns>Iff the attribute contains intervals</returns>
+        public bool ContainsIntervals()
+        {
+            foreach (Category<T> cat in _categories.Values)
+            {
+                if (cat.Intervals.Count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #region IComparer<Category<T>> Members
