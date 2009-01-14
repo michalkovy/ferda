@@ -518,6 +518,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
             throw new Exception("The method or operation is not implemented.");
         }
 
+        /// <summary>
+        /// Gets categories and frequencies of the underlying attribute. The function
+        /// was taken from AttributeFunctions for purposes of PMML generation. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Values and frequencies of the attribute categories</returns>
+        public override ValuesAndFrequencies getCategoriesAndFrequencies(Current current__)
+        {
+            throw new BoxRuntimeError("Virtual 4FT attribute", "The function GetColumnValuesAndFrequencies is not supported.");
+        }
+
         #endregion
 
         #endregion
