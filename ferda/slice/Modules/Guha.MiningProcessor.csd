@@ -44,6 +44,7 @@
       <Member type="Method">Long GetMaxBitStringCount()</Member>
       <Member type="Method">Ferda.Guha.Data.ValuesAndFrequencies GetColumnValuesAndFrequencies()</Member>
       <Member type="Method">string getAttribute()</Member>
+      <Member type="Method">Ferda.Guha.Data.ValuesAndFrequencies getCategoriesAndFrequencies()</Member>
     </Entity>
     <Entity type="Enum">
       <Name>ImportanceEnum</Name>
@@ -385,8 +386,8 @@
       <Size width="283" height="93" />
     </Shape>
     <Shape>
-      <Location left="394" top="432" />
-      <Size width="429" height="252" />
+      <Location left="394" top="417" />
+      <Size width="429" height="269" />
     </Shape>
     <Shape>
       <Location left="703" top="18" />
@@ -441,7 +442,7 @@
       <Size width="130" height="85" />
     </Shape>
     <Shape>
-      <Location left="323" top="698" />
+      <Location left="323" top="719" />
       <Size width="268" height="99" />
     </Shape>
     <Shape>
