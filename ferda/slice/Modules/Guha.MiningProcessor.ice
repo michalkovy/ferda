@@ -101,7 +101,12 @@ module Ferda {
 
 					Ferda::Modules::StringOpt GetMissingInformationCategoryId()
 						throws Ferda::Modules::BoxRuntimeError;
-						
+					
+					//The function was added from the AttributeFunctions for provision
+					//of information to the PMML documents
+					idempotent Ferda::Guha::Data::ValuesAndFrequencies getCategoriesAndFrequencies()
+						throws Ferda::Modules::BoxRuntimeError;					
+					
 					//---relacni DM informace	
 					//vraci countvector
 					Ferda::Modules::IntSeq GetCountVector(string masterIdColumn, string masterDataTableName, string detailIdColumn)

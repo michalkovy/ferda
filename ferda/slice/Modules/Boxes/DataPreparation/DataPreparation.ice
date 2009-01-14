@@ -110,10 +110,9 @@ module Ferda {
 						SubDomain
 					};
 					
+					//THE AttributeFunctions WAS REMOVED, BECAUSE ALL ITS FUNCTIONALITY WAS NEEDED
+					//IN THE BitStringGenerator INTERFACE FOR PMML DOCUMENTS
 					interface AttributeFunctions extends Ferda::Guha::MiningProcessor::BitStringGenerator {
-						// Returns the names of the categories and their frequencies
-						idempotent Ferda::Guha::Data::ValuesAndFrequencies getCategoriesAndFrequencies()
-							throws Ferda::Modules::BoxRuntimeError;
 					};
 
 			};
