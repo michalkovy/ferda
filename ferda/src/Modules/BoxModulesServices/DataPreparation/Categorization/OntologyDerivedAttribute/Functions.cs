@@ -1218,6 +1218,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             return GetCategoriesIds(true);
         }
 
+        /// <summary>
+        /// Gets the name of the column from which the attribute and bit string generator
+        /// is created. Added for PMML purposes. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns></returns>
+        public override string GetColumnName(Current current__)
+        {
+            return GetColumnFunctionsPrx(true).getColumnInfo().columnSelectExpression;
+        }
 
         /// <summary>
         /// Returns numerical values of the categories. These numerical

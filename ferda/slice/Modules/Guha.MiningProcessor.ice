@@ -107,6 +107,10 @@ module Ferda {
 					idempotent Ferda::Guha::Data::ValuesAndFrequencies getCategoriesAndFrequencies()
 						throws Ferda::Modules::BoxRuntimeError;					
 					
+          //Name of the column from which this bit string generator is created (for PMML)
+          string GetColumnName()
+            throws Ferda::Modules::BoxRuntimeError;					
+					
 					//---relacni DM informace	
 					//vraci countvector
 					Ferda::Modules::IntSeq GetCountVector(string masterIdColumn, string masterDataTableName, string detailIdColumn)
@@ -118,7 +122,7 @@ module Ferda {
 						
 					//maximalni # bs, ktere podminer vygeneruje
 					long GetMaxBitStringCount()
-						throws Ferda::Modules::BoxRuntimeError;						
+						throws Ferda::Modules::BoxRuntimeError;          
 				};
 				sequence<BitStringGenerator*> BitStringGeneratorSeq;
 

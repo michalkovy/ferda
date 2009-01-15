@@ -44,6 +44,28 @@ namespace Ferda.Guha.MiningProcessor.Design
     public class BitStringGeneratorPrx : AttributeNameProvider
     {
         /// <summary>
+        /// Gets the name of the column from which the attribute and bit string generator
+        /// is created. Added for PMML purposes. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns></returns>
+        public override string GetColumnName(Current current__)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets categories and frequencies of the underlying attribute. The function
+        /// was taken from AttributeFunctions for purposes of PMML generation. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Values and frequencies of the attribute categories</returns>
+        public override ValuesAndFrequencies getCategoriesAndFrequencies(Current current__)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Returns serialized attribute <see cref="Ferda.Guha.Attribute"/>.
         /// This fucntion was added to the Slice desing for
         /// the PMML support - it was removed from 
