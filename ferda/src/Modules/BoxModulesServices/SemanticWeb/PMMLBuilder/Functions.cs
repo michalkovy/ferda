@@ -2,7 +2,7 @@
 //
 // Author: Martin Ralbovský <martin.ralbovsky@gmail.cz>
 //
-// Copyright (c) 2007 Martin Ralbovský
+// Copyright (c) 2009 Martin Ralbovský
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.Results;
 using Ferda.Guha.Data;
 using Ferda.Guha.Attribute;
+using Ferda.Guha.Math.Quantifiers;
 
 namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 {
@@ -36,7 +37,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
     /// Class is providing ICE functionality of the PMMLBuilder
     /// box module
     /// </summary>
-    class Functions : PMMLBuilderFunctionsDisp_, Ferda.Modules.IFunctions
+    public class Functions : PMMLBuilderFunctionsDisp_, Ferda.Modules.IFunctions
     {
         #region Protected fields
 
@@ -59,6 +60,12 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// The cached bit string generators of the connected 4FT task
         /// </summary>
         private BitStringGeneratorPrx[] _bsg = null;
+
+        /// <summary>
+        /// Unique identifier. Access this field only through the
+        /// property to work properly.
+        /// </summary>
+        private int _uniqueIdentifier = 0;
 
         #endregion
 
@@ -83,6 +90,22 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
             get
             {
                 return boxModule.GetPropertyString(SockAuthor);
+            }
+        }
+
+        /// <summary>
+        /// Gets an integer n=unique  identifier (for construction
+        /// of Boolean attributes for PMML)
+        /// </summary>
+        public int UniqueIdentifier
+        {
+            get
+            {
+                lock (this)
+                {
+                    _uniqueIdentifier++;
+                    return _uniqueIdentifier;
+                }
             }
         }
 
@@ -210,6 +233,28 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
             return SerializableResultInfo.Deserialize(statistics);
         }
 
+        /// <summary>
+        /// Returns quantifiers connected to the 4FT task box
+        /// </summary>
+        /// <returns>Quantifiers</returns>
+        public QuantifierSetting[] GetQuantifiers()
+        {
+            MiningTaskFunctionsPrx taskPrx =
+                SocketConnections.GetPrx<MiningTaskFunctionsPrx>(
+                    boxModule,
+                    Sock4FTTask,
+                    MiningTaskFunctionsPrxHelper.checkedCast,
+                    true);
+            QuantifierBaseFunctionsPrx[] prxs = taskPrx.GetQuantifiers();
+
+            List<QuantifierSetting> result = new List<QuantifierSetting>();
+            foreach (QuantifierBaseFunctionsPrx prx in prxs)
+            {
+                result.Add(prx.GetQuantifierSetting());
+            }
+            return result.ToArray();
+        }
+
         #endregion
 
         #region Protected methods
@@ -270,12 +315,51 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         protected XmlTextWriter CreateAssociationModel(XmlTextWriter xmlWriter)
         {
             xmlWriter.WriteStartElement("AssociationModel");
-            xmlWriter.WriteAttributeString("modelName", "");
+            xmlWriter.WriteAttributeString("modelName", 
+                "GUHA Association rules procedure 4FT");
+            xmlWriter.WriteAttributeString("maxNumberOfItemsPerTA", "1");
+            xmlWriter.WriteAttributeString("avgNumberOfItemsPerTA", "1");
+            xmlWriter.WriteAttributeString("numberOfTransactions",
+                GetDataMatrixLength());
+            xmlWriter.WriteAttributeString("numberOfItems", GetPMMLItemsCount());
+            xmlWriter.WriteAttributeString("numberOfItemsets", "0");
+            xmlWriter.WriteAttributeString("numberOfRules", 
+                GetResultInfo().NumberOfHypotheses.ToString());
+
+            QuantifierSetting[] quant = GetQuantifiers();
+            if (IsQuantifierConnedted(quant,
+                "GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication"))
+            {
+                xmlWriter.WriteAttributeString("minimimConfidence", 
+                    GetQuantifierTreshold(quant,"GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication").ToString());
+            }
+            else
+            {
+                xmlWriter.WriteAttributeString("minimimConfidence", "-1");
+            }
+            if (IsQuantifierConnedted(quant,
+                "GuhaMining.Quantifiers.FourFold.Others.Base"))
+            {
+                xmlWriter.WriteAttributeString("minimumSupport", 
+                    GetQuantifierTreshold(quant,"GuhaMining.Quantifiers.FourFold.Others.Base").ToString());
+            }
+            else
+            {
+                xmlWriter.WriteAttributeString("minimumSupport", "-1");
+            }
+
+            xmlWriter.WriteStartElement("Extension");
+            xmlWriter.WriteAttributeString("name", "TaskSetting");
+            xmlWriter.WriteStartElement("BasicDerivedBooleanAttributeSettings");
+
+            xmlWriter.WriteEndElement();//BasicDerivedBooleanAttributeSettings
+
+            xmlWriter.WriteEndElement(); //Extension
 
             xmlWriter.WriteEndElement();
             return xmlWriter;
         }
-        
+      
         /// <summary>
         /// Creates and fills the TransformationDictionary element of the PMML
         /// </summary>
@@ -436,6 +520,71 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 
             xmlWriter.WriteEndElement(); //DataDictionary
             return xmlWriter;
+        }
+
+        /// <summary>
+        /// Determines, if the quantifier is connected to the box
+        /// </summary>
+        /// <param name="quant">Array of connected quantifiers</param>
+        /// <param name="quantName">Name of the quantifier</param>
+        /// <returns>Iff the quantifier is connected</returns>
+        protected bool IsQuantifierConnedted(QuantifierSetting[] quant, string quantName)
+        {
+            foreach (QuantifierSetting q in quant)
+            {
+                if (q.boxTypeIdentifier == quantName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the threshold for a given qunatifier
+        /// </summary>
+        /// <param name="quant">Array of connected quantifiers</param>
+        /// <param name="quantName">Name of the quantifier</param>
+        /// <returns>Treshold value, -1 iff the quantifier was not found</returns>
+        protected double GetQuantifierTreshold(QuantifierSetting[] quant, string quantName)
+        {
+            foreach (QuantifierSetting q in quant)
+            {
+                if (q.boxTypeIdentifier == quantName)
+                {
+                    return q.treshold;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Gets PMML number of items - sum of all categories of all attributes
+        /// </summary>
+        /// <returns>PMML number of items in string representation</returns>
+        protected string GetPMMLItemsCount()
+        {
+            int count = 0;
+            foreach (BitStringGeneratorPrx gen in _bsg)
+            {
+                count += gen.GetCategoriesIds().Length;
+            }
+
+            return count.ToString();
+        }
+
+        /// <summary>
+        /// Gets length of the data matrix (number of rows of the data matrix).
+        /// It is presumed that all the bit string generators (attributes) provide
+        /// bit strings of the same length and also that there is at least one
+        /// bit string generator with one category.
+        /// </summary>
+        /// <returns>Length of the data matrix in string representation</returns>
+        protected string GetDataMatrixLength()
+        {
+            return _bsg[0].GetBitString(_bsg[0].GetCategoriesIds()[0]).length.ToString();
         }
 
         /// <summary>
