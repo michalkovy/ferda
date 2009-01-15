@@ -270,7 +270,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         protected XmlTextWriter CreateAssociationModel(XmlTextWriter xmlWriter)
         {
             xmlWriter.WriteStartElement("AssociationModel");
-
+            xmlWriter.WriteAttributeString("modelName", "");
 
             xmlWriter.WriteEndElement();
             return xmlWriter;
@@ -306,6 +306,39 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                     foreach (Category<IComparable> category in attr.Values)
                     {
                         xmlWriter.WriteStartElement("DiscretizeBin");
+                        xmlWriter.WriteAttributeString("binValue", category.Name);
+                        xmlWriter.WriteStartElement("Extension");
+                        xmlWriter.WriteAttributeString("name", "Frequency");
+                        xmlWriter.WriteAttributeString("value", 
+                            GetFrequencyFromCategory(generator, category.Name));
+                        xmlWriter.WriteAttributeString("extender", category.Name);
+                        xmlWriter.WriteEndElement(); //Extension
+                        for (int i = 0; i < category.Intervals.Count; i++)
+                        {
+                            xmlWriter.WriteStartElement("Interval");
+                            xmlWriter.WriteAttributeString("closure",
+                                GetPMMLClosure(category.Intervals[i]));
+                            xmlWriter.WriteAttributeString("leftMargin",
+                                category.Intervals[i].LeftValue.ToString());
+                            xmlWriter.WriteAttributeString("rightMargin",
+                                category.Intervals[i].RightValue.ToString());
+                            xmlWriter.WriteEndElement(); //Interval
+                        }
+
+                        if (category.Enumeration.Count > 0)
+                        {
+                            foreach (IComparable obj in category.Enumeration)
+                            {
+                                xmlWriter.WriteStartElement("Extension");
+                                xmlWriter.WriteAttributeString("name", "Enumeration");
+                                xmlWriter.WriteAttributeString("value", obj.ToString());
+                                xmlWriter.WriteEndElement(); //Extension
+                            }
+                            xmlWriter.WriteStartElement("Interval");
+                            xmlWriter.WriteAttributeString("closure", "closedClosed");
+                            xmlWriter.WriteEndElement(); //Interval
+                        }
+
                         xmlWriter.WriteEndElement();//DiscretizeBin
                     }
 
@@ -313,7 +346,37 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                 }
                 else
                 {
+                    string columnName = generator.GetColumnName();
+                    string attrName = GetAttributeName(generator);
+
                     xmlWriter.WriteStartElement("MapValues");
+                    xmlWriter.WriteAttributeString("outputColumn", attrName);
+                    xmlWriter.WriteStartElement("FieldColumnPair");
+                    xmlWriter.WriteAttributeString("column", columnName);
+                    xmlWriter.WriteAttributeString("field", columnName);
+                    xmlWriter.WriteStartElement("InlineTable");
+                    foreach (Category<IComparable> category in attr.Values)
+                    {
+                        xmlWriter.WriteStartElement("Extension");
+                        xmlWriter.WriteAttributeString("name", "Frequency");
+                        xmlWriter.WriteAttributeString("value",
+                            GetFrequencyFromCategory(generator, category.Name));
+                        xmlWriter.WriteAttributeString("extender", category.Name);
+                        xmlWriter.WriteEndElement(); //Extension
+                    }
+                    foreach (Category<IComparable> category in attr.Values)
+                    {
+                        for (int i = 0; i < category.Enumeration.Count; i++)
+                        {
+                            xmlWriter.WriteStartElement("row");
+                            xmlWriter.WriteElementString(columnName, 
+                                category.Enumeration[i].ToString());
+                            xmlWriter.WriteElementString(attrName, category.Name);
+                            xmlWriter.WriteEndElement(); //row
+                        }
+                    }
+                    xmlWriter.WriteEndElement(); //InlineTable
+                    xmlWriter.WriteEndElement(); //FieldColumnPair
                     xmlWriter.WriteEndElement();//MapValues
                 }
 
@@ -373,6 +436,63 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 
             xmlWriter.WriteEndElement(); //DataDictionary
             return xmlWriter;
+        }
+
+        /// <summary>
+        /// Gets the PMML interval closure type from the Ferda interval type
+        /// </summary>
+        /// <param name="interval">Ferda interval type</param>
+        /// <returns>PMML interval closure type in string representation</returns>
+        private string GetPMMLClosure(Interval<IComparable> interval)
+        {
+            string result = string.Empty;
+
+            switch (interval.LeftBoundary)
+            {
+                case BoundaryEnum.Closed:
+                    result += "closed";
+                    break;
+                case BoundaryEnum.Infinity:
+                case BoundaryEnum.Open:
+                    result += "open";
+                    break;
+                default:
+                    break;
+            }
+            switch (interval.RightBoundary)
+            {
+                case BoundaryEnum.Closed:
+                    result += "Closed";
+                    break;
+                case BoundaryEnum.Infinity:
+                case BoundaryEnum.Open:
+                    result += "Open";
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets frequency of an attribute category
+        /// </summary>
+        /// <param name="generator">The corresponding bit string generator</param>
+        /// <param name="name">the category name</param>
+        /// <returns>Frequency (in string form)</returns>
+        protected string GetFrequencyFromCategory(BitStringGeneratorPrx generator, string name)
+        {
+            ValuesAndFrequencies vaf = generator.getCategoriesAndFrequencies();
+            foreach (ValueFrequencyPair pair in vaf.data)
+            {
+                if (pair.value == name)
+                {
+                    return pair.frequency.ToString();
+                }
+            }
+
+            throw new BoxRuntimeError("PMML Builder", "Frequency not found for given category");
         }
 
         /// <summary>
