@@ -45,6 +45,7 @@
       <Member type="Method">Ferda.Guha.Data.ValuesAndFrequencies GetColumnValuesAndFrequencies()</Member>
       <Member type="Method">string getAttribute()</Member>
       <Member type="Method">Ferda.Guha.Data.ValuesAndFrequencies getCategoriesAndFrequencies()</Member>
+      <Member type="Method">string GetColumnName()</Member>
     </Entity>
     <Entity type="Enum">
       <Name>ImportanceEnum</Name>
@@ -387,7 +388,7 @@
     </Shape>
     <Shape>
       <Location left="394" top="417" />
-      <Size width="429" height="269" />
+      <Size width="429" height="286" />
     </Shape>
     <Shape>
       <Location left="703" top="18" />
@@ -442,7 +443,7 @@
       <Size width="130" height="85" />
     </Shape>
     <Shape>
-      <Location left="323" top="719" />
+      <Location left="323" top="739" />
       <Size width="268" height="99" />
     </Shape>
     <Shape>
@@ -454,7 +455,7 @@
       <Size width="334" height="70" />
     </Shape>
     <Shape>
-      <Location left="220" top="864" />
+      <Location left="220" top="888" />
       <Size width="433" height="115" />
     </Shape>
     <Shape>
@@ -486,7 +487,7 @@
       <Size width="217" height="125" />
     </Shape>
     <Shape>
-      <Location left="294" top="1016" />
+      <Location left="293" top="1044" />
       <Size width="364" height="216" />
     </Shape>
     <Shape>

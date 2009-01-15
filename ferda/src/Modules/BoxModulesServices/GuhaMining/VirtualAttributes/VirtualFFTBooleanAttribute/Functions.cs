@@ -571,7 +571,18 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         {
             throw new BoxRuntimeError("Virtual 4FT attribute", "The function getAttribute is not supported.");
         }
-   
+
+        /// <summary>
+        /// Gets the name of the column from which the attribute and bit string generator
+        /// is created. Added for PMML purposes. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns></returns>
+        public override string GetColumnName(Current current__)
+        {
+            return "Virtual 4FT attribute";
+        }
+
         #region Not implemented
 
         public override BitStringIce GetBitString(string categoryId, Current current__)
