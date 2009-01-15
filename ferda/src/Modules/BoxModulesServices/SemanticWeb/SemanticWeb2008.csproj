@@ -41,6 +41,7 @@
   </Target>
   -->
   <ItemGroup>
+    <Compile Include="Helpers.cs" />
     <Compile Include="PMMLBuilder\BoxInfo.cs" />
     <Compile Include="PMMLBuilder\Functions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
