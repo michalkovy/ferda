@@ -171,6 +171,26 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         #region Public methods
 
         /// <summary>
+        /// Returns name of an attribute depending on its GUID
+        /// </summary>
+        /// <param name="prx">Bit string generator proxy (attribute name
+        /// provider)</param>
+        /// <returns>Name of the attribute</returns>
+        public string GetAttributeName(BitStringGeneratorPrx prx)
+        {
+            GuidAttributeNamePair[] listOfPairs = prx.GetAttributeNames();
+            foreach (GuidAttributeNamePair pair in listOfPairs)
+            {
+                if (pair.id == prx.GetAttributeId())
+                {
+                    return pair.attributeName;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Saves the PMML to file specified by the property "PMMLFile".
         /// </summary>
         public void SavePMMLToFile()
@@ -350,13 +370,31 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 
             xmlWriter.WriteStartElement("Extension");
             xmlWriter.WriteAttributeString("name", "TaskSetting");
-            xmlWriter.WriteStartElement("BasicDerivedBooleanAttributeSettings");
 
-            xmlWriter.WriteEndElement();//BasicDerivedBooleanAttributeSettings
-
+            xmlWriter.WriteStartElement("BasicBooleanAttributeSettings");
+            Helpers.PMMLBooleanAttributeHelper helper = new
+                Helpers.PMMLBooleanAttributeHelper(this, boxModule.GetConnections(Sock4FTTask)[0]);
+            xmlWriter = helper.WriteBasicBooleanAttributes(xmlWriter);
+            xmlWriter.WriteEndElement();//BasicBooleanAttributeSettings
+            xmlWriter.WriteStartElement("DerivedBooleanAttributeSettings");
+            xmlWriter = helper.WriteDerivedBooleanAttributes(xmlWriter);
+            xmlWriter.WriteEndElement(); //DerivedBooleanAttributeSettings
+            xmlWriter.WriteElementString("Antecedent", helper.GetAntecedentID().ToString());
+            xmlWriter.WriteElementString("Succedent", helper.GetSuccedentID().ToString());
+            xmlWriter.WriteElementString("Condition", helper.GetConditionID().ToString());
             xmlWriter.WriteEndElement(); //Extension
 
-            xmlWriter.WriteEndElement();
+            foreach (QuantifierSetting qs in quant)
+            {
+                xmlWriter.WriteStartElement("Extension");
+                xmlWriter.WriteAttributeString("name", "QuantifierTreshold");
+                xmlWriter.WriteAttributeString("value",
+                    qs.boxTypeIdentifier.Substring(qs.boxTypeIdentifier.LastIndexOf('.')+1));
+                xmlWriter.WriteElementString("Treshold", qs.treshold.ToString());
+                xmlWriter.WriteEndElement(); //Extension
+            }
+
+            xmlWriter.WriteEndElement(); //AssociationModel
             return xmlWriter;
         }
       
@@ -642,26 +680,6 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
             }
 
             throw new BoxRuntimeError("PMML Builder", "Frequency not found for given category");
-        }
-
-        /// <summary>
-        /// Returns name of an attribute depending on its GUID
-        /// </summary>
-        /// <param name="prx">Bit string generator proxy (attribute name
-        /// provider)</param>
-        /// <returns>Name of the attribute</returns>
-        protected string GetAttributeName(BitStringGeneratorPrx prx)
-        {
-            GuidAttributeNamePair[] listOfPairs = prx.GetAttributeNames();
-            foreach (GuidAttributeNamePair pair in listOfPairs)
-            {
-                if (pair.id == prx.GetAttributeId())
-                {
-                    return pair.attributeName;
-                }
-            }
-
-            return null;
         }
 
         /// <summary>
