@@ -30,6 +30,7 @@ using Ferda.Guha.MiningProcessor.Results;
 using Ferda.Guha.Data;
 using Ferda.Guha.Attribute;
 using Ferda.Guha.Math.Quantifiers;
+using Ferda.Guha.MiningProcessor.Formulas;
 
 namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 {
@@ -285,6 +286,15 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// <returns>PMML</returns>
         protected string BuildPMML()
         {
+            //Initializes the attribute name in literals provider
+            MiningTaskFunctionsPrx taskPrx =
+                SocketConnections.GetPrx<MiningTaskFunctionsPrx>(
+                    boxModule,
+                    Sock4FTTask,
+                    MiningTaskFunctionsPrxHelper.checkedCast,
+                    true);
+            AttributeNameInLiteralsProvider.Init(taskPrx);
+
             StringWriter strWriter = new StringWriter();
             XmlTextWriter xmlWriter = new XmlTextWriter(strWriter);
 
@@ -393,6 +403,9 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                 xmlWriter.WriteElementString("Treshold", qs.treshold.ToString());
                 xmlWriter.WriteEndElement(); //Extension
             }
+
+            Helpers.PMMLAssociationRulesHelper ARhelper =
+                new Helpers.PMMLAssociationRulesHelper(this, GetResult());
 
             xmlWriter.WriteEndElement(); //AssociationModel
             return xmlWriter;
