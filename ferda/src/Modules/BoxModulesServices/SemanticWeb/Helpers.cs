@@ -24,6 +24,7 @@ using System.Text;
 using System.Xml;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.Results;
+using Ferda.Guha.MiningProcessor.Formulas;
 
 namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
 {
@@ -57,6 +58,80 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         /// Name of the attribute from which the Boolean attribute is created
         /// </summary>
         public string AttributeName;
+    }
+
+    /// <summary>
+    /// A helping structure for storing information about PMML item
+    /// </summary>
+    public struct PMMLItem
+    {
+        /// <summary>
+        /// Unique identifier of the item used for XML referencing
+        /// </summary>
+        public int XmlId;
+
+        /// <summary>
+        /// The name of the attribute
+        /// </summary>
+        public string AttributeName;
+
+        /// <summary>
+        /// The name of the category in the attribute
+        /// </summary>
+        public string CategoryName;
+
+        /// <summary>
+        /// The text representation of the PMMLItem
+        /// </summary>
+        public string Text;
+    }
+
+    /// <summary>
+    /// A helping structure for storing information about PMML itemset
+    /// </summary>
+    public struct PMMLItemset
+    {
+        /// <summary>
+        /// Unique identifier of the itemset used for XML referencing
+        /// </summary>
+        public int XmlId;
+
+        /// <summary>
+        /// XML ID's of the ancestors. 
+        /// </summary>
+        public int[] Ancestors;
+
+        /// <summary>
+        /// The text representation of the PMMLItem
+        /// </summary>
+        public string Text;
+    }
+
+    /// <summary>
+    /// A helping structure for storing information about PMML itemset
+    /// </summary>
+    public struct PMMLAssociationRule
+    {
+        /// <summary>
+        /// The XML ID of the antecedent (item or itemset)
+        /// </summary>
+        public int antecedent;
+
+        /// <summary>
+        /// The XML ID of the consequent(item or itemset)
+        /// </summary>
+        public int consequent;
+
+        /// <summary>
+        /// The XML ID of the condition (item or itemset)
+        /// </summary>
+        public int condition;
+
+        /// <summary>
+        /// Values of the connected quantifiers. Key means identifier
+        /// of the quantifier and value means the quantifier value
+        /// </summary>
+        public Dictionary<string, double> quantifiers;
     }
 
     /// <summary>
@@ -336,5 +411,212 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Class for providing helping information for the PMMLBuilder box
+    /// for providing association rules
+    /// </summary>
+    public class PMMLAssociationRulesHelper
+    {
+        #region Privage fields
+
+        /// <summary>
+        /// The list of all PMML items
+        /// </summary>
+        private List<PMMLItem> items = new List<PMMLItem>();
+
+        /// <summary>
+        /// The list of all PMML itemsets
+        /// </summary>
+        private List<PMMLItemset> itemsets = new List<PMMLItemset>();
+
+        /// <summary>
+        /// The list of all PMML association rules
+        /// </summary>
+        private List<PMMLAssociationRule> rules = new List<PMMLAssociationRule>();
+
+        /// <summary>
+        /// The PMML builder functions object for retrieving unique ID's
+        /// </summary>
+        private PMMLBuilder.Functions functions;
+
+        #endregion
+
+        /// <summary>
+        /// Default constructor of the class
+        /// </summary>
+        /// <param name="functions">The PMML builder functions object</param>
+        /// <param name="result">The Ferda result</param>
+        public PMMLAssociationRulesHelper(PMMLBuilder.Functions functions,
+            Result result)
+        {
+            this.functions = functions;
+
+            foreach (Hypothesis hyp in result.Hypotheses)
+            {
+                PMMLAssociationRule rule = new PMMLAssociationRule();
+                rule.antecedent = ConstructPMMLItemset(hyp.GetFormula(MarkEnum.Antecedent));
+                rule.consequent = ConstructPMMLItemset(hyp.GetFormula(MarkEnum.Succedent));
+                rule.condition = ConstructPMMLItemset(hyp.GetFormula(MarkEnum.Condition));
+            }
+        }
+
+        public XmlWriter WriteItemsItemsets(XmlWriter writer)
+        {
+            return writer;
+        }
+
+        /// <summary>
+        /// Recursive function constructing the PMML items and PMML itemsets
+        /// </summary>
+        /// <param name="formula">Formula, accoridng to which the item or 
+        /// itemset is beeing constructed</param>
+        /// <returns>XML identifier of the formula</returns>
+        private int ConstructPMMLItemset(Formula formula)
+        {
+            if (formula is AtomFormula)
+            {
+                PMMLItem item = new PMMLItem();
+                AtomFormula atom = formula as AtomFormula;
+                
+                //case that i.e. condition is not connected
+                if (atom.BitStringIdentifier.AttributeGuid == null)
+                {
+                    return -1;
+                }
+                
+                item.AttributeName =
+                    AttributeNameInLiteralsProvider.GetAttributeNameInLiterals(atom.BitStringIdentifier.AttributeGuid);
+                item.CategoryName = atom.BitStringIdentifier.CategoryId;
+                item.Text = atom.ToString();
+                
+                //checks if the PMMLItem was already created
+                int result = ContainsPMMLItem(item);
+                if (result == -1)
+                {
+                    item.XmlId = functions.UniqueIdentifier;
+                    items.Add(item);
+                    return item.XmlId;
+                }
+                else
+                {
+                    return result;
+                }
+            }
+
+            PMMLItemset itemset = new PMMLItemset();
+            if (formula is NegationFormula)
+            {
+                NegationFormula negation = formula as NegationFormula;
+                int operand = ConstructPMMLItemset(negation.Operand);
+                itemset.Ancestors = new int[1];
+                itemset.Ancestors[0] = operand;
+                itemset.Text = negation.ToString();
+
+                int result = ContainsPMMLItemSet(itemset);
+                if (result == -1)
+                {
+                    itemset.XmlId = functions.UniqueIdentifier;
+                    itemsets.Add(itemset);
+                    return itemset.XmlId;
+                }
+                else
+                {
+                    return result;
+                }
+            }
+
+            if (formula is ConjunctionFormula)
+            {
+                ConjunctionFormula conjunction = formula as ConjunctionFormula;
+                itemset.Ancestors = new int[conjunction.Operands.Count];
+                itemset.Text = conjunction.ToString();
+
+                //checking if there is other same conjunction (texts should be unique)
+                int result = ContainsPMMLItemSet(itemset);
+                if (result == -1)
+                {
+                    for (int i = 0; i < conjunction.Operands.Count; i++)
+                    {
+                        itemset.Ancestors[i] =
+                            ConstructPMMLItemset(conjunction.Operands[i]);
+                    }
+                    itemset.XmlId = functions.UniqueIdentifier;
+                    itemsets.Add(itemset);
+                    return itemset.XmlId;
+                }
+                else
+                {
+                    return result;
+                }
+            }
+
+            if (formula is DisjunctionFormula)
+            {
+                DisjunctionFormula disjunction = formula as DisjunctionFormula;
+                itemset.Ancestors = new int[disjunction.Operands.Count];
+                itemset.Text = disjunction.ToString();
+
+                //checking if there is other same conjunction (texts should be unique)
+                int result = ContainsPMMLItemSet(itemset);
+                if (result == -1)
+                {
+                    for (int i = 0; i < disjunction.Operands.Count; i++)
+                    {
+                        itemset.Ancestors[i] =
+                            ConstructPMMLItemset(disjunction.Operands[i]);
+                    }
+                    itemset.XmlId = functions.UniqueIdentifier;
+                    itemsets.Add(itemset);
+                    return itemset.XmlId;
+                }
+                else
+                {
+                    return result;
+                }
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// The method checks, if the PMMLItemset in the parameter was already
+        /// created previously. The method checks the equality of 
+        /// </summary>
+        /// <param name="itemset"></param>
+        /// <returns></returns>
+        private int ContainsPMMLItemSet(PMMLItemset itemset)
+        {
+            foreach (PMMLItemset itSet in itemsets)
+            {
+                //text should be unique
+                if (itemset.Text == itSet.Text)
+                {
+                    return itSet.XmlId;
+                }
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// The method checks, if the PMMLItem in parameter was already created 
+        /// previously. The method checks the equality of the attribute name and
+        /// category name. 
+        /// </summary>
+        /// <param name="item">Item to be checked</param>
+        /// <returns>XML identifier of the equal item iff exists, otherwise -1
+        /// </returns>
+        private int ContainsPMMLItem(PMMLItem item)
+        {
+            foreach (PMMLItem i in items)
+            {
+                //text should be unique
+                if (i.Text == item.Text)
+                {
+                    return i.XmlId;
+                }
+            }
+            return -1;
+        }
     }
 }
