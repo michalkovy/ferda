@@ -25,6 +25,8 @@ using System.Xml;
 using Ferda.Guha.MiningProcessor;
 using Ferda.Guha.MiningProcessor.Results;
 using Ferda.Guha.MiningProcessor.Formulas;
+using Ferda.Guha.Math.Quantifiers;
+using Ferda.Guha.MiningProcessor.QuantifierEvaluator;
 
 namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
 {
@@ -105,6 +107,11 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         /// The text representation of the PMMLItem
         /// </summary>
         public string Text;
+
+        /// <summary>
+        /// Conjunction, Disjunction or Negation
+        /// </summary>
+        public string Connective;
     }
 
     /// <summary>
@@ -132,6 +139,23 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         /// of the quantifier and value means the quantifier value
         /// </summary>
         public Dictionary<string, double> quantifiers;
+
+        /// <summary>
+        /// Computes values of quantifiers for given hypothesis
+        /// </summary>
+        /// <param name="hyp">The hypothesis</param>
+        /// <param name="allObjectsCount">count of all objects 
+        /// for quantifier counting</param>
+        public void ComputeQuantifiers(Hypothesis hyp, Quantifiers quant,
+            long allObjectsCount)
+        {
+            quantifiers = new Dictionary<string, double>();
+            foreach (string name in quant.Quantifeirs.Keys)
+            {
+                quantifiers.Add(quant.Quantifeirs[name].LocalizedLabel,
+                    quant.Quantifeirs[name].Value(hyp, allObjectsCount));
+            }
+        }
     }
 
     /// <summary>
@@ -201,7 +225,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         /// </summary>
         /// <param name="output">The XML output</param>
         /// <returns>XML output with basic Boolean information</returns>
-        public XmlTextWriter WriteBasicBooleanAttributes(XmlTextWriter output)
+        public XmlWriter WriteBasicBooleanAttributes(XmlWriter output)
         {
             foreach (PMMLBooleanAttribute attr in BAs)
             {
@@ -246,7 +270,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         /// </summary>
         /// <param name="output">The XML output</param>
         /// <returns>XML output with derived Boolean information</returns>
-        public XmlTextWriter WriteDerivedBooleanAttributes(XmlTextWriter output)
+        public XmlWriter WriteDerivedBooleanAttributes(XmlWriter output)
         {
             foreach (PMMLBooleanAttribute attr in BAs)
             {
@@ -441,6 +465,13 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         /// </summary>
         private PMMLBuilder.Functions functions;
 
+        private List<string> miningFields = new List<string>();
+
+        /// <summary>
+        /// The bit string generator provider needed for PMML Mining Fields
+        /// </summary>
+        private MiningTaskFunctionsPrx bitStringGeneratorProvider;
+
         #endregion
 
         /// <summary>
@@ -448,10 +479,16 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         /// </summary>
         /// <param name="functions">The PMML builder functions object</param>
         /// <param name="result">The Ferda result</param>
+        /// <param name="taskPrx">Bit string generator provider</param>
         public PMMLAssociationRulesHelper(PMMLBuilder.Functions functions,
-            Result result)
+            Result result, MiningTaskFunctionsPrx taskPrx, 
+            BitStringGeneratorProviderPrx bsgp)
         {
             this.functions = functions;
+            this.bitStringGeneratorProvider = taskPrx;
+
+            Quantifiers quantifiers = 
+                new Quantifiers(taskPrx.GetQuantifiers(), bsgp, new string[1] {"en-US"});
 
             foreach (Hypothesis hyp in result.Hypotheses)
             {
@@ -459,11 +496,126 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                 rule.antecedent = ConstructPMMLItemset(hyp.GetFormula(MarkEnum.Antecedent));
                 rule.consequent = ConstructPMMLItemset(hyp.GetFormula(MarkEnum.Succedent));
                 rule.condition = ConstructPMMLItemset(hyp.GetFormula(MarkEnum.Condition));
+                rule.ComputeQuantifiers(hyp, quantifiers, result.AllObjectsCount);
+                rules.Add(rule);
             }
         }
 
+        /// <summary>
+        /// Writes the PMML association rules to the XML output
+        /// </summary>
+        /// <param name="output">The XML output</param>
+        /// <returns>XML output with PMML mining fields information</returns>
+        public XmlWriter WriteAssociationRules(XmlWriter writer)
+        {
+            foreach (PMMLAssociationRule ar in rules)
+            {
+                writer.WriteStartElement("AssociationRule");
+                writer.WriteAttributeString("antecedent", ar.antecedent.ToString());
+                writer.WriteAttributeString("consequent", ar.consequent.ToString());
+
+                //confidence
+                if (ar.quantifiers.ContainsKey("Founded Implication"))
+                {
+                    writer.WriteAttributeString("Confidence", 
+                        ar.quantifiers["Founded Implication"].ToString());
+                }
+                else
+                {
+                    writer.WriteAttributeString("Confidence", "-1");
+                }
+                //support
+                if (ar.quantifiers.ContainsKey("Base"))
+                {
+                    writer.WriteAttributeString("Support", 
+                        ar.quantifiers["Base"].ToString());
+                }
+                else
+                {
+                    writer.WriteAttributeString("Support", "-1");
+                }
+
+                writer.WriteStartElement("Extension");
+                writer.WriteAttributeString("name", "Condition");
+                writer.WriteAttributeString("value", ar.condition.ToString());
+                writer.WriteEndElement(); //Extension
+
+                //other quantifiers
+                foreach (string s in ar.quantifiers.Keys)
+                {
+                    if (s == "FoundedImplication" || s == "Base")
+                    {
+                        continue;
+                    }
+
+                    writer.WriteStartElement("Extension");
+                    writer.WriteAttributeString("name", "Quantifier");
+                    writer.WriteAttributeString("value", ar.quantifiers[s].ToString());
+                    writer.WriteAttributeString("extender", s);
+                    writer.WriteEndElement(); //Extension
+                }
+
+                writer.WriteEndElement(); //AssociationRule
+            }
+            return writer;
+        }
+
+        /// <summary>
+        /// Writes the PMML mining fields to the XML output
+        /// </summary>
+        /// <param name="output">The XML output</param>
+        /// <returns>XML output with PMML mining fields information</returns>
+        public XmlWriter WriteMiningFields(XmlWriter writer)
+        {
+            writer.WriteStartElement("MiningSchema");
+            foreach (string s in miningFields)
+            {
+                writer.WriteStartElement("MiningField");
+                writer.WriteAttributeString("name", s);
+                writer.WriteEndElement();//MiningField
+            }
+            writer.WriteEndElement(); //MiningSchema
+            return writer;
+        }
+
+        /// <summary>
+        /// Writes items and itemsets to the XML output
+        /// </summary>
+        /// <param name="output">The XML output</param>
+        /// <returns>XML output with items and itemsets information</returns>
         public XmlWriter WriteItemsItemsets(XmlWriter writer)
         {
+            foreach (PMMLItem item in items)
+            {
+                writer.WriteStartElement("Item");
+                writer.WriteAttributeString("id", item.XmlId.ToString());
+                writer.WriteAttributeString("value", item.Text);
+                writer.WriteStartElement("Extension");
+                writer.WriteAttributeString("name", "attribute");
+                writer.WriteAttributeString("value", item.AttributeName);
+                writer.WriteEndElement(); //Extension
+                writer.WriteStartElement("Extension");
+                writer.WriteAttributeString("name", "value");
+                writer.WriteAttributeString("value", item.CategoryName);
+                writer.WriteEndElement(); //Extension
+                writer.WriteEndElement(); //Item
+            }
+            foreach (PMMLItemset itemset in itemsets)
+            {
+                writer.WriteStartElement("Itemset");
+                writer.WriteAttributeString("id", itemset.XmlId.ToString());
+                writer.WriteStartElement("Extension");
+                writer.WriteAttributeString("name", "Connective");
+                writer.WriteAttributeString("value", itemset.Connective);
+                writer.WriteEndElement(); //Extenstion
+                foreach (int i in itemset.Ancestors)
+                {
+                    writer.WriteStartElement("ItemRef");
+                    writer.WriteAttributeString("itemRef", i.ToString());
+                    writer.WriteEndElement(); //ItemRef
+                }
+                writer.WriteEndElement(); //Itemset
+            }
             return writer;
         }
 
@@ -484,6 +636,24 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                 if (atom.BitStringIdentifier.AttributeGuid == null)
                 {
                     return -1;
+                }
+                //filling the mining fields
+                else
+                {
+                    GuidStruct guid = new GuidStruct(atom.BitStringIdentifier.AttributeGuid);
+                    BitStringGeneratorPrx[] generators =
+                        bitStringGeneratorProvider.GetBitStringGenerators();
+                    foreach (BitStringGeneratorPrx generator in generators)
+                    {
+                        if (generator.GetAttributeId() == guid)
+                        {
+                            string columnName = generator.GetColumnName();
+                            if (!miningFields.Contains(columnName))
+                            {
+                                miningFields.Add(columnName);
+                            }
+                        }
+                    }
                 }
                 
                 item.AttributeName =
@@ -513,6 +683,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                 itemset.Ancestors = new int[1];
                 itemset.Ancestors[0] = operand;
                 itemset.Text = negation.ToString();
+                itemset.Connective = "Negation";
 
                 int result = ContainsPMMLItemSet(itemset);
                 if (result == -1)
@@ -532,6 +703,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                 ConjunctionFormula conjunction = formula as ConjunctionFormula;
                 itemset.Ancestors = new int[conjunction.Operands.Count];
                 itemset.Text = conjunction.ToString();
+                itemset.Connective = "Conjunction";
 
                 //checking if there is other same conjunction (texts should be unique)
                 int result = ContainsPMMLItemSet(itemset);
@@ -557,6 +729,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                 DisjunctionFormula disjunction = formula as DisjunctionFormula;
                 itemset.Ancestors = new int[disjunction.Operands.Count];
                 itemset.Text = disjunction.ToString();
+                itemset.Connective = "Disjunction";
 
                 //checking if there is other same conjunction (texts should be unique)
                 int result = ContainsPMMLItemSet(itemset);
