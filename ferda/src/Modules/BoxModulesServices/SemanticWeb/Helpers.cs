@@ -517,22 +517,22 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                 //confidence
                 if (ar.quantifiers.ContainsKey("Founded Implication"))
                 {
-                    writer.WriteAttributeString("Confidence", 
+                    writer.WriteAttributeString("confidence", 
                         ar.quantifiers["Founded Implication"].ToString());
                 }
                 else
                 {
-                    writer.WriteAttributeString("Confidence", "-1");
+                    writer.WriteAttributeString("confidence", "-1");
                 }
                 //support
                 if (ar.quantifiers.ContainsKey("Base"))
                 {
-                    writer.WriteAttributeString("Support", 
+                    writer.WriteAttributeString("support", 
                         ar.quantifiers["Base"].ToString());
                 }
                 else
                 {
-                    writer.WriteAttributeString("Support", "-1");
+                    writer.WriteAttributeString("support", "-1");
                 }
 
                 writer.WriteStartElement("Extension");
