@@ -352,6 +352,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                 "GUHA Association rules procedure 4FT");
             xmlWriter.WriteAttributeString("maxNumberOfItemsPerTA", "1");
             xmlWriter.WriteAttributeString("avgNumberOfItemsPerTA", "1");
+            xmlWriter.WriteAttributeString("functionName", "associationRules");
             xmlWriter.WriteAttributeString("numberOfTransactions",
                 GetDataMatrixLength());
             xmlWriter.WriteAttributeString("numberOfItems", GetPMMLItemsCount());
@@ -368,7 +369,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
             }
             else
             {
-                xmlWriter.WriteAttributeString("minimimConfidence", "-1");
+                xmlWriter.WriteAttributeString("minimumConfidence", "-1");
             }
             if (IsQuantifierConnedted(quant,
                 "GuhaMining.Quantifiers.FourFold.Others.Base"))
@@ -508,6 +509,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                     xmlWriter.WriteStartElement("FieldColumnPair");
                     xmlWriter.WriteAttributeString("column", columnName);
                     xmlWriter.WriteAttributeString("field", columnName);
+                    xmlWriter.WriteEndElement(); //FieldColumnPair
                     xmlWriter.WriteStartElement("InlineTable");
                     foreach (Category<IComparable> category in attr.Values)
                     {
@@ -530,7 +532,6 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                         }
                     }
                     xmlWriter.WriteEndElement(); //InlineTable
-                    xmlWriter.WriteEndElement(); //FieldColumnPair
                     xmlWriter.WriteEndElement();//MapValues
                 }
 
