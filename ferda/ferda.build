@@ -59,8 +59,8 @@
 				<include name="${bin.dir}/FrontEnd/**"/>
 				<include name="${bin.dir}/Server/**"/>
 				<include name="${bin.dir}/db/**"/>
-				<include name="${installerWiX.dir}/bin/**" />
-				<include name="${installerWiX.dir}/obj/**" />
+				<include name="${installerWiX.dir}/bin/**"/>
+				<include name="${installerWiX.dir}/obj/**"/>
 			</fileset>
 		</delete>
 	</target>

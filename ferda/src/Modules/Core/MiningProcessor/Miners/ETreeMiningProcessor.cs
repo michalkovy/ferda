@@ -411,7 +411,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 ser.IfRepresentation = tree.IfRepresentation;
                 ser.TreeDepth = tree.Depth;
                 ser.ConfusionMatrix = tree.ConfusionMatrix(
-                    targetClassificationAttribute.BitStrings, 
+                    targetClassificationAttribute.BitStrings,
                     targetClassificationAttribute.CategoriesIds);
 
                 //the nodes
