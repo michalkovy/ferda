@@ -3,8 +3,9 @@
 #
 Ice.Default.Locator=IceGrid/Locator:tcp -h 127.0.0.1 -p 12000
 
-Ice.MessageSizeMax=10240
+Ice.MessageSizeMax=268435456
 #default 1024kB~1MB
+#now is changed to 1024*256=262 144 (little higher than 250MB)
 
 
 #

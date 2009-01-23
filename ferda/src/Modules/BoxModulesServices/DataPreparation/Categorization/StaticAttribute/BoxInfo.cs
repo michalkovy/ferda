@@ -215,7 +215,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             dummy = Func.GetAttributeId();
             dummy = Func.GetAttributeNames();
 
-            dummy = Func.GetCategoriesNames(true);
+            string [] names = Func.GetCategoriesNames(true);
+            if (names.Length == 0)
+            {
+                throw Exceptions.BoxRuntimeError(
+                    null,
+                    boxModule.StringIceIdentity,
+                    "There has to be at least one category or interval created in the static attribute");
+            }
 
             dummy = Func.GetCategoriesAndFrequencies(true);
 

@@ -101,8 +101,7 @@
 				<if test="${not(aktualni)}">
 					<echo message="Generuji PDF z DocBook souboru '${path::get-file-name(input.file)}'..."/>
 					<if test="${use.xep}">
-						<exec program="xep.bat">
-							<arg value="-valid"/>
+						<exec program="fop.bat">
 							<arg value="-xml"/>
 							<arg>
 								<path>
@@ -203,8 +202,7 @@
 			<if test="${use.xep}">
 				<echo message="Generuji PDF popis krabiček do souboru ${boxesDescription.html}." />
 				
-				<exec program="xep.bat">
-					<arg value="-valid"/>
+				<exec program="fop.bat">
 					<arg value="-xml"/>
 					<arg>
 						<path>
@@ -231,8 +229,7 @@
 			<if test="${use.xep}">
 				<echo message="Generuji PDF popis krabiček do souboru ${boxesLocalization.html}." />
 				
-				<exec program="xep.bat">
-					<arg value="-valid"/>
+				<exec program="fop.bat">
 					<arg value="-xml"/>
 					<arg>
 						<path>
