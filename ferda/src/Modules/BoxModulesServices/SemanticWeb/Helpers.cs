@@ -517,8 +517,8 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                 //confidence
                 if (ar.quantifiers.ContainsKey("Founded Implication"))
                 {
-                    writer.WriteAttributeString("confidence", 
-                        ar.quantifiers["Founded Implication"].ToString());
+                    writer.WriteAttributeString("confidence",
+                        ar.quantifiers["Founded Implication"].ToString().Replace(',', '.'));
                 }
                 else
                 {
@@ -527,8 +527,8 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                 //support
                 if (ar.quantifiers.ContainsKey("Base"))
                 {
-                    writer.WriteAttributeString("support", 
-                        ar.quantifiers["Base"].ToString());
+                    writer.WriteAttributeString("support",
+                        ar.quantifiers["Base"].ToString().Replace(',', '.'));
                 }
                 else
                 {
@@ -550,7 +550,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
 
                     writer.WriteStartElement("Extension");
                     writer.WriteAttributeString("name", "Quantifier");
-                    writer.WriteAttributeString("value", ar.quantifiers[s].ToString());
+                    writer.WriteAttributeString("value", ar.quantifiers[s].ToString().Replace(',', '.'));
                     writer.WriteAttributeString("extender", s);
                     writer.WriteEndElement(); //Extension
                 }

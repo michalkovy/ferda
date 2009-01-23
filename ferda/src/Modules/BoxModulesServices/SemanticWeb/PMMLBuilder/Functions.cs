@@ -364,8 +364,9 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
             if (IsQuantifierConnedted(quant,
                 "GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication"))
             {
-                xmlWriter.WriteAttributeString("minimimConfidence", 
-                    GetQuantifierTreshold(quant,"GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication").ToString());
+                xmlWriter.WriteAttributeString("minimumConfidence", 
+                    GetQuantifierTreshold(quant,"GuhaMining.Quantifiers.FourFold.Implicational.FoundedImplication").
+                    ToString().Replace(',','.'));
             }
             else
             {
@@ -375,7 +376,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                 "GuhaMining.Quantifiers.FourFold.Others.Base"))
             {
                 xmlWriter.WriteAttributeString("minimumSupport", 
-                    GetQuantifierTreshold(quant,"GuhaMining.Quantifiers.FourFold.Others.Base").ToString());
+                    GetQuantifierTreshold(quant,"GuhaMining.Quantifiers.FourFold.Others.Base").ToString().Replace(',','.'));
             }
             else
             {
@@ -404,7 +405,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                 xmlWriter.WriteAttributeString("name", "QuantifierTreshold");
                 xmlWriter.WriteAttributeString("value",
                     qs.boxTypeIdentifier.Substring(qs.boxTypeIdentifier.LastIndexOf('.')+1));
-                xmlWriter.WriteElementString("Treshold", qs.treshold.ToString());
+                xmlWriter.WriteElementString("Treshold", qs.treshold.ToString().Replace(',','.'));
                 xmlWriter.WriteEndElement(); //Extension
             }
 
