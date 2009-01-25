@@ -231,6 +231,7 @@
 				<include name="System.Data.SQLite.lib"/>
 				<include name="Ice.jar"/>
 				<include name="OWL_API/*"/>
+				<include name="Mono.Simd.dll" />
 			</fileset>
 		</copy>
 	</target>

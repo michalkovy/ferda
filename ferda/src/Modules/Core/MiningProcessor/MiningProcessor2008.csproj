@@ -65,6 +65,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\lib\Ice.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Simd, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\Mono.Simd.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -81,6 +85,7 @@
     <Compile Include="BitStrings\BitStringsArray.cs" />
     <Compile Include="BitStrings\EmptyBitString.cs" />
     <Compile Include="BitStrings\FalseBitString.cs" />
+    <Compile Include="BitStrings\FuzzyBitString.cs" />
     <Compile Include="BitStrings\IBitString.cs" />
     <Compile Include="BitStrings\IBitStringCache.cs" />
     <Compile Include="BitStrings\MissingInformation.cs" />

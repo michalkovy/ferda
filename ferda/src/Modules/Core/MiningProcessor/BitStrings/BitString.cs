@@ -138,6 +138,13 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             _identifier = identifier;
         }
 
+        /// <summary>
+        /// Creates a new bit string
+        /// </summary>
+        /// <param name="identifier">The identifier of the bit string</param>
+        /// <param name="length">Length of the bit string</param>
+        /// <param name="bits">Array of longs, where each bit is means one bit
+        /// of the bit string (64 bits in one long)</param>
         public unsafe BitString(BitStringIdentifier identifier, int length, long[] bits)
             : this(new AtomFormula(identifier))
         {
@@ -175,7 +182,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (source._size == 0)
                 throw new InvalidOperationException("Cannot copy-construct a BitString from an uninitialized one.");
 
-            _size = source._size;
+            _size = source._size;   
             _sum = source._sum;
 
 #if USE64BIT
