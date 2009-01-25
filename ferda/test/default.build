@@ -7,6 +7,11 @@
             * debug           - (true|false) debug build?
     -->
 	<target name="test">
+		<nant buildfile="FuzzyBitStringsTest/default.build" target="test">
+			<properties>
+				<property name="build.dir" value="${serverbin.dir}"/>
+			</properties>
+		</nant>
 		<nant buildfile="ProjectManagerTest/default.build" target="test">
 			<properties>
 				<property name="build.dir" value="${frontendbin.dir}"/>

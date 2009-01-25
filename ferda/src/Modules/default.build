@@ -188,6 +188,7 @@
 				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
 				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
 				<include name="${path::combine(lib.dir,'IceBox.dll')}"/>
+				<include name="${path::combine(lib.dir,'Mono.Simd.dll')}"/>
 				<include name="System.dll"/>
 				<include name="System.Data.dll"/>
 				<include name="System.Xml.dll"/>
