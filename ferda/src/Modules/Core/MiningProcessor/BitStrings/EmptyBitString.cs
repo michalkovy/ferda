@@ -209,6 +209,22 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 			set {}
         }
 
+        /// <summary>
+        /// Number of bits in the current bit string, that are not equal to zero.
+        /// This property came with introduction of fuzzy bit strings. In boolean
+        /// bit strings, the Sum operation determines both the number of non-zero
+        /// bits and the sum of the bit string. In the fuzzy case these two numbers
+        /// are different. The function is needed for determining frequencies in ETrees
+        /// and number of all items belonging to a condition in a 4FT.
+        /// </summary>
+        public long NonZeroBitsCount
+        {
+            get
+            {
+                return long.MaxValue;
+            }
+        }
+
         #endregion
 
         #region IBitStringBase Members
