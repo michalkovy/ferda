@@ -105,5 +105,17 @@ namespace Ferda.Guha.MiningProcessor
             result.userMessage = "The GUHA tree node is not treated according to its position in the tree (leaf vs. inner node).";
             return result;
         }
+
+        /// <summary>
+        /// Returns an error saying that it is expected to create a non fuzzy bit string,
+        /// however the numbers are float i.e. fuzzy. 
+        /// </summary>
+        /// <returns></returns>
+        public static BoxRuntimeError NotFuzzyBitStringException()
+        {
+            BoxRuntimeError result = new BoxRuntimeError();
+            result.userMessage = "It is expected to create a non fuzzy bit string, however the data are fuzzy.";
+            return result;
+        }
     }
 }
