@@ -85,7 +85,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise SUM operation on current BitString.
         /// </summary>
         /// <returns>The number of bits set to 1 in current BitString.</returns>
-        int Sum { get; set; }
+        float Sum { get; set; }
     }
 
     /// <summary>
@@ -94,27 +94,29 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
     public interface IBitStringCreate : IBitStringBase
     {
         /// <summary>
-        /// Fills the whole BitString with the specified value.
+        /// Fills the whole BitString with the specified value. In case of 
+        /// crisp bit strings, the value is 1 or 0, in case of fuzzy bit strings,
+        /// the value is a float [0,1].
         /// </summary>
-        /// <param name="value">Value to be filled into every bit of the BitString.</param>
+        /// <param name="value">Value to be filled into every "bit" of the BitString.</param>
         /// <remarks>
         /// <para>BitString are filled with zeroes when created, so there is no need to call Fill(false) after create() method.</para>
         /// </remarks>
-        void Fill(bool value);
+        void Fill(float value);
 
         /// <summary>
         /// Gets a value of the specified bit from the BitString.
         /// </summary>
         /// <param name="index">Index of the bit to be retrieved.</param>
         /// <returns>Value of the specified bit from the BitString.</returns>
-        bool GetBit(int index);
+        float GetBit(int index);
 
         /// <summary>
         /// Sets a specified bit in the BitString.
         /// </summary>
         /// <param name="index">Index of the bit to be set.</param>
         /// <param name="value">New value of the bit.</param>
-        void SetBit(int index, bool value);
+        void SetBit(int index, float value);
     }
 
     /// <summary>

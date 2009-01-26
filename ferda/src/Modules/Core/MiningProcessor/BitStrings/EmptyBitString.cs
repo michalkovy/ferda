@@ -203,9 +203,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise SUM operation on current BitString.
         /// </summary>
         /// <returns>The number of bits set to 1 in current BitString.</returns>
-        public int Sum
+        public float Sum
         {
-            get { return Int32.MaxValue; }
+            get { return Single.MaxValue; }
 			set {}
         }
 
