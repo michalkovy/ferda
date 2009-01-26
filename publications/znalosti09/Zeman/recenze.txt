@@ -1,0 +1,31 @@
+﻿The main criticism towards authors would be exactly about giving more examples in their text, and illustrating various propositions with short but concrete examples. You talk about mappings, about alignments of ontologies to DB schemas, about the use of such alignments, but the case you give in section 5 is still too vague to fully appreciate the impact of your modifications to Ferda. Instead of abstract Fig.1 and over-generic Fig.2, could you give more concrete illustrations of what is happening in your tool/method? For example:
+
+p.1: you talk about structural heterogeneity issues -> what are they? Could you illustrate some specific issues you face(d) = as a part of the motivation for your work and for reading about it? Can you clearer about what specific gaps you are addressing?
+
+p.2: associative mining has been mentioned elsewhere, but could you give an example of such a rule (e.g., for the reader who has not seen your previous paper...) No need to go into extreme, one short sentence is more than enough...
+
+p.3: you mention that without categorization, results may be misleading -> specifically...?
+
+p.3.: the fact that same for entities are close to each other may be carried to data mining -> true, but can you be concrete? Give example from your case/scenario...
+
+p.5: Would it be possible to annotate Fig.2 and making it a bit more embedded in your scenario, so that the reader has a clue what s/he sees there?
+
+p.5/6: The mapping editor in Fig.3 is good, but would it be possible to state explicitly in words what is being mapped there and what are the expected benefits of such a mapping?
+
+p.5: Ferda does not necessarily recognize concepts automatically! The recognition is based on a previous, manually created mapping between DB schema and ontological entity... so, it's more about Ferda making use of the mapping rather than automatically recognizing...
+
+p.6: Information useful to data mining can be assigned... -> OK, true, but can you tell explicitly which information did you assigned and took into account? Which feature of OWL2 should help you here - punning, reification?
+
+p.7: Fig.4 is somewhat lost and I could not immediately attach it to the flowing text, narrative... Clarify its purpose, consider if it's needed...
+DODANO
+
+p.7: What is the value of your recommender? What/how much gets simplified for the user if they make use of the recommending feature? Is the result an increase in correctness? Or in overall productivity of the user? Or?
+NECHAPU
+
+p.9: Could you re-phrase the task from your experiment -> from NL to the language of associative rules. POssibly, give a sample "response" to the task...
+
+p.9: You mention data miner using an available ontology -> what is this? Where did the ontology come from? Is it part of the ADAMEK data set?
+
+p.10: Table 2 is far too cryptic to actually make much sense of it. Can you discuss the results, interpret what is shown in the table using words? Are you satisfied with this performance or not? Why yes or why not? This part needs a serious strengthening...
+
+Článek se týká dvou klíčových oblastí znalostního inženýrství - dobývání znalostí z dat a ontologií. Přitom je napsaný velmi kompetentním způsobem jak z hlediska dobývání znalostí z dat, tak z hlediska ontologií. Proto jeho přijetí na konferenci Znalosti silně doporučuji. Jediná připomínka, kterou vůči současné podobě článku mám, je poněkud neobjektivní srovnání tradičního přístupu bez použití ontologií s navrhovaným přístupem, založeným na ontologiích. Zatímco článek poukazuje na to, že kategorizace, kterou provádí analytik bez použití ontologií bývá často chybná a neodráží sémantiku dat, kategorizace daná ontologií se a priori pokládá za správnou. Ačkoliv z hlediska přístupu, který pokládá ontologie za řešení sémantických problémů při dobývání znalostí z dat, je takový pohled pochopitelný, jeví se mi stejně neobjektivní jako opačný pohled, běžně se vyskytující ve statistických článcích: že kategorizace stanovená analytikem je a priori správná a jde jenom o to, jaké metody na data při této kategorizaci aplikovat.

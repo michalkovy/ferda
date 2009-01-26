@@ -1,0 +1,105 @@
+\section{Demonstrative Experiment} \label{Experiments}
+
+In order to demonstrate the usefulness of the presented approach, we show a step-by-step experiment that simulates the solving of a typified data mining task. We cannot compare our method to any other method, because to our best knowledge such a method does not exist. 
+The task concerns finding strong associations between two groups of attributes in a medical database. 
+Section \ref{Adamek} describes the medical data, section \ref{Method} describes the mining method and analytical question solved, section \ref{Task} describes the task setup, and finally, section \ref{Results} concludes the experiment.
+% based on concrete quantitative results. 
+
+\subsection{ADAMEK data}\label{Adamek}
+The \emph{ADAMEK} medical data set \cite{Adamek} was used for our experiment. 
+The data set contains data taken from the ambulance of preventive cardiology and contains 180 attributes for each of 1122 examined patients. 
+Related attributes are clustered to 25 thematic groups. 
+
+\subsection{Mining Method and Analytical Questions}\label{Method}
+We chose GUHA-based association mining and in particular its 4FT procedure as our mining method. 
+Although the method provides great possibilities in constructing association rules, we simplified the task so that both the antecedent and consequent only consist of a conjunction of attribute categories and the relation between them is expressed by \emph{support} and \emph{confidence}. 
+In this way, mining with 4FT corresponds to classical \emph{a-priori} mining \cite{Agrawal}, and there is no need to introduce the complexity of GUHA theory to the reader. 
+
+One can construct \emph{analytical questions} that correspond to finding associations between two chosen groups of related attributes. We chose a medium-sized experiment that consisted in solving the following analytical questions:
+
+\medskip
+\noindent
+\emph{What are the relations between blood pressure levels and the following diseases:}
+	\begin{enumerate}
+		\item \emph{Myocardial ischemia}
+		\item \emph{Cardiomyopathy}
+		\item \emph{Diabetes}
+		\item \emph{Hypertension}
+		\item \emph{Allergy}
+		\item \emph{Angina Pectoris}
+		\item \emph{Myocardial infarction}
+	\end{enumerate}
+
+\subsection{Task Setup}\label{Task}
+The experiment aims to test the benefit of association mining with aid of ontologies. 
+Therefore we presume that the data miner uses an available ontology enhanced with additional information and mapping. 
+We used a relevant part of the \emph{UMLS}\footnote{Unified Medical Language System \url{http://www.nlm.nih.gov/research/UMLS/}} metathesaurus and semantic network as the ontology. 
+The mapping was created manually; Table \ref{tab:Mapping} shows the details.
+
+\begin{table}[ht]
+	\centering
+		\begin{tabular}{|p{2,2cm}|p{2,9cm}|p{2,4cm}|p{2,5cm}|}
+			\hline
+			\textbf{Attribute group} & \textbf{Ontology entity} & \textbf{Columns in group} & \textbf{Mapped columns}\\
+			\hline
+			Blood pressure & Blood pressure & 4 & 4 \\
+			\hline
+			ICHS & Myocardial ischemia & 16 & 7 \\
+			\hline
+			Diabetes & Diabetes & 6 & 5 \\
+			\hline
+			Hypertension & Hypertension & 5 & 4 \\
+			\hline
+			Allergy & Alergic anamnesis & 3 & 2 \\
+			\hline
+			 - & Angina pectoris & 1 & 1 \\
+			\hline
+			 - & Myocardial infarction & 1 & 1 \\
+			 \hline
+		\end{tabular}
+	\caption{Mapping details}
+	\label{tab:Mapping}
+\end{table}
+
+We can see from the table (last column) that multiple database attributes were mapped on one ontology entity. 
+This is because we used a general medical ontology but rather specific cardiologic data. 
+The two last entities from the ontology did not have a corresponding attribute group in the data source. 
+The number of mapped attributes is usually lower than the total number of attributes in one attribute group. 
+This is caused by the inconsistency of the database: some attributes are erroneous and cannot be used for mining at all. 
+
+%The previous paragraph shows that the (properly done) 
+The mapping itself can be a valuable source of information. 
+The mining tool, through it, receives information about the grouping %and semantics 
+of attributes and also the identification of unfit attributes.
+% as positive side effect.
+%
+With the mapping available, data preparation is simplified. 
+We take advantage of the identification of related attributes and of the automatic attribute creation. 
+The user selects the mapping box and clicks into the \emph{Boxes asking for creation} submenu on the chosen entity. 
+Then s/he selects all created columns and chooses the \emph{Ontology derived attribute} option from the \emph{Boxes asking for creation} submenu to complete attribute creation through box recommendation.
+%
+%!!! ZDE JE MOZNOST NAHRADIT SLOVNI POSTUP OBRAZKEM POSTUP.PNG !!!
+%
+Furthermore, the information in ontology guarantees that the categorization is in a sense correct. 
+Without ontology support the user would have to find each column in the overall list of columns, then to choose a proper attribute box (representing categorization), and then finally adjust the box. 
+%For special entities such as blood pressure, the user had to manually construct proper intervals. 
+
+\subsection{Results and Evaluation}\label{Results}
+In Table~\ref{tab:Hypotheses}, for completeness, we list the numbers of hypotheses resulting from the above-described experiment for the seven analytical questions mentioned, with basic parameter setting \emph{Support = 0.1}, \emph{Confidence = 0.8}.\footnote{We consider these values as default for first iteration of association rules mining} 
+
+\begin{table}[ht]
+	\centering
+		\begin{tabular}{|p{3,5cm}|p{0,45cm}|p{0,3cm}|p{0,3cm}|p{0,3cm}|p{0,3cm}|p{0,3cm}|p{0,3cm}|}
+			\hline
+			Analytical question & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+			\hline
+			No. of hypotheses found & 191 & 32 & 33 & 13 & 0 & 0 & 0 \\
+			\hline
+		\end{tabular}
+	\caption{Numbers of hypotheses found in the illustrative experiment}
+	\label{tab:Hypotheses}
+\end{table}
+
+The experiment demonstrates the usability of ontology support in GUHA-based association mining in two ways. 
+Proper mapping and terms from the ontology help the user better understand the examined \emph{data} and to properly create \emph{attributes}. The implementation in Ferda also allows to speed up the process of constructing the data mining \emph{task}.
+Without ontology usage, the user needs to perform several mouse clicks and item selections for each attribute from an attribute group. With ontology usage, all attributes from one group are created just by 3 clicks and two item selections no matter the size of the group.
