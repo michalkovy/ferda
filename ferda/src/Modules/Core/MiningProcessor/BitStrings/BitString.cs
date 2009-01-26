@@ -560,7 +560,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise SUM operation on current BitString.
         /// </summary>
         /// <returns>The number of bits set to 1 in current BitString.</returns>
-        public int Sum
+        public float Sum
         {
             get
             {
@@ -590,12 +590,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 Debug.Assert(_sum >= 0, "The sum must be non-negative.");
                 Debug.Assert(_sum <= _size, "The sum must be less than or equal to the size of the bit string.");
 
-                return _sum;
+                return Convert.ToSingle(_sum);
             }
             
             set
             {
-                _sum = value;
+                _sum = Convert.ToInt32(value);
             }
         }
 
@@ -1181,15 +1181,20 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="index">Index of the bit to be set.</param>
         /// <param name="value">New value of the bit.</param>
-        public void SetBit(int index, bool value)
+        public void SetBit(int index, float value)
         {
             if (_size == 0)
                 throw new InvalidOperationException("BitString was not initialized (use create method first).");
             if ((index < 0) || (index >= _size))
                 throw new ArgumentOutOfRangeException("index",
                                                       "Index must be between 0 and the length of BitString minus 1.");
+            if (value != 0f && value != 1f)
+            {
+                throw Exceptions.NotFuzzyBitStringException();
+            }
+            bool v = System.Convert.ToBoolean(value);
 
-            if (value)
+            if (v)
             {
                 _array[index / _blockSize] |= _one << (index % _blockSize);
             }
@@ -1207,7 +1212,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="index">Index of the bit to be retrieved.</param>
         /// <returns>Value of the specified bit from the BitString.</returns>
-        public bool GetBit(int index)
+        public float GetBit(int index)
         {
             if (_size == 0)
                 throw new InvalidOperationException("BitString was not initialized (use create method first).");
@@ -1215,7 +1220,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 throw new ArgumentOutOfRangeException("index",
                                                       "Index must be between 0 and the length of BitString minus 1.");
 
-            return (_array[index / _blockSize] & (_one << (index % _blockSize))) > 0;
+            bool result = (_array[index / _blockSize] & (_one << (index % _blockSize))) > 0;
+            return Convert.ToSingle(result);
         }
 
 
@@ -1226,15 +1232,21 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <remarks>
         /// <para>BitString are filled with zeroes when created, so there is no need to call Fill(false) after create() method.</para>
         /// </remarks>
-        public void Fill(bool value)
+        public void Fill(float value)
         {
+            if (value != 0f && value != 1f)
+            {
+                throw Exceptions.NotFuzzyBitStringException();
+            }
+
             if (_size == 0)
                 throw new InvalidOperationException("BitString was not initialized (use create method first).");
 
+            bool v = System.Convert.ToBoolean(value);
 #if UNSAFE
-            fillUnsafe(value);
+            fillUnsafe(v);
 #else
-            fillSafe(value);
+            fillSafe(v);
 #endif
         }
 
