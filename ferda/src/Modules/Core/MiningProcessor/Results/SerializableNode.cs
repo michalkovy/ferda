@@ -161,7 +161,6 @@ namespace Ferda.Guha.MiningProcessor.Results
         /// from name of the attribute (property "Name in Boolean attributes") to
         /// select expression of the column.
         /// </summary>
-        /// <param name="node">Node to be changed.</param>
         /// <param name="conversion">Conversion dictionary, key key is attribute name,
         /// value is select expression
         /// </param>
