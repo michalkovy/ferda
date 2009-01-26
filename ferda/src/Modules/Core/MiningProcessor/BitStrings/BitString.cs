@@ -1145,6 +1145,29 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     }
                 }
             }
+
+            /* ukazka pouziti Mono.Simd
+	     * nicmene myslim si, ze bychom meli retizky predelat z ulong[] na Vector2ul[] a pak by to nize bylo komplikovanejsi
+            Vector4i sum = new Vector4i(0, 0, 0, 0);
+            fixed (ulong* aP = ap, bP = bp, cP = cp, dP = dp)
+            {
+                fixed (Byte* lookup = _lookup16)
+                {
+                    ulong* aPt = aP, bPt = bP, cPt = cP, dPt = dP, stopPt = aP + ap.Length;
+                    ulong temp1, temp2, temp3;
+                    while (aPt < stopPt)
+                    {
+		        Vector2ul ab = new Vector2ul(*aPt++, *bPt++);
+			Vector2ul cd = new Vector2ul(*cPt++, *dPt++);
+			Vector8us aAcbAd = (Vector8us)(ab & cd);
+			Vector8us aAdbAc = (Vector8us)(ab & (Vector2ul)Vector4i.Suffle((Vector4i)cd,ShuffleSel.XFromZ | ShuffleSel.YFromW | ShuffleSel.ZFromX | ShuffleSel.WFromY));
+			sum += new Vector4i(*(lookup + (int)aAcbAd.V0), *(lookup + (int)aAdbAc.V4), *(lookup + (int)aAdbAc.V0), *(lookup + (int)aAcbAd.V4));
+			sum += new Vector4i(*(lookup + (int)aAcbAd.V1), *(lookup + (int)aAdbAc.V5), *(lookup + (int)aAdbAc.V1), *(lookup + (int)aAcbAd.V5));
+			sum += new Vector4i(*(lookup + (int)aAcbAd.V2), *(lookup + (int)aAdbAc.V6), *(lookup + (int)aAdbAc.V2), *(lookup + (int)aAcbAd.V6));
+			sum += new Vector4i(*(lookup + (int)aAcbAd.V3), *(lookup + (int)aAdbAc.V7), *(lookup + (int)aAdbAc.V3), *(lookup + (int)aAcbAd.V7));
+                    }
+                }
+            } */
         }
 
         private static void fillSum(IBitString iBS, int actSum, int secondSum, ref int sumSet, ref ulong[] bp)
