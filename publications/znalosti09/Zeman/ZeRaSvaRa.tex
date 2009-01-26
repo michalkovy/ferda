@@ -1,0 +1,248 @@
+\documentclass{llncs}
+\usepackage{times}
+\usepackage{url}
+\usepackage{array}
+\usepackage{graphicx}
+ 
+\begin{document}
+
+\pagestyle{empty}
+\mainmatter
+
+\title{Ontology-Driven Data Preparation for Association Mining}
+
+\author{Martin Zeman\inst{1} \and Martin Ralbovsk\'{y}\inst{2} \and Vojt\v{e}ch Sv\'{a}tek\inst{2} \and Jan Rauch\inst{2}}
+
+\institute{Department of Software Engineering, Faculty of Mathematics and Physics, Charles University\\
+Malostransk\'{e} n\'{a}m. 25, 118 01 Praha, Czech Republic\\
+\email{martinzeman@email.cz}
+\and
+Department of Information and Knowledge Engineering, University of Economics, Prague\\
+W. Churchill Sq.~4, 130 67 Praha, Czech Republic\\
+\email{ralbovsm@vse.cz, svatek@vse.cz, rauch@vse.cz}
+}
+
+\maketitle
+
+\begin{abstract}
+Ontologies can convey domain semantics to various phases of a KDD application through a mapping established between ontology entities and columns of the data matrix.
+The approach implemented in the Ferda tool focuses on providing support for the data preparation phase.
+Information about important data values and column groupings, once injected into a domain ontology, can be repeatedly used for creating meaninfgul categories for attributes and for defining mining tasks producing association hypotheses well-interpretable in the domain context.
+Tests on real data have been carried out in the domain of cardiology.
+\end{abstract}
+
+\input 1Introduction.tex
+
+\input 2OntologiesAssociation.tex
+
+\input 3Ferda.tex
+
+\input 4OntologiesFerda.tex
+
+\input 5Experiments.tex
+
+\input 6Related.tex
+
+\input 7Conclusions.tex
+
+\section*{Acknowledgment}
+
+This work was partly supported by the CSF project no.201/08/0802, ``Application of Knowledge Engineering Methods in Knowledge Discovery from Databases'' and grant IGA 21/08 of UEP, Prague. 
+
+\begin{thebibliography}{1}
+
+%\bibitem{Hypertension}
+%1999 World Health Organization – International Society of Hypertension Guidelines for the Management of Hypertension. Guidelines Subcommittee. \emph{J~Hypertension}, 1999, 17: 151–-83.
+
+\bibitem{OWL2}
+\emph{OWL 2 Web Ontology Language: Profiles}. W3C Working Draft 11 April 2008, online \url{http://www.w3.org/TR/2008/WD-owl2-profiles-20080411/}.
+
+\bibitem{Agrawal}
+Agrawal R., Imielinski T., Swami A.:
+Mining association rules between sets of items in large databases.
+In: Proc. of the ACM SIGMOD Conference on Management of Data, p.207--216.
+
+%\bibitem{Hussein} 
+%Almuallim, H., Akiba, Y. A., Kaneda, S.: On Handling Tree-Structured Attributes in Decision Tree Learning. 
+%In: Proceedings of the Twelfth International Conference on Machine Learning (ML-95). Morgan Kaufmann, 12--20.
+
+%\bibitem{Aronis} 
+%Aronis, J.M., Provost, F.J., Buchanan, B.G.: Exploiting Background Knowledge in Automated Discovery. 
+%In: Proceedings of the 2nd International Conference on Knowledge Discovery and Data Mining, 1996 (KDD-96).
+%Proc. SIGKDD-96.
+
+\bibitem{Bogorny} 
+Bogorny, V., Engel, P., Alvares, L.O.: 
+Enhancing the Process of Knowledge Discovery in Geographic Databases using Geo-Ontologies. 
+In: Nigro, H. O., Cisaro, S.G., Xodo, D. (Ed.). Data Mining with Ontologies: Implementations, Findings, and Frameworks. Idea Group Inc. (2007). pp.160-181.
+
+\bibitem{Collard}
+Brisson, L., Collard, M., Le Brigant, K., Barbry, P.: KTA: A Framework for Integrating Expert Knowledge and Experiment Memory in Transcriptome Analysis. In: International Workshop on Knowledge Discovery and Ontologies, held with ECML/PKDD 2004, Pisa, p.85-90.
+
+\bibitem{Cannataro}
+Cannataro, M., Guzzi, P. H., Mazza, T., Tradigo, G., Veltri, P.: Using Ontologies in PROTEUS for Modeling Proteomics Data Mining Applications.
+In: From Grid to Healthgrid: Proceedings of Healthgrid 2005, IOS Press, 17-26. 
+
+%\bibitem{Clark}
+%Clark, P. Matwin, S.: Using Qualitative Models to Guide Inductive Learning. 
+%In: Proceedings of the 1993 International Conference on Machine Learning, 49-56.
+
+%\bibitem{Domingues}
+%Domingues, M. A., Rezende S. A.:
+%Using Taxonomies to Facilitate the Analysis of the Association Rules.
+%In: The 2$^{nd}$ International Workshop on Knowledge Discovery and Ontologies, held with ECML/PKDD 2005, Porto, p.59-66.
+
+\bibitem{Cespivova}
+\v{C}e\v{s}pivov\'{a} H. Rauch J., Sv\'{a}tek V., Kejkula M., Tome\v{c}kov\'{a} M.: Roles of Medical Ontologies in Association Mining CRISP-DM Cycle, ECML/PKDD Workshop on Knowledge Discovery and Ontologies (KDO'04), Pisa 2004.
+
+%\bibitem{Embley}
+%Embley, D.~W., Tao, C., Liddle, D.~W.:
+%\newblock Automatically extracting ontologically specified data from {HTML} tables of unknown structure.
+%\newblock In {\em Proc. ER '02}, pp. 322--337, London, UK, 2002, Springer-Verlag. 
+
+\bibitem{GUHA}
+H\'{a}jek P., Havr\'{a}nek, T.: 
+\emph{Mechanising Hypothesis Formation -- Mathematical  Foundations  for  a   General  Theory.}
+Springer-Verlag, 1978.
+
+%\bibitem{HajekHolena}
+%H\'{a}jek P., Hole\v{n}a M.: Formal logics of discovery and hypothesis 
+%formation by machine. \emph{Theoretical Computer Science}, 292 (2003) p.345--357.
+
+\bibitem{Kovac}
+Kov\'{a}\v{c} M.:User oriented language for solving KDD tasks. 
+Master Thesis, Faculty of Mathematics and Physics, Charles University, Prague (to appear).
+
+\bibitem{Ferda}
+Kov\'{a}\v{c} M., Kucha\v{r} T., Kuzmin A., Ralbovsk\'{y} M.: Ferda, 
+New Visual Environment for Data Mining. Znalosti 2006, 
+Conference on Data Mining, Hradec Kr\'{a}lov\'{e} 2006, p.~118--129 (in Czech).
+
+\bibitem{Kuzmin}
+Kuzmin A.: Relational GUHA procedures. Master Thesis, 
+Faculty of Mathematics and Physics, Charles University, Prague 2007 (in Czech)
+
+\bibitem{Prickl}
+Labsk\'{y}, M., Nekvasil, M., Sv\'{a}tek, V., Rak, D.:
+\newblock The Ex Project: Web Information Extraction using Extraction Ontologies. 
+\newblock In: Proc. PriCKL'07, ECML/PKDD Workshop on Prior Conceptual Knowledge in Machine Learning and Knowledge Discovery. Warsaw 2007. 
+
+%\bibitem{Nunez} 
+%N\'{u}\~{n}ez, M.: The Use of Background Knowledge in Decision Tree Induction. 
+%{\em Machine Learning}, 6, 231--250 (1991).
+
+\bibitem{Philips}
+Phillips, J., Buchanan, B.G.: Ontology-guided knowledge discovery in databases. 
+In: International Conf. Knowledge Capture (K-CAP, 2001), Victoria, Canada, 2001.
+
+\bibitem{Ralbovsky}
+Ralbovsk\'{y} M.: Usage of Domain Knowledge for Applications of GUHA Procedures. Master thesis, Faculty of Mathematics and Physics, Charles University, Prague, 2006.
+
+\bibitem{ETree}
+Ralbovsk\'{y} M., Berka P.: Implementation of GUHA Decision Trees. In: MIS 2008, Computer science conference, Josef\accent23uv D\accent23ul (to appear).
+
+\bibitem{Disjunctions}
+Ralbovsk\'{y} M., Kucha\v{r} T.: Using Disjunctions in Association Mining. 
+In: P. Perner (Ed.), Advances in Data Mining - Theoretical Aspects and Applications, LNAI
+4597, Springer Verlag, Heidelberg 2007.
+
+\bibitem{Rauch}
+Rauch J.: Logic of Association Rules. \emph{Applied Intelligence}, Vol. 22,
+Issue 1, p.~9~--~28.
+
+%\bibitem{Alternative}
+%Rauch J., \v{S}im\accent23unek, M.: An Alternative Approach to Mining
+%Association Rules. Lin T Y, Ohsuga S, Liau C J, and Tsumoto S (eds):
+%Foundations of Data Mining and Knowledge Discovery, Springer-Verlag, 2005
+%p.~219~--~239.
+
+\bibitem{SEWEBAR}
+Rauch, J., \v{S}im\accent23unek, M.: 
+Semantic Web Presentation of Analytical Reports from Data Mining---Preliminary Considerations. 
+In: Web Intelligence 2007, Los Alamitos: IEEE Computer Society, 2007, pp. 3 – 7.
+
+\bibitem{Adamek}
+Rauch J., Tome\v{c}kov\'{a} M.: System Of Analytical Questions And Reports on On Mining In Health Data – A Case Study. MCCSIS 2007 [CD-ROM]. Lisabon : IADIS, 2007. pp.~176--181.
+
+%\bibitem{Svatek}
+%Sv\'{a}tek, V.: Exploiting Value Hierarchies in Rule Learning. 
+%In: 
+%%van Someren, M. - Widmer, G. (Eds.): 
+%ECML'97, 9th European Conference on Machine Learning. Poster Papers. Prague 1997, 108--117.
+
+\bibitem{Ontology}
+Sv\'{a}tek V., Rauch J., Ralbovsk\'{y} M.: Ontology-Enhanced Association
+Mining. In: Ackermann et al. (eds.). Semantics, Web and Mining, 
+Springer-Verlag, 2006.
+
+\bibitem {Simunek}
+\v{S}im\accent23unek M.: Academic KDD Project LISp-Miner.
+In: 
+%Abraham A. et al (eds): 
+Advances in Soft Computing---Intelligent Systems Design and Applications, 
+Springer Verlag 2003.
+
+%\bibitem{Thomas}
+%Thomas J., Laublet, P., Ganascia, J. G.: A Machine Learning Tool Designed for a Model-Based Knowledge Acquisition Approach. 
+%In: EKAW-93, European Knowledge Acquisition Workshop, Lecture Notes in Artificial Intelligence No.723, N.Aussenac et al. (eds.), Springer-Verlag, 1993, 123--138.
+
+%\bibitem{Someren}
+%van Dompseler, H. J. H., van Someren, M. W.: Using Models of Problem Solving as Bias in Automated Knowledge Acquisition. 
+%In: ECAI'94 - European Conference on Artificial Intelligence, Amsterdam 1994, 503--507.
+
+\bibitem{Zeman}
+Zeman M.: Usage of Ontologies for GUHA Procedures. Master thesis, Faculty of Mathematics and Physics, Charles University, Prague 2008.
+
+\bibitem{Zakova}
+\v{Z}\'{a}kov\'{a}, M., \v{Z}elezn\'{y}, F.:  Exploiting Term, Predicate, and Feature Taxonomies in Propositionalization and Propositional Rule Learning. ECML 2007: the 18th European Conference on Machine Learning, Springer 2007.
+
+%\bibitem{SWM} Berendt, B., Hotho, A., Stumme, G.: 2nd Workshop on Semantic Web Mining, held at ECML/PKDD-2002, Helsinki 2002,
+%\url{http://km.aifb.uni-karlsruhe.de/semwebmine2002}.
+
+%\bibitem{IOS-book}
+%Buitelaar, P., Cimiano, P., Magnini, B. (eds.): Ontology Learning and Population, IOS Press, 2005.
+
+%\bibitem{IOS-book}
+%Buitelaar, P., Franke, J., Grobelnik, M., Paass, G., Sv\'{a}tek, V. (eds.): ECML/PKDD 2004 Workshop on Knowledge Discovery and Ontologies (KDO-04), Pisa 2004.
+
+%\bibitem{Cespivova}
+%\v{C}e\v{s}pivov\'{a}, H., Rauch, J., Sv\'{a}tek V., Kejkula M., Tome\v{c}kov\'{a} M.: Roles of Medical Ontology in Association Mining CRISP-DM Cycle. In: ECML/PKDD04 Workshop on Knowledge Discovery and Ontologies (KDO'04), Pisa 2004.
+
+%\bibitem{OE}
+%G\'{o}mez-Perez, A., Fern\'{a}ndez-Lopez, M., Corcho, O.: Ontological Engineering. Springer 2004.
+
+%\bibitem{GUHA}  %%%%%%%%%%%%% DODAL RAUCH
+%H\'{a}jek, P., Havr\'{a}nek, T.: \emph{Mechanising Hypothesis Formation - Mathematical  Foundations  for  a   General  Theory}. Springer-Verlag: Berlin  - Heidelberg - New York, 1978.
+
+%\bibitem{swrl}
+%Horrocks, I., Patel-Schneider, P. F., Boley, H., Tabet, S., Grosof, B., Dean, M.:
+%SWRL: A Semantic Web Rule Language Combining OWL and RuleML. W3C Submission, 21 May 2004. Online \url{http://www.w3.org/Submission/SWRL}.
+
+%\bibitem{Lin}
+%L\'{\i}n, V., Rauch, J., Sv\'{a}tek, V.: Content-based Retrieval of Analytic Reports. In: Schroeder, M., Wagner, G. (eds.). Rule Markup Languages for Business Rules on the Semantic Web, Sardinia 2002, 219--224.
+
+%\bibitem{Maedche}
+%Maedche, A.: Ontology Learning for the Semantic Web. Kluwer, 2002.
+
+%\bibitem{Trondheim}
+%Rauch, J.: Logical Calculi for Knowledge Discovery in Databases. In: Principles of Data Mining and Knowledge Discovery (PKDD-97), Springer-Verlag, 1997.
+
+%\bibitem{Ra:05A}   %%%%%%%%%%%%% DODAL RAUCH
+%Rauch, J.: Logic of Association Rules. \emph{Applied Intelligence}, 22, 9–-28, 2005.
+
+%\bibitem{LM}  %%%%%%%%%%%%% OPRAVIL RAUCH
+%Rauch, J., \v{S}im\accent23unek, M.: An Alternative Approach to Mining Association Rules. In: Lin, T. Y., Ohsuga, S.,  Liau, C. J., Tsumoto, S. (eds.), Data Mining: Foundations, Methods, and Applications, Springer-Verlag, 2005, pp. 211--232
+
+%\bibitem{SpecVal}
+%Rector, A. (ed.): Representing Specified Values in OWL: "value partitions" and "value sets".
+%W3C Working Group Note, 17 May 2005, online at \url{http://www.w3.org/TR/swbp-specified-values/}.
+
+%\bibitem{Strossa}  %%%%%%%%%%%%% DODAL RAUCH
+%Strossa, P., \v{C}ern\'{y}, Z., Rauch, J.:. Reporting Data Mining Results in a Natural Language. In: Lin, T. Y.,  Ohsuga, S., Liau, C. J.,  Hu, X.  (ed.):  Foundations of Data Mining and Knowledge Discovery. Berlin : Springer, 2005, pp. 347-362
+
+%\bibitem{KDO05}
+%Sv\'{a}tek, V., Rauch, J., Flek, M.: Ontology-Based Explanation of Discovered Associations in the Domain of Social Reality. In: The 2$^{nd}$ ECML/PKDD Workshop on Knowledge Discovery and Ontologies, 2005, Porto, 75-86.
+
+\end{thebibliography}
+
+\end{document}
