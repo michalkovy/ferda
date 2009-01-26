@@ -121,5 +121,137 @@ namespace FuzzyBitStringsTest
             Debug.WriteLine(fb12.Length);
             Debug.WriteLine("Constructor and ToString() test successful");
         }
+
+        [Test]
+        public void FillTest()
+        {
+            Debug.WriteLine("Fill(..) test");
+            BitStringIdentifier o = new BitStringIdentifier("x", "y");
+
+            float f1 = 0.01f;
+            float f2 = 0.02f;
+            float f3 = 0.03f;
+            float f4 = 0.04f;
+            float f5 = 0.05f;
+            float f6 = 0.06f;
+            float f7 = 0.07f;
+            float f8 = 0.08f;
+            float f9 = 0.09f;
+            float f10 = 0.1f;
+            float f11 = 0.11f;
+            float f12 = 0.12f;
+
+            float[] fa1 = new float[] { f1 };
+            float[] fa2 = new float[] { f1, f2 };
+            float[] fa3 = new float[] { f1, f2, f3 };
+            float[] fa4 = new float[] { f1, f2, f3, f4 };
+            float[] fa5 = new float[] { f1, f2, f3, f4, f5 };
+            float[] fa6 = new float[] { f1, f2, f3, f4, f5, f6 };
+            float[] fa7 = new float[] { f1, f2, f3, f4, f5, f6, f7 };
+            float[] fa8 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8 };
+            float[] fa9 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8, f9 };
+            float[] fa10 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8, f9, f10 };
+            float[] fa11 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11 };
+            float[] fa12 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12 };
+
+            FuzzyBitString fb1 = new FuzzyBitString(o, fa1);
+            FuzzyBitString fb2 = new FuzzyBitString(o, fa2);
+            FuzzyBitString fb3 = new FuzzyBitString(o, fa3);
+            FuzzyBitString fb4 = new FuzzyBitString(o, fa4);
+            FuzzyBitString fb5 = new FuzzyBitString(o, fa5);
+            FuzzyBitString fb6 = new FuzzyBitString(o, fa6);
+            FuzzyBitString fb7 = new FuzzyBitString(o, fa7);
+            FuzzyBitString fb8 = new FuzzyBitString(o, fa8);
+            FuzzyBitString fb9 = new FuzzyBitString(o, fa9);
+            FuzzyBitString fb10 = new FuzzyBitString(o, fa10);
+            FuzzyBitString fb11 = new FuzzyBitString(o, fa11);
+            FuzzyBitString fb12 = new FuzzyBitString(o, fa12);
+
+            fb1.Fill(0.1f);
+            fb2.Fill(0.2f);
+            fb3.Fill(0.3f);
+            fb4.Fill(0.4f);
+            fb5.Fill(0.5f);
+            fb6.Fill(0.6f);
+            fb7.Fill(0.7f);
+            fb8.Fill(0.8f);
+            fb9.Fill(0.9f);
+            fb10.Fill(0.10f);
+            fb11.Fill(0.11f);
+            fb12.Fill(0.12f);
+
+            Debug.WriteLine(fb1.ToString());
+            Debug.WriteLine(fb2.ToString());
+            Debug.WriteLine(fb3.ToString());
+            Debug.WriteLine(fb4.ToString());
+            Debug.WriteLine(fb5.ToString());
+            Debug.WriteLine(fb6.ToString());
+            Debug.WriteLine(fb7.ToString());
+            Debug.WriteLine(fb8.ToString());
+            Debug.WriteLine(fb9.ToString());
+            Debug.WriteLine(fb10.ToString());
+            Debug.WriteLine(fb11.ToString());
+            Debug.WriteLine(fb12.ToString());
+
+            Debug.WriteLine("Fill(..) test successful");
+        }
+
+        [Test]
+        public void GetBitTest()
+        {
+            Debug.WriteLine("GetBitTest(..) test");
+            BitStringIdentifier o = new BitStringIdentifier("x", "y");
+
+            float f1 = 0.01f;
+            float f2 = 0.02f;
+            float f3 = 0.03f;
+            float f4 = 0.04f;
+            float f5 = 0.05f;
+            float f6 = 0.06f;
+            float f7 = 0.07f;
+            float f8 = 0.08f;
+            float f9 = 0.09f;
+            float f10 = 0.1f;
+            float f11 = 0.11f;
+            float f12 = 0.12f;
+
+            float[] fa12 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12 };
+            FuzzyBitString fb12 = new FuzzyBitString(o, fa12);
+            for (int i = 0; i < 12; i++)
+            {
+                Debug.WriteLine(fb12.GetBit(i));
+            }
+
+            Debug.WriteLine("GetBitTest(..) test successful");
+        }
+
+        [Test]
+        public void SetBitTest()
+        {
+            Debug.WriteLine("SetBitTest(..) test");
+            BitStringIdentifier o = new BitStringIdentifier("x", "y");
+
+            float f1 = 0.01f;
+            float f2 = 0.02f;
+            float f3 = 0.03f;
+            float f4 = 0.04f;
+            float f5 = 0.05f;
+            float f6 = 0.06f;
+            float f7 = 0.07f;
+            float f8 = 0.08f;
+            float f9 = 0.09f;
+            float f10 = 0.1f;
+            float f11 = 0.11f;
+            float f12 = 0.12f;
+
+            float[] fa12 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12 };
+            FuzzyBitString fb12 = new FuzzyBitString(o, fa12);
+            for (int i = 0; i < 12; i++)
+            {
+                fb12.SetBit(i, 0f);
+            }
+            Debug.WriteLine(fb12.ToString());
+            Debug.WriteLine("SetBitTest(..) test successful");
+        }
     }
 }
