@@ -50,6 +50,16 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         private const int _blocksize = 4;
 
+        /// <summary>
+        /// Number of bits in the current bit string, that are not equal to zero.
+        /// This property came with introduction of fuzzy bit strings. In boolean
+        /// bit strings, the Sum operation determines both the number of non-zero
+        /// bits and the sum of the bit string. In the fuzzy case these two numbers
+        /// are different. The function is needed for determining frequencies in ETrees
+        /// and number of all items belonging to a condition in a 4FT.
+        /// </summary>
+        private long _nonZeroBitsCount = -1;
+
         #region Properties
 
         /// <summary>
@@ -176,9 +186,52 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
         #endregion
 
-        #region And
+        /// <summary>
+        /// Number of bits in the current bit string, that are not equal to zero.
+        /// This property came with introduction of fuzzy bit strings. In boolean
+        /// bit strings, the Sum operation determines both the number of non-zero
+        /// bits and the sum of the bit string. In the fuzzy case these two numbers
+        /// are different. The function is needed for determining frequencies in ETrees
+        /// and number of all items belonging to a condition in a 4FT.
+        /// </summary>
+        public long NonZeroBitsCount
+        {
+            get
+            {
+                if (_size == 0)
+                    throw new InvalidOperationException("BitString was not initialized (use create method first).");
 
-        #endregion
+                lock (this)
+                {
+                    //using a cache, computing only once
+                    if (_nonZeroBitsCount >= 0)
+                    {
+                        return _nonZeroBitsCount;
+                    }
+
+                    long result = 0;
+                    for (int i = 0; i < _array.Length; i++)
+                    {
+                        result += _array[i].X > 0 ? 1 : 0;
+                        result += _array[i].Y > 0 ? 1 : 0;
+                        result += _array[i].Z > 0 ? 1 : 0;
+                        result += _array[i].W > 0 ? 1 : 0;
+                    }
+
+                    if (result < 0)
+                    {
+                        throw Exceptions.BitStringLengthError();
+                    }
+                    if (result > _size)
+                    {
+                        throw Exceptions.BitStringLengthError2();
+                    }
+
+                    _nonZeroBitsCount = result;
+                    return _nonZeroBitsCount;
+                }
+            }
+        }
 
         #region IBitStringCreate
 
