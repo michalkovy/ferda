@@ -826,8 +826,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 for (int i = 0; i < targetClassificationAttribute.BitStrings.Length; i++)
                 {
                     long andSum = targetClassificationAttribute.BitStrings[i].And(
-                        node.CategoryBitString(category)).Sum;
-                    if (andSum == node.CategoryBitString(category).Sum)
+                        node.CategoryBitString(category)).NonZeroBitsCount;
+                    if (andSum == node.CategoryBitString(category).NonZeroBitsCount)
                     {
                         hasOneOnly = true;
                         break;
@@ -908,7 +908,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 Node newNode = new Node(true);
                 newNode.Attribute = attribute;
                 newNode.BaseBitString = n.CategoryBitString(category).And(n.BaseBitString);
-                newNode.Frequency = newNode.BaseBitString.Sum;
+                newNode.Frequency = newNode.BaseBitString.NonZeroBitsCount;
                 newNode.SubCategories = attribute.CategoriesIds;
 
                 //changing the unused attributes of the new node
@@ -1070,14 +1070,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
 
             //The r_{i} array
-            int[] r;
+            float[] r;
             //The s_{j} array and array of (classificationAttribute AND baseBitString)
             //bit strings
-            int[] s;
+            float[] s;
             IBitString[] sBitStrings;
             //The a_{i,j} array
-            int[,] a;
-            double chiSq;
+            float[,] a;
+            double chiSq = 0;
 
             Dictionary<IdValuePair, CategorialAttributeTrace> dict = 
                 new Dictionary<IdValuePair,CategorialAttributeTrace>();
@@ -1088,7 +1088,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             foreach (CategorialAttributeTrace attribute in possibleAttributes)
             {
                 //computing the s_{j} array
-                s = new int[targetClassificationAttribute.NoOfCategories];
+                s = new float[targetClassificationAttribute.NoOfCategories];
                 sBitStrings = new IBitString[targetClassificationAttribute.NoOfCategories];
                 for (int i = 0; i < s.Length; i++)
                 {
@@ -1155,11 +1155,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
         private void FillChiSqData(CategorialAttributeTrace attribute,
             IBitString[] classificationBitStrings,
             IBitString baseBitString,
-            out int[] r,
-            out int[,] a)
+            out float[] r,
+            out float[,] a)
         {
-            r = new int[attribute.NoOfCategories];
-            a = new int[attribute.NoOfCategories, classificationBitStrings.Length];
+            r = new float[attribute.NoOfCategories];
+            a = new float[attribute.NoOfCategories, classificationBitStrings.Length];
 
             for (int i = 0; i < r.Length; i++)
             {

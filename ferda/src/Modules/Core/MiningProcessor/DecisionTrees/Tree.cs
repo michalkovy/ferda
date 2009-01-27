@@ -282,11 +282,11 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                     if (!(classifiedBitString is EmptyBitString))
                     {
                         truePositive +=
-                            classificationBitStrings[i].And(classifiedBitString).Sum;
+                            classificationBitStrings[i].And(classifiedBitString).NonZeroBitsCount;
                     }
                     
                     falseNegative +=
-                        classificationBitStrings[i].And(classifiedBitString.Not()).Sum;
+                        classificationBitStrings[i].And(classifiedBitString.Not()).NonZeroBitsCount;
 
                     //when classified bit string is empty bit string (which is that
                     //no row was classified by this category), the false positive
@@ -294,11 +294,11 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                     if (!(classifiedBitString is EmptyBitString))
                     {
                         falsePositive +=
-                            classificationBitStrings[i].Not().And(classifiedBitString).Sum;
+                            classificationBitStrings[i].Not().And(classifiedBitString).NonZeroBitsCount;
                     }
 
                     trueNegative +=
-                        classificationBitStrings[i].Not().And(classifiedBitString.Not()).Sum;
+                        classificationBitStrings[i].Not().And(classifiedBitString.Not()).NonZeroBitsCount;
                 }
 
                 result[0][0] = (double)truePositive;

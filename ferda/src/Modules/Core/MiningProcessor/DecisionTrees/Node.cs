@@ -428,12 +428,15 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// Gets frequency of one category. The frequency is computed
         /// as sum of the category bit string from the bit string generator
         /// and base bit string of the node.
+        /// The NonZeroBitsCount function is used instead of Sum, because the 
+        /// number determines the count of examples classified by this category
+        /// - which is an integer number.
         /// </summary>
         /// <param name="category">Category name</param>
         /// <returns>Category frequency</returns>
         public long CategoryFrequency(string category)
         {
-            return CategoryBitString(category).Sum;
+            return CategoryBitString(category).NonZeroBitsCount;
         }
 
         /// <summary>
@@ -518,13 +521,18 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             {
                 //determining the classification category which bit string
                 //has maximal interference with the selected category
-                int max = -1;
+
+                //The sum function is used instead of the NonZeroBitsCount function.
+                //The goal is to determine which category suits the best for one
+                //classification category. Therefore when con sidering fuzzy cases, 
+                //it is a difference between membership degree 0.1 and 0.9
+                float max = -1;
                 int index = -1;
                 IBitString categoryBitString = CategoryBitString(category);
 
                 for (int i = 0; i < classificationCategories.Length; i++)
                 {
-                    int sum = categoryBitString.And(classificationBitStrings[i]).Sum;
+                    float sum = categoryBitString.And(classificationBitStrings[i]).Sum;
 
                     if (sum > max)
                     {
@@ -539,9 +547,9 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                 nc.classificationCategory = classificationCategories[index];
                 nc.classificationBitString = categoryBitString;
                     //categoryBitString.And(classificationBitStrings[index]);
-                nc.noItemsInCategory = categoryBitString.Sum;
+                nc.noItemsInCategory = categoryBitString.NonZeroBitsCount;
                 nc.noErrors = 
-                    categoryBitString.And(classificationBitStrings[index].Not()).Sum;
+                    categoryBitString.And(classificationBitStrings[index].Not()).NonZeroBitsCount;
 
                 classifiedCategories.Add(category, nc);
             }
