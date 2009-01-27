@@ -576,7 +576,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                         for (int k = marker; k < marker + CountVector[i]; k++)
                         {
-                            _masks[i].SetBit(k, true);
+                            _masks[i].SetBit(k, 1f);
                         }
                         marker += CountVector[i];
                     }
@@ -957,12 +957,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Actual count of objects (depending on condition)
         /// </summary>
-        private int _actConditionCountOfObjects = -1;
+        private long _actConditionCountOfObjects = -1;
 
         /// <summary>
         /// Actual count of objects (depending on condition)
         /// </summary>        
-        public int ActConditionCountOfObjects
+        public long ActConditionCountOfObjects
         {
             set
             {

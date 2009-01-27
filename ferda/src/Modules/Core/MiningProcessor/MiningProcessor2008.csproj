@@ -53,10 +53,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Server\FerdaHelpers.dll</HintPath>
     </Reference>
-    <Reference Include="FerdaMath, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Server\FerdaMath.dll</HintPath>
-    </Reference>
     <Reference Include="iceboxcs, Version=3.0.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\lib\IceBox.dll</HintPath>
@@ -188,6 +184,12 @@
     <Compile Include="Results\SerializableResultInfo.cs" />
     <Compile Include="Service.cs" />
     <Content Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Math\Math2008.csproj">
+      <Project>{05E5938B-3DD8-4D2F-905F-C4B3B7129568}</Project>
+      <Name>Math2008</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
