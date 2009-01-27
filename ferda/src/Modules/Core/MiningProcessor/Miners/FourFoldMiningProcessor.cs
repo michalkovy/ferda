@@ -343,7 +343,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
 
                 //set actual count of objects with respect to condition
-                int actCount = SetActConditionCountOfObjects(pC);
+                long actCount = SetActConditionCountOfObjects(pC);
 
                 foreach (IBitString pS in _succedent)
                 {
@@ -599,6 +599,24 @@ namespace Ferda.Guha.MiningProcessor.Miners
         #region Private methods
 
         /// <summary>
+        /// Returns true, if the bit string is everything else except fuzzy bit 
+        /// string
+        /// </summary>
+        /// <param name="source">The source bit string</param>
+        /// <returns>
+        /// Returns true, if the bit string is everything else except fuzzy bit 
+        /// string
+        /// </returns>
+        private bool IsNotFuzzyBitString(IBitString source)
+        {
+            if (source is FuzzyBitString)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
         /// Executes one verification.
         /// </summary>
         /// <param name="ob">Mining settings</param>
@@ -614,41 +632,61 @@ namespace Ferda.Guha.MiningProcessor.Miners
             int allObjectsCount = miningSetting.AllObjectsCount;
 			
 			MissingInformation missingInformation = MissingInformation.GetInstance();
-			IBitString xA;
-			
+   			IBitString xA;
 			GetMissings(pA, out xA, usedAttributes, missingInformation);
-			int f111, fx11, f1x1, fxx1;
-			int f11x, fx1x, f1xx, fxxx;
-			
-			BitString.CrossAndSum(pA, xA, nineFT.pApB, nineFT.pAxB, pA.Sum, xA.Sum, nineFT.pApB.Sum, nineFT.pAxB.Sum, 
-                out f111, out fx11, out f1x1, out fxx1);
-			BitString.CrossAndSum(pA, xA, nineFT.xApB, nineFT.xAxB, pA.Sum, xA.Sum, nineFT.xApB.Sum, nineFT.xAxB.Sum, 
-                out f11x, out fx1x, out f1xx, out fxxx);
-			NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
-			
-			fft.f111 = f111;
-			fft.f1x1 = f1x1;
-			fft.f101 = pA.Sum - f111 - f1x1;
-			
-			fft.fx11 = fx11;
-			fft.fxx1 = fxx1;
-			fft.fx01 = xA.Sum - fx11 - fxx1;
-			
-			fft.f011 = nineFT.pApB.Sum - fft.f111 - fft.fx11;
-			fft.f0x1 = nineFT.pAxB.Sum - fft.f1x1 - fft.fxx1;
-			fft.f001 = nineFT.pAnB.Sum - fft.f101 - fft.fx01;
-			
-			fft.f11x = f11x;
-			fft.f1xx = f1xx;
-			fft.f10x = pA.Sum - f11x - f1xx;
-			
-			fft.fx1x = fx1x;
-			fft.fxxx = fxxx;
-			fft.fx0x = xA.Sum - fx1x - fxxx;
-			
-			fft.f01x = nineFT.xApB.Sum - fft.f111 - fft.fx11;
-			fft.f0xx = nineFT.xAxB.Sum - fft.f1x1 - fft.fxx1;
-			fft.f00x = nineFT.xAnB.Sum - fft.f101 - fft.fx01;
+
+            NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
+
+            if (IsNotFuzzyBitString(pA) && IsNotFuzzyBitString(pS) && 
+                IsNotFuzzyBitString(pC) && IsNotFuzzyBitString(xA))
+            {
+                int pASum = Convert.ToInt32(pA.Sum);
+                int xASum = Convert.ToInt32(xA.Sum);
+                int nineFTpApBSum = Convert.ToInt32(nineFT.pApB.Sum);
+                int nineFTpAxBSum = Convert.ToInt32(nineFT.pAxB.Sum);
+                int nineFTxApBSum = Convert.ToInt32(nineFT.xApB.Sum);
+                int nineFTxAxBSum = Convert.ToInt32(nineFT.xAxB.Sum);
+                int nineFTpAnBSum = Convert.ToInt32(nineFT.pAnB.Sum);
+                int nineFTxAnBSum = Convert.ToInt32(nineFT.xAnB.Sum);
+
+                int f111, fx11, f1x1, fxx1;
+                int f11x, fx1x, f1xx, fxxx;
+
+                BitString.CrossAndSum(pA, xA, nineFT.pApB, nineFT.pAxB,
+                    pASum, xASum, nineFTpApBSum, nineFTpAxBSum,
+                    out f111, out fx11, out f1x1, out fxx1);
+                BitString.CrossAndSum(pA, xA, nineFT.xApB, nineFT.xAxB,
+                    pASum, xASum, nineFTxApBSum, nineFTxAxBSum,
+                    out f11x, out fx1x, out f1xx, out fxxx);
+
+                fft.f111 = f111;
+                fft.f1x1 = f1x1;
+                fft.f101 = pASum - f111 - f1x1;
+
+                fft.fx11 = fx11;
+                fft.fxx1 = fxx1;
+                fft.fx01 = xASum - fx11 - fxx1;
+
+                fft.f011 = nineFTpApBSum - fft.f111 - fft.fx11;
+                fft.f0x1 = nineFTpApBSum - fft.f1x1 - fft.fxx1;
+                fft.f001 = nineFTpAnBSum - fft.f101 - fft.fx01;
+
+                fft.f11x = f11x;
+                fft.f1xx = f1xx;
+                fft.f10x = pASum - f11x - f1xx;
+
+                fft.fx1x = fx1x;
+                fft.fxxx = fxxx;
+                fft.fx0x = xASum - fx1x - fxxx;
+
+                fft.f01x = nineFTxApBSum - fft.f111 - fft.fx11;
+                fft.f0xx = nineFTxAxBSum - fft.f1x1 - fft.fxx1;
+                fft.f00x = nineFTxAnBSum - fft.f101 - fft.fx01;
+            }
+            else
+            {
+                
+            }
 			
 			ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
 				fft.ContingencyTable,
@@ -715,14 +753,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// bit string</param>
         /// <returns>Count of all objects with respect
         /// to condition.</returns>
-        private int SetActConditionCountOfObjects(IBitString positiveCondition)
+        private long SetActConditionCountOfObjects(IBitString positiveCondition)
         {
-            int result;
+            long result;
 
             if (positiveCondition is IEmptyBitString)
-                result = (int)_result.AllObjectsCount;
+                result = _result.AllObjectsCount;
             else
-                result = positiveCondition.Sum;
+                result = positiveCondition.NonZeroBitsCount;
 
             ActConditionCountOfObjects = result;
             return result;
@@ -753,7 +791,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// and succedent.</returns>
         private nineFoldTableOfBitStrings FillNineFoldConditionSuccedent(
             IBitString pS, IBitString nS, IBitString xS,
-            IBitString pC, IBitString xC, int allObjectsCount)
+            IBitString pC, IBitString xC, long allObjectsCount)
         {
             nineFoldTableOfBitStrings result = new nineFoldTableOfBitStrings();
 
@@ -765,7 +803,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             result.xAxB = xC.And(xS);
             result.xAnB = xC.And(nS);
 
-            if (allObjectsCount == Int32.MinValue)
+            if (allObjectsCount == long.MinValue)
             {
                 result.pAnB.Sum = allObjectsCount - result.pApB.Sum - result.pAxB.Sum;
                 result.xAnB.Sum = xC.Sum - result.xApB.Sum - result.xAxB.Sum;
