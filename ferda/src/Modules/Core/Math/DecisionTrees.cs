@@ -109,12 +109,12 @@ namespace Ferda.Guha.Math
         /// base bit string) for classification category <c>j</c> and attribute
         /// category <c>i</c></param>
         /// <returns>Chi squared value for given parametersu</returns>
-        public static double ChiSquared(int[] r, int[] s, int[,] a)
+        public static double ChiSquared(float[] r, float[] s, float[,] a)
         {
             double result = 0;
 
             //counting n
-            int n=0;
+            double n=0;
             for (int i = 0; i < r.Length; i++)
             {
                 n+= r[i];
@@ -133,8 +133,8 @@ namespace Ferda.Guha.Math
                         continue;
                     }
 
-                    double step = System.Math.Pow((a[i, j] - (double)r[i] * s[j] / n), 2) 
-                        / ((double)r[i] * s[j] / n);
+                    double step = System.Math.Pow((a[i, j] - r[i] * s[j] / n), 2) 
+                        / (r[i] * s[j] / n);
                     result += step;
                 }
             }
