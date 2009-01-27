@@ -44,6 +44,18 @@ namespace Ferda.Guha.MiningProcessor
         }
 
         /// <summary>
+        /// Returns an error concerning bit string lenght
+        /// </summary>
+        /// <returns>error concerning bit string lenght</returns>
+        public static BoxRuntimeError BitStringLengthError2()
+        {
+            BoxRuntimeError result = new BoxRuntimeError();
+            result.userMessage = "The number of 1 bits in the bit string is higher that its length.";
+
+            return result;
+        }
+
+        /// <summary>
         /// Returns an error concerning different size of bit strings
         /// </summary>
         /// <returns>error concerning different size of bit strings</returns>
