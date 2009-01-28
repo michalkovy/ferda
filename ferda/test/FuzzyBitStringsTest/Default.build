@@ -20,6 +20,7 @@
 				<include name="${lib.dir}/nunit.framework.dll"/>
 				<include name="${lib.dir}/Mono.Simd.dll"/>
 				<include name="${build.dir}/FerdaMiningProcessor.dll" />
+				<include name="${build.dir}/FerdaMath.dll"/>
 			</references>
 		</csc>
 	</target>
