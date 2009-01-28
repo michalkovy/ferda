@@ -94,7 +94,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <summary>
         /// Performs the bitwise SUM operation on current BitString.
         /// </summary>
-        /// <returns>The number of bits set to 1 in current BitString.</returns>
         float Sum { get; set; }
     }
 
