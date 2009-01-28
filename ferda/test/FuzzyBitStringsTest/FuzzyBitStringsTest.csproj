@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FerdaMath, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9c707da063d5a3ca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Server\FerdaMath.dll</HintPath>
+    </Reference>
     <Reference Include="FerdaMiningProcessor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b8124f638c9cf024, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Server\FerdaMiningProcessor.dll</HintPath>

@@ -25,6 +25,7 @@ using System.Text;
 using System.Diagnostics;
 using NUnit.Framework;
 using Ferda.Guha.MiningProcessor.BitStrings;
+using Ferda.Guha.Math;
 
 namespace FuzzyBitStringsTest
 {
@@ -34,6 +35,15 @@ namespace FuzzyBitStringsTest
     [TestFixture]
     public class FuzzyBitStringTest
     {
+        /// <summary>
+        /// The dummy bit string identifier
+        /// </summary>
+        BitStringIdentifier o = new BitStringIdentifier("x", "y");
+        /// <summary>
+        /// Generator of random numbers
+        /// </summary>
+        Random r = new Random();
+
         [TestFixtureSetUp]
         public void SetUp()
         {
@@ -54,7 +64,6 @@ namespace FuzzyBitStringsTest
         public void ConstructorAndToStringTest()
         {
             Debug.WriteLine("Constructor and ToString() test");
-            BitStringIdentifier o = new BitStringIdentifier("x", "y");
 
             float f1 = 0.01f;
             float f2 = 0.02f;
@@ -82,18 +91,18 @@ namespace FuzzyBitStringsTest
             float[] fa11 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11 };
             float[] fa12 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12 };
 
-            FuzzyBitString fb1 = new FuzzyBitString(o, fa1);
-            FuzzyBitString fb2 = new FuzzyBitString(o, fa2);
-            FuzzyBitString fb3 = new FuzzyBitString(o, fa3);
-            FuzzyBitString fb4 = new FuzzyBitString(o, fa4);
-            FuzzyBitString fb5 = new FuzzyBitString(o, fa5);
-            FuzzyBitString fb6 = new FuzzyBitString(o, fa6);
-            FuzzyBitString fb7 = new FuzzyBitString(o, fa7);
-            FuzzyBitString fb8 = new FuzzyBitString(o, fa8);
-            FuzzyBitString fb9 = new FuzzyBitString(o, fa9);
-            FuzzyBitString fb10 = new FuzzyBitString(o, fa10);
-            FuzzyBitString fb11 = new FuzzyBitString(o, fa11);
-            FuzzyBitString fb12 = new FuzzyBitString(o, fa12);
+            FuzzyBitString fb1 = new FuzzyBitString(o, fa1, true);
+            FuzzyBitString fb2 = new FuzzyBitString(o, fa2, true);
+            FuzzyBitString fb3 = new FuzzyBitString(o, fa3, true);
+            FuzzyBitString fb4 = new FuzzyBitString(o, fa4, true);
+            FuzzyBitString fb5 = new FuzzyBitString(o, fa5, true);
+            FuzzyBitString fb6 = new FuzzyBitString(o, fa6, true);
+            FuzzyBitString fb7 = new FuzzyBitString(o, fa7, true);
+            FuzzyBitString fb8 = new FuzzyBitString(o, fa8, true);
+            FuzzyBitString fb9 = new FuzzyBitString(o, fa9, true);
+            FuzzyBitString fb10 = new FuzzyBitString(o, fa10, true);
+            FuzzyBitString fb11 = new FuzzyBitString(o, fa11, true);
+            FuzzyBitString fb12 = new FuzzyBitString(o, fa12, true);
 
             Debug.WriteLine(fb1.ToString());
             Debug.WriteLine(fb1.Length);
@@ -126,7 +135,6 @@ namespace FuzzyBitStringsTest
         public void FillTest()
         {
             Debug.WriteLine("Fill(..) test");
-            BitStringIdentifier o = new BitStringIdentifier("x", "y");
 
             float f1 = 0.01f;
             float f2 = 0.02f;
@@ -154,18 +162,18 @@ namespace FuzzyBitStringsTest
             float[] fa11 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11 };
             float[] fa12 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12 };
 
-            FuzzyBitString fb1 = new FuzzyBitString(o, fa1);
-            FuzzyBitString fb2 = new FuzzyBitString(o, fa2);
-            FuzzyBitString fb3 = new FuzzyBitString(o, fa3);
-            FuzzyBitString fb4 = new FuzzyBitString(o, fa4);
-            FuzzyBitString fb5 = new FuzzyBitString(o, fa5);
-            FuzzyBitString fb6 = new FuzzyBitString(o, fa6);
-            FuzzyBitString fb7 = new FuzzyBitString(o, fa7);
-            FuzzyBitString fb8 = new FuzzyBitString(o, fa8);
-            FuzzyBitString fb9 = new FuzzyBitString(o, fa9);
-            FuzzyBitString fb10 = new FuzzyBitString(o, fa10);
-            FuzzyBitString fb11 = new FuzzyBitString(o, fa11);
-            FuzzyBitString fb12 = new FuzzyBitString(o, fa12);
+            FuzzyBitString fb1 = new FuzzyBitString(o, fa1, true);
+            FuzzyBitString fb2 = new FuzzyBitString(o, fa2, true);
+            FuzzyBitString fb3 = new FuzzyBitString(o, fa3, true);
+            FuzzyBitString fb4 = new FuzzyBitString(o, fa4, true);
+            FuzzyBitString fb5 = new FuzzyBitString(o, fa5, true);
+            FuzzyBitString fb6 = new FuzzyBitString(o, fa6, true);
+            FuzzyBitString fb7 = new FuzzyBitString(o, fa7, true);
+            FuzzyBitString fb8 = new FuzzyBitString(o, fa8, true);
+            FuzzyBitString fb9 = new FuzzyBitString(o, fa9, true);
+            FuzzyBitString fb10 = new FuzzyBitString(o, fa10, true);
+            FuzzyBitString fb11 = new FuzzyBitString(o, fa11, true);
+            FuzzyBitString fb12 = new FuzzyBitString(o, fa12, true);
 
             fb1.Fill(0.1f);
             fb2.Fill(0.2f);
@@ -199,8 +207,7 @@ namespace FuzzyBitStringsTest
         [Test]
         public void GetBitTest()
         {
-            Debug.WriteLine("GetBitTest(..) test");
-            BitStringIdentifier o = new BitStringIdentifier("x", "y");
+            Debug.WriteLine("GetBit(..) test");
 
             float f1 = 0.01f;
             float f2 = 0.02f;
@@ -216,20 +223,19 @@ namespace FuzzyBitStringsTest
             float f12 = 0.12f;
 
             float[] fa12 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12 };
-            FuzzyBitString fb12 = new FuzzyBitString(o, fa12);
+            FuzzyBitString fb12 = new FuzzyBitString(o, fa12, true);
             for (int i = 0; i < 12; i++)
             {
                 Debug.WriteLine(fb12.GetBit(i));
             }
 
-            Debug.WriteLine("GetBitTest(..) test successful");
+            Debug.WriteLine("GetBit(..) test successful");
         }
 
         [Test]
         public void SetBitTest()
         {
-            Debug.WriteLine("SetBitTest(..) test");
-            BitStringIdentifier o = new BitStringIdentifier("x", "y");
+            Debug.WriteLine("SetBit(..) test");
 
             float f1 = 0.01f;
             float f2 = 0.02f;
@@ -245,23 +251,21 @@ namespace FuzzyBitStringsTest
             float f12 = 0.12f;
 
             float[] fa12 = new float[] { f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12 };
-            FuzzyBitString fb12 = new FuzzyBitString(o, fa12);
+            FuzzyBitString fb12 = new FuzzyBitString(o, fa12, true);
             for (int i = 0; i < 12; i++)
             {
                 fb12.SetBit(i, 0f);
             }
             Debug.WriteLine(fb12.ToString());
-            Debug.WriteLine("SetBitTest(..) test successful");
+            Debug.WriteLine("SetBit(..) test successful");
         }
 
         [Test]
         public void NonZeroBitsCountTest()
         {
-            Debug.WriteLine("NonZeroBitsCountTest(..) test");
-
-            BitStringIdentifier o = new BitStringIdentifier("x", "y");
+            Debug.WriteLine("NonZeroBitsCount(..) test");
+            
             float[] bitField = new float[100];
-            Random r = new Random();
 
             int count = 0;
             for (int i = 0; i < 100; i++)
@@ -276,11 +280,70 @@ namespace FuzzyBitStringsTest
             Debug.WriteLine(count.ToString());
 
 
-            FuzzyBitString fb = new FuzzyBitString(o, bitField);
+            FuzzyBitString fb = new FuzzyBitString(o, bitField, true);
             Debug.WriteLine(fb.NonZeroBitsCount);
 
             Debug.Assert(fb.NonZeroBitsCount == count);            
-            Debug.WriteLine("NonZeroBitsCountTest(..) test successful");
+            Debug.WriteLine("NonZeroBitsCount(..) test successful");
+        }
+
+        [Test]
+        public void SumTest2()
+        {
+            Debug.WriteLine("Sum(..) test 2");
+
+            float[] bitField1000 = new float[1000];
+            float[] bitField1001 = new float[1001];
+            float[] bitField1002 = new float[1002];
+            float[] bitField1003 = new float[1003];
+
+            for (int i = 0; i < 1000; i++)
+            {
+                bitField1000[i] = Convert.ToSingle(r.NextDouble());
+                bitField1001[i] = bitField1000[i];
+                bitField1002[i] = bitField1000[i];
+                bitField1003[i] = bitField1000[i];
+
+            }
+            bitField1001[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1002[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1002[1001] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003[1001] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003[1002] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+
+            float sum1000 = 0f;
+            float sum1001 = 0f;
+            float sum1002 = 0f;
+            float sum1003 = 0f;
+
+            for (int i = 0; i < 1000; i++)
+            {
+                sum1000 += bitField1000[i];
+            }
+            sum1001 = sum1000 + bitField1001[1000];
+            sum1002 = sum1000 + bitField1002[1000] + bitField1002[1001];
+            sum1003 = sum1000 + bitField1003[1000] + bitField1003[1001] + bitField1003[1002];
+
+            FuzzyBitString f1000 = new FuzzyBitString(o, bitField1000, true);
+            FuzzyBitString f1001 = new FuzzyBitString(o, bitField1001, true);
+            FuzzyBitString f1002 = new FuzzyBitString(o, bitField1002, true);
+            FuzzyBitString f1003 = new FuzzyBitString(o, bitField1003, true);
+
+            //Debug.WriteLine(sum1000);
+            //Debug.WriteLine(f1000.Sum);
+            Debug.Assert(Common.CloseEnough(4, sum1000, f1000.Sum));
+            //Debug.WriteLine(sum1001);
+            //Debug.WriteLine(f1001.Sum);
+            Debug.Assert(Common.CloseEnough(4, sum1001, f1001.Sum));
+            //Debug.WriteLine(sum1002);
+            //Debug.WriteLine(f1002.Sum);
+            Debug.Assert(Common.CloseEnough(4, sum1002, f1002.Sum));
+            //Debug.WriteLine(sum1003);
+            //Debug.WriteLine(f1003.Sum);
+            Debug.Assert(Common.CloseEnough(4, sum1003, f1003.Sum));
+
+            Debug.WriteLine("Sum(..) test 2 successful");
         }
     }
 }
