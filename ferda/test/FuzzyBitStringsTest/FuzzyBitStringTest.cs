@@ -253,5 +253,34 @@ namespace FuzzyBitStringsTest
             Debug.WriteLine(fb12.ToString());
             Debug.WriteLine("SetBitTest(..) test successful");
         }
+
+        [Test]
+        public void NonZeroBitsCountTest()
+        {
+            Debug.WriteLine("NonZeroBitsCountTest(..) test");
+
+            BitStringIdentifier o = new BitStringIdentifier("x", "y");
+            float[] bitField = new float[100];
+            Random r = new Random();
+
+            int count = 0;
+            for (int i = 0; i < 100; i++)
+            {
+                int tmp = r.Next(2);
+                if (tmp == 1)
+                {
+                    count++;
+                }
+                bitField[i] = tmp;
+            }
+            Debug.WriteLine(count.ToString());
+
+
+            FuzzyBitString fb = new FuzzyBitString(o, bitField);
+            Debug.WriteLine(fb.NonZeroBitsCount);
+
+            Debug.Assert(fb.NonZeroBitsCount == count);            
+            Debug.WriteLine("NonZeroBitsCountTest(..) test successful");
+        }
     }
 }
