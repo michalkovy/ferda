@@ -50,13 +50,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <returns>Result of the AND operation</returns>
         IBitString And(IBitString source);
 
-        ///// <summary>
-        ///// Performs the bitwise AND operation on
-        ///// copy of current BitString against the specified BitString.
-        ///// </summary>
-        ///// <param name="source">The second BitString operand.</param>
-        //IBitString AndCloned(IBitString source);
-
         /// <summary>
         /// Performs the bitwise OR operation on current BitString against the specified BitString.
         /// </summary>
@@ -64,22 +57,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <returns>Result of the OR operation</returns>
         IBitString Or(IBitString source);
 
-        ///// <summary>
-        ///// Performs the bitwise OR operation on
-        ///// copy of current BitString against the specified BitString.
-        ///// </summary>
-        ///// <param name="source">The second BitString operand.</param>
-        //IBitString OrCloned(IBitString source);
-
         /// <summary>
         /// Performs the bitwise NOT on current BitString.
         /// </summary>
         IBitString Not();
-
-        ///// <summary>
-        ///// Performs the bitwise NOT on copy of current BitString.
-        ///// </summary>
-        //IBitString NotCloned();
 
         /// <summary>
         /// Number of bits in the current bit string, that are not equal to zero.

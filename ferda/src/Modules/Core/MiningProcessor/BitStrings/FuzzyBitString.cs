@@ -26,7 +26,7 @@ using Mono.Simd;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
-    public class FuzzyBitString : IBitStringBase, IBitStringCreate
+    public class FuzzyBitString : IBitString
     {
         /// <summary>
         /// Internal array where fuzzy bit strings are stored
@@ -203,6 +203,56 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 }
             }
         }
+
+        #endregion
+
+        #region And
+
+        /// <summary>
+        /// Performs the bitwise AND operation on current BitString against the specified BitString.
+        /// </summary>
+        /// <param name="source">The second BitString operand.</param>
+        /// <returns>Result of the AND operation</returns>
+        public IBitString And(IBitString source)
+        {
+            return EmptyBitString.GetInstance();
+        }
+
+        #endregion
+
+        #region Or
+
+        /// <summary>
+        /// Performs the bitwise OR operation on current BitString against the specified BitString.
+        /// </summary>
+        /// <param name="source">The second BitString operand.</param>
+        /// <returns>Result of the OR operation</returns>
+        public IBitString Or(IBitString source)
+        {
+            return EmptyBitString.GetInstance();
+        }
+
+        #endregion
+
+        #region Not
+
+        /// <summary>
+        /// Performs the bitwise NOT on current BitString.
+        /// </summary>
+        public IBitString Not()
+        {
+            return EmptyBitString.GetInstance();
+        }
+
+        /// <summary>
+        /// Performs a Lukasiewicz negation (1-x) on the current bit string. The
+        /// operation DOES NOT deal with 
+        /// </summary>
+        /// <returns></returns>
+        //private FuzzyBitString LukasiewiczNot()
+        //{
+        //
+        //}
 
         #endregion
 

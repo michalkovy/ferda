@@ -304,6 +304,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 result._identifier = FormulaHelper.And(Identifier, source.Identifier);
                 return result;
             }
+            else if (source is FuzzyBitString)
+            {
+                return source.And(this);
+            }
             else if (source is EmptyBitString)
             {
                 return new BitString(this);
@@ -395,6 +399,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 result.or((BitString)source);
                 result._identifier = FormulaHelper.Or(Identifier, source.Identifier);
                 return result;
+            }
+            else if (source is FuzzyBitString)
+            {
+                //fuzzy handling is in fuzzy bit strings
+                return source.Or(this);
             }
             else if (source is EmptyBitString)
             {
