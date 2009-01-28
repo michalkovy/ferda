@@ -60,6 +60,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         private long _nonZeroBitsCount = -1;
 
+        /// <summary>
+        /// A bitwise SUM cache
+        /// </summary>
+        private float _sum = -1f;
+
         #region Properties
 
         /// <summary>
@@ -118,17 +123,32 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <param name="identifier">Identifier of the bit string</param>
         /// <param name="floats">Array of floats, which are transformed into
         /// the <see cref="Mono.Simd.Vector4f"/>structures.</param>
+        /// <param name="checking">
+        /// Determines, if the individual fuzzy values, that is floats in the 
+        /// <paramref name="float"/> parameter should be checked if they are 
+        /// in [0,1]
+        /// </param>
         /// <remarks>
         /// In contrary to the constructor of <see cref="BitString"/> class, this constructor
         /// is safe and it does not need the length parameter. The length of the bit string
         /// is determined by the lenght of the array of floats. 
         /// </remarks>
-        public FuzzyBitString(BitStringIdentifier identifier, float[] floats)
+        public FuzzyBitString(BitStringIdentifier identifier, float[] floats, bool checking)
             : this(new AtomFormula(identifier))
         {
             if (floats.Length == 0)
             {
                 throw Exceptions.BitStringLengthError();
+            }
+            if (checking)
+            {
+                foreach (float f in floats)
+                {
+                    if (f < 0 || f > 1)
+                    {
+                        throw Exceptions.ValueNotFuzzyException();
+                    }
+                }
             }
 
             _size = floats.Length;
@@ -229,6 +249,60 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
                     _nonZeroBitsCount = result;
                     return _nonZeroBitsCount;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Performs the bitwise SUM operation on current BitString.
+        /// </summary>
+        public float Sum
+        {
+            set { }
+            get
+            {
+                if (_size == 0)
+                    throw new InvalidOperationException("BitString was not initialized (use create method first).");
+
+                lock (this)
+                {
+                    //using a cache, computing only once
+                    if (_sum >= 0)
+                    {
+                        return _sum;
+                    }
+
+                    Vector4f res = new Vector4f();
+                    //counting all but last vector
+                    for (int i = 0; i < _array.Length - 1; i++)
+                    {
+                        res += _array[i];
+                    }
+
+                    //there has to be at least one item in the last vector
+                    float result = _array[_array.Length - 1].X;
+                    if (_size % _blocksize == 2)
+                    {
+                        result += _array[_array.Length - 1].Y;
+                    }
+                    if (_size % _blocksize == 3)
+                    {
+                        result += _array[_array.Length - 1].Y;
+                        result += _array[_array.Length - 1].Z;
+                    }
+                    if (_size % _blocksize == 0)
+                    {
+                        result += _array[_array.Length - 1].Y;
+                        result += _array[_array.Length - 1].Z;
+                        result += _array[_array.Length - 1].W;
+                    }
+                    result += res.X;
+                    result += res.Y;
+                    result += res.Z;
+                    result += res.W;
+
+                    _sum = result;
+                    return _sum;
                 }
             }
         }

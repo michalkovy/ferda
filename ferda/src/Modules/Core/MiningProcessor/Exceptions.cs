@@ -129,5 +129,17 @@ namespace Ferda.Guha.MiningProcessor
             result.userMessage = "It is expected to create a non fuzzy bit string, however the data are fuzzy.";
             return result;
         }
+
+        /// <summary>
+        /// Returns an error saying that one of the floats in the constructor of 
+        /// FuzzyBitString is not in [0,1]
+        /// </summary>
+        /// <returns></returns>
+        public static BoxRuntimeError ValueNotFuzzyException()
+        {
+            BoxRuntimeError result = new BoxRuntimeError();
+            result.userMessage = "One of the values in the constructor of FuzzyBitString is not in [0,1].";
+            return result;
+        }
     }
 }
