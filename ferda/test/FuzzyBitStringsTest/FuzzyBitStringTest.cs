@@ -288,9 +288,9 @@ namespace FuzzyBitStringsTest
         }
 
         [Test]
-        public void SumTest2()
+        public void SumTest()
         {
-            Debug.WriteLine("Sum(..) test 2");
+            Debug.WriteLine("Sum(..) test");
 
             float[] bitField1000 = new float[1000];
             float[] bitField1001 = new float[1001];
@@ -343,7 +343,100 @@ namespace FuzzyBitStringsTest
             //Debug.WriteLine(f1003.Sum);
             Debug.Assert(Common.CloseEnough(4, sum1003, f1003.Sum));
 
-            Debug.WriteLine("Sum(..) test 2 successful");
+            Debug.WriteLine("Sum(..) test successful");
+        }
+
+        [Test]
+        public void NotTest()
+        {
+            Debug.WriteLine("Not(..) test");
+
+            float[] bitField1000 = new float[1000];
+            float[] bitField1001 = new float[1001];
+            float[] bitField1002 = new float[1002];
+            float[] bitField1003 = new float[1003];
+
+            for (int i = 0; i < 1000; i++)
+            {
+                bitField1000[i] = Convert.ToSingle(r.NextDouble());
+                bitField1001[i] = bitField1000[i];
+                bitField1002[i] = bitField1000[i];
+                bitField1003[i] = bitField1000[i];
+            }
+            bitField1001[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1002[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1002[1001] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003[1001] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003[1002] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+
+            FuzzyBitString f1000 = new FuzzyBitString(o, bitField1000, true);
+            FuzzyBitString f1001 = new FuzzyBitString(o, bitField1001, true);
+            FuzzyBitString f1002 = new FuzzyBitString(o, bitField1002, true);
+            FuzzyBitString f1003 = new FuzzyBitString(o, bitField1003, true);
+
+            for (int i = 0; i < 1000; i++)
+            {
+                bitField1000[i] = 1 - bitField1000[i];
+                bitField1001[i] = 1 - bitField1001[i];
+                bitField1002[i] = 1 - bitField1002[i];
+                bitField1003[i] = 1 - bitField1003[i];
+            }
+
+            bitField1001[1000] = 1 - bitField1001[1000];
+            bitField1002[1000] = 1 - bitField1002[1000];
+            bitField1003[1000] = 1 - bitField1003[1000];
+            bitField1002[1001] = 1 - bitField1002[1001];
+            bitField1003[1001] = 1 - bitField1003[1001];
+            bitField1003[1002] = 1 - bitField1003[1002];
+
+            FuzzyBitString nf1000 = f1000.Not() as FuzzyBitString;
+            FuzzyBitString nf1001 = f1001.Not() as FuzzyBitString;
+            FuzzyBitString nf1002 = f1002.Not() as FuzzyBitString;
+            FuzzyBitString nf1003 = f1003.Not() as FuzzyBitString;
+
+            for (int i = 0; i < 1000; i++)
+            {
+                if (!Common.CloseEnough(4, nf1000.GetBit(i), bitField1000[i]))
+                {
+                    throw new Exception("The Not() does not work");
+                }
+                if (!Common.CloseEnough(4, nf1001.GetBit(i), bitField1001[i]))
+                {
+                    throw new Exception("The Not() does not work");
+                }
+                if (!Common.CloseEnough(4, nf1002.GetBit(i), bitField1002[i]))
+                {
+                    throw new Exception("The Not() does not work");
+                }
+                if (!Common.CloseEnough(4, nf1003.GetBit(i), bitField1003[i]))
+                {
+                    throw new Exception("The Not() does not work");
+                }
+            }
+            if (!Common.CloseEnough(4, nf1001.GetBit(1000), bitField1001[1000]))
+            {
+                throw new Exception("The Not() does not work");
+            }
+            if (!Common.CloseEnough(4, nf1002.GetBit(1000), bitField1002[1000]))
+            {
+                throw new Exception("The Not() does not work");
+            }
+            if (!Common.CloseEnough(4, nf1002.GetBit(1001), bitField1002[1001]))
+            {
+                throw new Exception("The Not() does not work");
+            }
+            if (!Common.CloseEnough(4, nf1003.GetBit(1000), bitField1003[1000]))
+            {
+                throw new Exception("The Not() does not work");
+            }
+            if (!Common.CloseEnough(4, nf1003.GetBit(1002), bitField1003[1002]))
+            {
+                throw new Exception("The Not() does not work");
+            }
+
+
+            Debug.WriteLine("Not(..) test successful");
         }
     }
 }

@@ -26,7 +26,7 @@ using Mono.Simd;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
-    public class FuzzyBitString : IBitString
+    public class FuzzyBitString : IBitString, IBitStringCreate
     {
         /// <summary>
         /// Internal array where fuzzy bit strings are stored
@@ -237,22 +237,52 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         #region Not
 
         /// <summary>
-        /// Performs the bitwise NOT on current BitString.
+        /// Performs the bitwise NOT on current BitString. The used fuzzy negation
+        /// is the Lukasiewicz negation (standard complement), that is N(x) = 1 - x. It the future, we
+        /// also consider other negations.
         /// </summary>
         public IBitString Not()
         {
-            return EmptyBitString.GetInstance();
+            FuzzyBitString result = new FuzzyBitString(this);
+            result.not();
+            result._identifier = FormulaHelper.Not(_identifier);
+            return result;
         }
 
         /// <summary>
-        /// Performs a Lukasiewicz negation (1-x) on the current bit string. The
-        /// operation DOES NOT deal with 
+        /// Method that switches a fuzzy bit string for its negation. 
+        /// The used fuzzy negation
+        /// is the Lukasiewicz negation (standard complement), that is N(x) = 1 - x.
         /// </summary>
-        /// <returns></returns>
-        //private FuzzyBitString LukasiewiczNot()
-        //{
-        //
-        //}
+        private void not()
+        {
+            if (_size == 0)
+                throw new InvalidOperationException("BitString was not initialized (use create method first).");
+
+            Vector4f tmp = new Vector4f(1f, 1f, 1f, 1f);
+            //processing all but last vector
+            for (int i = 0; i < _array.Length - 1; i++)
+            {
+                _array[i] = tmp - _array[i];
+            }
+            //there has to be at least one item in the last vector
+            _array[_array.Length - 1].X = 1 - _array[_array.Length - 1].X;
+            if (_size % _blocksize == 2)
+            {
+                _array[_array.Length - 1].Y = 1 - _array[_array.Length - 1].Y;
+            }
+            if (_size % _blocksize == 3)
+            {
+                _array[_array.Length - 1].Y = 1 - _array[_array.Length - 1].Y;
+                _array[_array.Length - 1].Z = 1 - _array[_array.Length - 1].Z;
+            }
+            if (_size % _blocksize == 0)
+            {
+                _array[_array.Length - 1].Y = 1 - _array[_array.Length - 1].Y;
+                _array[_array.Length - 1].Z = 1 - _array[_array.Length - 1].Z;
+                _array[_array.Length - 1].W = 1 - _array[_array.Length - 1].W;
+            }
+        }
 
         #endregion
 
