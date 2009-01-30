@@ -225,7 +225,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         /// </summary>
         /// <param name="output">The XML output</param>
         /// <returns>XML output with basic Boolean information</returns>
-        public XmlWriter WriteBasicBooleanAttributes(XmlWriter output)
+        public XmlTextWriter WriteBasicBooleanAttributes(XmlTextWriter output)
         {
             foreach (PMMLBooleanAttribute attr in BAs)
             {
@@ -270,7 +270,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         /// </summary>
         /// <param name="output">The XML output</param>
         /// <returns>XML output with derived Boolean information</returns>
-        public XmlWriter WriteDerivedBooleanAttributes(XmlWriter output)
+        public XmlTextWriter WriteDerivedBooleanAttributes(XmlTextWriter output)
         {
             foreach (PMMLBooleanAttribute attr in BAs)
             {
@@ -506,7 +506,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         /// </summary>
         /// <param name="output">The XML output</param>
         /// <returns>XML output with PMML mining fields information</returns>
-        public XmlWriter WriteAssociationRules(XmlWriter writer)
+        public XmlTextWriter WriteAssociationRules(XmlTextWriter writer)
         {
             foreach (PMMLAssociationRule ar in rules)
             {
@@ -565,7 +565,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         /// </summary>
         /// <param name="output">The XML output</param>
         /// <returns>XML output with PMML mining fields information</returns>
-        public XmlWriter WriteMiningFields(XmlWriter writer)
+        public XmlTextWriter WriteMiningFields(XmlTextWriter writer)
         {
             writer.WriteStartElement("MiningSchema");
             foreach (string s in miningFields)
@@ -583,7 +583,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         /// </summary>
         /// <param name="output">The XML output</param>
         /// <returns>XML output with items and itemsets information</returns>
-        public XmlWriter WriteItemsItemsets(XmlWriter writer)
+        public XmlTextWriter WriteItemsItemsets(XmlTextWriter writer)
         {
             foreach (PMMLItem item in items)
             {

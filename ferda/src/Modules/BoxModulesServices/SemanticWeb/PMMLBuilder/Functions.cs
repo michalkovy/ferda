@@ -68,6 +68,11 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// </summary>
         private int _uniqueIdentifier = 0;
 
+        /// <summary>
+        /// Stream, where the bytes are stored
+        /// </summary>
+        private MemoryStream _stream = new MemoryStream();
+
         #endregion
 
         #region Properties
@@ -209,10 +214,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 
             using (FileStream fs = File.Create(PMMLFile))
             {
-                UnicodeEncoding uniEncoding = new UnicodeEncoding();
-
-                fs.Write(uniEncoding.GetBytes(PMML), 
-                    0, uniEncoding.GetByteCount(PMML));
+                fs.Write(_stream.ToArray(), 0, _stream.ToArray().Length);
             }
         }
 
@@ -295,13 +297,12 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                     true);
             AttributeNameInLiteralsProvider.Init(taskPrx);
 
-            StringBuilder strBuilder = new StringBuilder();
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-            settings.IndentChars = ("\t");
-            settings.Encoding = Encoding.ASCII;
-            XmlWriter xmlWriter = XmlWriter.Create(strBuilder, settings);
-            //XmlWriter xmlWriter = XmlWriter.Create("j:\\pokus.pmml", settings);
+            //StringBuilder strBuilder = new StringBuilder();
+            
+            XmlTextWriter xmlWriter = new XmlTextWriter(_stream, Encoding.UTF8);
+            xmlWriter.IndentChar = '\t';
+            xmlWriter.Formatting = Formatting.Indented;
+            xmlWriter.Indentation = 1;
 
             //Write the start of the document
             xmlWriter.WriteStartDocument();
@@ -309,9 +310,9 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
             //The PMML element
             xmlWriter.WriteStartElement("PMML");
             xmlWriter.WriteAttributeString("version", "3.0");
-            //xmlWriter.WriteAttributeString("xmlns", "http://www.dmg.org/PMML-3_2");
-            //xmlWriter.WriteAttributeString("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-            //xmlWriter.WriteAttributeString("xsi:schemaLocation", "http://www.dmg.org/PMML-3_2 http://www.dmg.org/v3-2/pmml-3-2.xsd");
+            xmlWriter.WriteAttributeString("xmlns", "http://www.dmg.org/PMML-3_2");
+            xmlWriter.WriteAttributeString("xmlns", "http://www.w3.org/2001/XMLSchema-instance");
+            xmlWriter.WriteAttributeString("xsi:schemaLocation", "http://www.dmg.org/PMML-3_2 http://www.dmg.org/v3-2/pmml-3-2.xsd");
 
             //The Header element
             xmlWriter.WriteStartElement("Header");
@@ -336,8 +337,11 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 
             xmlWriter.WriteEndElement(); //PMML
 
-            xmlWriter.Close();
-            return strBuilder.ToString();
+            //xmlWriter.Close();
+            //return strBuilder.ToString();
+            _stream.Position = 0;
+            StreamReader sr = new StreamReader(_stream, Encoding.UTF8);
+            return sr.ReadToEnd();
         }
 
         /// <summary>
@@ -345,7 +349,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// </summary>
         /// <param name="xmlWriter">Here the content is written</param>
         /// <returns>Writer with added content association model</returns>
-        protected XmlWriter CreateAssociationModel(XmlWriter xmlWriter)
+        protected XmlTextWriter CreateAssociationModel(XmlTextWriter xmlWriter)
         {
             xmlWriter.WriteStartElement("AssociationModel");
             xmlWriter.WriteAttributeString("modelName", 
@@ -437,7 +441,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// </summary>
         /// <param name="xmlWriter">Here the content is written</param>
         /// <returns>Writer with added content transformation dictionary</returns>
-        protected XmlWriter CreateTransformationDictionary(XmlWriter xmlWriter)
+        protected XmlTextWriter CreateTransformationDictionary(XmlTextWriter xmlWriter)
         {
             xmlWriter.WriteStartElement("TransformationDictionary");
 
@@ -548,7 +552,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// </summary>
         /// <param name="xmlWriter">Here the content is written</param>
         /// <returns>Writer with added content data dictionary`</returns>
-        protected XmlWriter CreateDataDictionary(XmlWriter xmlWriter)
+        protected XmlTextWriter CreateDataDictionary(XmlTextWriter xmlWriter)
         {
             MiningTaskFunctionsPrx taskPrx =
                 SocketConnections.GetPrx<MiningTaskFunctionsPrx>(
