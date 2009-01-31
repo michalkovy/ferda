@@ -1,4 +1,4 @@
-// Sum.cs
+﻿// Sum.cs
 //
 //  Copyright (C) 2009 Michal Kováč <michal.kovac.develop@centrum.cz>
 //
@@ -20,20 +20,22 @@
 
 using System;
 using Mono.Simd;
+//using Mono.Math;
 
 
 public class Sum
 {
 	#region Fields
 	private static int iterations = 10000;
-	private const int lengthUlongString = 10000;
+	private const int lengthUlongString = 100000;
 	static ulong sumBitResult; // This is what we'll check in double
 	static double sumFloatResult; // This is what we'll check in float version
 
 	static ulong[] stringUlong = new ulong[lengthUlongString];
+	//static BigInteger[] stringBigInteger = new BigInteger[lengthUlongString];
 	static Vector2ul[] stringVector2ul = new Vector2ul[LengthVector2ulString];
 	static float[] stringFloat = new float[LengthFloatString];
-	static Vector4f[] stringVector4f = new Vector4f[LengthVector4fString];	
+	static Vector4f[] stringVector4f = new Vector4f[LengthVector4fString];
 	
 	private static int LengthVector2ulString
 	{
@@ -50,7 +52,6 @@ public class Sum
 		get{return lengthUlongString*64/4;}
 	}
 	#endregion
-
 	
 	#region Init, Reset and Check
 	public static void Init(string[] args)
@@ -63,6 +64,7 @@ public class Sum
 		for(int i = 0; i < lengthUlongString; i++)
 		{
 			stringUlong[i] = (ulong)(uint)r.Next(Int32.MinValue,Int32.MaxValue) | (((ulong)(uint)r.Next(Int32.MinValue,Int32.MaxValue)) << 32);
+			//stringBigInteger[i] = new BigInteger(stringUlong[i]);
 		}
 		for(int i = 0; i < LengthFloatString; i++)
 		{
@@ -159,6 +161,21 @@ public class Sum
         }
 		sumBitResult = result;
 	}
+	
+	/*
+	[Benchmark]
+	public static void BoolBigInteger()
+	{
+		//don't use static variables in iterations
+		BigInteger[] array = stringBigInteger;
+		int count = iterations;
+		ulong result = 0;
+		for (int i = 0; i < count; i++)
+        {
+            result = BigIntegerSum(array);
+        }
+		sumBitResult = result;
+	}*/
 
 	[Benchmark]
 	public static void FuzzyFloat()
@@ -189,7 +206,7 @@ public class Sum
 	}
 	#endregion
 
-	#region real implementation methods
+	#region Real implementation methods
 	const ulong m1  = 0x5555555555555555; //binary: 0101...
 	const ulong m2  = 0x3333333333333333; //binary: 00110011..
 	const ulong m4  = 0x0f0f0f0f0f0f0f0f; //binary:  4 zeros,  4 ones ...
@@ -235,12 +252,21 @@ public class Sum
 		
 		return result.X + result.Y + result.Z + result.W;
 	}
-		
+	
+	/*
+	static ulong BigIntegerSum(BigInteger[] r) {
+		ulong result = 0;
+		for(int i = 0; i < r.Length; i++)
+		{
+			result += (ulong)r[i].BitCount();
+        }
+		return result;
+	}*/
 	
 	//This uses fewer arithmetic operations than any other known  
 	//implementation on machines with fast multiplication.
 	//It uses 12 arithmetic operations, one of which is a multiply.
-	static unsafe uint QuickSum(ulong[] r) {
+	static unsafe ulong QuickSum(ulong[] r) {
 		ulong result = 0;
 		fixed (ulong* arrayPtr = r)
         {
@@ -254,7 +280,7 @@ public class Sum
 		    	result += ((x * h01)>>56);  //returns left 8 bits of x + (x<<8) + (x<<16) + (x<<24) + ...
             }
         }
-		return (uint)result;
+		return result;
 	}
 
 	//This uses fewer arithmetic operations than any other known  

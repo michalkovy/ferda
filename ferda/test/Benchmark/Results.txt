@@ -1,0 +1,50 @@
+﻿This file should include results of tests run on different machines with different configuration.
+
+How to fill this file:
+0) Make your machine idle (close all processes which you do not need) and stable at performance (see ***)
+1) Execute "nant" in the Benchmark directory
+2) Copy down information from "YourLastResult.txt" file which has been created in the directory
+3) Fill in info about your machine (machine name should mach the name of machine in the "YourLastResult.txt" file)
+(4) Execute "nant -t:mono-2.0" in the Benchmark directory)
+(5) Copy down information from "YourLastResult.txt" file which has been created in the directory)
+
+*** How to make computer stable in performace
+If you have laptop with SpeedStep technology and the processor is so much hot, the computer decreases performance
+of the CPU. It discvalifies the results, because some numbers are with higher performance of the CPU then other.
+So let me describe how to set the CPU to the lowest performance from beginning:
+1) In Control Panel -> Power options on the "Power Schemas" tab select the "Max Battery" schema
+2) Unplug laptop from the electricity
+3) In the machine description include operating frequency. You can use for the determination of the frequency
+the Intel Frequency ID utility (http://support.intel.com/support/processors/tools/frequencyid/), but it may work incorrectly
+in some situations
+
+Machine descriptions:
+========================================================
+MICHALBOOK: Core 2 Duo T7200 @1GHz, 2GB RAM
+
+Results:
+========================================================
+Benchmark version: 1
+Machine name: MICHALBOOK
+Operating System: Microsoft Windows NT 5.2.3790 Service Pack 2
+Runtime version: 2.0.50727.1433
+Mono: False
+64bit native mode: True
+Supported accelerations: None
+Date and time: 30.1.2009 22:56:55
+Benchmarking type Sum
+Run #1
+  BoolPrecomputed      00:00:15.6875000
+  BoolQuick            00:00:11.7656250
+  BoolQuickWithoutMult 00:00:16.8906250
+  BoolQuickVector2ul   00:03:00.4843750
+  FuzzyFloat           00:03:28.3750000
+  FuzzyVector4f        00:15:03.9375000
+Run #2
+  BoolPrecomputed      00:00:15.7031250
+  BoolQuick            00:00:11.7812500
+  BoolQuickWithoutMult 00:00:16.8906250
+  BoolQuickVector2ul   00:03:00.6093750
+  FuzzyFloat           00:03:28.3437500
+  FuzzyVector4f        00:15:04.1875000
+
