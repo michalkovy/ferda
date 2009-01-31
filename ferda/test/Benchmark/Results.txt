@@ -71,3 +71,27 @@ Run #2
   BoolQuickVector2ul   00:03:06.0118470
   FuzzyFloat           00:16:20.2916640
   FuzzyVector4f        00:17:16.4391330
+
+Benchmark version: 1
+Machine name: MICHALBOOK
+Operating System: Microsoft Windows NT 5.2.3790.0
+Runtime version: 2.0.50727.1433
+Mono: True
+64bit native mode: False
+Supported accelerations: SSE1, SSE2, SSE3, SSSE3
+Date and time: 31.1.2009 3:44:20
+Benchmarking type Sum
+Run #1
+  BoolPrecomputed      00:00:31.6720000
+  BoolQuick            00:01:09.8600000
+  BoolQuickWithoutMult 00:01:04.5320000
+  BoolQuickVector2ul   00:00:54.7180000
+  FuzzyFloat           00:09:43.6250000
+  FuzzyVector4f        00:03:05.1090000
+Run #2
+  BoolPrecomputed      00:00:31.6560000
+  BoolQuick            00:01:09.7970000
+  BoolQuickWithoutMult 00:01:04.6720000
+  BoolQuickVector2ul   00:00:54.6720000
+  FuzzyFloat           00:09:43.1090000
+  FuzzyVector4f        00:03:05.0470000
