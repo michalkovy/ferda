@@ -48,3 +48,26 @@ Run #2
   FuzzyFloat           00:03:28.3437500
   FuzzyVector4f        00:15:04.1875000
 
+Benchmark version: 1
+Machine name: michalbook
+Operating System: Unix 2.6.27.8
+Runtime version: 2.0.50727.1433
+Mono: True
+64bit native mode: True
+Supported accelerations: None
+Date and time: 31.1.2009 1:39:05
+Benchmarking type Sum
+Run #1
+  BoolPrecomputed      00:00:19.8435630
+  BoolQuick            00:00:15.4699350
+  BoolQuickWithoutMult 00:00:25.4193650
+  BoolQuickVector2ul   00:03:06.0202230
+  FuzzyFloat           00:16:21.9661810
+  FuzzyVector4f        00:17:17.9295310
+Run #2
+  BoolPrecomputed      00:00:19.8475560
+  BoolQuick            00:00:15.4672150
+  BoolQuickWithoutMult 00:00:25.4088540
+  BoolQuickVector2ul   00:03:06.0118470
+  FuzzyFloat           00:16:20.2916640
+  FuzzyVector4f        00:17:16.4391330

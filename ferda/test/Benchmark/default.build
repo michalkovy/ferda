@@ -7,6 +7,7 @@
 			</fileset>
 		</delete>
 		<delete dir="bin" failonerror="false" if="${directory::exists('bin')}"/>
+		<mkdir dir="bin/Release" failonerror="false"/>
 	</target>	
 	<target name="build" depends="clean">
 		<if test="${framework::get-target-framework()=='mono-2.0'}">
@@ -41,7 +42,7 @@
 		
 	</target>
 	<target name="run" depends="build">
-		<exec program="bin/Release/Benchmark.exe" output="YourLastResult.txt" managed="true">
+		<exec program="bin/Release/Benchmark.exe" output="YourLastResult.txt" useruntimeengine="true">
 			<arg value="-version"/>
 			<arg value="-runtwice"/>
 		</exec>
