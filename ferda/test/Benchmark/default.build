@@ -1,0 +1,49 @@
+﻿<?xml version="1.0"?>
+<project name="Benchmark" default="run">
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset>
+				<include name="bin/**"/>
+			</fileset>
+		</delete>
+		<delete dir="bin" failonerror="false" if="${directory::exists('bin')}"/>
+	</target>	
+	<target name="build" depends="clean">
+		<if test="${framework::get-target-framework()=='mono-2.0'}">
+			<csc target="exe" warnaserror="true" optimize="true" unsafe="true" output="bin/Release/Benchmark.exe">
+				<sources failonempty="true">
+					<include name="**.cs"/>
+				</sources>
+				<references>
+					<include name="System.dll"/>
+					<include name="System.Data.dll"/>
+					<include name="Mono.Simd.dll"/>
+				</references>
+			</csc>
+		</if>
+		<if test="${framework::get-target-framework()!='mono-2.0'}">
+			<csc target="exe" warnaserror="true" optimize="true" unsafe="true" output="bin/Release/Benchmark.exe">
+				<sources failonempty="true">
+					<include name="**.cs"/>
+				</sources>
+				<references>
+					<include name="System.dll"/>
+					<include name="System.Data.dll"/>
+					<include name="../../lib/Mono.Simd.dll"/>
+				</references>
+			</csc>
+			<copy todir="bin/Release">
+				<fileset basedir="../../lib">
+					<include name="Mono.Simd.dll" />
+				</fileset>
+			</copy>
+		</if>
+		
+	</target>
+	<target name="run" depends="build">
+		<exec program="bin/Release/Benchmark.exe" output="YourLastResult.txt" managed="true">
+			<arg value="-version"/>
+			<arg value="-runtwice"/>
+		</exec>
+	</target>
+</project>
