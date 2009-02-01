@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Reflection;
+using System;
 
 namespace Ferda.Modules
 {
@@ -228,9 +229,16 @@ namespace Ferda.Modules
         [Test]
         public void Test_OWLOntologyModule()
         {
-            IBoxModuleFactoryCreator ontologyCreator = modulesManager.GetBoxModuleFactoryCreator("OntologyRelated.Ontology");
-            IBoxModule ontologyBox = ontologyCreator.CreateBoxModule();
-            ontologyBox.RunAction("LoadOntology");
+			try{
+            	IBoxModuleFactoryCreator ontologyCreator = modulesManager.GetBoxModuleFactoryCreator("OntologyRelated.Ontology");
+            	IBoxModule ontologyBox = ontologyCreator.CreateBoxModule();
+            	ontologyBox.RunAction("LoadOntology");
+			}
+			catch(Modules.BoxRuntimeError boxError)
+			{
+				NUnit.Framework.Assert.Fail("Box '" + boxError.boxIdentity + "' throw error: '" + boxError.userMessage + "'" + 
+				                            Environment.NewLine + "Error: " + boxError.ToString());
+			}
         }
 
         /*
