@@ -212,9 +212,10 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                 File.Delete(PMMLFile);
             }
 
-            using (FileStream fs = File.Create(PMMLFile))
+            //using (FileStream fs = File.Create(PMMLFile))
+            using (StreamWriter sw= new StreamWriter(PMMLFile))
             {
-                fs.Write(_stream.ToArray(), 0, _stream.ToArray().Length);
+                sw.Write(PMML);
             }
         }
 
@@ -337,11 +338,17 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
 
             xmlWriter.WriteEndElement(); //PMML
 
-            //xmlWriter.Close();
+            xmlWriter.Flush();
             //return strBuilder.ToString();
-            _stream.Position = 0;
-            StreamReader sr = new StreamReader(_stream, Encoding.UTF8);
-            return sr.ReadToEnd();
+
+            byte [] byteArray = new byte[_stream.Length];
+            _stream.Seek(0, SeekOrigin.Begin);
+            _stream.Read(byteArray, 0, (int) _stream.Length);
+            UTF8Encoding utf8 = new UTF8Encoding();
+            char [] charArray = new char[utf8.GetCharCount(byteArray)];
+            utf8.GetDecoder().GetChars(byteArray, 0, (int) _stream.Length, charArray, 0);
+
+            return new string(charArray);
         }
 
         /// <summary>
