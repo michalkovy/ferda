@@ -8,6 +8,11 @@ dir}/bin
     -->
 	<target name="build">
 		<!-- build test assembly -->
+		<copy  todir="${build.dir}" overwrite="true">
+			<fileset>
+				<include name="ontology.owl"/>
+			</fileset>
+		</copy>		
 		<csc target="library" warnaserror="true" debug="${debug}" output="${build.dir}/ModulesTest.dll">
 			<sources failonempty="true">
 				<include name="**/*.cs"/>
