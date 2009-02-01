@@ -188,8 +188,8 @@
 			</icebox>
 		</server-template>
 		<node name="localhost">
-			<server-instance template="FerdaServerTemplate" index="0" pwd="..\Server" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
-			<server-instance template="FerdaServerTemplateJava" index="1" pwd="..\Server\OWLParser" classpath="..\Server\OWLParser;..\Server\Ice.jar;..\Server\OWL_API\owlapi-api.jar;..\Server\OWL_API\owlapi-apibinding.jar;..\Server\OWL_API\owlapi-oboparser.jar;..\Server\OWL_API\owlapi-krssparser.jar;..\Server\OWL_API\owlapi-functionalparser.jar;..\Server\OWL_API\owlapi-owlxmlparser.jar;..\Server\OWL_API\owlapi-rdfxmlparser.jar;..\Server\OWL_API\owlapi-impl.jar;..\Server\OWL_API\owlapi-rdfxmlrenderer.jar;..\Server\OWL_API\owlapi-owlxmlrenderer.jar;..\Server\OWL_API\owlapi-functionalrenderer.jar;..\Server\OWL_API\owlapi-rdfapi.jar;%CLASSPATH%" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
+			<server-instance template="FerdaServerTemplate" index="0" pwd="../Server" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
+			<server-instance template="FerdaServerTemplateJava" index="1" pwd="../Server/OWLParser" classpath="../Server/OWLParser;../Server/Ice.jar;../Server/OWL_API/owlapi-api.jar;../Server/OWL_API/owlapi-apibinding.jar;../Server/OWL_API/owlapi-oboparser.jar;../Server/OWL_API/owlapi-krssparser.jar;../Server/OWL_API/owlapi-functionalparser.jar;../Server/OWL_API/owlapi-owlxmlparser.jar;../Server/OWL_API/owlapi-rdfxmlparser.jar;../Server/OWL_API/owlapi-impl.jar;../Server/OWL_API/owlapi-rdfxmlrenderer.jar;../Server/OWL_API/owlapi-owlxmlrenderer.jar;../Server/OWL_API/owlapi-functionalrenderer.jar;../Server/OWL_API/owlapi-rdfapi.jar;%CLASSPATH%" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
 		</node>
 	</application>
 </icegrid>
