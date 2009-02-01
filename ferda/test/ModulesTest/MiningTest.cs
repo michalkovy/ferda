@@ -34,7 +34,7 @@ namespace Ferda.Modules
 		{
 			int sum1, sum2, sum3, sum4;
 			BitString.CrossAndSum(bitStrings[0], falseBitString, bitStrings[1], falseBitString,
-				bitStrings[0].Sum, 0, bitStrings[1].Sum, 0,
+				(int)bitStrings[0].Sum, 0, (int)bitStrings[1].Sum, 0,
 				out sum1, out sum2, out sum3, out sum4);
 			Assert.AreEqual(0, sum2);
 			Assert.AreEqual(0, sum3);
@@ -42,7 +42,7 @@ namespace Ferda.Modules
 			Assert.IsTrue(sum1 > 0);
 			
 			BitString.CrossAndSum(bitStrings[0], bitStrings[1], bitStrings[2], bitStrings[3],
-				bitStrings[0].Sum, bitStrings[1].Sum, bitStrings[2].Sum, bitStrings[3].Sum,
+				(int)bitStrings[0].Sum, (int)bitStrings[1].Sum, (int)bitStrings[2].Sum, (int)bitStrings[3].Sum,
 				out sum1, out sum2, out sum3, out sum4);
 			Assert.IsTrue(sum1 > 0);
 			Assert.IsTrue(sum2 > 0);
