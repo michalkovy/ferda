@@ -225,13 +225,13 @@ namespace Ferda.Modules
 			Assert.AreEqual(5.0, doubleBoxResult.GetPropertyDouble("value"), 0.1);
 		}
 
-        //[Test]
-        //public void Test_OWLOntologyModule()
-        //{
-        //    IBoxModuleFactoryCreator ontologyCreator = modulesManager.GetBoxModuleFactoryCreator("OntologyRelated.Ontology");
-        //    IBoxModule ontologyBox = ontologyCreator.CreateBoxModule();
-        //    ontologyBox.RunAction("LoadOntology");
-        //}
+        [Test]
+        public void Test_OWLOntologyModule()
+        {
+            IBoxModuleFactoryCreator ontologyCreator = modulesManager.GetBoxModuleFactoryCreator("OntologyRelated.Ontology");
+            IBoxModule ontologyBox = ontologyCreator.CreateBoxModule();
+            ontologyBox.RunAction("LoadOntology");
+        }
 
         /*
 		[Test]
