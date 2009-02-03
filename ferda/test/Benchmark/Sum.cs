@@ -204,6 +204,21 @@ public class Sum
         }
 		sumFloatResult = result;
 	}
+
+    [Benchmark]
+    public static void FuzzyVector4fSafe()
+    {
+        //don't use static variables in iterations
+        Vector4f[] array = stringVector4f;
+        int count = iterations;
+        double result = 0;
+        for (int i = 0; i < count; i++)
+        {
+            result = FloatSumVectorSafe(array);
+        }
+        sumFloatResult = result;
+    }
+
 	#endregion
 
 	#region Real implementation methods
@@ -251,7 +266,19 @@ public class Sum
         }
 		
 		return result.X + result.Y + result.Z + result.W;
-	}
+    }
+
+    static float FloatSumVectorSafe(Vector4f[] r)
+    {
+        Vector4f result = new Vector4f(0, 0, 0, 0);
+
+        for (int i = 0; i < r.Length - 1; i++)
+        {
+            result += r[i];
+        }
+
+        return result.X + result.Y + result.Z + result.W;
+    }
 	
 	/*
 	static ulong BigIntegerSum(BigInteger[] r) {
