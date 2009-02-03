@@ -181,23 +181,17 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         //there is only one
                         if (floats.Length % _blocksize == 1)
                         {
-                            _array[i].Y = -1f;
-                            _array[i].Z = -1f;
-                            _array[i].W = -1f;
                             break;
                         }
                         //there are at least 2 floats to be filled
                         if (floats.Length % _blocksize == 2)
                         {
                             _array[i].Y = floats[_blocksize * i + 1];
-                            _array[i].Z = -1f;
-                            _array[i].W = -1f;
                         }
                         else
                         {
                             _array[i].Y = floats[_blocksize * i + 1];
                             _array[i].Z = floats[_blocksize * i + 2];
-                            _array[i].W = -1f;
                         }
                     }
                 }
@@ -210,12 +204,57 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
         /// <summary>
         /// Performs the bitwise AND operation on current BitString against the specified BitString.
+        /// The supported t-norm is algebraic product, that is T(x,y) = xy. 
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
         /// <returns>Result of the AND operation</returns>
         public IBitString And(IBitString source)
         {
-            return EmptyBitString.GetInstance();
+            if (source is BitString)
+            {
+                FuzzyBitString result = new FuzzyBitString(this);
+                result.andNonFuzzy((BitString)source);
+                result._identifier = FormulaHelper.And(_identifier, source.Identifier);
+                return result;
+            }
+            else if (source is FuzzyBitString)
+            {
+                FuzzyBitString result = new FuzzyBitString(this);
+                result.andSafe((FuzzyBitString)source);
+                result._identifier = FormulaHelper.And(_identifier, source.Identifier);
+                return result;
+            }
+            else if (source is EmptyBitString)
+            {
+                return new FuzzyBitString(this);
+            }
+            else if (source is FalseBitString)
+            {
+                return source;
+            }
+            else if (source is TrueBitString)
+            {
+                return new FuzzyBitString(this);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private void andNonFuzzy(BitString source)
+        {
+
+        }
+
+        /// <summary>
+        /// Safe (managed) computation of the fuzzy conjuction -
+        /// algebraic product
+        /// </summary>
+        /// <param name="source">the other operand</param>
+        private void andSafe(FuzzyBitString source)
+        {
+
         }
 
         #endregion
@@ -243,6 +282,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         public IBitString Not()
         {
+            if (_size == 0)
+                throw new InvalidOperationException("BitString was not initialized (use create method first).");
+
             FuzzyBitString result = new FuzzyBitString(this);
             result.not();
             result._identifier = FormulaHelper.Not(_identifier);
@@ -250,37 +292,39 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         }
 
         /// <summary>
+        /// Unsafe (unmanaged) negation.
         /// Method that switches a fuzzy bit string for its negation. 
         /// The used fuzzy negation
         /// is the Lukasiewicz negation (standard complement), that is N(x) = 1 - x.
         /// </summary>
-        private void not()
+        private unsafe void not()
         {
-            if (_size == 0)
-                throw new InvalidOperationException("BitString was not initialized (use create method first).");
+            Vector4f tmp = new Vector4f(1f, 1f, 1f, 1f);
 
+            fixed (Vector4f* arrayPtr = _array)
+            {
+                Vector4f* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
+                while (currentPtr < stopPtr)
+                {
+                    *currentPtr = tmp - *currentPtr;
+                    currentPtr++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Safe (managed) negation.
+        /// Method that switches a fuzzy bit string for its negation. 
+        /// The used fuzzy negation
+        /// is the Lukasiewicz negation (standard complement), that is N(x) = 1 - x.
+        /// </summary>
+        private void notSafe()
+        {
             Vector4f tmp = new Vector4f(1f, 1f, 1f, 1f);
             //processing all but last vector
-            for (int i = 0; i < _array.Length - 1; i++)
+            for (int i = 0; i < _array.Length; i++)
             {
                 _array[i] = tmp - _array[i];
-            }
-            //there has to be at least one item in the last vector
-            _array[_array.Length - 1].X = 1 - _array[_array.Length - 1].X;
-            if (_size % _blocksize == 2)
-            {
-                _array[_array.Length - 1].Y = 1 - _array[_array.Length - 1].Y;
-            }
-            if (_size % _blocksize == 3)
-            {
-                _array[_array.Length - 1].Y = 1 - _array[_array.Length - 1].Y;
-                _array[_array.Length - 1].Z = 1 - _array[_array.Length - 1].Z;
-            }
-            if (_size % _blocksize == 0)
-            {
-                _array[_array.Length - 1].Y = 1 - _array[_array.Length - 1].Y;
-                _array[_array.Length - 1].Z = 1 - _array[_array.Length - 1].Z;
-                _array[_array.Length - 1].W = 1 - _array[_array.Length - 1].W;
             }
         }
 
@@ -310,12 +354,30 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     }
 
                     long result = 0;
-                    for (int i = 0; i < _array.Length; i++)
+                    for (int i = 0; i < _array.Length - 1; i++)
                     {
                         result += _array[i].X > 0 ? 1 : 0;
                         result += _array[i].Y > 0 ? 1 : 0;
                         result += _array[i].Z > 0 ? 1 : 0;
                         result += _array[i].W > 0 ? 1 : 0;
+                    }
+
+                    //there has to be at least one item in the last vector
+                    result += _array[_array.Length - 1].X > 0 ? 1 : 0;
+                    if (_size % _blocksize == 2)
+                    {
+                        result += _array[_array.Length - 1].Y > 0 ? 1 : 0;
+                    }
+                    if (_size % _blocksize == 3)
+                    {
+                        result += _array[_array.Length - 1].Y > 0 ? 1 : 0;
+                        result += _array[_array.Length - 1].Z > 0 ? 1 : 0;
+                    }
+                    if (_size % _blocksize == 0)
+                    {
+                        result += _array[_array.Length - 1].Y > 0 ? 1 : 0;
+                        result += _array[_array.Length - 1].Z > 0 ? 1 : 0;
+                        result += _array[_array.Length - 1].W > 0 ? 1 : 0;
                     }
 
                     if (result < 0)
@@ -352,39 +414,84 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         return _sum;
                     }
 
-                    Vector4f res = new Vector4f();
-                    //counting all but last vector
-                    for (int i = 0; i < _array.Length - 1; i++)
-                    {
-                        res += _array[i];
-                    }
+                    //sumSafe();
+                    sumUnsafe();
 
-                    //there has to be at least one item in the last vector
-                    float result = _array[_array.Length - 1].X;
-                    if (_size % _blocksize == 2)
-                    {
-                        result += _array[_array.Length - 1].Y;
-                    }
-                    if (_size % _blocksize == 3)
-                    {
-                        result += _array[_array.Length - 1].Y;
-                        result += _array[_array.Length - 1].Z;
-                    }
-                    if (_size % _blocksize == 0)
-                    {
-                        result += _array[_array.Length - 1].Y;
-                        result += _array[_array.Length - 1].Z;
-                        result += _array[_array.Length - 1].W;
-                    }
-                    result += res.X;
-                    result += res.Y;
-                    result += res.Z;
-                    result += res.W;
-
-                    _sum = result;
                     return _sum;
                 }
             }
+        }
+
+        /// <summary>
+        /// Unsafe (unmanaged) computation of the fuzzy bit string sum
+        /// </summary>
+        private unsafe void sumUnsafe()
+        {
+            Vector4f res = new Vector4f(0, 0, 0, 0);
+
+            fixed (Vector4f* arrayPtr = _array)
+            {
+                Vector4f* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length - 1;
+                while (currentPtr < stopPtr)
+                {
+                    res += *currentPtr++;
+                }
+            }
+
+            //there has to be at least one item in the last vector
+            float result = _array[_array.Length - 1].X;
+            if (_size % _blocksize == 2)
+            {
+                result += _array[_array.Length - 1].Y;
+            }
+            if (_size % _blocksize == 3)
+            {
+                result += _array[_array.Length - 1].Y;
+                result += _array[_array.Length - 1].Z;
+            }
+            if (_size % _blocksize == 0)
+            {
+                result += _array[_array.Length - 1].Y;
+                result += _array[_array.Length - 1].Z;
+                result += _array[_array.Length - 1].W;
+            }
+            result += res.X + res.Y + res.Z + res.W;
+
+            _sum = result;
+        }
+
+        /// <summary>
+        /// Safe (managed) computation of the fuzzy bit string sum
+        /// </summary>
+        private void sumSafe()
+        {
+            Vector4f res = new Vector4f(0f, 0f, 0f, 0f);
+            //counting all but last vector
+            for (int i = 0; i < _array.Length - 1; i++)
+            {
+                res += _array[i];
+            }
+
+            //there has to be at least one item in the last vector
+            float result = _array[_array.Length - 1].X;
+            if (_size % _blocksize == 2)
+            {
+                result += _array[_array.Length - 1].Y;
+            }
+            if (_size % _blocksize == 3)
+            {
+                result += _array[_array.Length - 1].Y;
+                result += _array[_array.Length - 1].Z;
+            }
+            if (_size % _blocksize == 0)
+            {
+                result += _array[_array.Length - 1].Y;
+                result += _array[_array.Length - 1].Z;
+                result += _array[_array.Length - 1].W;
+            }
+            result += res.X + res.Y + res.Z + res.W;
+
+            _sum = result;
         }
 
         #region IBitStringCreate
