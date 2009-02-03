@@ -95,3 +95,58 @@ Run #2
   BoolQuickVector2ul   00:00:54.6720000
   FuzzyFloat           00:09:43.1090000
   FuzzyVector4f        00:03:05.0470000
+
+========================================================
+Machine descriptions: 
+========================================================
+KANCIIBM: Intel Pentium M @1,7GHz, 1GB RAM
+
+Results:
+========================================================
+Benchmark version: 1
+Machine name: KANCIIBM
+Operating System: Microsoft Windows NT 5.1.2600 Service Pack 3
+Runtime version: 2.0.50727.1433
+Mono: False
+64bit native mode: False
+Supported accelerations: None
+Date and time: 2.2.2009 21:50:17
+Benchmarking type Sum
+Run #1
+  BoolPrecomputed      00:00:12.3577696
+  BoolQuick            00:00:32.3565264
+  BoolQuickWithoutMult 00:00:32.5668288
+  BoolQuickVector2ul   00:03:50.1108832
+  FuzzyFloat           00:02:44.2662032
+  FuzzyVector4f        00:09:47.7851936
+Run #2
+  BoolPrecomputed      00:00:12.1975392
+  BoolQuick            00:00:31.5253312
+  BoolQuickWithoutMult 00:00:32.1061664
+  BoolQuickVector2ul   00:03:45.7746480
+  FuzzyFloat           00:02:39.9499968
+  FuzzyVector4f        00:09:43.7393760
+
+Benchmark version: 1
+Machine name: KANCIIBM
+Operating System: Microsoft Windows NT 5.1.2600.0
+Runtime version: 2.0.50727.1433
+Mono: True
+64bit native mode: False
+Supported accelerations: SSE1, SSE2
+Date and time: 2.2.2009 22:32:15
+Benchmarking type Sum
+Run #1
+  BoolPrecomputed      00:00:20.6700000
+  BoolQuick            00:00:48.2690000
+  BoolQuickWithoutMult 00:00:40.6380000
+  BoolQuickVector2ul   00:00:39.8580000
+  FuzzyFloat           00:05:42.4220000
+  FuzzyVector4f        00:02:32.6900000
+Run #2
+  BoolPrecomputed      00:00:20.2790000
+  BoolQuick            00:00:47.7290000
+  BoolQuickWithoutMult 00:00:40.8880000
+  BoolQuickVector2ul   00:00:39.4570000
+  FuzzyFloat           00:05:44.2450000
+  FuzzyVector4f        00:02:42.0930000
