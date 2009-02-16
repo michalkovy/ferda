@@ -21,6 +21,7 @@ in some situations
 Machine descriptions:
 ========================================================
 MICHALBOOK: Core 2 Duo T7200 @1GHz, 2GB RAM
+KANCIIBM: Intel Pentium M @1,7GHz, 1GB RAM
 
 Results:
 ========================================================
@@ -97,10 +98,6 @@ Run #2
   FuzzyVector4f        00:03:05.0470000
 
 ========================================================
-Machine descriptions: 
-========================================================
-KANCIIBM: Intel Pentium M @1,7GHz, 1GB RAM
-
 Results:
 ========================================================
 Benchmark version: 1
