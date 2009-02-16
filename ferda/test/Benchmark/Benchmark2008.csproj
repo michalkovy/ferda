@@ -58,6 +58,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Compile Include="Benchmark.cs" />
+    <Compile Include="FerdaBenchmark.cs" />
+    <Compile Include="Not.cs" />
     <Compile Include="Sum.cs" />
     <None Include="Readme.txt" />
     <None Include="Results.txt" />
@@ -67,5 +69,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Mono.Simd.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
 </Project>
