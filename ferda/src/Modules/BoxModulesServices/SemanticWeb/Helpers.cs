@@ -313,7 +313,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                     IMultipleOperandEntitySetting setting =
                         attr.EntitySetting as IMultipleOperandEntitySetting;
                     output.WriteElementString("MinimalLength", setting.minLength.ToString());
-                    output.WriteElementString("MaximaLength", setting.maxLength.ToString());
+                    output.WriteElementString("MaximalLength", setting.maxLength.ToString());
                     output.WriteEndElement(); //DerivedBoolenaAttributeSetting
                 }
             }
