@@ -312,7 +312,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
             xmlWriter.WriteStartElement("PMML");
             xmlWriter.WriteAttributeString("version", "3.0");
             xmlWriter.WriteAttributeString("xmlns", "http://www.dmg.org/PMML-3_2");
-            xmlWriter.WriteAttributeString("xmlns", "http://www.w3.org/2001/XMLSchema-instance");
+            xmlWriter.WriteAttributeString("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
             xmlWriter.WriteAttributeString("xsi:schemaLocation", "http://www.dmg.org/PMML-3_2 http://www.dmg.org/v3-2/pmml-3-2.xsd");
 
             //The Header element
