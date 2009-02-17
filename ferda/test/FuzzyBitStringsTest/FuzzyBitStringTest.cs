@@ -397,6 +397,8 @@ namespace FuzzyBitStringsTest
 
             for (int i = 0; i < 1000; i++)
             {
+                //Debug.WriteLine("Should be: " + nf1000.GetBit(i).ToString());
+                //Debug.WriteLine("Result: " + bitField1000[i].ToString());
                 if (!Common.CloseEnough(4, nf1000.GetBit(i), bitField1000[i]))
                 {
                     throw new Exception("The Not() does not work");
@@ -435,8 +437,120 @@ namespace FuzzyBitStringsTest
                 throw new Exception("The Not() does not work");
             }
 
-
             Debug.WriteLine("Not(..) test successful");
+        }
+
+        /// <summary>
+        /// Only if precomputed numbers work
+        /// </summary>
+        //[Test]
+        //public void StupidAndTest()
+        //{
+        //    Debug.WriteLine("Stupid And(..) test");
+
+        //    float[] f1 = new float[] { 0.1f, 0.2f, 0.3f, 0.4f };
+        //    float[] f2 = new float[] { 0f, 0.1f, 0.2f, 0.3f };
+
+        //    FuzzyBitString fb1 = new FuzzyBitString(o, f1, true);
+        //    FuzzyBitString fb2 = new FuzzyBitString(o, f2, true);
+
+        //    IBitString result = fb1.And(fb2);
+
+        //    Debug.WriteLine(result.ToString());
+        //}
+
+        [Test]
+        public void AndTest()
+        {
+            Debug.WriteLine("And(..) test");
+
+            float[] bitField1000 = new float[1000];
+            float[] bitField1000b = new float[1000];
+            float[] bitField1001 = new float[1001];
+            float[] bitField1001b = new float[1001];
+            float[] bitField1002 = new float[1002];
+            float[] bitField1002b = new float[1002];
+            float[] bitField1003 = new float[1003];
+            float[] bitField1003b = new float[1003];
+
+            for (int i = 0; i < 1000; i++)
+            {
+                bitField1000[i] = Convert.ToSingle(r.NextDouble());
+                bitField1000b[i] = Convert.ToSingle(r.NextDouble());
+                bitField1001[i] = Convert.ToSingle(r.NextDouble());
+                bitField1001b[i] = Convert.ToSingle(r.NextDouble());
+                bitField1002[i] = Convert.ToSingle(r.NextDouble());
+                bitField1002b[i] = Convert.ToSingle(r.NextDouble());
+                bitField1003[i] = Convert.ToSingle(r.NextDouble());
+                bitField1003b[i] = Convert.ToSingle(r.NextDouble());
+            }
+
+            bitField1001[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1001b[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1002[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1002b[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003b[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1002[1001] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1002b[1001] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003[1001] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003b[1001] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003[1002] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003b[1002] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+
+            FuzzyBitString f1000 = new FuzzyBitString(o, bitField1000, true);
+            FuzzyBitString f1000b = new FuzzyBitString(o, bitField1000b, true);
+            FuzzyBitString f1001 = new FuzzyBitString(o, bitField1001, true);
+            FuzzyBitString f1001b = new FuzzyBitString(o, bitField1001b, true);
+            FuzzyBitString f1002 = new FuzzyBitString(o, bitField1002, true);
+            FuzzyBitString f1002b = new FuzzyBitString(o, bitField1002b, true);
+            FuzzyBitString f1003 = new FuzzyBitString(o, bitField1003, true);
+            FuzzyBitString f1003b = new FuzzyBitString(o, bitField1003b, true);
+
+            FuzzyBitString f1000A = f1000.And(f1000b) as FuzzyBitString;
+            FuzzyBitString f1001A = f1001.And(f1001b) as FuzzyBitString;
+            FuzzyBitString f1002A = f1002.And(f1002b) as FuzzyBitString;
+            FuzzyBitString f1003A = f1003.And(f1003b) as FuzzyBitString;
+
+            for (int i = 0; i < 1000; i++)
+            {
+                //Debug.WriteLine(i);
+                //Debug.WriteLine("Result: " + f1000A.GetBit(i).ToString());
+                //Debug.WriteLine("Operand 1: " + bitField1000[i].ToString());
+                //Debug.WriteLine("Operand 2: " + bitField1000b[i].ToString());
+                //Debug.WriteLine("Should be: " + (bitField1000[i] * bitField1000b[i]).ToString());
+                if (!Common.CloseEnough(4, f1000A.GetBit(i), bitField1000[i] * bitField1000b[i]))
+                {
+                    throw new Exception("The And() does not work");
+                }
+                if (!Common.CloseEnough(4, f1001A.GetBit(i), bitField1001[i] * bitField1001b[i]))
+                {
+                    throw new Exception("The And() does not work");
+                }
+                if (!Common.CloseEnough(4, f1002A.GetBit(i), bitField1002[i] * bitField1002b[i]))
+                {
+                    throw new Exception("The And() does not work");
+                }
+                if (!Common.CloseEnough(4, f1003A.GetBit(i), bitField1003[i] * bitField1003b[i]))
+                {
+                    throw new Exception("The And() does not work");
+                }
+            }
+
+            if (!Common.CloseEnough(4, f1001A.GetBit(1000), bitField1001[1000] * bitField1001b[1000]))
+            {
+                throw new Exception("The And() does not work");
+            }
+            if (!Common.CloseEnough(4, f1002A.GetBit(1001), bitField1002[1001] * bitField1002b[1001]))
+            {
+                throw new Exception("The And() does not work");
+            }
+            if (!Common.CloseEnough(4, f1003A.GetBit(1002), bitField1003[1002] * bitField1003b[1002]))
+            {
+                throw new Exception("The And() does not work");
+            }
+
+            Debug.WriteLine("And(..) test successful");
         }
     }
 }

@@ -210,17 +210,17 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <returns>Result of the AND operation</returns>
         public IBitString And(IBitString source)
         {
-            if (source is BitString)
-            {
-                FuzzyBitString result = new FuzzyBitString(this);
-                result.andNonFuzzy((BitString)source);
-                result._identifier = FormulaHelper.And(_identifier, source.Identifier);
-                return result;
-            }
-            else if (source is FuzzyBitString)
+            if (source is FuzzyBitString)
             {
                 FuzzyBitString result = new FuzzyBitString(this);
                 result.andSafe((FuzzyBitString)source);
+                result._identifier = FormulaHelper.And(_identifier, source.Identifier);
+                return result;
+            }
+            else if (source is BitString)
+            {
+                FuzzyBitString result = new FuzzyBitString(this);
+                result.andNonFuzzy((BitString)source);
                 result._identifier = FormulaHelper.And(_identifier, source.Identifier);
                 return result;
             }
@@ -254,7 +254,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <param name="source">the other operand</param>
         private void andSafe(FuzzyBitString source)
         {
-
+            for (int i = 0; i < _array.Length; i++)
+            {
+                _array[i] = source._array[i] * _array[i];
+            }
         }
 
         #endregion
@@ -321,7 +324,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         private void notSafe()
         {
             Vector4f tmp = new Vector4f(1f, 1f, 1f, 1f);
-            //processing all but last vector
             for (int i = 0; i < _array.Length; i++)
             {
                 _array[i] = tmp - _array[i];
