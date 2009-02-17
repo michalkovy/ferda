@@ -285,7 +285,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                     output.WriteAttributeString("type", "Sign");
                     output.WriteAttributeString("id", attr.XmlId.ToString());
                     output.WriteAttributeString("name", attr.TextRepresentation);
-                    output.WriteElementString("ConnectiveOrAtomId", 
+                    output.WriteElementString("BooleanAttributeId", 
                         attr.Ancestors[0].ToString());
                     if (attr.EntitySetting is NegationSetting)
                     {
@@ -313,7 +313,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                     output.WriteAttributeString("name", attr.TextRepresentation);
                     foreach (int ancestor in attr.Ancestors)
                     {
-                        output.WriteElementString("ConnectiveOrAtomId", ancestor.ToString());
+                        output.WriteElementString("BooleanAttributeId", ancestor.ToString());
                     }
                     IMultipleOperandEntitySetting setting =
                         attr.EntitySetting as IMultipleOperandEntitySetting;
