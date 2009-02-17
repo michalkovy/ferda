@@ -406,7 +406,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
             xmlWriter = helper.WriteDerivedBooleanAttributes(xmlWriter);
             xmlWriter.WriteEndElement(); //DerivedBooleanAttributeSettings
             xmlWriter.WriteElementString("Antecedent", helper.GetAntecedentID().ToString());
-            xmlWriter.WriteElementString("Succedent", helper.GetSuccedentID().ToString());
+            xmlWriter.WriteElementString("Consequent", helper.GetSuccedentID().ToString());
             xmlWriter.WriteElementString("Condition", helper.GetConditionID().ToString());
             xmlWriter.WriteEndElement(); //Extension
 
