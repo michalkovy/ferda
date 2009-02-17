@@ -32,16 +32,10 @@ namespace Ferda.Benchmark
 
         //static BigInteger[] stringBigInteger = new BigInteger[lengthUlongString];
         static Vector2ul[] stringVector2ul = new Vector2ul[LengthVector2ulString];
-        static float[] stringFloat = new float[LengthFloatString];
 
         private static int LengthVector2ulString
         {
             get { return lengthUlongString / 2; }
-        }
-
-        private static int LengthFloatString
-        {
-            get { return lengthUlongString * 64; }
         }
 
         #endregion
@@ -102,6 +96,7 @@ namespace Ferda.Benchmark
         #endregion
 
         #region Benchmarks
+
         [Benchmark]
         public static void BoolPrecomputed()
         {
@@ -158,21 +153,6 @@ namespace Ferda.Benchmark
             sumBitResult = result;
         }
 
-        /*
-        [Benchmark]
-        public static void BoolBigInteger()
-        {
-            //don't use static variables in iterations
-            BigInteger[] array = stringBigInteger;
-            int count = iterations;
-            ulong result = 0;
-            for (int i = 0; i < count; i++)
-            {
-                result = BigIntegerSum(array);
-            }
-            sumBitResult = result;
-        }*/
-
         [Benchmark]
         public static void FuzzyFloat()
         {
@@ -214,6 +194,21 @@ namespace Ferda.Benchmark
             }
             sumFloatResult = result;
         }
+
+        /*
+         [Benchmark]
+         public static void BoolBigInteger()
+         {
+             //don't use static variables in iterations
+             BigInteger[] array = stringBigInteger;
+             int count = iterations;
+             ulong result = 0;
+             for (int i = 0; i < count; i++)
+             {
+                 result = BigIntegerSum(array);
+             }
+             sumBitResult = result;
+         }*/
 
         #endregion
 
