@@ -141,6 +141,11 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
         public Dictionary<string, double> quantifiers;
 
         /// <summary>
+        /// The contingency table of thy hypothesis
+        /// </summary>
+        public double[][] contingencyTable; 
+
+        /// <summary>
         /// Computes values of quantifiers for given hypothesis
         /// </summary>
         /// <param name="hyp">The hypothesis</param>
@@ -152,7 +157,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
             quantifiers = new Dictionary<string, double>();
             foreach (string name in quant.Quantifeirs.Keys)
             {
-                quantifiers.Add(quant.Quantifeirs[name].LocalizedLabel,
+                quantifiers.Add(quant.Quantifeirs[name].LocalizedLabel.Replace(" ", string.Empty),
                     quant.Quantifeirs[name].Value(hyp, allObjectsCount));
             }
         }
@@ -496,6 +501,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                 rule.antecedent = ConstructPMMLItemset(hyp.GetFormula(MarkEnum.Antecedent));
                 rule.consequent = ConstructPMMLItemset(hyp.GetFormula(MarkEnum.Succedent));
                 rule.condition = ConstructPMMLItemset(hyp.GetFormula(MarkEnum.Condition));
+                rule.contingencyTable = hyp.ContingencyTableA;
                 rule.ComputeQuantifiers(hyp, quantifiers, result.AllObjectsCount);
                 rules.Add(rule);
             }
@@ -515,10 +521,10 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                 writer.WriteAttributeString("consequent", ar.consequent.ToString());
 
                 //confidence
-                if (ar.quantifiers.ContainsKey("Founded Implication"))
+                if (ar.quantifiers.ContainsKey("FoundedImplication"))
                 {
                     writer.WriteAttributeString("confidence",
-                        ar.quantifiers["Founded Implication"].ToString().Replace(',', '.'));
+                        ar.quantifiers["FoundedImplication"].ToString().Replace(',', '.'));
                 }
                 else
                 {
@@ -554,6 +560,28 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
                     writer.WriteAttributeString("extender", s);
                     writer.WriteEndElement(); //Extension
                 }
+
+                //Writing the contingency table
+                writer.WriteStartElement("Extension");
+                writer.WriteAttributeString("name", "4ftFrequency");
+                writer.WriteAttributeString("value", ar.contingencyTable[0][0].ToString());
+                writer.WriteAttributeString("extender", "a");
+                writer.WriteEndElement(); //Extension
+                writer.WriteStartElement("Extension");
+                writer.WriteAttributeString("name", "4ftFrequency");
+                writer.WriteAttributeString("value", ar.contingencyTable[0][2].ToString());
+                writer.WriteAttributeString("extender", "b");
+                writer.WriteEndElement(); //Extension
+                writer.WriteStartElement("Extension");
+                writer.WriteAttributeString("name", "4ftFrequency");
+                writer.WriteAttributeString("value", ar.contingencyTable[2][0].ToString());
+                writer.WriteAttributeString("extender", "c");
+                writer.WriteEndElement(); //Extension
+                writer.WriteStartElement("Extension");
+                writer.WriteAttributeString("name", "4ftFrequency");
+                writer.WriteAttributeString("value", ar.contingencyTable[2][2].ToString());
+                writer.WriteAttributeString("extender", "d");
+                writer.WriteEndElement(); //Extension
 
                 writer.WriteEndElement(); //AssociationRule
             }

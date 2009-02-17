@@ -31,7 +31,7 @@ namespace Ferda.Benchmark
         protected static ulong[] stringUlong = new ulong[lengthUlongString];
         protected static Vector4f[] stringVector4f = new Vector4f[LengthVector4fString];
 
-        private static int LengthVector4fString
+        protected static int LengthVector4fString
         {
             get { return lengthUlongString * 64 / 4; }
         }
