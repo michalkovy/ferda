@@ -29,13 +29,33 @@ namespace Ferda.Benchmark
         protected const int lengthUlongString = 100000;
 
         protected static ulong[] stringUlong = new ulong[lengthUlongString];
+        protected static long[] stringLong = new long[lengthUlongString];
         protected static Vector4f[] stringVector4f = new Vector4f[LengthVector4fString];
+        protected static float[] stringFloat = new float[LengthFloatString];
 
+        /// <summary>
+        /// The length of the Vector4f string
+        /// </summary>
         protected static int LengthVector4fString
         {
             get { return lengthUlongString * 64 / 4; }
         }
 
+        /// <summary>
+        /// The length of the float string
+        /// </summary>
+        protected static int LengthFloatString
+        {
+            get { return lengthUlongString * 64; }
+        }
+
+        /// <summary>
+        /// The actual number of bitstrings in the Ulong and long fields
+        /// </summary>
+        protected static int LengthLongString
+        {
+            get { return lengthUlongString * 64;  }
+        }
 
         #endregion
     }
