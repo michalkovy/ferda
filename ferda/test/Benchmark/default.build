@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0"?>
-<project name="Benchmark" default="run">
+<project name="Benchmark" default="run" 
+	xmlns="http://nant.sf.net/release/0.86/nant.xsd" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://nant.sf.net/release/0.86/nant.xsd ../../lib/nant.xsd">
 	<target name="clean">
 		<delete failonerror="false">
 			<fileset>
@@ -12,26 +15,28 @@
 	<target name="build" depends="clean">
 		<if test="${framework::get-target-framework()=='mono-2.0'}">
 			<csc target="exe" warnaserror="true" optimize="true" unsafe="true" output="bin/Release/Benchmark.exe">
-				<sources failonempty="true">
-					<include name="**.cs"/>
-				</sources>
 				<references>
 					<include name="System.dll"/>
 					<include name="System.Data.dll"/>
 					<include name="Mono.Simd.dll"/>
+					<include name="../../bin/Server/FerdaMiningProcessor.dll" />
 				</references>
+				<sources failonempty="true">
+					<include name="**.cs"/>
+				</sources>
 			</csc>
 		</if>
 		<if test="${framework::get-target-framework()!='mono-2.0'}">
 			<csc target="exe" warnaserror="true" optimize="true" unsafe="true" output="bin/Release/Benchmark.exe">
-				<sources failonempty="true">
-					<include name="**.cs"/>
-				</sources>
 				<references>
 					<include name="System.dll"/>
 					<include name="System.Data.dll"/>
 					<include name="../../lib/Mono.Simd.dll"/>
+					<include name="../../bin/Server/FerdaMiningProcessor.dll" />
 				</references>
+				<sources failonempty="true">
+					<include name="**.cs"/>
+				</sources>
 			</csc>
 			<copy todir="bin/Release">
 				<fileset basedir="../../lib">

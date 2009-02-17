@@ -18,11 +18,31 @@
 
 using System;
 using Mono.Simd;
+using Ferda.Guha.MiningProcessor.BitStrings;
 
 namespace Ferda.Benchmark
 {
 	public class Not : FerdaBenchmark
-	{
-        
+    {
+        #region Init, Reset and Check
+
+        public static void Init(string[] args)
+        {
+            if (args.Length > 0)
+                iterations = Int32.Parse(args[0]);
+
+            Random r = new Random();
+            for (int i = 0; i < lengthUlongString; i++)
+            {
+                stringUlong[i] = (ulong)(uint)r.Next(Int32.MinValue,
+                    Int32.MaxValue) |
+                    (((ulong)(uint)r.Next(Int32.MinValue,
+                    Int32.MaxValue)) << 32);
+            }
+
+
+        }
+
+        #endregion
     }
 }

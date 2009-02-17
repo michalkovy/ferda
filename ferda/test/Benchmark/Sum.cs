@@ -56,7 +56,10 @@ namespace Ferda.Benchmark
             Random r = new Random();
             for (int i = 0; i < lengthUlongString; i++)
             {
-                stringUlong[i] = (ulong)(uint)r.Next(Int32.MinValue, Int32.MaxValue) | (((ulong)(uint)r.Next(Int32.MinValue, Int32.MaxValue)) << 32);
+                stringUlong[i] = (ulong)(uint)r.Next(Int32.MinValue, 
+                    Int32.MaxValue) | 
+                    (((ulong)(uint)r.Next(Int32.MinValue, 
+                    Int32.MaxValue)) << 32);
                 //stringBigInteger[i] = new BigInteger(stringUlong[i]);
             }
             for (int i = 0; i < LengthFloatString; i++)
