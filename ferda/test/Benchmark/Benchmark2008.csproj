@@ -57,6 +57,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Compile Include="And.cs" />
     <Compile Include="Benchmark.cs" />
     <Compile Include="FerdaBenchmark.cs" />
     <Compile Include="Not.cs" />
@@ -65,10 +66,6 @@
     <None Include="Results.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FerdaMiningProcessor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b8124f638c9cf024, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Server\FerdaMiningProcessor.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Simd, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Mono.Simd.dll</HintPath>
