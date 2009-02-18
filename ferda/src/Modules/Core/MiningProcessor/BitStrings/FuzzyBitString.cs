@@ -256,7 +256,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         {
             for (int i = 0; i < _array.Length; i++)
             {
-                _array[i] = source._array[i] * _array[i];
+                _array[i] *= source._array[i];
             }
         }
 

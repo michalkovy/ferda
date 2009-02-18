@@ -43,6 +43,11 @@ namespace Ferda.Benchmark
         protected static Vector4f[] stringVector4f2 = new Vector4f[LengthVector4fString];
 
         /// <summary>
+        /// The second float array - for conjunction and disjunction
+        /// </summary>
+        protected static float[] stringFloat2 = new float[LengthFloatString];
+
+        /// <summary>
         /// The length of the Vector4f string
         /// </summary>
         protected static int LengthVector4fString
@@ -116,6 +121,11 @@ namespace Ferda.Benchmark
                     Int32.MaxValue) |
                     (((ulong)(uint)r.Next(Int32.MinValue,
                     Int32.MaxValue)) << 32);
+            }
+
+            for (int i = 0; i < LengthFloatString; i++)
+            {
+                stringFloat2[i] = (float)r.NextDouble();
             }
 
             for (int i = 0; i < LengthVector4fString; i++)
