@@ -213,7 +213,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (source is FuzzyBitString)
             {
                 FuzzyBitString result = new FuzzyBitString(this);
-                result.andSafe((FuzzyBitString)source);
+                result.and((FuzzyBitString)source);
                 result._identifier = FormulaHelper.And(_identifier, source.Identifier);
                 return result;
             }
@@ -257,6 +257,27 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             for (int i = 0; i < _array.Length; i++)
             {
                 _array[i] = source._array[i] * _array[i];
+            }
+        }
+
+        /// <summary>
+        /// Unsafe (unmanaged) conjunction.
+        /// The method uses the algebraic product T(a,b) = a*b as
+        /// a conjunction.
+        /// </summary>
+        /// <param name="source">the other operand</param>
+        private unsafe void and(FuzzyBitString source)
+        {
+            fixed (Vector4f* thisPin = _array, sourcePin = source._array)
+            {
+                Vector4f* currentPtr = thisPin, sourcePtr = sourcePin,
+                    stopPtr = thisPin + _array.Length;
+                while (currentPtr < stopPtr)
+                {
+                    *currentPtr = (*currentPtr) * (*sourcePtr);
+                    currentPtr++;
+                    sourcePtr++;
+                }
             }
         }
 
