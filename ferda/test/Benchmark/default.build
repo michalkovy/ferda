@@ -19,23 +19,11 @@
 					<include name="System.dll"/>
 					<include name="System.Data.dll"/>
 					<include name="Mono.Simd.dll"/>
-					<include name="../../bin/Server/FerdaMiningProcessor.dll" />
 				</references>
 				<sources failonempty="true">
 					<include name="**.cs"/>
 				</sources>
 			</csc>
-			<copy todir="bin/Release">
-				<fileset basedir="../../lib">
-					<include name="Ice.dll"/>
-				</fileset>			
-			</copy>
-			<copy todir="bin/Release">
-				<fileset basedir="../../bin/Server">
-					<include name="FerdaMiningProcessor.dll" />
-					<include name="FerdaBase.dll" />
-				</fileset>
-			</copy>				
 		</if>
 		<if test="${framework::get-target-framework()!='mono-2.0'}">
 			<csc target="exe" warnaserror="true" optimize="true" unsafe="true" output="bin/Release/Benchmark.exe">
@@ -52,15 +40,8 @@
 			<copy todir="bin/Release">
 				<fileset basedir="../../lib">
 					<include name="Mono.Simd.dll" />
-					<include name="Ice.dll"/>
 				</fileset>			
 			</copy>
-			<copy todir="bin/Release">
-				<fileset basedir="../../bin/Server">
-					<include name="FerdaMiningProcessor.dll" />
-					<include name="FerdaBase.dll" />
-				</fileset>
-			</copy>				
 		</if>
 		
 	</target>
