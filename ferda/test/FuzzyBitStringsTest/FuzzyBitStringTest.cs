@@ -552,5 +552,57 @@ namespace FuzzyBitStringsTest
 
             Debug.WriteLine("And(..) test successful");
         }
+
+        /// <summary>
+        /// Test of conjunction between fuzzy and crisp bit strings
+        /// </summary>
+        [Test]
+        public void FuzzyCrispAndTest()
+        {
+            Debug.WriteLine("Crisp vs. fuzzy And(..) test");
+
+            int[] lengths = new int[] { 400, 801, 1202, 1603 };
+            float[] floatArray;
+            bool[] boolArray;
+
+            foreach (int length in lengths)
+            {
+                //filling the arrays
+                floatArray = new float[length];
+                boolArray = new bool[length];
+                for (int i = 0; i < length; i++)
+                {
+                    floatArray[i] = (float)r.NextDouble();
+                    boolArray[i] = Convert.ToBoolean(r.Next(0, 2));
+                }
+
+                //construction of the bit strings
+                FuzzyBitString fb = new FuzzyBitString(o, floatArray, true);
+                BitString b = new BitString(o, length, new long[(length + 63) / 64]);
+                //setting the bits in the crisp bit string
+                for (int i = 0; i < length; i++)
+                {
+                    b.SetBit(i, Convert.ToSingle(boolArray[i]));
+                }
+
+                FuzzyBitString result = fb.And(b) as FuzzyBitString;
+
+                for (int i = 0; i < length; i++)
+                {
+                    //Debug.WriteLine("Boolean: " + boolArray[i].ToString());
+                    //Debug.WriteLine("Float: " + floatArray[i].ToString());
+                    //Debug.WriteLine("Result: " + result.GetBit(i).ToString());
+                    //Debug.WriteLine("Should be: " + (floatArray[i] * Convert.ToSingle(boolArray[i])).ToString());
+                    if (!Common.CloseEnough(6,
+                        result.GetBit(i),
+                        floatArray[i] * Convert.ToSingle(boolArray[i])))
+                    {
+                        throw new Exception("The crisp vs. fuzzy And() does not work");
+                    }
+                }
+            }
+
+            Debug.WriteLine("Crisp vs. fuzzy And(..) test successful");
+        }
     }
 }

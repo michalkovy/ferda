@@ -1271,7 +1271,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             return Convert.ToSingle(result);
         }
 
-
         /// <summary>
         /// Fills the whole BitString with the specified value.
         /// </summary>

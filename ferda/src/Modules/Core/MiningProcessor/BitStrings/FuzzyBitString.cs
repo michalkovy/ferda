@@ -242,9 +242,47 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
         }
 
+        /// <summary>
+        /// The conjunction of fuzzy and non fuzzy bit string
+        /// </summary>
+        /// <param name="source">the other operand</param>
         private void andNonFuzzy(BitString source)
         {
+            if (_size == 0)
+                throw new InvalidOperationException("BitString was not initialized (use create method first).");
+            if (_size != source.Length)
+                throw Exceptions.BitStringsLengtsAreNotEqualError();
 
+            //all but the last one
+            for (int i = 0; i < _array.Length - 1; i++)
+            {
+                Vector4f tmp = new Vector4f(
+                    source.GetBit(_blocksize * i),
+                    source.GetBit(_blocksize * i + 1),
+                    source.GetBit(_blocksize * i + 2),
+                    source.GetBit(_blocksize * i + 3));
+                _array[i] *= tmp;
+            }
+
+            //there has to be at least one item in the last vector
+            Vector4f last = new Vector4f();
+            last.X = source.GetBit(_blocksize * (_array.Length - 1));
+            if (_size % _blocksize == 2)
+            {
+                last.Y = source.GetBit(_blocksize * (_array.Length - 1) + 1);
+            }
+            if (_size % _blocksize == 3)
+            {
+                last.Y = source.GetBit(_blocksize * (_array.Length - 1) + 1);
+                last.Z = source.GetBit(_blocksize * (_array.Length - 1) + 2);
+            }
+            if (_size % _blocksize == 0)
+            {
+                last.Y = source.GetBit(_blocksize * (_array.Length - 1) + 1);
+                last.Z = source.GetBit(_blocksize * (_array.Length - 1) + 2);
+                last.W = source.GetBit(_blocksize * (_array.Length - 1) + 3);
+            }
+            _array[_array.Length - 1] *= last;
         }
 
         /// <summary>
@@ -268,6 +306,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <param name="source">the other operand</param>
         private unsafe void and(FuzzyBitString source)
         {
+            if (_size == 0)
+                throw new InvalidOperationException("BitString was not initialized (use create method first).");
+            if (_size != source._size)
+                throw Exceptions.BitStringsLengtsAreNotEqualError();
+
             fixed (Vector4f* thisPin = _array, sourcePin = source._array)
             {
                 Vector4f* currentPtr = thisPin, sourcePtr = sourcePin,
