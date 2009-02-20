@@ -446,6 +446,42 @@ namespace Ferda.Benchmark
             return operand1;
         }
 
+        /// <summary>
+        /// The unsafe (unmanaged) implementation of conjunction between fuzy and crisp
+        /// bit strings using Vector4f and precomputed uint and float vectors.
+        /// The algoritm presumes the number of elements both in ulong and Vector4f
+        /// fields to be a multiple of 64.
+        /// </summary>
+        /// <param name="operand1">1. operand (fuzzy)</param>
+        /// <param name="operand2">2. operand (crisp)</param>
+        /// <returns>Conjunction result (fuzzy)</returns>
+        public unsafe static Vector4f[] AndUnsafeCrispFuzzyVector4f2(Vector4f[] operand1, ulong[] operand2)
+        {
+            Vector4f tmpF;
+            Vector4ui tmpUi;
+            Vector4ui vect;
+            uint part;
+
+            fixed (ulong* pinUL = operand2)
+            {
+                fixed (Vector4f* pinV = operand1)
+                {
+                    ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
+                    Vector4f* ptrV = pinV;
+
+                    //the main cycle
+                    while (ptrUL < stopUL)
+                    {
+                        part = (uint)*ptrUL; //last 8 bits
+                        vect = new Vector4ui(part, part, part, part);
+
+                        ptrUL++;
+                    }
+                }
+            }
+        }
+
+
         #endregion
     }
 }
