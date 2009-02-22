@@ -1124,33 +1124,32 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 fixed (Byte* lookup = _lookup16)
                 {
                     ulong* aPt = aP, bPt = bP, cPt = cP, dPt = dP, stopPt = aP + ap.Length;
-                    ulong temp1, temp2, temp3;
                     while (aPt < stopPt)
                     {
-                        temp1 = *aPt++;
-                        temp2 = *cPt++;
-                        temp3 = temp1 & temp2;
-                        sum1 += *(lookup + (int)(temp3 & _16bits));
-                        sum1 += *(lookup + (int)((temp3 >> 16) & _16bits));
-                        sum1 += *(lookup + (int)((temp3 >> 32) & _16bits));
-                        sum1 += *(lookup + (int)(temp3 >> 48));
-                        temp3 = *dPt++;
-                        temp1 &= temp3;
-                        sum2 += *(lookup + (int)(temp1 & _16bits));
-                        sum2 += *(lookup + (int)((temp1 >> 16) & _16bits));
-                        sum2 += *(lookup + (int)((temp1 >> 32) & _16bits));
-                        sum2 += *(lookup + (int)(temp1 >> 48));
-                        temp1 = *bPt++;
-                        temp2 &= temp1;
-                        sum3 += *(lookup + (int)(temp2 & _16bits));
-                        sum3 += *(lookup + (int)((temp2 >> 16) & _16bits));
-                        sum3 += *(lookup + (int)((temp2 >> 32) & _16bits));
-                        sum3 += *(lookup + (int)(temp2 >> 48));
-                        temp3 &= temp1;
-                        sum4 += *(lookup + (int)(temp3 & _16bits));
-                        sum4 += *(lookup + (int)((temp3 >> 16) & _16bits));
-                        sum4 += *(lookup + (int)((temp3 >> 32) & _16bits));
-                        sum4 += *(lookup + (int)(temp3 >> 48));
+                        ulong al = *aPt++;
+                        ulong bl = *bPt++;
+                        ulong cl = *cPt++;
+                        ulong dl = *dPt++;
+                        ulong ac = al & cl;
+                        ulong ad = al & dl;
+                        ulong bc = bl & cl;
+                        ulong bd = bl & dl;
+                        sum1 += *(lookup + (int)(ac & _16bits));
+                        sum1 += *(lookup + (int)((ac >> 16) & _16bits));
+                        sum1 += *(lookup + (int)((ac >> 32) & _16bits));
+                        sum1 += *(lookup + (int)(ac >> 48));
+                        sum2 += *(lookup + (int)(bc & _16bits));
+                        sum2 += *(lookup + (int)((bc >> 16) & _16bits));
+                        sum2 += *(lookup + (int)((bc >> 32) & _16bits));
+                        sum2 += *(lookup + (int)(bc >> 48));
+                        sum3 += *(lookup + (int)(ad & _16bits));
+                        sum3 += *(lookup + (int)((ad >> 16) & _16bits));
+                        sum3 += *(lookup + (int)((ad >> 32) & _16bits));
+                        sum3 += *(lookup + (int)(ad >> 48));
+                        sum4 += *(lookup + (int)(bd & _16bits));
+                        sum4 += *(lookup + (int)((bd >> 16) & _16bits));
+                        sum4 += *(lookup + (int)((bd >> 32) & _16bits));
+                        sum4 += *(lookup + (int)(bd >> 48));
                     }
                 }
             }

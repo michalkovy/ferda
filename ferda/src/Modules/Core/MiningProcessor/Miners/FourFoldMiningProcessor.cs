@@ -351,13 +351,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         continue;
                     GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
 
-                    //Fills the nine fold table (A is condition, B is succedent)
+                    //Fills the nine fold table (FIRST is condition, SECOND is succedent)
                     nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, actCount);
 
                     foreach (IBitString pA in _antecedent)
                     {
                         MiningSetting miningSetting =
-                            new MiningSetting(pA, pS, pC, nineFT, evaluator, _succedent.UsedAttributes, 
+                            new MiningSetting(pA, pS, pC, nineFT, evaluator, _antecedent.UsedAttributes, 
                             (int)_result.AllObjectsCount);
 
                         //miningThreads.AddSetting(miningSetting);
@@ -490,29 +490,29 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             {
                                 IBitString mask = Masks[i];
 
-                                fft.f111 = nineFT.pApB.And(pA.And(Masks[i])).Sum;
-                                fft.f1x1 = nineFT.pAxB.And(pA.And(Masks[i])).Sum;
-                                fft.f101 = nineFT.pAnB.And(pA.And(Masks[i])).Sum;
+                                fft.f111 = nineFT.pp.And(pA.And(Masks[i])).Sum;
+                                fft.f1x1 = nineFT.px.And(pA.And(Masks[i])).Sum;
+                                fft.f101 = nineFT.pn.And(pA.And(Masks[i])).Sum;
 
-                                fft.fx11 = nineFT.pApB.And(xA.And(Masks[i])).Sum;
-                                fft.fxx1 = nineFT.pAxB.And(xA.And(Masks[i])).Sum;
-                                fft.fx01 = nineFT.pAnB.And(xA.And(Masks[i])).Sum;
+                                fft.fx11 = nineFT.pp.And(xA.And(Masks[i])).Sum;
+                                fft.fxx1 = nineFT.px.And(xA.And(Masks[i])).Sum;
+                                fft.fx01 = nineFT.pn.And(xA.And(Masks[i])).Sum;
 
-                                fft.f011 = nineFT.pApB.And(nA.And(Masks[i])).Sum;
-                                fft.f0x1 = nineFT.pAxB.And(nA.And(Masks[i])).Sum;
-                                fft.f001 = nineFT.pAnB.And(nA.And(Masks[i])).Sum;
+                                fft.f011 = nineFT.pp.And(nA.And(Masks[i])).Sum;
+                                fft.f0x1 = nineFT.px.And(nA.And(Masks[i])).Sum;
+                                fft.f001 = nineFT.pn.And(nA.And(Masks[i])).Sum;
 
-                                fft.f11x = nineFT.xApB.And(pA.And(Masks[i])).Sum;
-                                fft.f1xx = nineFT.xAxB.And(pA.And(Masks[i])).Sum;
-                                fft.f10x = nineFT.xAnB.And(pA.And(Masks[i])).Sum;
+                                fft.f11x = nineFT.xp.And(pA.And(Masks[i])).Sum;
+                                fft.f1xx = nineFT.xx.And(pA.And(Masks[i])).Sum;
+                                fft.f10x = nineFT.xn.And(pA.And(Masks[i])).Sum;
 
-                                fft.fx1x = nineFT.xApB.And(xA.And(Masks[i])).Sum;
-                                fft.fxxx = nineFT.xAxB.And(xA.And(Masks[i])).Sum;
-                                fft.fx0x = nineFT.xAnB.And(xA.And(Masks[i])).Sum;
+                                fft.fx1x = nineFT.xp.And(xA.And(Masks[i])).Sum;
+                                fft.fxxx = nineFT.xx.And(xA.And(Masks[i])).Sum;
+                                fft.fx0x = nineFT.xn.And(xA.And(Masks[i])).Sum;
 
-                                fft.f01x = nineFT.xApB.And(nA.And(Masks[i])).Sum;
-                                fft.f0xx = nineFT.xAxB.And(nA.And(Masks[i])).Sum;
-                                fft.f00x = nineFT.xAnB.And(nA.And(Masks[i])).Sum;
+                                fft.f01x = nineFT.xp.And(nA.And(Masks[i])).Sum;
+                                fft.f0xx = nineFT.xx.And(nA.And(Masks[i])).Sum;
+                                fft.f00x = nineFT.xn.And(nA.And(Masks[i])).Sum;
                             }
                             ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
                                 fft.ContingencyTable,
@@ -626,6 +626,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			IBitString pA = miningSetting.PA;
 			IBitString pS = miningSetting.PS;
 			IBitString pC = miningSetting.PC;
+            //Nine fold table - FIRST is condition, SECOND is succedent
 			nineFoldTableOfBitStrings nineFT = miningSetting.NineFT;
 			IEvaluator evaluator = miningSetting.Evaluator;
             Set<String> usedAttributes = miningSetting.UsedAttributes;
@@ -642,46 +643,53 @@ namespace Ferda.Guha.MiningProcessor.Miners
             {
                 int pASum = Convert.ToInt32(pA.Sum);
                 int xASum = Convert.ToInt32(xA.Sum);
-                int nineFTpApBSum = Convert.ToInt32(nineFT.pApB.Sum);
-                int nineFTpAxBSum = Convert.ToInt32(nineFT.pAxB.Sum);
-                int nineFTxApBSum = Convert.ToInt32(nineFT.xApB.Sum);
-                int nineFTxAxBSum = Convert.ToInt32(nineFT.xAxB.Sum);
-                int nineFTpAnBSum = Convert.ToInt32(nineFT.pAnB.Sum);
-                int nineFTxAnBSum = Convert.ToInt32(nineFT.xAnB.Sum);
+                int nineFTppSum = Convert.ToInt32(nineFT.pp.Sum);
+                int nineFTpxSum = Convert.ToInt32(nineFT.px.Sum);
+                int nineFTxpSum = Convert.ToInt32(nineFT.xp.Sum);
+                int nineFTxxSum = Convert.ToInt32(nineFT.xx.Sum);
+                int nineFTpnSum = Convert.ToInt32(nineFT.pn.Sum);
+                int nineFTxnSum = Convert.ToInt32(nineFT.xn.Sum);
+
+                
 
                 int f111, fx11, f1x1, fxx1;
                 int f11x, fx1x, f1xx, fxxx;
 
-                BitString.CrossAndSum(pA, xA, nineFT.pApB, nineFT.pAxB,
-                    pASum, xASum, nineFTpApBSum, nineFTpAxBSum,
+                BitString.CrossAndSum(pA, xA, nineFT.pp, nineFT.px,
+                    pASum, xASum, nineFTppSum, nineFTpxSum,
                     out f111, out fx11, out f1x1, out fxx1);
-                BitString.CrossAndSum(pA, xA, nineFT.xApB, nineFT.xAxB,
-                    pASum, xASum, nineFTxApBSum, nineFTxAxBSum,
+                BitString.CrossAndSum(pA, xA, nineFT.xp, nineFT.xx,
+                    pASum, xASum, nineFTxpSum, nineFTxxSum,
                     out f11x, out fx1x, out f1xx, out fxxx);
+
+                int f10x, fx0x;
+
+                BitString.TwoAndSum(nineFT.xn, pA, xA, nineFTxnSum,
+                    pASum, xASum, out f10x, out fx0x);
 
                 fft.f111 = f111;
                 fft.f1x1 = f1x1;
-                fft.f101 = pASum - f111 - f1x1;
+                fft.f101 = pASum - f111 - f1x1 - f11x - f10x - f1xx;
 
                 fft.fx11 = fx11;
                 fft.fxx1 = fxx1;
-                fft.fx01 = xASum - fx11 - fxx1;
+                fft.fx01 = xASum - fx11 - fxx1 - fx1x - fx0x - fxxx;
 
-                fft.f011 = nineFTpApBSum - fft.f111 - fft.fx11;
-                fft.f0x1 = nineFTpApBSum - fft.f1x1 - fft.fxx1;
-                fft.f001 = nineFTpAnBSum - fft.f101 - fft.fx01;
+                fft.f011 = nineFTppSum - fft.f111 - fft.fx11;
+                fft.f0x1 = nineFTpxSum - fft.f1x1 - fft.fxx1;
+                fft.f001 = nineFTpnSum - fft.f101 - fft.fx01;
 
                 fft.f11x = f11x;
                 fft.f1xx = f1xx;
-                fft.f10x = pASum - f11x - f1xx;
+                fft.f10x = f10x;
 
                 fft.fx1x = fx1x;
                 fft.fxxx = fxxx;
-                fft.fx0x = xASum - fx1x - fxxx;
+                fft.fx0x = fx0x;
 
-                fft.f01x = nineFTxApBSum - fft.f111 - fft.fx11;
-                fft.f0xx = nineFTxAxBSum - fft.f1x1 - fft.fxx1;
-                fft.f00x = nineFTxAnBSum - fft.f101 - fft.fx01;
+                fft.f01x = nineFTxpSum - fft.f11x - fft.fx1x;
+                fft.f0xx = nineFTxxSum - fft.f1xx - fft.fxxx;
+                fft.f00x = nineFTxnSum - fft.f10x - fft.fx0x;
             }
             else
             {
@@ -795,18 +803,18 @@ namespace Ferda.Guha.MiningProcessor.Miners
         {
             nineFoldTableOfBitStrings result = new nineFoldTableOfBitStrings();
 
-            result.pApB = pC.And(pS);
-            result.pAxB = pC.And(xS);
-            result.pAnB = pC.And(nS);
+            result.pp = pC.And(pS);
+            result.px = pC.And(xS);
+            result.pn = pC.And(nS);
 
-            result.xApB = xC.And(pS);
-            result.xAxB = xC.And(xS);
-            result.xAnB = xC.And(nS);
+            result.xp = xC.And(pS);
+            result.xx = xC.And(xS);
+            result.xn = xC.And(nS);
 
             if (allObjectsCount == long.MinValue)
             {
-                result.pAnB.Sum = allObjectsCount - result.pApB.Sum - result.pAxB.Sum;
-                result.xAnB.Sum = xC.Sum - result.xApB.Sum - result.xAxB.Sum;
+                result.pn.Sum = allObjectsCount - result.pp.Sum - result.px.Sum;
+                result.xn.Sum = xC.Sum - result.xp.Sum - result.xx.Sum;
             }
 
             return result;

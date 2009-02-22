@@ -391,7 +391,7 @@ namespace Ferda.Benchmark
                 vect = new Vector4ui(part, part, part, part);
 
                 tmpUi = vect & ui1;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
+                tmpF = new Vector4f(tmpUi.X , tmpUi.Y , tmpUi.Z ,  tmpUi.W ) ;
                 operand1[vPtr++] *= tmpF / f1;
                 tmpUi = vect & ui2;
                 tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
