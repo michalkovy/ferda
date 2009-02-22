@@ -662,18 +662,18 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     pASum, xASum, nineFTxpSum, nineFTxxSum,
                     out f11x, out fx1x, out f1xx, out fxxx);
 
-                int f10x, fx0x;
+                int f10x, fx0x, f101, fx01;
 
-                BitString.TwoAndSum(nineFT.xn, pA, xA, nineFTxnSum,
-                    pASum, xASum, out f10x, out fx0x);
+                BitString.CrossAndSum(nineFT.pn, nineFT.xn, pA, xA, nineFTpnSum, nineFTxnSum,
+                    pASum, xASum, out f101, out f10x, out fx01, out fx0x);
 
                 fft.f111 = f111;
                 fft.f1x1 = f1x1;
-                fft.f101 = pASum - f111 - f1x1 - f11x - f10x - f1xx;
+                fft.f101 = f101;
 
                 fft.fx11 = fx11;
                 fft.fxx1 = fxx1;
-                fft.fx01 = xASum - fx11 - fxx1 - fx1x - fx0x - fxxx;
+                fft.fx01 = fx01;
 
                 fft.f011 = nineFTppSum - fft.f111 - fft.fx11;
                 fft.f0x1 = nineFTpxSum - fft.f1x1 - fft.fxx1;
