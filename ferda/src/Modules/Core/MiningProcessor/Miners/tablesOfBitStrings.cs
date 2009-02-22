@@ -29,50 +29,50 @@ namespace Ferda.Guha.MiningProcessor.Miners
     /// <summary>
     /// Nine-fold table of bit strings (used for the 4FT procedure).
     /// In addition to the four-fold table, this table contains
-    /// missing information frequencies. The A and B fields
+    /// missing information frequencies. The FIRST and SECOND fields
     /// can be any cedents (in the 4FT procedure, they are used
     /// as condition and antecedent).
     /// </summary>
     internal class nineFoldTableOfBitStrings
     {
         /// <summary>
-        /// Bit string for positive A AND positive B
+        /// Bit string for positive FIRST AND positive SECOND
         /// </summary>
-        public IBitString pApB;
+        public IBitString pp;
         /// <summary>
-        /// Bit string for positive A AND missing B
+        /// Bit string for positive FIRST AND missing SECOND
         /// </summary>
-        public IBitString pAxB;
+        public IBitString px;
         /// <summary>
-        /// Bit string for positive A AND negative B
+        /// Bit string for positive FIRST AND negative SECOND
         /// </summary>
-        public IBitString pAnB;
+        public IBitString pn;
 
         /// <summary>
-        /// Bit string for missing A AND positive B
+        /// Bit string for missing FIRST AND positive SECOND
         /// </summary>
-        public IBitString xApB;
+        public IBitString xp;
         /// <summary>
-        /// Bit string for missing A AND missing B
+        /// Bit string for missing FIRST AND missing SECOND
         /// </summary>
-        public IBitString xAxB;
+        public IBitString xx;
         /// <summary>
-        /// Bit string for missing A AND negative B
+        /// Bit string for missing FIRST AND negative SECOND
         /// </summary>
-        public IBitString xAnB;
+        public IBitString xn;
 
         /// <summary>
-        /// Bit string for negative A AND positive B
+        /// Bit string for negative FIRST AND positive SECOND
         /// </summary>
-        public IBitString nApB;
+        public IBitString np;
         /// <summary>
-        /// Bit string for negative A AND missing B
+        /// Bit string for negative FIRST AND missing SECOND
         /// </summary>
-        public IBitString nAxB;
+        public IBitString nx;
         /// <summary>
-        /// Bit string for negative A AND negative B
+        /// Bit string for negative FIRST AND negative SECOND
         /// </summary>
-        public IBitString nAnB;
+        public IBitString nn;
     }
 
     /// <summary>
