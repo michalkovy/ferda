@@ -162,6 +162,23 @@ namespace Ferda.Benchmark
         }
 
         /// <summary>
+        /// The OR benchmark for fuzzy and crips bit strings - using array of floats,
+        /// less access to the float array
+        /// </summary>
+        [Benchmark]
+        public static void SafeOrCrispFuzzyFloat2()
+        {
+            //don't use static variables in iterations
+            float[] tmp = stringFloat;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                OrSafeCrispFuzzyFloat2(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
         /// The Vector4f OR benchmark for fuzzy and crisp bit strings - safe, 
         /// naive version
         /// </summary>
@@ -526,7 +543,7 @@ namespace Ferda.Benchmark
         /// <param name="operand1">1. operand (fuzzy)</param>
         /// <param name="operand2">2. operand (crisp)</param>
         /// <returns>Disjunction result (fuzzy)</returns>
-        static float[] AndSafeCrispFuzzyFloat2(float[] operand1, ulong[] operand2)
+        static float[] OrSafeCrispFuzzyFloat2(float[] operand1, ulong[] operand2)
         {
             int fltPtr = 0;
             ulong tmpul;
@@ -535,20 +552,202 @@ namespace Ferda.Benchmark
             {
                 tmpul = operand2[i];
 
-                tmpfl = Convert.ToSingle(tmp);
-                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1 * tmpfl;
+                tmpfl = Convert.ToSingle(tmpul);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
                 fltPtr++;
-                tmpfl = Convert.ToSingle(tmp >> 1);
-                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1 * tmpfl;
+                tmpfl = Convert.ToSingle(tmpul >> 1);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
                 fltPtr++;
-                tmpfl = Convert.ToSingle(tmp >> 2);
-                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1 * tmpfl;
+                tmpfl = Convert.ToSingle(tmpul >> 2);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
                 fltPtr++;
-                tmpfl = Convert.ToSingle(tmp >> 3);
-                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1 * tmpfl;
+                tmpfl = Convert.ToSingle(tmpul >> 3);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 4);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 5);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 6);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 7);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 8);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 9);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 10);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 11);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 12);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 13);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 14);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 15);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 16);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 17);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 18);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 19);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 20);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 21);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 22);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 23);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 24);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 25);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 26);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 27);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 28);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 29);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 30);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 31);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 32);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 33);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 34);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 35);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 36);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 37);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 38);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 39);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 40);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 41);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 42);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 43);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 44);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 45);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 46);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 47);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 48);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 49);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 50);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 51);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 52);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 53);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 54);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 55);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 56);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 57);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 58);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 59);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 60);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 61);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 62);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
+                fltPtr++;
+                tmpfl = Convert.ToSingle(tmpul >> 63);
+                operand1[fltPtr] = operand1[fltPtr] + tmpfl - operand1[fltPtr] * tmpfl;
                 fltPtr++;
                 //ADT az do 63
             }
+
+            return operand1;
         }
 
         /// <summary>

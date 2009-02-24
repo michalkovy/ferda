@@ -161,6 +161,23 @@ namespace Ferda.Benchmark
         }
 
         /// <summary>
+        /// The and benchmark for fuzzy and crips bit strings - using array 
+        /// of floats, less access to the float array
+        /// </summary>
+        [Benchmark]
+        public static void SafeAndCrispFuzzyFloat2()
+        {
+            //don't use static variables in iterations
+            float[] tmp = stringFloat;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndSafeCrispFuzzyFloat2(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
         /// The Vector4f and benchmark for fuzzy and crisp bit strings - safe, 
         /// naive version
         /// </summary>
@@ -540,8 +557,121 @@ namespace Ferda.Benchmark
                 fltPtr++;
                 operand1[fltPtr] *= Convert.ToSingle(tmp >> 5);
                 fltPtr++;
-                //ADT az do 63
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 6);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 7);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 8);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 9);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 12);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 13);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 14);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 15);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 16);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 17);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 18);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 19);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 20);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 21);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 22);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 23);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 24);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 25);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 26);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 27);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 28);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 29);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 30);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 31);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 32);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 33);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 34);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 35);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 36);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 37);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 38);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 39);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 40);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 41);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 42);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 43);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 44);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 45);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 46);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 47);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 48);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 49);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 50);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 51);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 52);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 53);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 54);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 55);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 56);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 57);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 58);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 59);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 60);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 61);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 62);
+                fltPtr++;
+                operand1[fltPtr] *= Convert.ToSingle(tmp >> 63);
+                fltPtr++;
             }
+
+            return operand1;
         }
 
         /// <summary>
