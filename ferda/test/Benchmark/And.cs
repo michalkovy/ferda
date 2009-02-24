@@ -73,54 +73,6 @@ namespace Ferda.Benchmark
         #region Benchmark
 
         /// <summary>
-        /// The Vector4f and benchmark - safe
-        /// </summary>
-        [Benchmark]
-        public static void SafeAndFuzzyVector4f()
-        {
-            //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
-            Vector4f[] tmp2 = stringVector4f2;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                AndSafe4f(tmp, tmp2);
-            }
-        }
-
-        /// <summary>
-        /// The Vector4f and benchmark for fuzzy and crisp bit strings - unsafe,
-        /// precomputed version
-        /// </summary>
-        [Benchmark]
-        public static void UnsafeAndCrispFuzzyVector4fPrecomputed()
-        {
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                AndUnsafeCrispFuzzyVector4f2(tmp, tmp2);
-            }
-        }
-
-        /// <summary>
-        /// The Vector4f and benchmark for fuzzy and crisp bit strings - unsafe,
-        /// precomputed version without allocation of new memory in the cycles
-        /// </summary>
-        [Benchmark]
-        public static void UnsafeAndCrispFuzzyVector4fPrecomputedNoAllocation()
-        {
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                AndUnsafeCrispFuzzyVector4f2NoAllocation(tmp, tmp2);
-            }
-        }
-
-        /// <summary>
         /// The crisp and benchmark - safe
         /// </summary>
         [Benchmark]
@@ -153,104 +105,18 @@ namespace Ferda.Benchmark
         }
 
         /// <summary>
-        /// The Vector4f and benchmark for fuzzy and crisp bit strings - safe, 
-        /// naive version
+        /// The Vector4f and benchmark - safe
         /// </summary>
         [Benchmark]
-        public static void SafeAndCrispFuzzyVector4fNaive()
+        public static void SafeAndFuzzyVector4f()
         {
             //don't use static variables in iterations
             Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
+            Vector4f[] tmp2 = stringVector4f2;
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
-                AndSafeCrispFuzzyVector4f1(tmp, tmp2);
-            }
-        }
-
-        /// <summary>
-        /// The Vector4f and benchmark for fuzzy and crisp bit strings - safe,
-        /// precomputed version
-        /// </summary>
-        [Benchmark]
-        public static void SafeAndCrispFuzzyVector4fPrecomputed()
-        {
-            //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                AndSafeCrispFuzzyVector4f2(tmp, tmp2);
-            }
-        }
-
-        /// <summary>
-        /// The Vector4f and benchmark for fuzzy and crisp bit strings - safe,
-        /// precomputed version without static variables
-        /// </summary>
-        [Benchmark]
-        public static void SafeAndCrispFuzzyVector4fPrecomputedNoStatic()
-        {
-            //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                AndSafeCrispFuzzyVector4f2NoStatic(tmp, tmp2);
-            }
-        }
-
-        /// <summary>
-        /// The Vector4f and benchmark for fuzzy and crisp bit strings - safe,
-        /// precomputed version with shifts in creation of Vector4f
-        /// </summary>
-        [Benchmark]
-        public static void SafeAndCrispFuzzyVector4fPrecomputedShift()
-        {
-            //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                AndSafeCrispFuzzyVector4f3(tmp, tmp2);
-            }
-        }
-
-        /// <summary>
-        /// The Vector4f and benchmark for fuzzy and crisp bit strings - safe,
-        /// precomputed version with shifts in creation of Vector4f without
-        /// static variables
-        /// </summary>
-        [Benchmark]
-        public static void SafeAndCrispFuzzyVector4fPrecomputedShiftNoStatic()
-        {
-            //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                AndSafeCrispFuzzyVector4f3NoStatic(tmp, tmp2);
-            }
-        }
-
-        /// <summary>
-        /// The and benchmark for fuzzy and crips bit strings - using array of floats
-        /// </summary>
-        [Benchmark]
-        public static void SafeAndCrispFuzzyFloat()
-        {
-            //don't use static variables in iterations
-            float[] tmp = stringFloat;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                AndSafeCrispFuzzyFloat(tmp, tmp2);
+                AndSafe4f(tmp, tmp2);
             }
         }
 
@@ -299,6 +165,225 @@ namespace Ferda.Benchmark
             for (int i = 0; i < count; i++)
             {
                 AndUnsafeFloat(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The and benchmark for fuzzy and crips bit strings - using array of floats
+        /// </summary>
+        [Benchmark]
+        public static void SafeAndCrispFuzzyFloat()
+        {
+            //don't use static variables in iterations
+            float[] tmp = stringFloat;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndSafeCrispFuzzyFloat(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The Vector4f and benchmark for fuzzy and crisp bit strings - safe, 
+        /// naive version
+        /// </summary>
+        [Benchmark]
+        public static void SafeAndCrispFuzzyVector4fNaive()
+        {
+            //don't use static variables in iterations
+            Vector4f[] tmp = stringVector4f;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndSafeCrispFuzzyVector4f1(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The Vector4f and benchmark for fuzzy and crisp bit strings - safe,
+        /// precomputed version
+        /// </summary>
+        [Benchmark]
+        public static void SafeAndCrispFuzzyVector4fPrecomputed()
+        {
+            //don't use static variables in iterations
+            Vector4f[] tmp = stringVector4f;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndSafeCrispFuzzyVector4f2(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The Vector4f and benchmark for fuzzy and crisp bit strings - safe,
+        /// precomputed version with shifts in creation of Vector4f
+        /// </summary>
+        [Benchmark]
+        public static void SafeAndCrispFuzzyVector4fPrecomputedShift()
+        {
+            //don't use static variables in iterations
+            Vector4f[] tmp = stringVector4f;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndSafeCrispFuzzyVector4f3(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The Vector4f and benchmark for fuzzy and crisp bit strings - safe,
+        /// precomputed version with shifts in creation of Vector4f without
+        /// static variables
+        /// </summary>
+        [Benchmark]
+        public static void SafeAndCrispFuzzyVector4fPrecomputedShiftNoStatic()
+        {
+            //don't use static variables in iterations
+            Vector4f[] tmp = stringVector4f;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndSafeCrispFuzzyVector4f3NoStatic(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The Vector4f and benchmark for fuzzy and crisp bit strings - safe,
+        /// precomputed version with shifts in creation of Vector4f without
+        /// alocations of new Vector4f's
+        /// </summary>
+        [Benchmark]
+        public static void SafeAndCrispFuzzyVector4fPrecomputedShiftNoAllocation()
+        {
+            //don't use static variables in iterations
+            Vector4f[] tmp = stringVector4f;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndSafeCrispFuzzyVector4f3NoAllocation(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The Vector4f and benchmark for fuzzy and crisp bit strings - unsafe,
+        /// precomputed version
+        /// </summary>
+        [Benchmark]
+        public static void UnsafeAndCrispFuzzyVector4fPrecomputed()
+        {
+            Vector4f[] tmp = stringVector4f;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndUnsafeCrispFuzzyVector4f2(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The Vector4f and benchmark for fuzzy and crisp bit strings - unsafe,
+        /// precomputed version without allocation of new memory in the cycles
+        /// </summary>
+        [Benchmark]
+        public static void UnsafeAndCrispFuzzyVector4fPrecomputedNoAllocation()
+        {
+            Vector4f[] tmp = stringVector4f;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndUnsafeCrispFuzzyVector4f2NoAllocation(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The Vector4f and benchmark for fuzzy and crisp bit strings - unsafe,
+        /// precomputed version without static variables, without allocation of new memory
+        /// in the cycles
+        /// </summary>
+        [Benchmark]
+        public static void UnsafeAndCrispFuzzyVector4fPrecomputedNoStaticNoAllocation()
+        {
+            Vector4f[] tmp = stringVector4f;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndUnsafeCrispFuzzyVector4f2NoAllocationNoStatic(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The Vector4f and benchmark for fuzzy and crisp bit strings - unsafe,
+        /// precomputed version with shifts in creation of Vector4f
+        /// </summary>
+        [Benchmark]
+        public static void UnsafeAndCrispFuzzyVector4fPrecomputedShift()
+        {
+            Vector4f[] tmp = stringVector4f;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndUnsafeCrispFuzzyVector4f3(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The Vector4f and benchmark for fuzzy and crisp bit strings - unsafe,
+        /// precomputed version with shifts in creation of Vector4f, 
+        /// no static variables
+        /// </summary>
+        [Benchmark]
+        public static void UnsafeAndCrispFuzzyVector4fPrecomputedShiftNoStatic()
+        {
+            Vector4f[] tmp = stringVector4f;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndUnsafeCrispFuzzyVector4f3NoStatic(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The Vector4f and benchmark for fuzzy and crisp bit strings - unsafe,
+        /// precomputed version with shifts in creation of Vector4f, 
+        /// no allocation of new memory in cycles
+        /// </summary>
+        [Benchmark]
+        public static void UnsafeAndCrispFuzzyVector4fPrecomputedShiftNoAllocation()
+        {
+            Vector4f[] tmp = stringVector4f;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndUnsafeCrispFuzzyVector4f3NoAllocation(tmp, tmp2);
+            }
+        }
+
+        /// <summary>
+        /// The Vector4f and benchmark for fuzzy and crisp bit strings - unsafe,
+        /// precomputed version with shifts in creation of Vector4f, 
+        /// no allocation of new memory in cycles + no static variables
+        /// </summary>
+        [Benchmark]
+        public static void UnsafeAndCrispFuzzyVector4fPrecomputedShiftNoStaticNoAllocation()
+        {
+            Vector4f[] tmp = stringVector4f;
+            ulong[] tmp2 = stringUlong;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndUnsafeCrispFuzzyVector4f3NoAllocationNoStatic(tmp, tmp2);
             }
         }
 
@@ -531,102 +616,7 @@ namespace Ferda.Benchmark
         }
 
         /// <summary>
-        /// The safe (managed) implementation of conjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and float vectors.
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64. There are no static variables used. 
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Conjunction result (fuzzy)</returns>
-        public static Vector4f[] AndSafeCrispFuzzyVector4f2NoStatic(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF;
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-            int vPtr = 0;
-
-            Vector4ui ui1 = sui1;
-            Vector4ui ui2 = sui2;
-            Vector4ui ui3 = sui3;
-            Vector4ui ui4 = sui4;
-            Vector4ui ui5 = sui5;
-            Vector4ui ui6 = sui6;
-            Vector4ui ui7 = sui7;
-            Vector4ui ui8 = sui8;
-            Vector4f f1 = sf1;
-            Vector4f f2 = sf2;
-            Vector4f f3 = sf3;
-            Vector4f f4 = sf4;
-            Vector4f f5 = sf5;
-            Vector4f f6 = sf6;
-            Vector4f f7 = sf7;
-            Vector4f f8 = sf8;
-
-            for (int i = 0; i < operand2.Length; i++)
-            {
-                part = (uint)operand2[i]; //last 8 bits
-                vect = new Vector4ui(part, part, part, part);
-
-                tmpUi = vect & ui1;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f1;
-                tmpUi = vect & ui2;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f2;
-                tmpUi = vect & ui3;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f3;
-                tmpUi = vect & ui4;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f4;
-                tmpUi = vect & ui5;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f5;
-                tmpUi = vect & ui6;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f6;
-                tmpUi = vect & ui7;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f7;
-                tmpUi = vect & ui8;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f8;
-
-                part = (uint)(operand2[i] >> 32);
-                vect = new Vector4ui(part, part, part, part);
-
-                tmpUi = vect & ui1;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f1;
-                tmpUi = vect & ui2;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f2;
-                tmpUi = vect & ui3;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f3;
-                tmpUi = vect & ui4;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f4;
-                tmpUi = vect & ui5;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f5;
-                tmpUi = vect & ui6;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f6;
-                tmpUi = vect & ui7;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f7;
-                tmpUi = vect & ui8;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W);
-                operand1[vPtr++] *= tmpF / f8;
-            }
-            return operand1;
-        }
-
-        /// <summary>
-        /// The safe (managed) implementation of conjunction between fuzy and crisp
+        /// The safe implementation of conjunction between fuzy and crisp
         /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
         /// The algoritm presumes the number of elements both in ulong and Vector4f
         /// fields to be a multiple of 64.
@@ -698,6 +688,175 @@ namespace Ferda.Benchmark
                 operand1[vPtr++] *= tmpF;
                 tmpUi = vect & sui8;
                 tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
+                operand1[vPtr++] *= tmpF;
+            }
+            return operand1;
+        }
+
+        /// <summary>
+        /// The safe implementation of conjunction between fuzy and crisp
+        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
+        /// The algoritm presumes the number of elements both in ulong and Vector4f
+        /// fields to be a multiple of 64. The algorithm
+        /// doesn't use allocation of new memory in computation of individual Vector4f's,
+        /// it assigns to only one Vector4f previously defined. 
+        /// </summary>
+        /// <param name="operand1">1. operand (fuzzy)</param>
+        /// <param name="operand2">2. operand (crisp)</param>
+        /// <returns>Conjunction result (fuzzy)</returns>
+        public static Vector4f[] AndSafeCrispFuzzyVector4f3NoAllocation(Vector4f[] operand1, ulong[] operand2)
+        {
+            Vector4f tmpF = new Vector4f();
+            Vector4ui tmpUi;
+            Vector4ui vect;
+            uint part;
+            int vPtr = 0;
+
+            for (int i = 0; i < operand2.Length; i++)
+            {
+                part = (uint)operand2[i]; //last 8 bits
+                vect = new Vector4ui(part, part, part, part);
+
+                tmpUi = vect & sui1;
+                tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui2;
+                tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui3;
+                tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui4;
+                tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui5;
+                tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui6;
+                tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui7;
+                tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui8;
+                tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+                operand1[vPtr++] *= tmpF;
+
+                part = (uint)(operand2[i] >> 32);
+                vect = new Vector4ui(part, part, part, part);
+
+                tmpUi = vect & sui1;
+                tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui2;
+                tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui3;
+                tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui4;
+                tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui5;
+                tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui6;
+                tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui7;
+                tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & sui8;
+                tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+                operand1[vPtr++] *= tmpF;
+            }
+            return operand1;
+        }
+
+        /// <summary>
+        /// The safe implementation of conjunction between fuzy and crisp
+        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
+        /// The algoritm presumes the number of elements both in ulong and Vector4f
+        /// fields to be a multiple of 64. The algorithm
+        /// doesn't use allocation of new memory in computation of individual Vector4f's,
+        /// it assigns to only one Vector4f previously defined + does not use static variables
+        /// </summary>
+        /// <param name="operand1">1. operand (fuzzy)</param>
+        /// <param name="operand2">2. operand (crisp)</param>
+        /// <returns>Conjunction result (fuzzy)</returns>
+        public static Vector4f[] AndSafeCrispFuzzyVector4f3NoStaticNoAllocation(Vector4f[] operand1, ulong[] operand2)
+        {
+            Vector4f tmpF = new Vector4f();
+            Vector4ui tmpUi;
+            Vector4ui vect;
+            uint part;
+            int vPtr = 0;
+
+            Vector4ui ui1 = sui1;
+            Vector4ui ui2 = sui2;
+            Vector4ui ui3 = sui3;
+            Vector4ui ui4 = sui4;
+            Vector4ui ui5 = sui5;
+            Vector4ui ui6 = sui6;
+            Vector4ui ui7 = sui7;
+            Vector4ui ui8 = sui8;
+
+            for (int i = 0; i < operand2.Length; i++)
+            {
+                part = (uint)operand2[i]; //last 8 bits
+                vect = new Vector4ui(part, part, part, part);
+
+                tmpUi = vect & ui1;
+                tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui2;
+                tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui3;
+                tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui4;
+                tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui5;
+                tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui6;
+                tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui7;
+                tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui8;
+                tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+                operand1[vPtr++] *= tmpF;
+
+                part = (uint)(operand2[i] >> 32);
+                vect = new Vector4ui(part, part, part, part);
+
+                tmpUi = vect & ui1;
+                tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui2;
+                tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui3;
+                tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui4;
+                tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui5;
+                tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui6;
+                tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui7;
+                tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+                operand1[vPtr++] *= tmpF;
+                tmpUi = vect & ui8;
+                tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
                 operand1[vPtr++] *= tmpF;
             }
             return operand1;
@@ -1013,7 +1172,7 @@ namespace Ferda.Benchmark
         /// <param name="operand1">1. operand (fuzzy)</param>
         /// <param name="operand2">2. operand (crisp)</param>
         /// <returns>Conjunction result (fuzzy)</returns>
-        public unsafe static Vector4f[] AndUnsafeCrispFuzzyVector4fNoAllocationNoStatic(Vector4f[] operand1, ulong[] operand2)
+        public unsafe static Vector4f[] AndUnsafeCrispFuzzyVector4f2NoAllocationNoStatic(Vector4f[] operand1, ulong[] operand2)
         {
             Vector4f tmpF = new Vector4f();
             Vector4ui tmpUi;
@@ -1124,6 +1283,66 @@ namespace Ferda.Benchmark
                 }
             }
             return operand1;
+        }
+
+        /// <summary>
+        /// The unsafe implementation of conjunction between fuzy and crisp
+        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
+        /// The algoritm presumes the number of elements both in ulong and Vector4f
+        /// fields to be a multiple of 64.
+        /// </summary>
+        /// <param name="operand1">1. operand (fuzzy)</param>
+        /// <param name="operand2">2. operand (crisp)</param>
+        /// <returns>Conjunction result (fuzzy)</returns>
+        public unsafe static Vector4f[] AndUnsafeCrispFuzzyVector4f3(Vector4f[] operand1, ulong[] operand2)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// The unsafe implementation of conjunction between fuzy and crisp
+        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
+        /// The algoritm presumes the number of elements both in ulong and Vector4f
+        /// fields to be a multiple of 64. The algorithm
+        /// doesn't use allocation of new memory in computation of individual Vector4f's,
+        /// it assigns to only one Vector4f previously defined. 
+        /// </summary>
+        /// <param name="operand1">1. operand (fuzzy)</param>
+        /// <param name="operand2">2. operand (crisp)</param>
+        /// <returns>Conjunction result (fuzzy)</returns>
+        public unsafe static Vector4f[] AndUnsafeCrispFuzzyVector4f3NoAllocation(Vector4f[] operand1, ulong[] operand2)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// The unsafe implementation of conjunction between fuzy and crisp
+        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
+        /// The algoritm presumes the number of elements both in ulong and Vector4f
+        /// fields to be a multiple of 64. No static variables used
+        /// </summary>
+        /// <param name="operand1">1. operand (fuzzy)</param>
+        /// <param name="operand2">2. operand (crisp)</param>
+        /// <returns>Conjunction result (fuzzy)</returns>
+        public unsafe static Vector4f[] AndUnsafeCrispFuzzyVector4f3NoStatic(Vector4f[] operand1, ulong[] operand2)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// The unsafe implementation of conjunction between fuzy and crisp
+        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
+        /// The algoritm presumes the number of elements both in ulong and Vector4f
+        /// fields to be a multiple of 64. The algorithm
+        /// doesn't use allocation of new memory in computation of individual Vector4f's,
+        /// it assigns to only one Vector4f previously defined. No static variables used
+        /// </summary>
+        /// <param name="operand1">1. operand (fuzzy)</param>
+        /// <param name="operand2">2. operand (crisp)</param>
+        /// <returns>Conjunction result (fuzzy)</returns>
+        public unsafe static Vector4f[] AndUnsafeCrispFuzzyVector4f3NoAllocationNoStatic(Vector4f[] operand1, ulong[] operand2)
+        {
+            return null;
         }
 
         #endregion
