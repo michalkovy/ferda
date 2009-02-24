@@ -1296,7 +1296,98 @@ namespace Ferda.Benchmark
         /// <returns>Conjunction result (fuzzy)</returns>
         public unsafe static Vector4f[] AndUnsafeCrispFuzzyVector4f3(Vector4f[] operand1, ulong[] operand2)
         {
-            return null;
+            Vector4f tmpF;
+            Vector4ui tmpUi;
+            Vector4ui vect;
+            uint part;
+
+            fixed (ulong* pinUL = operand2)
+            {
+                fixed (Vector4f* pinV = operand1)
+                {
+                    ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
+                    Vector4f* ptrV = pinV;
+
+                    //the main cycle
+                    while (ptrUL < stopUL)
+                    {
+                        part = (uint)*ptrUL; //last 8 bits
+                        vect = new Vector4ui(part, part, part, part);
+
+                        tmpUi = vect & sui1;
+                        tmpF = new Vector4f(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui2;
+                        tmpF = new Vector4f(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui3;
+                        tmpF = new Vector4f(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui4;
+                        tmpF = new Vector4f(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui5;
+                        tmpF = new Vector4f(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui6;
+                        tmpF = new Vector4f(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui7;
+                        tmpF = new Vector4f(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui8;
+                        tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31); ;
+                        *ptrV *= tmpF;
+                        ptrV++;
+
+                        part = (uint)(*ptrUL >> 32);
+                        vect = new Vector4ui(part, part, part, part);
+
+                        tmpUi = vect & sui1;
+                        tmpF = new Vector4f(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui2;
+                        tmpF = new Vector4f(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui3;
+                        tmpF = new Vector4f(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui4;
+                        tmpF = new Vector4f(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui5;
+                        tmpF = new Vector4f(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui6;
+                        tmpF = new Vector4f(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui7;
+                        tmpF = new Vector4f(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui8;
+                        tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
+                        *ptrV *= tmpF;
+                        ptrV++;
+
+                        ptrUL++;
+                    }
+                }
+            }
+            return operand1;
         }
 
         /// <summary>
@@ -1312,7 +1403,98 @@ namespace Ferda.Benchmark
         /// <returns>Conjunction result (fuzzy)</returns>
         public unsafe static Vector4f[] AndUnsafeCrispFuzzyVector4f3NoAllocation(Vector4f[] operand1, ulong[] operand2)
         {
-            return null;
+            Vector4f tmpF = new Vector4f();
+            Vector4ui tmpUi;
+            Vector4ui vect;
+            uint part;
+
+            fixed (ulong* pinUL = operand2)
+            {
+                fixed (Vector4f* pinV = operand1)
+                {
+                    ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
+                    Vector4f* ptrV = pinV;
+
+                    //the main cycle
+                    while (ptrUL < stopUL)
+                    {
+                        part = (uint)*ptrUL; //last 8 bits
+                        vect = new Vector4ui(part, part, part, part);
+
+                        tmpUi = vect & sui1;
+                        tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui2;
+                        tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui3;
+                        tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui4;
+                        tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui5;
+                        tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui6;
+                        tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui7;
+                        tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui8;
+                        tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+                        *ptrV *= tmpF;
+                        ptrV++;
+
+                        part = (uint)(*ptrUL >> 32);
+                        vect = new Vector4ui(part, part, part, part);
+
+                        tmpUi = vect & sui1;
+                        tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui2;
+                        tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui3;
+                        tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui4;
+                        tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui5;
+                        tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui6;
+                        tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui7;
+                        tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & sui8;
+                        tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+                        *ptrV *= tmpF;
+                        ptrV++;
+
+                        ptrUL++;
+                    }
+                }
+            }
+            return operand1;
         }
 
         /// <summary>
@@ -1326,7 +1508,107 @@ namespace Ferda.Benchmark
         /// <returns>Conjunction result (fuzzy)</returns>
         public unsafe static Vector4f[] AndUnsafeCrispFuzzyVector4f3NoStatic(Vector4f[] operand1, ulong[] operand2)
         {
-            return null;
+            Vector4f tmpF;
+            Vector4ui tmpUi;
+            Vector4ui vect;
+            uint part;
+
+            Vector4ui ui1 = sui1;
+            Vector4ui ui2 = sui2;
+            Vector4ui ui3 = sui3;
+            Vector4ui ui4 = sui4;
+            Vector4ui ui5 = sui5;
+            Vector4ui ui6 = sui6;
+            Vector4ui ui7 = sui7;
+            Vector4ui ui8 = sui8;
+
+            fixed (ulong* pinUL = operand2)
+            {
+                fixed (Vector4f* pinV = operand1)
+                {
+                    ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
+                    Vector4f* ptrV = pinV;
+
+                    //the main cycle
+                    while (ptrUL < stopUL)
+                    {
+                        part = (uint)*ptrUL; //last 8 bits
+                        vect = new Vector4ui(part, part, part, part);
+
+                        tmpUi = vect & ui1;
+                        tmpF = new Vector4f(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui2;
+                        tmpF = new Vector4f(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui3;
+                        tmpF = new Vector4f(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui4;
+                        tmpF = new Vector4f(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui5;
+                        tmpF = new Vector4f(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui6;
+                        tmpF = new Vector4f(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui7;
+                        tmpF = new Vector4f(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui8;
+                        tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31); ;
+                        *ptrV *= tmpF;
+                        ptrV++;
+
+                        part = (uint)(*ptrUL >> 32);
+                        vect = new Vector4ui(part, part, part, part);
+
+                        tmpUi = vect & ui1;
+                        tmpF = new Vector4f(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui2;
+                        tmpF = new Vector4f(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui3;
+                        tmpF = new Vector4f(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui4;
+                        tmpF = new Vector4f(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui5;
+                        tmpF = new Vector4f(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui6;
+                        tmpF = new Vector4f(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui7;
+                        tmpF = new Vector4f(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui8;
+                        tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
+                        *ptrV *= tmpF;
+                        ptrV++;
+
+                        ptrUL++;
+                    }
+                }
+            }
+            return operand1;
         }
 
         /// <summary>
@@ -1342,7 +1624,107 @@ namespace Ferda.Benchmark
         /// <returns>Conjunction result (fuzzy)</returns>
         public unsafe static Vector4f[] AndUnsafeCrispFuzzyVector4f3NoAllocationNoStatic(Vector4f[] operand1, ulong[] operand2)
         {
-            return null;
+            Vector4f tmpF = new Vector4f();
+            Vector4ui tmpUi;
+            Vector4ui vect;
+            uint part;
+
+            Vector4ui ui1 = sui1;
+            Vector4ui ui2 = sui2;
+            Vector4ui ui3 = sui3;
+            Vector4ui ui4 = sui4;
+            Vector4ui ui5 = sui5;
+            Vector4ui ui6 = sui6;
+            Vector4ui ui7 = sui7;
+            Vector4ui ui8 = sui8;
+
+            fixed (ulong* pinUL = operand2)
+            {
+                fixed (Vector4f* pinV = operand1)
+                {
+                    ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
+                    Vector4f* ptrV = pinV;
+
+                    //the main cycle
+                    while (ptrUL < stopUL)
+                    {
+                        part = (uint)*ptrUL; //last 8 bits
+                        vect = new Vector4ui(part, part, part, part);
+
+                        tmpUi = vect & ui1;
+                        tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui2;
+                        tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui3;
+                        tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui4;
+                        tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui5;
+                        tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui6;
+                        tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui7;
+                        tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui8;
+                        tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+                        *ptrV *= tmpF;
+                        ptrV++;
+
+                        part = (uint)(*ptrUL >> 32);
+                        vect = new Vector4ui(part, part, part, part);
+
+                        tmpUi = vect & ui1;
+                        tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui2;
+                        tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui3;
+                        tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui4;
+                        tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui5;
+                        tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui6;
+                        tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui7;
+                        tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+                        *ptrV *= tmpF;
+                        ptrV++;
+                        tmpUi = vect & ui8;
+                        tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+                        *ptrV *= tmpF;
+                        ptrV++;
+
+                        ptrUL++;
+                    }
+                }
+            }
+            return operand1;
         }
 
         #endregion
