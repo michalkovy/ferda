@@ -553,6 +553,100 @@ namespace FuzzyBitStringsTest
             Debug.WriteLine("And(..) test successful");
         }
 
+        [Test]
+        public void OrTest()
+        {
+            Debug.WriteLine("Or(..) test");
+
+            float[] bitField1000 = new float[1000];
+            float[] bitField1000b = new float[1000];
+            float[] bitField1001 = new float[1001];
+            float[] bitField1001b = new float[1001];
+            float[] bitField1002 = new float[1002];
+            float[] bitField1002b = new float[1002];
+            float[] bitField1003 = new float[1003];
+            float[] bitField1003b = new float[1003];
+
+            for (int i = 0; i < 1000; i++)
+            {
+                bitField1000[i] = Convert.ToSingle(r.NextDouble());
+                bitField1000b[i] = Convert.ToSingle(r.NextDouble());
+                bitField1001[i] = Convert.ToSingle(r.NextDouble());
+                bitField1001b[i] = Convert.ToSingle(r.NextDouble());
+                bitField1002[i] = Convert.ToSingle(r.NextDouble());
+                bitField1002b[i] = Convert.ToSingle(r.NextDouble());
+                bitField1003[i] = Convert.ToSingle(r.NextDouble());
+                bitField1003b[i] = Convert.ToSingle(r.NextDouble());
+            }
+
+            bitField1001[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1001b[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1002[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1002b[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003b[1000] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1002[1001] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1002b[1001] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003[1001] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003b[1001] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003[1002] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+            bitField1003b[1002] = Convert.ToSingle(Convert.ToSingle(r.NextDouble()));
+
+            FuzzyBitString f1000 = new FuzzyBitString(o, bitField1000, true);
+            FuzzyBitString f1000b = new FuzzyBitString(o, bitField1000b, true);
+            FuzzyBitString f1001 = new FuzzyBitString(o, bitField1001, true);
+            FuzzyBitString f1001b = new FuzzyBitString(o, bitField1001b, true);
+            FuzzyBitString f1002 = new FuzzyBitString(o, bitField1002, true);
+            FuzzyBitString f1002b = new FuzzyBitString(o, bitField1002b, true);
+            FuzzyBitString f1003 = new FuzzyBitString(o, bitField1003, true);
+            FuzzyBitString f1003b = new FuzzyBitString(o, bitField1003b, true);
+
+            FuzzyBitString f1000A = f1000.Or(f1000b) as FuzzyBitString;
+            FuzzyBitString f1001A = f1001.Or(f1001b) as FuzzyBitString;
+            FuzzyBitString f1002A = f1002.Or(f1002b) as FuzzyBitString;
+            FuzzyBitString f1003A = f1003.Or(f1003b) as FuzzyBitString;
+
+            for (int i = 0; i < 1000; i++)
+            {
+                //Debug.WriteLine(i);
+                //Debug.WriteLine("Result: " + f1000A.GetBit(i).ToString());
+                //Debug.WriteLine("Operand 1: " + bitField1000[i].ToString());
+                //Debug.WriteLine("Operand 2: " + bitField1000b[i].ToString());
+                //Debug.WriteLine("Should be: " + (bitField1000[i] * bitField1000b[i]).ToString());
+                if (!Common.CloseEnough(4, f1000A.GetBit(i), bitField1000[i] + bitField1000b[i] - bitField1000[i] * bitField1000b[i]))
+                {
+                    throw new Exception("The Or() does not work");
+                }
+                if (!Common.CloseEnough(4, f1001A.GetBit(i), bitField1001[i] + bitField1001b[i] - bitField1001[i] * bitField1001b[i]))
+                {
+                    throw new Exception("The Or() does not work");
+                }
+                if (!Common.CloseEnough(4, f1002A.GetBit(i), bitField1002[i] + bitField1002b[i] - bitField1002[i] * bitField1002b[i]))
+                {
+                    throw new Exception("The Or() does not work");
+                }
+                if (!Common.CloseEnough(4, f1003A.GetBit(i), bitField1003[i] + bitField1003b[i] - bitField1003[i] * bitField1003b[i]))
+                {
+                    throw new Exception("The Or() does not work");
+                }
+            }
+
+            if (!Common.CloseEnough(4, f1001A.GetBit(1000), bitField1001[1000] + bitField1001b[1000]  - bitField1001[1000] * bitField1001b[1000]))
+            {
+                throw new Exception("The And() does not work");
+            }
+            if (!Common.CloseEnough(4, f1002A.GetBit(1001), bitField1002[1001] + bitField1002b[1001] - bitField1002[1001] * bitField1002b[1001]))
+            {
+                throw new Exception("The And() does not work");
+            }
+            if (!Common.CloseEnough(4, f1003A.GetBit(1002), bitField1003[1002] + bitField1003b[1002] - bitField1003[1002] * bitField1003b[1002]))
+            {
+                throw new Exception("The And() does not work");
+            }
+
+            Debug.WriteLine("Or(..) test successful");
+        }
+
         /// <summary>
         /// Test of conjunction between fuzzy and crisp bit strings
         /// </summary>
@@ -603,6 +697,55 @@ namespace FuzzyBitStringsTest
             }
 
             Debug.WriteLine("Crisp vs. fuzzy And(..) test successful");
+        }
+
+        [Test]
+        public void FuzzyCrispOrTest()
+        {
+            Debug.WriteLine("Crisp vs. fuzzy Or(..) test");
+
+            int[] lengths = new int[] { 400, 801, 1202, 1603 };
+            float[] floatArray;
+            bool[] boolArray;
+
+            foreach (int length in lengths)
+            {
+                //filling the arrays
+                floatArray = new float[length];
+                boolArray = new bool[length];
+                for (int i = 0; i < length; i++)
+                {
+                    floatArray[i] = (float)r.NextDouble();
+                    boolArray[i] = Convert.ToBoolean(r.Next(0, 2));
+                }
+
+                //construction of the bit strings
+                FuzzyBitString fb = new FuzzyBitString(o, floatArray, true);
+                BitString b = new BitString(o, length, new long[(length + 63) / 64]);
+                //setting the bits in the crisp bit string
+                for (int i = 0; i < length; i++)
+                {
+                    b.SetBit(i, Convert.ToSingle(boolArray[i]));
+                }
+
+                FuzzyBitString result = fb.Or(b) as FuzzyBitString;
+
+                for (int i = 0; i < length; i++)
+                {
+                    //Debug.WriteLine("Boolean: " + boolArray[i].ToString());
+                    //Debug.WriteLine("Float: " + floatArray[i].ToString());
+                    //Debug.WriteLine("Result: " + result.GetBit(i).ToString());
+                    //Debug.WriteLine("Should be: " + (floatArray[i] * Convert.ToSingle(boolArray[i])).ToString());
+                    if (!Common.CloseEnough(6,
+                        result.GetBit(i),
+                        floatArray[i] + Convert.ToSingle(boolArray[i]) - floatArray[i] * Convert.ToSingle(boolArray[i])))
+                    {
+                        throw new Exception("The crisp vs. fuzzy Or() does not work");
+                    }
+                }
+            }
+
+            Debug.WriteLine("Crisp vs. fuzzy Or(..) test successful");
         }
     }
 }
