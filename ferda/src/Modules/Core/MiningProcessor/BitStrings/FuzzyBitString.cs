@@ -243,7 +243,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         }
 
         /// <summary>
-        /// The conjunction of fuzzy and non fuzzy bit string
+        /// The conjunction of fuzzy and crisp bit string
         /// </summary>
         /// <param name="source">the other operand</param>
         private void andNonFuzzy(BitString source)
@@ -299,7 +299,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         }
 
         /// <summary>
-        /// Unsafe (unmanaged) conjunction.
+        /// Unsafe conjunction.
         /// The method uses the algebraic product T(a,b) = a*b as
         /// a conjunction.
         /// </summary>
@@ -317,9 +317,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     stopPtr = thisPin + _array.Length;
                 while (currentPtr < stopPtr)
                 {
-                    *currentPtr = (*currentPtr) * (*sourcePtr);
-                    currentPtr++;
-                    sourcePtr++;
+                    *currentPtr++ *= *sourcePtr++;
                 }
             }
         }
@@ -335,7 +333,105 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <returns>Result of the OR operation</returns>
         public IBitString Or(IBitString source)
         {
-            return EmptyBitString.GetInstance();
+            if (source is FuzzyBitString)
+            {
+                FuzzyBitString result = new FuzzyBitString(this);
+                result.or((FuzzyBitString)source);
+                result._identifier = FormulaHelper.Or(_identifier, source.Identifier);
+                return result;
+            }
+            else if (source is BitString)
+            {
+                FuzzyBitString result = new FuzzyBitString(this);
+                result.orNonFuzzy((BitString)source);
+                result._identifier = FormulaHelper.Or(_identifier, source.Identifier);
+                return result;
+            }
+            else if (source is EmptyBitString)
+            {
+                return new FuzzyBitString(this);
+            }
+            else if (source is FalseBitString)
+            {
+                return new FuzzyBitString(this);
+            }
+            else if (source is TrueBitString)
+            {
+                return source;
+            }
+            else
+                throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Unsafe disjunction.
+        /// The method uses the algebraic sum S(a,b) = a + b - ab
+        /// as a disjunction.
+        /// </summary>
+        /// <param name="source">the other operand</param>
+        private unsafe void or(FuzzyBitString source)
+        {
+            if (_size == 0)
+                throw new InvalidOperationException("BitString was not initialized (use create method first).");
+            if (_size != source._size)
+                throw Exceptions.BitStringsLengtsAreNotEqualError();
+
+            fixed (Vector4f* thisPin = _array, sourcePin = source._array)
+            {
+                Vector4f* currentPtr = thisPin, sourcePtr = sourcePin,
+                    stopPtr = thisPin + _array.Length;
+                while (currentPtr < stopPtr)
+                {
+                    *currentPtr= *sourcePtr + *currentPtr - (*sourcePtr)*(*currentPtr);
+                    currentPtr++;
+                    sourcePtr++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// The disjunction of fuzzy and crisp bit string.
+        /// The method uses the algebraic sum S(a,b) = a + b - ab
+        /// as a disjunction.
+        /// </summary>
+        /// <param name="source">the other operand</param>
+        private void orNonFuzzy(BitString source)
+        {
+            if (_size == 0)
+                throw new InvalidOperationException("BitString was not initialized (use create method first).");
+            if (_size != source.Length)
+                throw Exceptions.BitStringsLengtsAreNotEqualError();
+
+            //all but the last one
+            for (int i = 0; i < _array.Length - 1; i++)
+            {
+                Vector4f tmp = new Vector4f(
+                    source.GetBit(_blocksize * i),
+                    source.GetBit(_blocksize * i + 1),
+                    source.GetBit(_blocksize * i + 2),
+                    source.GetBit(_blocksize * i + 3));
+                _array[i] = tmp + _array[i] - tmp*_array[i];
+            }
+
+            //there has to be at least one item in the last vector
+            Vector4f last = new Vector4f();
+            last.X = source.GetBit(_blocksize * (_array.Length - 1));
+            if (_size % _blocksize == 2)
+            {
+                last.Y = source.GetBit(_blocksize * (_array.Length - 1) + 1);
+            }
+            if (_size % _blocksize == 3)
+            {
+                last.Y = source.GetBit(_blocksize * (_array.Length - 1) + 1);
+                last.Z = source.GetBit(_blocksize * (_array.Length - 1) + 2);
+            }
+            if (_size % _blocksize == 0)
+            {
+                last.Y = source.GetBit(_blocksize * (_array.Length - 1) + 1);
+                last.Z = source.GetBit(_blocksize * (_array.Length - 1) + 2);
+                last.W = source.GetBit(_blocksize * (_array.Length - 1) + 3);
+            }
+            _array[_array.Length - 1] = last + _array[_array.Length - 1] - last * _array[_array.Length - 1];
         }
 
         #endregion
