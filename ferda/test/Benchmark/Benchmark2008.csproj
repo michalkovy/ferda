@@ -61,6 +61,7 @@
     <Compile Include="Benchmark.cs" />
     <Compile Include="FerdaBenchmark.cs" />
     <Compile Include="Not.cs" />
+    <Compile Include="Or.cs" />
     <Compile Include="Sum.cs" />
     <None Include="Readme.txt" />
     <None Include="Results.txt" />
