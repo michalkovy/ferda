@@ -125,3 +125,54 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         string ToString();
     }
 }
+
+/*
+IBitString.Sum vs. IBitString.NonZeroBitsCount
+
+Node.Frequency - u uzlu rozhodovacino stromu se urcuje, kolik prikladu se bude 
+ * pomoci tohoto uzlu klasifikovat. Float hodnota by nedavala smysl. 
+
+Node.CategoryFrequency(..) - pouziva se NonZeroBitsCount, protoze frekvence u 
+ * kategorie udava pocet prikladu, ktere se klasifikuji podle teto kategorie - 
+ * cele cislo
+
+Node.InitNodeClassification(..) - tady zustava pouziti Sum. Zde je potreba 
+ * priradit kategoriim uzlu kategorie klasifikacniho atributu (pomoci AND 
+ * operatoru). Ve fuzzy pripade je dulezite, jestli stupen prislusnosti je 0.1 
+ * nebo 0.9.
+
+NodeClassification.noItemsInCategory, NodeClassification.noErrors - zde je 
+ * zrejme, ze by to mel byt long (pouziti NonZeroBitsCount), protoze opet pocet 
+ * prikladu, ktere se klasifikovali podle jiste tridy musi byt cele cislo. 
+ * Nejsem si vsak jisty, zda bitove operace v Node.InitNodeClassification(..), 
+ * kde se to nastavuje budou pocitat spravne.   
+
+Tree.ConfusionMatrix(...) - jednotlive policka matice zamen odpovidaji poctum 
+ * objektu, ktere se nejak klasifikovali, proto je pouzity NonZeroBitsCount. 
+ * Opet nevim, jestli pro fuzzy pripad to bude fungovat uplne spravne. 
+
+ETreeMiningProcessor.DeleteOneClassificationCategoryOnly(...) - tady se pocita, 
+ * jestli kategorie klasifikuje pouze do jedne tridy, tedy vsechny prvky, ktere 
+ * do teto kategorie patri jsou klasifikovany pouze do jedne tridy. Pro crisp 
+ * pripad je to jedno, pro fuzzy pripad tato procedura zrejme vubec nema smysl, 
+ * musi se to poradne promyslet.
+
+ETreeMiningProcessor.SelectAttributesForBranching(...) - vybira se atribut, 
+ * podle ktereho se bude vetvit. Kriteriem je chi-kvadrat. Zde myslim, ze bude 
+ * pouziti fuzzy bitovych retizku povede k vetsi presnosti pocitani. 
+
+ETreeMiningProcessor.FillChiSqData, (Guha.Math.)DecisionTrees.ChiSquared - zde 
+ * opet kvuli vetsi presnosti se pocita se sumama. Zbyva overit, jestli se to 
+ * takto pocitat (teoreticky) muze, tedy jestli muzeme mit racionalni 
+ * kontingencni tabulku pro vypocet chi-kvadrat. 
+
+HOTOVE ZMENY DO ETREE
+
+MiningProcessor.Masks(...) - metoda pocita masky virtualniho atributu. Je to 
+ * zmena pouze pro funkci setBit, kde se da 1f misto true
+
+MiningProcessor.ActConditionCountOfObjects, 
+ * FourFoldMiningProcessor.SetActConditionCountOfObjects - zde se pocita pocet 
+ * radku databaze, ke kterym se vztahuje dana podminka - melo byt to opet byt cele cislo.  
+
+*/
