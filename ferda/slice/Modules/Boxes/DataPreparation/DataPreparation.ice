@@ -115,6 +115,10 @@ module Ferda {
 					interface AttributeFunctions extends Ferda::Guha::MiningProcessor::BitStringGenerator {
 					};
 
+          interface FuzzyAttributeFunctions
+          {
+            string HelloWorld();
+          };
 			};
 		};
 	};

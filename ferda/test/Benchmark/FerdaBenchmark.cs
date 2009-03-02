@@ -25,7 +25,7 @@ namespace Ferda.Benchmark
     {
         #region Fields
 
-        protected static int iterations = 1000;
+        protected static int iterations = 10000;
         protected const int lengthUlongString = 100000;
 
         protected static ulong[] stringUlong = new ulong[lengthUlongString];
