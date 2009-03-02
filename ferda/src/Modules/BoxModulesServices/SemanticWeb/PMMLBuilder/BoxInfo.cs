@@ -35,7 +35,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
     /// <seealso cref="T:Ferda.Modules.BoxModuleI"/>
     /// <seealso cref="T:Ferda.Modules.BoxModuleFactoryI"/>
     /// <seealso cref="T:Ferda.Modules.BoxModuleFactoryCreatorI"/>
-    internal class BoxInfo : Boxes.BoxInfo
+    public class BoxInfo : Boxes.BoxInfo
     {
         /// <summary>
         /// Functions creates an object of <see cref="T:Ferda.Modules.IFunctions">IFuntions</see>
