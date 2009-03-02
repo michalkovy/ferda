@@ -82,6 +82,8 @@
     <Reference Include="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Categorization\AutomaticAttributeWithFuzzyCategories\BoxInfo.cs" />
+    <Compile Include="Categorization\AutomaticAttributeWithFuzzyCategories\Functions.cs" />
     <Compile Include="Categorization\Common.cs" />
     <Compile Include="Categorization\EquidistantIntervalsLISp\BoxInfo.cs" />
     <Compile Include="Categorization\EquidistantIntervalsLISp\Functions.cs" />
@@ -111,12 +113,14 @@
     <Compile Include="Service.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Categorization\AutomaticAttributeWithFuzzyCategories\boxIcon.ico" />
     <Content Include="Categorization\EachValueOneCategory\boxIcon.ico" />
     <Content Include="Categorization\EquidistantIntervalsLISp\boxDesign.svg" />
     <Content Include="Categorization\EquidistantIntervalsLISp\boxIcon.ico" />
     <Content Include="Categorization\EquidistantIntervals\boxDesign.svg" />
     <Content Include="Categorization\EquidistantIntervals\boxIcon.ico" />
     <Content Include="Categorization\ManualAttributeWithFuzzyCategories\boxIcon.ico" />
+    <Content Include="Categorization\OntologyDerivedAttribute\boxIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Categorization\EachValueOneCategory\boxDesign.svg" />
@@ -126,9 +130,6 @@
       <Project>{9D598D8A-0393-4E99-9842-49D120C06881}</Project>
       <Name>GuhaMining2008</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Categorization\AutomaticAttributeWithFuzzyCategories\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

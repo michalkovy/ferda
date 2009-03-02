@@ -1393,6 +1393,144 @@
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
+		<Identifier>DataPreparation.Categorization.AutomaticAttributeWithFuzzyCategories</Identifier>
+		<Label>Automatic attribute with fuzzy categories</Label>
+		<Hint>System automatically creates attribute with fuzzy categories</Hint>
+		<Categories>
+			<Category>
+				<Name>DataPreparation.Categorization</Name>
+				<Label>Data preparation.Categorization</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Column</Name>
+				<Label>Column</Label>
+				<Hint>Defines column or derived column .</Hint>
+			</Socket>
+			<Socket>
+				<Name>NameInBooleanAttributes</Name>
+				<Label>Name in Boolean Attributes</Label>
+				<Hint>The name that will be used for construction of Boolean attributes from this attribute.</Hint>
+			</Socket>
+			<Socket>
+				<Name>CountOfCategories</Name>
+				<Label>Number of intervals.</Label>
+				<Hint>Enter number of intervals.</Hint>
+			</Socket>
+			<Socket>
+				<Name>XCategory</Name>
+				<Label>X-Category</Label>
+				<Hint>Category for missing values.</Hint>
+			</Socket>
+			<!--
+                        <Socket>
+                                <Name>IncludeNullCategory</Name>
+                                <Label>Include null Category</Label>
+                                <Hint>Category with null values.</Hint>
+                        </Socket>
+                        -->
+			<Socket>
+				<Name>Domain</Name>
+				<Label>Domain</Label>
+				<Hint>Decide if whole domain of column will be categorized or only some subdomain.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>WholeDomain</Name>
+						<Label>Whole actual domain</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>SubDomain</Name>
+						<Label>User defined domain</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>From</Name>
+				<Label>From</Label>
+				<Hint>Starting value</Hint>
+			</Socket>
+			<Socket>
+				<Name>To</Name>
+				<Label>To</Label>
+				<Hint>Ending value</Hint>
+			</Socket>
+			<Socket>
+				<Name>Cardinality</Name>
+				<Label>Cardinality</Label>
+				<Hint>You should specify the semantic of categories.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Nominal</Name>
+						<Label>Nominal</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Ordinal</Name>
+						<Label>Ordinal</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>OrdinalCyclic</Name>
+						<Label>Ordinal Cyclic</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Cardinal</Name>
+						<Label>Cardinal</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>ClosedFrom</Name>
+				<Label>Closed from</Label>
+				<Hint>Intervals are closed from specified side.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Left</Name>
+						<Label>Left</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Right</Name>
+						<Label>Right</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Categories</Name>
+				<Label>Categories</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Domain</Name>
+				<Label>Domain</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Semantic</Name>
+				<Label>Semantic</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Intervals</Name>
+				<Label>Intervals</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>FixedAtom</Name>
+				<Label>Fixed Atom</Label>
+				<Hint>Creates a fixes set coefficient.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>AtomSetting</Name>
+				<Label>Atom Setting</Label>
+				<Hint>Creates a coefficient setting where user can set the type of coefficient and maximal and minimal lengths.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>StaticAttribute</Name>
+				<Label>Static attribute</Label>
+				<Hint>Creates a static attribute which can be manually edited.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
+	</BoxLocalization>
+	<BoxLocalization>
 		<Identifier>Sample.BodyMassIndex</Identifier>
 		<Label>Body Mass Index</Label>
 		<Hint>BMI equals a person's weight in kilograms divided by height in meters squared. (BMI=kg/m^2).</Hint>
@@ -2271,6 +2409,13 @@
 				<Hint>Total time of last task run.</Hint>
 			</Socket>
 		</Sockets>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>PMMLBuilder</Name>
+				<Label>PMML Builder</Label>
+				<Hint>Builds PMML from the results of the task</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>GuhaMining.Tasks.SDFourFold</Identifier>
@@ -11515,7 +11660,7 @@
 	<BoxLocalization>
 		<Identifier>SemanticWeb.PMMLBuilder</Identifier>
 		<Label>PMML Builder</Label>
-		<Hint> PMML na základě výsledku úlohy</Hint>
+		<Hint>Builds PMML from the results of the task</Hint>
 		<Categories>
 			<Category>
 				<Name>SemanticWeb</Name>
