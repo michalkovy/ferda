@@ -36,6 +36,32 @@
 			</references>
 		</csc>
 	</target>
+	<target name="FerdaSemanticWebBoxes">
+	  <csc target="library" 
+		   output="${path::combine(build.dir,'FerdaSemanticWebBoxes.dll')}" 
+		   doc="${path::combine(build.dir,'FerdaSemanticWebBoxes.xml')}" 
+		   debug="${debug}" optimize="${optimize}">
+		<nowarn>
+		  <warning number="1591"/>
+		</nowarn>
+		<sources>
+		  <include name="SemanticWeb/**.cs"/>
+		  <exclude name="SemanticWeb/**/generated/**.cs"/>
+		</sources>
+		<references>
+		  <include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+		  <include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+		  <include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
+		  <include name="${path::combine(build.dir,'FerdaMiningProcessor.dll')}"/>
+		  <include name="${path::combine(build.dir,'FerdaAttribute.dll')}"/>
+		  <include name="${path::combine(lib.dir,'Ice.dll')}"/>
+		  <include name="${path::combine(lib.dir,'IceBox.dll')}"/>
+		  <include name="System.dll"/>
+		  <include name="System.Data.dll"/>
+		  <include name="System.Xml.dll"/>
+		</references>
+	  </csc>
+	</target>
 	<target name="FerdaDataPreparationBoxes" depends="FerdaGuhaMiningBoxes">
 		<csc target="library" output="${path::combine(build.dir,'FerdaDataPreparationBoxes.dll')}" doc="${path::combine(build.dir,'FerdaDataPreparationBoxes.xml')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaDataPreparationBoxes.snk">
 			<nowarn>
@@ -61,7 +87,7 @@
 			</references>
 		</csc>
 	</target>
-  <target name="FerdaGuhaMiningBoxes">
+  <target name="FerdaGuhaMiningBoxes" depends="FerdaSemanticWebBoxes">
     <csc target="library" output="${path::combine(build.dir,'FerdaGuhaMiningBoxes.dll')}" doc="${path::combine(build.dir,'FerdaGuhaMiningBoxes.xml')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaGuhaMiningBoxes.snk">
       <nowarn>
         <warning number="1591"/>
@@ -79,6 +105,7 @@
         <include name="${path::combine(build.dir,'FerdaMiningProcessor.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaMath.dll')}"/>
         <include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+        <include name="${path::combine(build.dir,'FerdaSemanticWebBoxes.dll')}"/>
         <include name="${path::combine(lib.dir,'Ice.dll')}"/>
         <include name="${path::combine(lib.dir,'IceBox.dll')}"/>
         <include name="System.dll"/>
@@ -185,32 +212,6 @@
 		</references>
 	  </csc>
   </target>
-	<target name="FerdaSemanticWebBoxes" depends="FerdaGuhaMiningBoxes">
-	  <csc target="library" 
-		   output="${path::combine(build.dir,'FerdaSemanticWebBoxes.dll')}" 
-		   doc="${path::combine(build.dir,'FerdaSemanticWebBoxes.xml')}" 
-		   debug="${debug}" optimize="${optimize}">
-		<nowarn>
-		  <warning number="1591"/>
-		</nowarn>
-		<sources>
-		  <include name="SemanticWeb/**.cs"/>
-		  <exclude name="SemanticWeb/**/generated/**.cs"/>
-		</sources>
-		<references>
-		  <include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
-		  <include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
-		  <include name="${path::combine(build.dir,'FerdaServerBase.dll')}"/>
-		  <include name="${path::combine(build.dir,'FerdaMiningProcessor.dll')}"/>
-		  <include name="${path::combine(build.dir,'FerdaAttribute.dll')}"/>
-		  <include name="${path::combine(lib.dir,'Ice.dll')}"/>
-		  <include name="${path::combine(lib.dir,'IceBox.dll')}"/>
-		  <include name="System.dll"/>
-		  <include name="System.Data.dll"/>
-		  <include name="System.Xml.dll"/>
-		</references>
-	  </csc>
-	</target>
 	<target name="clean">
 		<!-- Nothing to do ... build directory is deleted -->
 	</target>

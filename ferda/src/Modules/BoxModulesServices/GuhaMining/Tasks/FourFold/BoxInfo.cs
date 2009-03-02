@@ -21,6 +21,7 @@
 
 using System;
 using Object=Ice.Object;
+using System.Collections.Generic;
 
 namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
 {
@@ -81,7 +82,50 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
         public override ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs,
                                                                                BoxModuleI boxModule)
         {
-            return new ModulesAskingForCreation[0];
+            //getting the information what is in the config files
+            Dictionary<string, ModulesAskingForCreation> modulesAFC =
+                getModulesAskingForCreationNonDynamic(localePrefs);
+            //creating the structure that will be returned
+            List<ModulesAskingForCreation> result =
+                new List<ModulesAskingForCreation>();
+
+            ModulesConnection moduleConnection;
+            ModuleAskingForCreation singleModule;
+
+            foreach (string moduleAFCname in modulesAFC.Keys)
+            {
+                singleModule = new ModuleAskingForCreation();
+                moduleConnection = new ModulesConnection();
+                //no need to set any property
+                singleModule.propertySetting = new PropertySetting[] { };
+
+                switch (moduleAFCname)
+                {
+                    case "PMMLBuilder":
+                        //creating the info about the connections of the new module
+                        moduleConnection.socketName =
+                            SemanticWeb.PMMLBuilder.Functions.Sock4FTTask;
+
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+
+                        //creating the new (single) module
+                        singleModule.modulesConnection =
+                            new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier =
+                            SemanticWeb.PMMLBuilder.BoxInfo.typeIdentifier;
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                //setting the newModules property of each modules for intearction
+                modulesAFC[moduleAFCname].newModules =
+                    new ModuleAskingForCreation[] { singleModule };
+                result.Add(modulesAFC[moduleAFCname]);
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>

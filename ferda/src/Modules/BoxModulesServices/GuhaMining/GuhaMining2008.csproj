@@ -233,6 +233,12 @@
     <None Include="AtomSetting\boxDesign.svg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SemanticWeb\SemanticWeb2008.csproj">
+      <Project>{2BB6FBC2-F098-4714-9390-F9FF3743450F}</Project>
+      <Name>SemanticWeb2008</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Quantifiers\FourFold\DoubleImplicational\DoubleLowerCriticalImplication\" />
     <Folder Include="Quantifiers\FourFold\DoubleImplicational\DoubleUpperCriticalImplication\" />
     <Folder Include="Quantifiers\FourFold\Equivalence\LowerCriticalEquivalence\" />
