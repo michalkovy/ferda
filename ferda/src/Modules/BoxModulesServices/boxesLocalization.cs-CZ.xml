@@ -1388,6 +1388,149 @@
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
+		<Identifier>DataPreparation.Categorization.AutomaticAttributeWithFuzzyCategories</Identifier>
+		<Label>Automatický atribut s fuzzy kategoriemi</Label>
+		<Hint>Systém automaticky vytvoří atribut s fuzzy kategoriemi</Hint>
+		<Categories>
+			<Category>
+				<Name>DataPreparation.Categorization</Name>
+				<Label>Příprava dat.Kategorizace</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>Column</Name>
+				<Label>Sloupec nebo atribut</Label>
+				<Hint>Sloupec nebo atribut</Hint>
+			</Socket>
+			<Socket>
+				<Name>NameInBooleanAttributes</Name>
+				<Label>Název v Boolských atributech</Label>
+				<Hint>Název, který bude použitý pro tvorbu Boolských atributů</Hint>
+			</Socket>
+			<Socket>
+				<Name>CountOfCategories</Name>
+				<Label>Počet kategorií.</Label>
+				<Hint>Počet kategorií v atributů..</Hint>
+			</Socket>
+			<Socket>
+				<Name>XCategory</Name>
+				<Label>X-Kategorie</Label>
+				<Hint>Kategorie pro chybějící hodnoty.</Hint>
+			</Socket>
+			<!--
+				<Socket>
+				<Name>IncludeNullCategory</Name>
+				<Label>Include null Category</Label>
+				<Hint>Category with null values.</Hint>
+				</Socket>
+			-->
+			<Socket>
+				<Name>Domain</Name>
+				<Label>Doména</Label>
+				<Hint>Výběr rozsahu hodnot pro kategorizaci.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>WholeDomain</Name>
+						<Label>Celá aktuální doména</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>SubDomain</Name>
+						<Label>Uživatelem definovaná doména</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>From</Name>
+				<Label>Od</Label>
+				<Hint>Počáteční hodnota</Hint>
+			</Socket>
+			<Socket>
+				<Name>To</Name>
+				<Label>Do</Label>
+				<Hint>Koncová hodnota</Hint>
+			</Socket>
+			<Socket>
+				<Name>Cardinality</Name>
+				<Label>Sémantika</Label>
+				<Hint>Musí se zadat sémantika hodnot ve sloupci.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Nominal</Name>
+						<Label>Nominální</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Ordinal</Name>
+						<Label>Ordinální</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>OrdinalCyclic</Name>
+						<Label>Ordinální cyklická</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Cardinal</Name>
+						<Label>Kardinální</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>Length</Name>
+				<Label>Délka</Label>
+				<Hint>Délka intervalu.</Hint>
+			</Socket>
+			<Socket>
+				<Name>ClosedFrom</Name>
+				<Label>Uzavřený ze strany</Label>
+				<Hint>Intervaly jsou uzavřeny z dané strany.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Left</Name>
+						<Label>Zleva</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Right</Name>
+						<Label>Zprava</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Categories</Name>
+				<Label>Kategorie</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Domain</Name>
+				<Label>Doména</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Semantic</Name>
+				<Label>Sémantika</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Intervals</Name>
+				<Label>Intervaly</Label>
+			</PropertyCategory>
+		</PropertyCategories>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>FixedAtom</Name>
+				<Label>Pevný atom</Label>
+				<Hint>Vytváří koeficient typu pevní podmnožina.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>AtomSetting</Name>
+				<Label>Nastavení atomu</Label>
+				<Hint>Vytváří nastavení koeficientu, kde uživatel může definovat typ koeficientů a maximální délku.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>StaticAttribute</Name>
+				<Label>Statický atribut</Label>
+				<Hint>Vytváří atribut, který může být manuálně upravován.</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
+	</BoxLocalization>
+	<BoxLocalization>
 		<Identifier>Sample.BodyMassIndex</Identifier>
 		<Label>Body Mass Index</Label>
 		<Hint>BMI equals a person's weight in kilograms divided by height in meters squared. (BMI=kg/m^2).</Hint>
@@ -2244,6 +2387,13 @@
 				<Hint>Total time of last task run.</Hint>
 			</Socket>
 		</Sockets>
+		<ModulesAskingForCreationSeq>
+			<ModulesAskingForCreation>
+				<Name>PMMLBuilder</Name>
+				<Label>Sestavení PMML</Label>
+				<Hint>Sestaví PMML na základě výsledku úlohy</Hint>
+			</ModulesAskingForCreation>
+		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>GuhaMining.Tasks.SDFourFold</Identifier>
