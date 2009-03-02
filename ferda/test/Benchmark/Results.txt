@@ -147,3 +147,132 @@ Run #2
   BoolQuickVector2ul   00:00:39.4570000
   FuzzyFloat           00:05:44.2450000
   FuzzyVector4f        00:02:42.0930000
+
+Benchmark version: 1
+Machine name: michalbook
+Operating System: Unix 2.6.27.8
+Runtime version: 2.0.50727.1433
+Mono: True
+64bit native mode: True
+Supported accelerations: None
+Date and time: 2.3.2009 2:31:06
+Benchmarking type And
+Run #1
+  SafeAndCrisp         00:00:00.5672870
+  UnsafeAndCrisp       00:00:00.4114700
+  SafeAndFuzzyVector4f 00:01:54.3847100
+  UnsafeAndFuzzyVector4f 00:01:47.4378050
+  SafeAndFuzzyFloat    00:00:59.2582420
+  UnsafeAndFuzzyFloat  00:00:46.1988020
+  SafeAndCrispFuzzyFloat 00:03:22.8528860
+  SafeAndCrispFuzzyFloat2 00:01:56.8211750
+  SafeAndCrispFuzzyVector4fNaive 00:05:17.1508220
+  SafeAndCrispFuzzyVector4fPrecomputed 00:09:59.0485100
+  SafeAndCrispFuzzyVector4fPrecomputedShift 00:08:16.1384270
+  SafeAndCrispFuzzyVector4fPrecomputedShiftNoStatic 00:07:57.9911910
+  SafeAndCrispFuzzyVector4fPrecomputedShiftNoAllocation 00:08:04.0486850
+  UnsafeAndCrispFuzzyVector4fPrecomputed 00:09:16.3014150
+  UnsafeAndCrispFuzzyVector4fPrecomputedNoAllocation 00:09:13.3756600
+  UnsafeAndCrispFuzzyVector4fPrecomputedNoStaticNoAllocation 00:09:51.3127480
+  UnsafeAndCrispFuzzyVector4fPrecomputedShift 00:07:56.5110330
+  UnsafeAndCrispFuzzyVector4fPrecomputedShiftNoStatic 00:07:45.4418720
+  UnsafeAndCrispFuzzyVector4fPrecomputedShiftNoAllocation 00:09:20.2675150
+  UnsafeAndCrispFuzzyVector4fPrecomputedShiftNoStaticNoAllocation 00:07:29.1031980
+Run #2
+  SafeAndCrisp         00:00:00.5651380
+  UnsafeAndCrisp       00:00:00.4111760
+  SafeAndFuzzyVector4f 00:01:54.3589720
+  UnsafeAndFuzzyVector4f 00:01:47.5194040
+  SafeAndFuzzyFloat    00:00:59.3895830
+  UnsafeAndFuzzyFloat  00:00:46.3598560
+  SafeAndCrispFuzzyFloat 00:03:22.9536960
+  SafeAndCrispFuzzyFloat2 00:01:55.1419720
+  SafeAndCrispFuzzyVector4fNaive 00:05:17.1467600
+  SafeAndCrispFuzzyVector4fPrecomputed 00:09:57.7947830
+  SafeAndCrispFuzzyVector4fPrecomputedShift 00:08:18.5197220
+  SafeAndCrispFuzzyVector4fPrecomputedShiftNoStatic 00:07:57.3026460
+  SafeAndCrispFuzzyVector4fPrecomputedShiftNoAllocation 00:08:04.0456720
+  UnsafeAndCrispFuzzyVector4fPrecomputed 00:09:15.9692690
+  UnsafeAndCrispFuzzyVector4fPrecomputedNoAllocation 00:09:13.2235490
+  UnsafeAndCrispFuzzyVector4fPrecomputedNoStaticNoAllocation 00:09:51.2342840
+  UnsafeAndCrispFuzzyVector4fPrecomputedShift 00:07:56.5236290
+  UnsafeAndCrispFuzzyVector4fPrecomputedShiftNoStatic 00:07:45.4651350
+  UnsafeAndCrispFuzzyVector4fPrecomputedShiftNoAllocation 00:09:20.2617700
+  UnsafeAndCrispFuzzyVector4fPrecomputedShiftNoStaticNoAllocation 00:07:29.1143650
+Benchmarking type Not
+Run #1
+  SafeNotCrisp         00:00:00.5189530
+  UnsafeNotCrisp       00:00:00.2463890
+  SafeNotFuzzyVector4f 00:01:41.4409110
+  SafeNotFuzzyFloat    00:00:50.6881980
+  UnsafeNotFuzzyVector4f1Operation 00:01:34.8888420
+  UnsafeNotFuzzyVector4f2Operation 00:03:35.6812240
+  UnsafeNotFuzzyFloat  00:00:33.2290690
+Run #2
+  SafeNotCrisp         00:00:00.5185990
+  UnsafeNotCrisp       00:00:00.2476750
+  SafeNotFuzzyVector4f 00:01:41.4372170
+  SafeNotFuzzyFloat    00:00:50.6892430
+  UnsafeNotFuzzyVector4f1Operation 00:01:34.8829180
+  UnsafeNotFuzzyVector4f2Operation 00:03:35.8717440
+  UnsafeNotFuzzyFloat  00:00:33.2328950
+Benchmarking type Or
+Run #1
+  SafeOrCrisp          00:00:00.5655340
+  UnsafeOrCrisp        00:00:00.4108980
+  SafeOrFuzzyVector4f  00:04:59.0274070
+  UnsafeOrFuzzyVector4f 00:04:42.0154120
+  SafeOrFuzzyFloat     00:01:46.3480790
+  UnsafeOrFuzzyFloat   00:01:11.8522070
+  SafeOrCrispFuzzyFloat 00:04:36.9400500
+  SafeOrCrispFuzzyFloat2 00:04:11.9940160
+  SafeOrCrispFuzzyVector4fNaive 00:08:27.9025970
+  SafeOrCrispFuzzyVector4fPrecomputed 00:13:17.3168560
+  SafeOrCrispFuzzyVector4fPrecomputedShift 00:10:51.7975120
+  SafeOrCrispFuzzyVector4fPrecomputedShiftNoStatic 00:10:57.6382570
+  SafeOrCrispFuzzyVector4fPrecomputedShiftNoAllocation 00:11:10.3121170
+  UnsafeOrCrispFuzzyVector4fPrecomputed 00:12:22.5543120
+  UnsafeOrCrispFuzzyVector4fPrecomputedNoAllocation 00:12:10.9536660
+  UnsafeOrCrispFuzzyVector4fPrecomputedNoStaticNoAllocation 00:12:15.7796460
+  UnsafeOrCrispFuzzyVector4fPrecomputedShift 00:10:44.6764910
+  UnsafeOrCrispFuzzyVector4fPrecomputedShiftNoStatic 00:10:40.5992980
+  UnsafeOrCrispFuzzyVector4fPrecomputedShiftNoAllocation 00:10:41.6388890
+  UnsafeOrCrispFuzzyVector4fPrecomputedShiftNoStaticNoAllocation 00:10:38.7619900
+Run #2
+  SafeOrCrisp          00:00:00.5671930
+  UnsafeOrCrisp        00:00:00.4106220
+  SafeOrFuzzyVector4f  00:04:58.2550100
+  UnsafeOrFuzzyVector4f 00:04:42.0110690
+  SafeOrFuzzyFloat     00:01:46.3019300
+  UnsafeOrFuzzyFloat   00:01:11.7826060
+  SafeOrCrispFuzzyFloat 00:04:36.7954570
+  SafeOrCrispFuzzyFloat2 00:04:11.9318150
+  SafeOrCrispFuzzyVector4fNaive 00:08:27.9012090
+  SafeOrCrispFuzzyVector4fPrecomputed 00:13:17.4165780
+  SafeOrCrispFuzzyVector4fPrecomputedShift 00:10:51.9017660
+  SafeOrCrispFuzzyVector4fPrecomputedShiftNoStatic 00:10:57.4279000
+  SafeOrCrispFuzzyVector4fPrecomputedShiftNoAllocation 00:11:10.2410840
+  UnsafeOrCrispFuzzyVector4fPrecomputed 00:12:22.6064400
+  UnsafeOrCrispFuzzyVector4fPrecomputedNoAllocation 00:12:11.3010970
+  UnsafeOrCrispFuzzyVector4fPrecomputedNoStaticNoAllocation 00:12:18.3610080
+  UnsafeOrCrispFuzzyVector4fPrecomputedShift 00:10:44.9024160
+  UnsafeOrCrispFuzzyVector4fPrecomputedShiftNoStatic 00:10:40.7178930
+  UnsafeOrCrispFuzzyVector4fPrecomputedShiftNoAllocation 00:10:41.1607090
+  UnsafeOrCrispFuzzyVector4fPrecomputedShiftNoStaticNoAllocation 00:10:38.3277860
+Benchmarking type Sum
+Run #1
+  BoolPrecomputed      00:00:01.9867110
+  BoolQuick            00:00:01.5471870
+  BoolQuickWithoutMult 00:00:02.5302240
+  BoolQuickVector2ul   00:00:17.7964220
+  FuzzyFloat           00:01:38.1007640
+  FuzzyVector4f        00:01:42.8055360
+  FuzzyVector4fSafe    00:01:43.6645870
+Run #2
+  BoolPrecomputed      00:00:01.9864770
+  BoolQuick            00:00:01.5474930
+  BoolQuickWithoutMult 00:00:02.5282200
+  BoolQuickVector2ul   00:00:17.7989440
+  FuzzyFloat           00:01:38.0992960
+  FuzzyVector4f        00:01:42.6914720
+  FuzzyVector4fSafe    00:01:43.6616110
