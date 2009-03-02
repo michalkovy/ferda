@@ -14,6 +14,7 @@
 			<object identity="DataPreparation.Categorization.EquifrequencyIntervals" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="DataPreparation.Categorization.StaticAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 			<object identity="DataPreparation.Categorization.OntologyDerivedAttribute" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="DataPreparation.Categorization.ManualAttributeWithFuzzyCategories" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
 		<replica-group id="FerdaBasicBoxesReplicaAdapter">
 			<load-balancing type="round-robin" n-replicas="1"/>
