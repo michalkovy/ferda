@@ -36,7 +36,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
     {
         #region Properties
 
-        public const string PropCardinality = "Cardinality";
         public const string PropNameInBooleanAttributes = "NameInBooleanAttributes";
         public const string PropCountOfCategories = "CountOfCategories";
         public const string PropXCategory = "XCategory";
@@ -175,7 +174,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                     null,
                     _boxModule.StringIceIdentity,
                     "Unsupported cardinality type for current attribute setting.",
-                    new string[] { PropCardinality },
+                    new string[] { Public.SockCardinality },
                     restrictionTypeEnum.OtherReason
                     );
             }

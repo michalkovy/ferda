@@ -54,7 +54,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         public const string PropCategories = "Categories";
         public const string SockOntologyEnablingColumn = "Column";
         //ontology derived properties
-        public const string PropCardinality = "Cardinality";
         public const string PropDistinctValues = "DistinctValues";
         public const string PropDomainDividingValues = "DomainDividingValues";
         public const string PropMinimum = "Minimum";
@@ -203,7 +202,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         {
             /// clears previous properties if there were any
             string emptyString = "";
-            _boxModule.setProperty(PropCardinality, new StringTI(CardinalityEnum.Nominal.ToString()));
+            _boxModule.setProperty(Public.SockCardinality, new StringTI(CardinalityEnum.Nominal.ToString()));
             _boxModule.setProperty(PropMinimum, (StringTI)emptyString);
             _boxModule.setProperty(PropMaximum, (StringTI)emptyString);
             _boxModule.setProperty(PropDomainDividingValues, (StringTI)emptyString);
@@ -456,7 +455,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             cacheSetting.Add(BoxInfo.typeIdentifier + PropClosedFrom, ClosedFrom);
 
             //adding the information derived from ontology to the cache
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropCardinality, Cardinality);
+            cacheSetting.Add(BoxInfo.typeIdentifier + Public.SockCardinality, Cardinality);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropMinimum, Minimum);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropMaximum, Maximum);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropDomainDividingValues, DomainDividingValues);
@@ -1161,7 +1160,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                     null,
                     _boxModule.StringIceIdentity,
                     "Unsupported cardinality type for current attribute setting.",
-                    new string[] { PropCardinality },
+                    new string[] { Public.SockCardinality },
                     restrictionTypeEnum.OtherReason
                     );
             }

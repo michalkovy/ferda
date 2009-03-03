@@ -52,7 +52,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         public const string PropDomain = "Domain";
         public const string PropFrom = "From";
         public const string PropTo = "To";
-        public const string PropCardinality = "Cardinality";
         public const string PropCategories = "Categories";
 
         /// <summary>
@@ -893,7 +892,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                     null,
                     _boxModule.StringIceIdentity,
                     "Unsupported cardinality type for current attribute setting.",
-                    new string[] { PropCardinality },
+                    new string[] { Public.SockCardinality },
                     restrictionTypeEnum.OtherReason
                     );
             }
