@@ -319,5 +319,23 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
         /// Socket of a column
         /// </summary>
         public const string SockColumn = "Column";
+
+        /// <summary>
+        /// The socket with the cardinality property
+        /// </summary>
+        public const string SockCardinality = "Cardinality";
+
+        /// <summary>
+        /// Returns the cardinality of an attribute box (there has to be
+        /// a socket named Cardinality). 
+        /// </summary>
+        /// <param name="_boxModule">The box module</param>
+        /// <returns>Cardinality of the box module</returns>
+        public static CardinalityEnum Cardinality(BoxModuleI _boxModule)
+        {
+            return (CardinalityEnum)Enum.Parse(
+                typeof(CardinalityEnum),
+                _boxModule.GetPropertyString(SockCardinality));
+        }
     }
 }
