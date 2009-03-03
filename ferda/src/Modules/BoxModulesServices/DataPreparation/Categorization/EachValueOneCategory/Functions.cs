@@ -67,10 +67,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         public const string PropDomain = "Domain";
         public const string PropFrom = "From";
         public const string PropTo = "To";
-        public const string PropCardinality = "Cardinality";
         public const string PropCategories = "Categories";
         public const string PropDataType = "DbDataType";
 
+        /// <summary>
+        /// The GUID (unique identifier) of the attribute
+        /// </summary>
         public GuidStruct Guid
         {
             get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
@@ -130,10 +132,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         {
             get
             {
-                return (CardinalityEnum)Enum.Parse(
-                                             typeof(CardinalityEnum),
-                                             _boxModule.GetPropertyString(PropCardinality)
-                                             );
+                return Public.Cardinality(_boxModule);
             }
         }
 
@@ -141,6 +140,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         #region Methods
 
+        /// <summary>
+        /// Gets the proxy of the connected column
+        /// </summary>
+        /// <param name="fallOnError">If the function should throw an exception on error</param>
+        /// <returns>Proxy of the connected column</returns>
         public ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError)
         {
             return SocketConnections.GetPrx<ColumnFunctionsPrx>(
@@ -704,7 +708,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                     null,
                     _boxModule.StringIceIdentity,
                     "Unsupported cardinality type for current attribute setting.",
-                    new string[] { PropCardinality },
+                    new string[] { Public.SockCardinality },
                     restrictionTypeEnum.OtherReason
                     );
             }
@@ -740,6 +744,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         /// </summary>
         /// <param name="categoryId">Category identification
         /// (name of the category)</param>
+        /// <param name="current__">Ice stuff</param>
         /// <returns>BitString</returns>
         public override BitStringIce GetBitString(string categoryId, Current current__)
         {
@@ -882,7 +887,5 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         }
 
         #endregion
-
-
     }
 }

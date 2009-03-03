@@ -21,6 +21,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Ferda.Guha.Data;
+using Ice;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.AutomaticAttributeWithFuzzyCategories
 {
@@ -30,17 +32,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.AutomaticAttributeW
     /// </summary>
     public class Functions : FuzzyAttributeFunctionsDisp_, Ferda.Modules.IFunctions
     {
-        #region ICE functions
+        #region Fields
 
-        public override string HelloWorld(Ice.Current __current)
-        {
-            return "Hello World!";
-        }
+        protected Ferda.Modules.BoxModuleI _boxModule;
+        protected Ferda.Modules.Boxes.IBoxInfo _boxInfo;
 
         #endregion
-
-        protected Ferda.Modules.BoxModuleI boxModule;
-        protected Ferda.Modules.Boxes.IBoxInfo boxInfo;
 
         #region IFunctions Members
 
@@ -52,8 +49,79 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.AutomaticAttributeW
         /// <param name="boxInfo">The box info.</param>
         void Ferda.Modules.IFunctions.setBoxModuleInfo(Ferda.Modules.BoxModuleI boxModule, Ferda.Modules.Boxes.IBoxInfo boxInfo)
         {
-            this.boxModule = boxModule;
-            this.boxInfo = boxInfo;
+            this._boxModule = boxModule;
+            this._boxInfo = boxInfo;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// The GUID (unique identifier) of the attribute
+        /// </summary>
+        public GuidStruct Guid
+        {
+            get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Gets the proxy of the connected column
+        /// </summary>
+        /// <param name="fallOnError">If the function should throw an exception on error</param>
+        /// <returns>Proxy of the connected column</returns>
+        public ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError)
+        {
+            return SocketConnections.GetPrx<ColumnFunctionsPrx>(
+                _boxModule,
+                Public.SockColumn,
+                ColumnFunctionsPrxHelper.checkedCast,
+                fallOnError);
+        }
+
+        #endregion
+
+        #region ICE functions
+
+        /// <summary>
+        /// Gets the name of the column from which the attribute and bit string generator
+        /// is created. Added for PMML purposes. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns></returns>
+        public string GetColumnName(Current current__)
+        {
+            return GetColumnFunctionsPrx(true).getColumnInfo().columnSelectExpression;
+        }
+
+        /// <summary>
+        /// Returns information from the column about the values and frequencies
+        /// of the column. This fucntion was added to the Slice desing for
+        /// the PMML support.
+        /// </summary>
+        /// <returns>ValuesAndFrequencies structure</returns>
+        public ValuesAndFrequencies GetColumnValuesAndFrequencies(Current current__)
+        {
+            return GetColumnFunctionsPrx(true).getDistinctsAndFrequencies();
+        }
+
+        /// <summary>
+        /// Returns the identification of the attribute.
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Identification of the attribute</returns>
+        public GuidStruct GetAttributeId(Current current__)
+        {
+            return Guid;
+        }
+
+        public override string HelloWorld(Ice.Current __current)
+        {
+            return "Hello World!";
         }
 
         #endregion

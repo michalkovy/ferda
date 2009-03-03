@@ -117,10 +117,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         {
             get
             {
-                return (CardinalityEnum)Enum.Parse(
-                                             typeof(CardinalityEnum),
-                                             _boxModule.GetPropertyString(PropCardinality)
-                                             );
+                return Public.Cardinality(_boxModule);
             }
         }
 
@@ -968,6 +965,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         /// </summary>
         /// <param name="categoryId">Category identification
         /// (name of the category)</param>
+        /// <param name="current__">Ice stuff</param>
         /// <returns>BitString</returns>
         public override BitStringIce GetBitString(string categoryId, Current current__)
         {
