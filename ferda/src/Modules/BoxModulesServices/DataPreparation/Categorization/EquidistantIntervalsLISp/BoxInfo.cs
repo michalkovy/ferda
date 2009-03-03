@@ -276,7 +276,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                     null,
                     boxModule.StringIceIdentity,
                     "Unsupported cardinality type for current attribute setting.",
-                    new string[] { Functions.PropCardinality },
+                    new string[] { Public.SockCardinality },
                     restrictionTypeEnum.OtherReason
                     );
             }

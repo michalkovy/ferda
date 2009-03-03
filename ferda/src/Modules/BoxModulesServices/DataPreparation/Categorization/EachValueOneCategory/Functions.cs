@@ -128,6 +128,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             get { return _boxModule.GetPropertyString(PropTo); }
         }
 
+        /// <summary>
+        /// Returns the cardinality of
+        /// </summary>
         public CardinalityEnum Cardinality
         {
             get
