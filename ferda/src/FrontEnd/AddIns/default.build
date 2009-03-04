@@ -548,12 +548,28 @@
       </sources>
     </csc>
     
-    <!--
     <csc target="library" output="${path::combine(addInsBuild.dir,'EditFuzzyCategories.dll')}" debug="${debug}" optimize="${optimize}">
+    	<references>
+    		<include name="System.dll"/>
+    		<include name="System.Data.dll"/>
+    		<include name="System.Drawing.dll" />
+    		<include name="System.Windows.Forms.dll"/>
+    		<include name="System.Collections.dll"/>
+    		<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+    		<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+    		<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+    		<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+    	</references>
 		<sources>
+			<include name="EditFuzzyCategories/**.cs"/>
+			<include name="EditFuzzyCategories/MyIce/**.cs"/>
+			<exclude name="EditFuzzyCategories/bin/**.*"/>
+			<exclude name="EditFuzzyCategories/obj/**.*"/>
 		</sources>
     </csc>
-    -->
     
     <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
     		  <fileset basedir="SetPrimaryKeys/Help">

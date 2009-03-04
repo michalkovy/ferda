@@ -2271,9 +2271,7 @@
 				<CategoryName>Categories</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<!--
 				<SettingModuleIdentifier>EditFuzzyCategories</SettingModuleIdentifier>
-				-->
 			</Property>
 		</Properties>
 		<ModulesAskingForCreationSeq>
