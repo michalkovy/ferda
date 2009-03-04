@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.Resources;
+using System.Windows.Forms;
 using Ferda.Modules;
 using Ferda.ModulesManager;
 using Ferda.FrontEnd.AddIns;
@@ -132,6 +133,9 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
             out string about, 
             Current current__)
         {
+            MainWindow wind = new MainWindow();
+            DialogResult result = ownerOfAddIn.ShowDialog(wind);
+
             about = "neco";
             return valueBefore;
         }
