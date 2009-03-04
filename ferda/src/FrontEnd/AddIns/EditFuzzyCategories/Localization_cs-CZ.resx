@@ -117,10 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddFC" xml:space="preserve">
+    <value>Přidat fuzzy kategorii</value>
+  </data>
+  <data name="ATB" xml:space="preserve">
+    <value>A (začátek lichobězníku):</value>
+  </data>
+  <data name="BTB" xml:space="preserve">
+    <value>B (konec lichoběžníku):</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Storno</value>
+  </data>
+  <data name="CTB" xml:space="preserve">
+    <value>C (koncový vrchol):</value>
+  </data>
+  <data name="DTB" xml:space="preserve">
+    <value>D (počáteční vrchol):</value>
+  </data>
+  <data name="EditFC" xml:space="preserve">
+    <value>Editovat fuzzy kategorii</value>
+  </data>
   <data name="EditFuzzyCategories" xml:space="preserve">
     <value>Editace fuzzy kategorií</value>
   </data>
   <data name="EditFuzzyCategoriesAbout" xml:space="preserve">
     <value>Modul pro úpravu fuzzy kategorií</value>
+  </data>
+  <data name="ExistingFuzzyCategories" xml:space="preserve">
+    <value>Existující fuzzy kategorie</value>
+  </data>
+  <data name="NewFCName" xml:space="preserve">
+    <value>Jméno:</value>
+  </data>
+  <data name="NewFuzzyCategory" xml:space="preserve">
+    <value>Nová fuzzy kategorie</value>
+  </data>
+  <data name="RemoveFC" xml:space="preserve">
+    <value>Odstranit fuzzy kategorii</value>
   </data>
 </root>

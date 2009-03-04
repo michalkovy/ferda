@@ -61,6 +61,69 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add fuzzy category.
+        /// </summary>
+        internal static string AddFC {
+            get {
+                return ResourceManager.GetString("AddFC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A (start of the trapeziod):.
+        /// </summary>
+        internal static string ATB {
+            get {
+                return ResourceManager.GetString("ATB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to B (end of the trapezoid):.
+        /// </summary>
+        internal static string BTB {
+            get {
+                return ResourceManager.GetString("BTB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C (descending peak):.
+        /// </summary>
+        internal static string CTB {
+            get {
+                return ResourceManager.GetString("CTB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D (ascending peak):.
+        /// </summary>
+        internal static string DTB {
+            get {
+                return ResourceManager.GetString("DTB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit fuzzy category.
+        /// </summary>
+        internal static string EditFC {
+            get {
+                return ResourceManager.GetString("EditFC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit fuzzy categories.
         /// </summary>
         internal static string EditFuzzyCategories {
@@ -75,6 +138,42 @@ namespace EditFuzzyCategories {
         internal static string EditFuzzyCategoriesAbout {
             get {
                 return ResourceManager.GetString("EditFuzzyCategoriesAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Existing fuzzy categories.
+        /// </summary>
+        internal static string ExistingFuzzyCategories {
+            get {
+                return ResourceManager.GetString("ExistingFuzzyCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        internal static string NewFCName {
+            get {
+                return ResourceManager.GetString("NewFCName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New fuzzy category.
+        /// </summary>
+        internal static string NewFuzzyCategory {
+            get {
+                return ResourceManager.GetString("NewFuzzyCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove fuzzy category.
+        /// </summary>
+        internal static string RemoveFC {
+            get {
+                return ResourceManager.GetString("RemoveFC", resourceCulture);
             }
         }
     }

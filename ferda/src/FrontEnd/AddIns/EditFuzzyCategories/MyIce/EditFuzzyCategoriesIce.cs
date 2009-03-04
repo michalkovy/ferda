@@ -83,9 +83,7 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
                 locale = "Ferda.FrontEnd.AddIns.EditFuzzyCategories.Localization_" + locale;
                 resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
             }
-            catch
-            {
-            }
+            catch { }
             return resManager.GetString("EditFuzzyCategories");
         }
 
@@ -133,7 +131,17 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
             out string about, 
             Current current__)
         {
-            MainWindow wind = new MainWindow();
+            string locale;
+            try
+            {
+                locale = localePrefs[0];
+                locale = "Ferda.FrontEnd.AddIns.EditFuzzyCategories.Localization_" + locale;
+                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
+            }
+            catch { }
+
+
+            MainWindow wind = new MainWindow(resManager);
             DialogResult result = ownerOfAddIn.ShowDialog(wind);
 
             about = "neco";

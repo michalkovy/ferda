@@ -61,6 +61,69 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Přidat fuzzy kategorii.
+        /// </summary>
+        internal static string AddFC {
+            get {
+                return ResourceManager.GetString("AddFC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A (začátek lichobězníku):.
+        /// </summary>
+        internal static string ATB {
+            get {
+                return ResourceManager.GetString("ATB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to B (konec lichoběžníku):.
+        /// </summary>
+        internal static string BTB {
+            get {
+                return ResourceManager.GetString("BTB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Storno.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C (koncový vrchol):.
+        /// </summary>
+        internal static string CTB {
+            get {
+                return ResourceManager.GetString("CTB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D (počáteční vrchol):.
+        /// </summary>
+        internal static string DTB {
+            get {
+                return ResourceManager.GetString("DTB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editovat fuzzy kategorii.
+        /// </summary>
+        internal static string EditFC {
+            get {
+                return ResourceManager.GetString("EditFC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Editace fuzzy kategorií.
         /// </summary>
         internal static string EditFuzzyCategories {
@@ -75,6 +138,42 @@ namespace EditFuzzyCategories {
         internal static string EditFuzzyCategoriesAbout {
             get {
                 return ResourceManager.GetString("EditFuzzyCategoriesAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Existující fuzzy kategorie.
+        /// </summary>
+        internal static string ExistingFuzzyCategories {
+            get {
+                return ResourceManager.GetString("ExistingFuzzyCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jméno:.
+        /// </summary>
+        internal static string NewFCName {
+            get {
+                return ResourceManager.GetString("NewFCName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nová fuzzy kategorie.
+        /// </summary>
+        internal static string NewFuzzyCategory {
+            get {
+                return ResourceManager.GetString("NewFuzzyCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odstranit fuzzy kategorii.
+        /// </summary>
+        internal static string RemoveFC {
+            get {
+                return ResourceManager.GetString("RemoveFC", resourceCulture);
             }
         }
     }

@@ -117,10 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddFC" xml:space="preserve">
+    <value>Add fuzzy category</value>
+  </data>
+  <data name="ATB" xml:space="preserve">
+    <value>A (start of the trapeziod):</value>
+  </data>
+  <data name="BTB" xml:space="preserve">
+    <value>B (end of the trapezoid):</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CTB" xml:space="preserve">
+    <value>C (descending peak):</value>
+  </data>
+  <data name="DTB" xml:space="preserve">
+    <value>D (ascending peak):</value>
+  </data>
+  <data name="EditFC" xml:space="preserve">
+    <value>Edit fuzzy category</value>
+  </data>
   <data name="EditFuzzyCategories" xml:space="preserve">
     <value>Edit fuzzy categories</value>
   </data>
   <data name="EditFuzzyCategoriesAbout" xml:space="preserve">
     <value>Modul for editing fuzzy categories</value>
+  </data>
+  <data name="ExistingFuzzyCategories" xml:space="preserve">
+    <value>Existing fuzzy categories</value>
+  </data>
+  <data name="NewFCName" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="NewFuzzyCategory" xml:space="preserve">
+    <value>New fuzzy category</value>
+  </data>
+  <data name="RemoveFC" xml:space="preserve">
+    <value>Remove fuzzy category</value>
   </data>
 </root>
