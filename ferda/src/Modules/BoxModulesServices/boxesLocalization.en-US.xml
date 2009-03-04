@@ -1282,8 +1282,8 @@
 			</Socket>
 			<Socket>
 				<Name>FuzzyCategories</Name>
-				<Label>Fuzzy kategorie</Label>
-				<Hint>Spustí modul nastavující lichoběžníkové fuzzy kategorie</Hint>
+				<Label>Fuzzy categories</Label>
+				<Hint>Runs a module enabling editing of fuzzy categories</Hint>
 			</Socket>
 			<Socket>
 				<Name>XCategory</Name>

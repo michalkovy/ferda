@@ -22,8 +22,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
+using System.Resources;
 using Ferda.Modules;
 using Ferda.ModulesManager;
+using Ferda.FrontEnd.AddIns;
 using Ice;
 
 namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
@@ -38,7 +41,12 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
         /// <summary>
         /// Owner of addin
         /// </summary>
-        Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn;
+        IOwnerOfAddIn ownerOfAddIn;
+
+        /// <summary>
+        /// L10n resource manager
+        /// </summary>
+        private ResourceManager resManager;
 
         #endregion
 
@@ -48,11 +56,11 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
         /// Class constructor
         /// </summary>
         /// <param name="ownerOfAddIn">Owner of addin</param>
-        public EditFuzzyCategoriesIce(Ferda.FrontEnd.AddIns.IOwnerOfAddIn ownerOfAddIn)
+        public EditFuzzyCategoriesIce(IOwnerOfAddIn ownerOfAddIn)
         {
             this.ownerOfAddIn = ownerOfAddIn;
-            //resManager = new ResourceManager("Ferda.FrontEnd.AddIns.FrequencyDisplayer.Localization_en-US",
-            //Assembly.GetExecutingAssembly());
+            resManager = new ResourceManager("Ferda.FrontEnd.AddIns.EditFuzzyCategories.Localization_en-US",
+            Assembly.GetExecutingAssembly());
         }
 
         #endregion
@@ -67,7 +75,17 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
         /// <returns>Localized label of the setting module</returns>
         public override string getLabel(string[] localePrefs, Current current__)
         {
-            return "EditFuzzyCategories ble ble ble";
+            string locale;
+            try
+            {
+                locale = localePrefs[0];
+                locale = "Ferda.FrontEnd.AddIns.EditFuzzyCategories.Localization_" + locale;
+                resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
+            }
+            catch
+            {
+            }
+            return resManager.GetString("EditFuzzyCategories");
         }
 
         /// <summary>
@@ -88,21 +106,8 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
         /// <returns>String representation of the property value</returns>
         public override string getPropertyAbout(PropertyValue value, Current current__)
         {
-            return "EditFuzzyCategories ble ble ble";
+            return resManager.GetString("EditFuzzyCategoriesAbout");
         }
-
-        /// <summary>
-        /// Converts to the property value from the string representation and local 
-        /// preferences
-        /// </summary>
-        /// <param name="about">The string representation of the property</param>
-        /// <param name="localePrefs">Localization preferences</param>
-        /// <param name="current__">Ice stuff</param>
-        /// <returns>The property value representation</returns>
-        //public override PropertyValue convertFromStringAbout(string about, string[] localePrefs, Ice.Current current__)
-        //{
-        //    return new StringTI(about);
-        //}
 
         #endregion
 
@@ -128,7 +133,7 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
             Current current__)
         {
             about = "neco";
-            return null;
+            return valueBefore;
         }
 
         #endregion

@@ -555,6 +555,7 @@
     		<include name="System.Drawing.dll" />
     		<include name="System.Windows.Forms.dll"/>
     		<include name="System.Collections.dll"/>
+    		<include name="System.Reflection.dll"/>
     		<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
     		<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
     		<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
@@ -563,6 +564,10 @@
     		<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
     		<include name="${path::combine(lib.dir,'Ice.dll')}"/>
     	</references>
+    	<resources prefix="Ferda.FrontEnd.AddIns.EditFuzzyCategories">
+    		<include name="EditFuzzyCategories/**.resx"/>
+    		<exclude name="EditFuzzyCategories/EditFuzzyCategories.resx"/>    		
+    	</resources>
 		<sources>
 			<include name="EditFuzzyCategories/**.cs"/>
 			<include name="EditFuzzyCategories/MyIce/**.cs"/>
