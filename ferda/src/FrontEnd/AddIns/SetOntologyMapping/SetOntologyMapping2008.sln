@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetOntologyMapping", "SetOntologyMapping.csproj", "{0577F968-7690-4016-B8BF-CE7D3A846224}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetOntologyMapping2008", "SetOntologyMapping2008.csproj", "{0577F968-7690-4016-B8BF-CE7D3A846224}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

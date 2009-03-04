@@ -102,16 +102,35 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping.MyIce
             return resManager.GetString("SetOntologyMapping");
         }
 
+        /// <summary>
+        /// ???
+        /// </summary>
+        /// <param name="value">The value to be converted</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>String representation of the property value</returns>
         public override string getPropertyAbout(PropertyValue value, global::Ice.Current current__)
         {
             return ((StringT)value).getStringValue();
         }
 
+        /// <summary>
+        /// Gets the identifier of the setting module (used in the boxes.xml file)
+        /// </summary>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>The identifier of the setting module</returns>
         public override string getIdentifier(global::Ice.Current current__)
         {
             return "SetOntologyMapping";
         }
 
+        /// <summary>
+        /// Converts to the property value from the string representation and local 
+        /// preferences
+        /// </summary>
+        /// <param name="about">The string representation of the property</param>
+        /// <param name="localePrefs">Localization preferences</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>The property value representation</returns>
         public override PropertyValue convertFromStringAbout(string about, string[] localePrefs, Ice.Current current__)
         {
             return new StringTI(about);
