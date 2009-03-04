@@ -101,7 +101,7 @@
             // 
             // NameTB
             // 
-            this.NameTB.Location = new System.Drawing.Point(136, 273);
+            this.NameTB.Location = new System.Drawing.Point(142, 273);
             this.NameTB.Name = "NameTB";
             this.NameTB.Size = new System.Drawing.Size(100, 20);
             this.NameTB.TabIndex = 5;
@@ -117,7 +117,7 @@
             // 
             // ATB
             // 
-            this.ATB.Location = new System.Drawing.Point(136, 299);
+            this.ATB.Location = new System.Drawing.Point(142, 299);
             this.ATB.Name = "ATB";
             this.ATB.Size = new System.Drawing.Size(100, 20);
             this.ATB.TabIndex = 7;
@@ -133,21 +133,21 @@
             // 
             // DTB
             // 
-            this.DTB.Location = new System.Drawing.Point(136, 325);
+            this.DTB.Location = new System.Drawing.Point(142, 325);
             this.DTB.Name = "DTB";
             this.DTB.Size = new System.Drawing.Size(100, 20);
             this.DTB.TabIndex = 9;
             // 
             // CTB
             // 
-            this.CTB.Location = new System.Drawing.Point(136, 351);
+            this.CTB.Location = new System.Drawing.Point(142, 351);
             this.CTB.Name = "CTB";
             this.CTB.Size = new System.Drawing.Size(100, 20);
             this.CTB.TabIndex = 10;
             // 
             // BTB
             // 
-            this.BTB.Location = new System.Drawing.Point(136, 377);
+            this.BTB.Location = new System.Drawing.Point(142, 377);
             this.BTB.Name = "BTB";
             this.BTB.Size = new System.Drawing.Size(100, 20);
             this.BTB.TabIndex = 11;
@@ -173,7 +173,7 @@
             // TrapezoidPB
             // 
             this.TrapezoidPB.Image = ((System.Drawing.Image)(resources.GetObject("TrapezoidPB.Image")));
-            this.TrapezoidPB.Location = new System.Drawing.Point(242, 273);
+            this.TrapezoidPB.Location = new System.Drawing.Point(248, 273);
             this.TrapezoidPB.Name = "TrapezoidPB";
             this.TrapezoidPB.Size = new System.Drawing.Size(138, 75);
             this.TrapezoidPB.TabIndex = 14;
@@ -181,7 +181,7 @@
             // 
             // AddFCButton
             // 
-            this.AddFCButton.Location = new System.Drawing.Point(242, 354);
+            this.AddFCButton.Location = new System.Drawing.Point(248, 354);
             this.AddFCButton.Name = "AddFCButton";
             this.AddFCButton.Size = new System.Drawing.Size(138, 43);
             this.AddFCButton.TabIndex = 15;
