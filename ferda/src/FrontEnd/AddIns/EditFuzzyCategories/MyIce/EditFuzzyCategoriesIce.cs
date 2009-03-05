@@ -29,6 +29,7 @@ using Ferda.Modules;
 using Ferda.ModulesManager;
 using Ferda.FrontEnd.AddIns;
 using Ferda.Modules.Boxes.DataPreparation;
+using Ferda.Guha.Data;
 using Ice;
 
 namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
@@ -49,8 +50,6 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
         /// L10n resource manager
         /// </summary>
         private ResourceManager resManager;
-
-
 
         #endregion
 
@@ -169,7 +168,7 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
             {
                 return valueBefore;
             }
-            if (info.cardinality != Ferda.Guha.Data.CardinalityEnum.Cardinal)
+            if (info.cardinality != CardinalityEnum.Cardinal)
             {
                 Ferda.Modules.BadParamsError e = new BadParamsError("Column", 
                     "Fuzzy categories can be created only from cardinal columns. Set the semantics of the column to cardinal",
@@ -177,12 +176,83 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
                 ownerOfAddIn.ShowBoxException(e);
                 return valueBefore;
             }
+            if (!Supported(info.dataType))
+            {
+                Ferda.Modules.BadParamsError e = new BadParamsError("Column",
+                    "The data type of the column is not supported for creation of fuzzy categories. Currently all numeric data types are supported.",
+                    restrictionTypeEnum.OtherReason);
+                ownerOfAddIn.ShowBoxException(e);
+                return valueBefore;
+            }
+            ColumnStatistics stat = prx.getColumnStatistics();
+            double minimum = Convert.ToDouble(stat.valueMin);
+            double maximum = Convert.ToDouble(stat.valueMax);
 
-            MainWindow wind = new MainWindow(resManager);
+            //checking, if the domain is
+            PropertyValue p = boxModuleParam.getProperty("Domain");
+            StringTI prop = p as StringTI;
+            if (prop.stringValue != "WholeDomain")
+            {
+                p = boxModuleParam.getProperty("From");
+                prop = p as StringTI;
+                minimum = Convert.ToDouble(prop.stringValue);
+                p = boxModuleParam.getProperty("To");
+                prop = p as StringTI;
+                maximum = Convert.ToDouble(prop.stringValue);
+            }
+            MainWindow wind = new MainWindow(resManager, minimum, maximum);
             DialogResult result = ownerOfAddIn.ShowDialog(wind);
 
             return valueBefore;
         }
+
+        #region Methods
+
+        /// <summary>
+        /// Determines, which column data types are supported, that is from 
+        /// which data types fuzzy categories can be created. Currently, all numeric
+        /// types are supported for creation of fuzzy categories. 
+        /// </summary>
+        /// <param name="dbDataTypeEnum">The data type enum</param>
+        /// <returns>Iff the data type is supported</returns>
+        private bool Supported(DbDataTypeEnum dbDataTypeEnum)
+        {
+            switch (dbDataTypeEnum)
+            {
+                case DbDataTypeEnum.BooleanType:
+                    return false;
+                case DbDataTypeEnum.DateTimeType:
+                    return false;
+                case DbDataTypeEnum.DecimalType:
+                    return true;
+                case DbDataTypeEnum.DoubleType:
+                    return true;
+                case DbDataTypeEnum.FloatType:
+                    return true;
+                case DbDataTypeEnum.IntegerType:
+                    return true;
+                case DbDataTypeEnum.LongIntegerType:
+                    return true;
+                case DbDataTypeEnum.ShortIntegerType:
+                    return true;
+                case DbDataTypeEnum.StringType:
+                    return false;
+                case DbDataTypeEnum.TimeType:
+                    return false;
+                case DbDataTypeEnum.UnknownType:
+                    return false;
+                case DbDataTypeEnum.UnsignedIntegerType:
+                    return true;
+                case DbDataTypeEnum.UnsignedLongIntegerType:
+                    return true;
+                case DbDataTypeEnum.UnsignedShortIntegerType:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        #endregion
 
         #endregion
     }
