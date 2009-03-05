@@ -25,6 +25,7 @@ using System.Data;
 using System.Resources;
 using System.Text;
 using System.Windows.Forms;
+using Steema.TeeChart;
 
 namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
 {
@@ -33,6 +34,11 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
     /// </summary>
     public partial class MainWindow : Form
     {
+        /// <summary>
+        /// The graphing component
+        /// </summary>
+        private TChart graph;
+
         /// <summary>
         /// The resource manager for localization
         /// </summary>
@@ -46,7 +52,22 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
         {
             resourceManager = resManager;
             InitializeComponent();
+            InitializeGraph();
+
             ChangeLocale();
+        }
+
+        /// <summary>
+        /// Initializes the graph component
+        /// </summary>
+        private void InitializeGraph()
+        {
+            graph = new TChart();
+            graph.Location = new System.Drawing.Point(12, 12);
+            graph.Aspect.View3D = false;
+            graph.Size = new System.Drawing.Size(822, 236);
+            this.Controls.Add(graph);
+            this.ResumeLayout();
         }
 
         /// <summary>

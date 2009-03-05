@@ -28,6 +28,7 @@ using System.Windows.Forms;
 using Ferda.Modules;
 using Ferda.ModulesManager;
 using Ferda.FrontEnd.AddIns;
+using Ferda.Modules.Boxes.DataPreparation;
 using Ice;
 
 namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
@@ -48,6 +49,8 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
         /// L10n resource manager
         /// </summary>
         private ResourceManager resManager;
+
+
 
         #endregion
 
@@ -131,6 +134,10 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
             out string about, 
             Current current__)
         {
+            //TOHLE SE URCITE BUDE MENIT
+            about = "neco";
+
+            //getting the localization
             string locale;
             try
             {
@@ -140,11 +147,40 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
             }
             catch { }
 
+            //determining if there is column connected to the boxModule
+            BoxModulePrx[] columns = boxModuleParam.getConnections("Column");
+            if (columns == null || columns.Length == 0)
+            {
+                return valueBefore;
+            }
+
+            //retrieving the information about the column
+            BoxModulePrx columnBox = columns[0];
+
+            ColumnFunctionsPrx prx =
+                ColumnFunctionsPrxHelper.checkedCast(columnBox.getFunctions());
+            //tries to retrieve the column info
+            ColumnInfo info;
+            try
+            {
+                info = prx.getColumnInfo();
+            }
+            catch 
+            {
+                return valueBefore;
+            }
+            if (info.cardinality != Ferda.Guha.Data.CardinalityEnum.Cardinal)
+            {
+                Ferda.Modules.BadParamsError e = new BadParamsError("Column", 
+                    "Fuzzy categories can be created only from cardinal columns. Set the semantics of the column to cardinal",
+                    restrictionTypeEnum.OtherReason);
+                ownerOfAddIn.ShowBoxException(e);
+                return valueBefore;
+            }
 
             MainWindow wind = new MainWindow(resManager);
             DialogResult result = ownerOfAddIn.ShowDialog(wind);
 
-            about = "neco";
             return valueBefore;
         }
 
