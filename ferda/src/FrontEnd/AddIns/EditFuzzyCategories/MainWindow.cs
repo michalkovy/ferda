@@ -45,10 +45,22 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
         private ResourceManager resourceManager;
 
         /// <summary>
+        /// Minimal value of the attribute
+        /// </summary>
+        private double minimum;
+
+        /// <summary>
+        /// Maximal value of the attribute
+        /// </summary>
+        private double maximum;
+
+        /// <summary>
         /// Default constructor of the class
         /// </summary>
         /// <param name="resManager">The resource manager</param>
-        public MainWindow(ResourceManager resManager)
+        /// <param name="minimum">Minimal value of the attribute</param>
+        /// <param name="maximum">Maximal value of the attribute</param>
+        public MainWindow(ResourceManager resManager, double minimum, double maximum)
         {
             resourceManager = resManager;
             InitializeComponent();
