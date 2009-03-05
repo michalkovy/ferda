@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.CancelButton = new System.Windows.Forms.Button();
             this.OKButton = new System.Windows.Forms.Button();
-            this.GraphPanel = new System.Windows.Forms.Panel();
             this.NewFCLabel = new System.Windows.Forms.Label();
             this.NewFCNameLabel = new System.Windows.Forms.Label();
             this.NameTB = new System.Windows.Forms.TextBox();
@@ -72,13 +71,6 @@
             this.OKButton.TabIndex = 1;
             this.OKButton.Text = "OK";
             this.OKButton.UseVisualStyleBackColor = true;
-            // 
-            // GraphPanel
-            // 
-            this.GraphPanel.Location = new System.Drawing.Point(12, 12);
-            this.GraphPanel.Name = "GraphPanel";
-            this.GraphPanel.Size = new System.Drawing.Size(822, 236);
-            this.GraphPanel.TabIndex = 2;
             // 
             // NewFCLabel
             // 
@@ -247,7 +239,6 @@
             this.Controls.Add(this.NameTB);
             this.Controls.Add(this.NewFCNameLabel);
             this.Controls.Add(this.NewFCLabel);
-            this.Controls.Add(this.GraphPanel);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.CancelButton);
             this.Name = "MainWindow";
@@ -262,7 +253,6 @@
 
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.Button OKButton;
-        private System.Windows.Forms.Panel GraphPanel;
         private System.Windows.Forms.Label NewFCLabel;
         private System.Windows.Forms.Label NewFCNameLabel;
         private System.Windows.Forms.TextBox NameTB;
