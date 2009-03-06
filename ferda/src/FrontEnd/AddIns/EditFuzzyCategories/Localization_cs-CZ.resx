@@ -156,4 +156,37 @@
   <data name="RemoveFC" xml:space="preserve">
     <value>Odstranit fuzzy kategorii</value>
   </data>
+  <data name="ABiggerThanMax" xml:space="preserve">
+    <value>Hodnota A lichoběžníku musí být menší než maximální hodnota atributu</value>
+  </data>
+  <data name="ADCB" xml:space="preserve">
+    <value>Fuzzy množina musí být lichoběžníkového tvaru, tj. A &lt; D &lt; C &lt; B</value>
+  </data>
+  <data name="BLowerThanMin" xml:space="preserve">
+    <value>Hodnota B lichoběžníku musí být větší než minimální hodnota atributu</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Chyba</value>
+  </data>
+  <data name="NoName" xml:space="preserve">
+    <value>Jméno nové fuzzy kategorie není zadáno</value>
+  </data>
+  <data name="SaveFC" xml:space="preserve">
+    <value>Uložit fuzzy kategorii</value>
+  </data>
+  <data name="TrapezoidInvalidFormat" xml:space="preserve">
+    <value>Hodnoty A, B, C, D jsou buď nevyplněné, nebo ve špatném nečíselném formátu</value>
+  </data>
+  <data name="AlreadyContainsName" xml:space="preserve">
+    <value>Fuzzy kategorie se stejným jménem už je definovaná. Fuzzy kategorie musí mít jedinečné jména.</value>
+  </data>
+  <data name="AlreadyContainsValues" xml:space="preserve">
+    <value>Lichoběžníková fuzzy kategorie se stejnými hodnotami již byla definovaná. Prosím změňte hodnoty lichoběžníku.</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Nápověda</value>
+  </data>
+  <data name="ItemNotSelected" xml:space="preserve">
+    <value>Není vybrána žádná fuzzy kategorie</value>
+  </data>
 </root>

@@ -29,7 +29,7 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
     /// A simplified representation of a trapezoidal fuzzy set. Only 4 points
     /// and a name of the fuzzy set is stored
     /// </summary>
-    public struct TrapezoidalFuzzySet
+    public class TrapezoidalFuzzySet
     {
         /// <summary>
         /// Name of the fuzzy set
