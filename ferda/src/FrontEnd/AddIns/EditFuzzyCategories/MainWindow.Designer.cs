@@ -48,6 +48,8 @@
             this.ExistingFCLB = new System.Windows.Forms.ListBox();
             this.RemoveFCButton = new System.Windows.Forms.Button();
             this.EditFCButton = new System.Windows.Forms.Button();
+            this.SaveFCButton = new System.Windows.Forms.Button();
+            this.HelpButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.TrapezoidPB)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,9 +57,9 @@
             // 
             this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.CancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.CancelButton.Location = new System.Drawing.Point(730, 331);
+            this.CancelButton.Location = new System.Drawing.Point(730, 354);
             this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(104, 62);
+            this.CancelButton.Size = new System.Drawing.Size(104, 39);
             this.CancelButton.TabIndex = 0;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseVisualStyleBackColor = true;
@@ -65,9 +67,9 @@
             // OKButton
             // 
             this.OKButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.OKButton.Location = new System.Drawing.Point(610, 331);
+            this.OKButton.Location = new System.Drawing.Point(610, 354);
             this.OKButton.Name = "OKButton";
-            this.OKButton.Size = new System.Drawing.Size(114, 63);
+            this.OKButton.Size = new System.Drawing.Size(114, 40);
             this.OKButton.TabIndex = 1;
             this.OKButton.Text = "OK";
             this.OKButton.UseVisualStyleBackColor = true;
@@ -173,12 +175,13 @@
             // 
             // AddFCButton
             // 
-            this.AddFCButton.Location = new System.Drawing.Point(248, 354);
+            this.AddFCButton.Location = new System.Drawing.Point(248, 351);
             this.AddFCButton.Name = "AddFCButton";
-            this.AddFCButton.Size = new System.Drawing.Size(138, 43);
+            this.AddFCButton.Size = new System.Drawing.Size(138, 23);
             this.AddFCButton.TabIndex = 15;
             this.AddFCButton.Text = "Add fuzzy category";
             this.AddFCButton.UseVisualStyleBackColor = true;
+            this.AddFCButton.Click += new System.EventHandler(this.AddFCButton_Click);
             // 
             // ExistingFCLabel
             // 
@@ -200,12 +203,13 @@
             // 
             // RemoveFCButton
             // 
-            this.RemoveFCButton.Location = new System.Drawing.Point(610, 302);
+            this.RemoveFCButton.Location = new System.Drawing.Point(610, 299);
             this.RemoveFCButton.Name = "RemoveFCButton";
             this.RemoveFCButton.Size = new System.Drawing.Size(224, 23);
             this.RemoveFCButton.TabIndex = 18;
             this.RemoveFCButton.Text = "Remove fuzzy category";
             this.RemoveFCButton.UseVisualStyleBackColor = true;
+            this.RemoveFCButton.Click += new System.EventHandler(this.RemoveFCButton_Click);
             // 
             // EditFCButton
             // 
@@ -215,6 +219,27 @@
             this.EditFCButton.TabIndex = 19;
             this.EditFCButton.Text = "Edit fuzzy category";
             this.EditFCButton.UseVisualStyleBackColor = true;
+            this.EditFCButton.Click += new System.EventHandler(this.EditFCButton_Click);
+            // 
+            // SaveFCButton
+            // 
+            this.SaveFCButton.Location = new System.Drawing.Point(248, 374);
+            this.SaveFCButton.Name = "SaveFCButton";
+            this.SaveFCButton.Size = new System.Drawing.Size(138, 23);
+            this.SaveFCButton.TabIndex = 20;
+            this.SaveFCButton.Text = "Save fuzzy category";
+            this.SaveFCButton.UseVisualStyleBackColor = true;
+            this.SaveFCButton.Click += new System.EventHandler(this.AddFCButton_Click);
+            // 
+            // HelpButton
+            // 
+            this.HelpButton.Location = new System.Drawing.Point(610, 325);
+            this.HelpButton.Name = "HelpButton";
+            this.HelpButton.Size = new System.Drawing.Size(224, 23);
+            this.HelpButton.TabIndex = 21;
+            this.HelpButton.Text = "Help";
+            this.HelpButton.UseVisualStyleBackColor = true;
+            this.HelpButton.Click += new System.EventHandler(this.HelpButton_Click);
             // 
             // MainWindow
             // 
@@ -222,6 +247,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(846, 402);
+            this.Controls.Add(this.HelpButton);
+            this.Controls.Add(this.SaveFCButton);
             this.Controls.Add(this.EditFCButton);
             this.Controls.Add(this.RemoveFCButton);
             this.Controls.Add(this.ExistingFCLB);
@@ -270,5 +297,7 @@
         private System.Windows.Forms.ListBox ExistingFCLB;
         private System.Windows.Forms.Button RemoveFCButton;
         private System.Windows.Forms.Button EditFCButton;
+        private System.Windows.Forms.Button SaveFCButton;
+        private System.Windows.Forms.Button HelpButton;
     }
 }

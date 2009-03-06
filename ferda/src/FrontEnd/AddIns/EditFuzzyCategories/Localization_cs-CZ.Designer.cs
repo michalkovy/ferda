@@ -61,6 +61,24 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hodnota A lichoběžníku musí být menší než maximální hodnota atributu.
+        /// </summary>
+        internal static string ABiggerThanMax {
+            get {
+                return ResourceManager.GetString("ABiggerThanMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fuzzy množina musí být lichoběžníkového tvaru, tj. A &lt; D &lt; C &lt; B.
+        /// </summary>
+        internal static string ADCB {
+            get {
+                return ResourceManager.GetString("ADCB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Přidat fuzzy kategorii.
         /// </summary>
         internal static string AddFC {
@@ -70,11 +88,38 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fuzzy kategorie se stejným jménem už je definovaná. Fuzzy kategorie musí mít jedinečné jména..
+        /// </summary>
+        internal static string AlreadyContainsName {
+            get {
+                return ResourceManager.GetString("AlreadyContainsName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lichoběžníková fuzzy kategorie se stejnými hodnotami již byla definovaná. Prosím změňte hodnoty lichoběžníku..
+        /// </summary>
+        internal static string AlreadyContainsValues {
+            get {
+                return ResourceManager.GetString("AlreadyContainsValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A (začátek lichobězníku):.
         /// </summary>
         internal static string ATB {
             get {
                 return ResourceManager.GetString("ATB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hodnota B lichoběžníku musí být větší než minimální hodnota atributu.
+        /// </summary>
+        internal static string BLowerThanMin {
+            get {
+                return ResourceManager.GetString("BLowerThanMin", resourceCulture);
             }
         }
         
@@ -142,11 +187,38 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chyba.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Existující fuzzy kategorie.
         /// </summary>
         internal static string ExistingFuzzyCategories {
             get {
                 return ResourceManager.GetString("ExistingFuzzyCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nápověda.
+        /// </summary>
+        internal static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Není vybrána žádná fuzzy kategorie.
+        /// </summary>
+        internal static string ItemNotSelected {
+            get {
+                return ResourceManager.GetString("ItemNotSelected", resourceCulture);
             }
         }
         
@@ -169,11 +241,38 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Jméno nové fuzzy kategorie není zadáno.
+        /// </summary>
+        internal static string NoName {
+            get {
+                return ResourceManager.GetString("NoName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Odstranit fuzzy kategorii.
         /// </summary>
         internal static string RemoveFC {
             get {
                 return ResourceManager.GetString("RemoveFC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uložit fuzzy kategorii.
+        /// </summary>
+        internal static string SaveFC {
+            get {
+                return ResourceManager.GetString("SaveFC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hodnoty A, B, C, D jsou buď nevyplněné, nebo ve špatném nečíselném formátu.
+        /// </summary>
+        internal static string TrapezoidInvalidFormat {
+            get {
+                return ResourceManager.GetString("TrapezoidInvalidFormat", resourceCulture);
             }
         }
     }

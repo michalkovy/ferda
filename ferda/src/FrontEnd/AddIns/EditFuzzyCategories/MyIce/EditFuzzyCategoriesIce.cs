@@ -200,7 +200,7 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
                 prop = p as StringTI;
                 maximum = Convert.ToDouble(prop.stringValue);
             }
-            MainWindow wind = new MainWindow(resManager, minimum, maximum);
+            MainWindow wind = new MainWindow(resManager, minimum, maximum, ownerOfAddIn);
             DialogResult result = ownerOfAddIn.ShowDialog(wind);
 
             return valueBefore;

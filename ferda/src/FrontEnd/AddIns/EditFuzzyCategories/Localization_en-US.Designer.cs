@@ -61,6 +61,24 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The A value of the trapezoid should be less than maximal value of the attribute.
+        /// </summary>
+        internal static string ABiggerThanMax {
+            get {
+                return ResourceManager.GetString("ABiggerThanMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The fuzzy set must be of trapeziodal shape, that is A &lt; D &lt; C &lt; B..
+        /// </summary>
+        internal static string ADCB {
+            get {
+                return ResourceManager.GetString("ADCB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add fuzzy category.
         /// </summary>
         internal static string AddFC {
@@ -70,11 +88,38 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A fuzzy category having the same name is already defined. Names of fuzzy categories have to be unique..
+        /// </summary>
+        internal static string AlreadyContainsName {
+            get {
+                return ResourceManager.GetString("AlreadyContainsName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A trapezoidal fuzzy category having the same values is already defined. Please change the values of the trapezoid..
+        /// </summary>
+        internal static string AlreadyContainsValues {
+            get {
+                return ResourceManager.GetString("AlreadyContainsValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A (start of the trapeziod):.
         /// </summary>
         internal static string ATB {
             get {
                 return ResourceManager.GetString("ATB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The B value of the trapezoid should be bigger than minimal value of the attribute.
+        /// </summary>
+        internal static string BLowerThanMin {
+            get {
+                return ResourceManager.GetString("BLowerThanMin", resourceCulture);
             }
         }
         
@@ -142,11 +187,38 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Existing fuzzy categories.
         /// </summary>
         internal static string ExistingFuzzyCategories {
             get {
                 return ResourceManager.GetString("ExistingFuzzyCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        internal static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No fuzzy category is selected.
+        /// </summary>
+        internal static string ItemNotSelected {
+            get {
+                return ResourceManager.GetString("ItemNotSelected", resourceCulture);
             }
         }
         
@@ -169,11 +241,38 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The name of the new fuzzy category is not set.
+        /// </summary>
+        internal static string NoName {
+            get {
+                return ResourceManager.GetString("NoName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove fuzzy category.
         /// </summary>
         internal static string RemoveFC {
             get {
                 return ResourceManager.GetString("RemoveFC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save fuzzy category.
+        /// </summary>
+        internal static string SaveFC {
+            get {
+                return ResourceManager.GetString("SaveFC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The values A, B, C, D are either not filled, or in invalid non-numerical format.
+        /// </summary>
+        internal static string TrapezoidInvalidFormat {
+            get {
+                return ResourceManager.GetString("TrapezoidInvalidFormat", resourceCulture);
             }
         }
     }

@@ -156,4 +156,37 @@
   <data name="RemoveFC" xml:space="preserve">
     <value>Remove fuzzy category</value>
   </data>
+  <data name="ABiggerThanMax" xml:space="preserve">
+    <value>The A value of the trapezoid should be less than maximal value of the attribute</value>
+  </data>
+  <data name="ADCB" xml:space="preserve">
+    <value>The fuzzy set must be of trapeziodal shape, that is A &lt; D &lt; C &lt; B.</value>
+  </data>
+  <data name="BLowerThanMin" xml:space="preserve">
+    <value>The B value of the trapezoid should be bigger than minimal value of the attribute</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="NoName" xml:space="preserve">
+    <value>The name of the new fuzzy category is not set</value>
+  </data>
+  <data name="SaveFC" xml:space="preserve">
+    <value>Save fuzzy category</value>
+  </data>
+  <data name="TrapezoidInvalidFormat" xml:space="preserve">
+    <value>The values A, B, C, D are either not filled, or in invalid non-numerical format</value>
+  </data>
+  <data name="AlreadyContainsName" xml:space="preserve">
+    <value>A fuzzy category having the same name is already defined. Names of fuzzy categories have to be unique.</value>
+  </data>
+  <data name="AlreadyContainsValues" xml:space="preserve">
+    <value>A trapezoidal fuzzy category having the same values is already defined. Please change the values of the trapezoid.</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="ItemNotSelected" xml:space="preserve">
+    <value>No fuzzy category is selected</value>
+  </data>
 </root>
