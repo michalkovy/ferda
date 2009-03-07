@@ -1,8 +1,8 @@
-﻿// TrapezoidalFuzzySet.cs - Simple representation of the trapezoidal fuzzy set
+﻿// Enumeration.cs - fuzzy set of the trapezoidal shape
 //
-// Author: Martin Ralbovsky <martin.ralbovsky@gmail.com>
+// Author: Martin Ralbovský <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2009 Martin Ralbovsky
+// Copyright (c) 2009 Martin Ralbovský
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,10 +20,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
+namespace Ferda.Guha.Attribute
 {
     /// <summary>
     /// A simplified representation of a trapezoidal fuzzy set. Only 4 points

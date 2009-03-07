@@ -27,6 +27,7 @@ using System.Text;
 using System.Windows.Forms;
 using Steema.TeeChart;
 using Steema.TeeChart.Styles;
+using Ferda.Guha.Attribute;
 
 namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
 {
@@ -159,8 +160,6 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
                 l.Add(fuzzySet.B,0);
                 graph.Series.Add(l);
             }
-
-            //PROBLEM SE ZOBRAZENIM JEDNE KATEGORIE
         }
 
         /// <summary>
