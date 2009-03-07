@@ -132,7 +132,7 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
         /// <param name="fuzzySets">Fuzzy sets in trapeziodal form</param>
         private void FillGraph(Dictionary<string,TrapezoidalFuzzySet> fuzzySets)
         {
-            graph.Header.Text = fuzzySets.Count.ToString() + "fuzzy categories, minimum = " 
+            graph.Header.Text = fuzzySets.Count.ToString() + " fuzzy categories, minimum = " 
                 + minimum.ToString() + ", maximum = " + maximum.ToString();
 
             if (fuzzySets.Count == 1)
