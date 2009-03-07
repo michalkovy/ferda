@@ -6,7 +6,9 @@
 	<target name="doc" description="Vytvoří dokumentaci">
 		<mkdir dir="${build.dir}"/>
 		<call target="docbookxhtml" />
+		<!--
 		<call target="docbookpdf" />
+		-->
 		<call target="xmltodocbooktoxhtml" />
         <call target="imagesforxhtml" />
 	</target>
