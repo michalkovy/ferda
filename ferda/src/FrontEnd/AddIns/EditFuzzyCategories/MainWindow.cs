@@ -79,8 +79,14 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
         /// <param name="resManager">The resource manager</param>
         /// <param name="minimum">Minimal value of the attribute</param>
         /// <param name="maximum">Maximal value of the attribute</param>
-        public MainWindow(ResourceManager resManager, double minimum, double maximum, IOwnerOfAddIn ownerOfAddIn)
+        public MainWindow(ResourceManager resManager, double minimum, double maximum, IOwnerOfAddIn ownerOfAddIn,
+            TrapezoidalFuzzySets fSets)
         {
+            foreach (TrapezoidalFuzzySet set in fSets.fuzzySets)
+            {
+                this.fuzzySets.Add(set.Name, set);
+            }
+
             this.ownerOfAddIn = ownerOfAddIn;
             this.minimum = minimum;
             this.maximum = maximum;
@@ -91,7 +97,8 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
             ChangeLocale();
 
             //tady se to bude jeste menit az budem ziskavat informace z krabicky
-            //FillGraph(list);
+            FillGraph(fuzzySets);
+            FillList(fuzzySets);
         }
 
         #endregion
@@ -217,6 +224,24 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="Ferda.Guha.Attribute.TrapezoidalFuzzySets"/>
+        /// object consisting of fuzzy categories to be serialized. 
+        /// </summary>
+        /// <returns><see cref="Ferda.Guha.Attribute.TrapezoidalFuzzySets"/>
+        /// object</returns>
+        public TrapezoidalFuzzySets GetSets()
+        {
+            TrapezoidalFuzzySets sets = new TrapezoidalFuzzySets();
+            List<TrapezoidalFuzzySet> field = new List<TrapezoidalFuzzySet>();
+            foreach(TrapezoidalFuzzySet set in fuzzySets.Values)
+            {
+                field.Add(set);
+            }
+            sets.fuzzySets = field.ToArray();
+            return sets;
         }
 
         #endregion

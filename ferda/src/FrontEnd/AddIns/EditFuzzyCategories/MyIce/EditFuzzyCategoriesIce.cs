@@ -30,6 +30,7 @@ using Ferda.ModulesManager;
 using Ferda.FrontEnd.AddIns;
 using Ferda.Modules.Boxes.DataPreparation;
 using Ferda.Guha.Data;
+using Ferda.Guha.Attribute;
 using Ice;
 
 namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
@@ -134,7 +135,7 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
             Current current__)
         {
             //TOHLE SE URCITE BUDE MENIT
-            about = "neco";
+            about = this.getPropertyAbout(valueBefore);
 
             //getting the localization
             string locale;
@@ -200,8 +201,18 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
                 prop = p as StringTI;
                 maximum = Convert.ToDouble(prop.stringValue);
             }
-            MainWindow wind = new MainWindow(resManager, minimum, maximum, ownerOfAddIn);
+
+            StringT vbefore = (StringT)valueBefore;
+            TrapezoidalFuzzySets fuzzySets = TrapezoidalFuzzySets.Deserialize(vbefore.stringValue);
+
+            MainWindow wind = new MainWindow(resManager, minimum, maximum, ownerOfAddIn, fuzzySets);
             DialogResult result = ownerOfAddIn.ShowDialog(wind);
+
+            if (result == DialogResult.OK)
+            {
+                vbefore.stringValue = TrapezoidalFuzzySets.Serialize(wind.GetSets());
+                return vbefore;
+            }
 
             return valueBefore;
         }
