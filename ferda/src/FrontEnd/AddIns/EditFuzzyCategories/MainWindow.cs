@@ -248,7 +248,7 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
             }
 
             //Checking the name of the new fuzzy category
-            if (NameTB.Text == null || NameTB.Text == string.Empty)
+            if (string.IsNullOrEmpty(NameTB.Text))
             {
                 MessageBox.Show(resourceManager.GetString("NoName"),
                     resourceManager.GetString("Error"),
