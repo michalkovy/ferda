@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+    <articleinfo>
+        <authorgroup>
+            <author>
+                <firstname>Martin</firstname>
+                <surname>Ralbovský</surname>
+                <email>martin.ralbovsky@gmail.com</email>
+            </author>
+        </authorgroup>
+        <pubdate>2009-03-06</pubdate>
+        <title>EditFuzzyCategories - Module for editing fuzzy categories</title>
+        <titleabbrev>EditFuzzyCategories</titleabbrev>
+        <!--
+        <revhistory>
+            <revision>
+                <revnumber>1.0</revnumber>
+                <date>2009-03-06</date>
+                <revremark>
+                    Initial version of the document
+                </revremark>
+            </revision>
+        </revhistory>
+        -->
+    </articleinfo>
+    <abstract>
+        <para>
+            This document describes the user interface for EditFuzzyCategories module. It 
+            also contains some simple examples and screenshots for the users to make using
+            this module easier.
+        </para>
+    </abstract>
+    <section>
+        <title>Introduction</title>
+        <para>
+            Welcome to Edit fuzzy categories module. This is a module designed for manual
+            creating and editing of fuzzy categories, that have trapezoidal shape. 
+        </para>
+    </section>
+    <section>
+        <title>Parts of the user interface</title>
+        <para>
+            The figure below shows the module. The upper part is a graph showing the 
+            existing fuzzy categories. In the lower part, there are text boxes and 
+            buttons to manipulate with the fuzzy categories. In the lower right corner,
+            there is a list of existing fuzzy categories. 
+        </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="editFuzzyCategories.PNG" format="PNG" />
+            </imageobject>
+        </mediaobject>
+    </section>
+    <section>
+        <title>Graph of the fuzzy categories</title>
+        <para>
+            The displayed graph shows all the fuzzy categories defined by the module. 
+            A 3D view was chosen, because it looked better than the 2D one. If there is
+            no fuzzy category, the axis do not have any scales. This is a technical
+            limitation of the underlying graphing library. The minimal and maxima values
+            of the attributes is displayed in the text area above the graph. 
+            The scales appear, when there exist at least one fuzzy category.  
+        </para>
+        <para>
+            The axes are scaled according to the minimal and maximal values of the 
+            attribute. The legend appears, if there are at least two fuzzy categories.
+        </para>
+    </section>
+    <section>
+        <title>User actions</title>
+        <section>
+            <title>Adding a fuzzy category</title>
+            <para>
+               If the user wants to add a fuzzy category, (s)he adds required information
+               about the category- name of the category and the A, B, C and D values of
+               the trapezoid. There are several constraints that the trapezoid must fulfill:
+               <itemizedlist>
+                   <listitem>
+                       <simpara>
+                           The condition A &lt; D &lt; C &lt; B in order to get a proper
+                           trapezoid.
+                       </simpara>
+                   </listitem>
+                   <listitem>
+                       <simpara>
+                           The A value must be less than maximal value of the attribute
+                       </simpara>
+                   </listitem>
+                   <listitem>
+                       <simpara>
+                           The B value must be greater than maximal value of the attribute
+                       </simpara>
+                   </listitem>
+                   <listitem>
+                       <simpara>
+                           The name of the fuzzy category has to be unique.
+                       </simpara>
+                   </listitem>
+               </itemizedlist>
+               If these are fullfilled, after clicking on the "Add fuzzy category" button, 
+               the fuzzy category is added. 
+            </para>
+        </section>
+        <section>
+            <title>Removing a fuzzy category</title>
+            <para>
+                In order to remove a fuzzy category, user selects a category from the
+                list of categories and then clicks to "Remove fuzzy category".
+            </para>
+        </section>
+        <section>
+            <title>Editing a fuzzy category</title>
+            <para>
+                The user needs to select a fuzzy category to be edited from the 
+                list of categores. After clicking on "Edit fuzzy category", the details
+                of the fuzzy category are displayed in the corresponding text boxes. 
+                After editing, the button "Save fuzzy category" should be clicked. Again
+                constraints from adding fuzzy categories (previous text) must be fullfilled.
+            </para>
+            <para>
+                If the user edits the category and clicks on "Add fuzzy category" instead,
+                a new category is created. In order to do this, the name of the category
+                must be different from the name of the edited categories and also some of
+                the values need to be different. 
+            </para>
+        </section>
+        <section>
+            <title>Saving created fuzzy categories</title>
+            <para>
+                After the process of creation and editing of fuzzy categories, user should
+                click on "OK" button in order to save categories and sending the information
+                back to the Attribute with fuzzy categories box. 
+            </para>
+        </section>
+    </section>
+</article>
