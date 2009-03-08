@@ -192,7 +192,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             {
                 case Functions.PropIncludeNullCategory:
                     return Func.IncludeNullCategory;
-                case Functions.PropCountOfCategories:
+                case Public.SockCountOfCategories:
                     return Func.Count;
                 default:
                     throw new NotImplementedException();
@@ -246,7 +246,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                     null,
                     boxModule.StringIceIdentity,
                     "Count of intervals has to be greater than 0.",
-                    new string[] { Functions.PropCountOfCategories },
+                    new string[] { Public.SockCountOfCategories },
                     restrictionTypeEnum.OtherReason
                     );
             }

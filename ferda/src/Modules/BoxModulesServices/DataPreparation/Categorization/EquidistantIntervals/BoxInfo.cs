@@ -185,7 +185,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             Functions Func = (Functions)boxModule.FunctionsIObj;
             switch (propertyName)
             {
-                case Functions.PropCountOfCategories:
+                case Public.SockCountOfCategories:
                     return Func.CountOfCategories;
                 case Functions.PropIncludeNullCategory:
                     return Func.IncludeNullCategory;
@@ -242,7 +242,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                     null,
                     boxModule.StringIceIdentity,
                     "Count of intervals has to be greater than 0.",
-                    new string[] { Functions.PropCountOfCategories },
+                    new string[] { Public.SockCountOfCategories },
                     restrictionTypeEnum.OtherReason
                     );
             }

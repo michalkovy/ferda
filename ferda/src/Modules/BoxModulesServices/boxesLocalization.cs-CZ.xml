@@ -1271,22 +1271,10 @@
 				<Hint>Počet kategorií v atributů..</Hint>
 			</Socket>
 			<Socket>
-				<Name>XCategory</Name>
-				<Label>X-Kategorie</Label>
-				<Hint>Kategorie pro chybějící hodnoty.</Hint>
-			</Socket>
-			<Socket>
 				<Name>FuzzyCategories</Name>
 				<Label>Fuzzy kategorie</Label>
 				<Hint>Spustí modul nastavující lichoběžníkové fuzzy kategorie</Hint>
 			</Socket>
-			<!--
-				<Socket>
-				<Name>IncludeNullCategory</Name>
-				<Label>Include null Category</Label>
-				<Hint>Category with null values.</Hint>
-				</Socket>
-			-->
 			<Socket>
 				<Name>Domain</Name>
 				<Label>Doména</Label>
@@ -1418,18 +1406,6 @@
 				<Label>Počet kategorií.</Label>
 				<Hint>Počet kategorií v atributů..</Hint>
 			</Socket>
-			<Socket>
-				<Name>XCategory</Name>
-				<Label>X-Kategorie</Label>
-				<Hint>Kategorie pro chybějící hodnoty.</Hint>
-			</Socket>
-			<!--
-				<Socket>
-				<Name>IncludeNullCategory</Name>
-				<Label>Include null Category</Label>
-				<Hint>Category with null values.</Hint>
-				</Socket>
-			-->
 			<Socket>
 				<Name>Domain</Name>
 				<Label>Doména</Label>

@@ -2095,15 +2095,6 @@
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
 			<Socket>
-				<Name>XCategory</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			<Socket>
 				<Name>Domain</Name>
 				<SocketTypes>
 					<BoxType>
@@ -2185,13 +2176,6 @@
 						<Including>true</Including>
 					</Restriction>
 				</NumericalRestrictions>
-			</Property>
-			<Property>
-				<Name>XCategory</Name>
-				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<CategoryName>Categories</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
 			</Property>
 			<Property>
 				<Name>Domain</Name>
@@ -2331,15 +2315,6 @@
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
 			<Socket>
-				<Name>XCategory</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			<Socket>
 				<Name>Domain</Name>
 				<SocketTypes>
 					<BoxType>
@@ -2412,13 +2387,6 @@
 						<Including>true</Including>
 					</Restriction>
 				</NumericalRestrictions>
-			</Property>
-			<Property>
-				<Name>XCategory</Name>
-				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<CategoryName>Categories</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
 			</Property>
 			<Property>
 				<Name>Domain</Name>

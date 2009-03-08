@@ -37,7 +37,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         #region Properties
 
         public const string PropNameInBooleanAttributes = "NameInBooleanAttributes";
-        public const string PropCountOfCategories = "CountOfCategories";
         public const string PropXCategory = "XCategory";
         public const string PropIncludeNullCategory = "IncludeNullCategory";
         public const string PropDomain = "Domain";

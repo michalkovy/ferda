@@ -44,7 +44,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         #region Properties
 
         public const string PropNameInBooleanAttributes = "NameInBooleanAttributes";
-        public const string PropCountOfCategories = "CountOfCategories";
         public const string PropLength = "Length";
         public const string PropClosedFrom = "ClosedFrom";
         public const string PropXCategory = "XCategory";
@@ -91,7 +90,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         {
             get
             {
-                return _boxModule.GetPropertyLong(PropCountOfCategories);
+                return _boxModule.GetPropertyLong(Public.SockCountOfCategories);
             }
         }
 

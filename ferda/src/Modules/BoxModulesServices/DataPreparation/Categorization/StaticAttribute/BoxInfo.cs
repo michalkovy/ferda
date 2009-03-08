@@ -178,7 +178,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             Functions Func = (Functions)boxModule.FunctionsIObj;
             switch (propertyName)
             {
-                case Functions.PropCountOfCategories:
+                case Public.SockCountOfCategories:
                     return Func.CountOfCategories;
                 case Functions.PropIncludeNullCategory:
                     return Func.IncludeNullCategory;
