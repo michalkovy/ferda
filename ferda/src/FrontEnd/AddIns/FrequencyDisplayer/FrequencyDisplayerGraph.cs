@@ -148,7 +148,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
                 {
                     if ((temp != 0) && (this.rowCount != 0))
                     {
-                        temp = Math.Round(((temp / (double)this.rowCount) * 100), 2);
+                        temp = Math.Round(((temp / this.rowCount) * 100), 2);
                         areaSeries.Add(temp, dataRow[0].ToString());
                     }
                     else
@@ -201,7 +201,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
                 {
                     if ((temp != 0) && (this.rowCount != 0))
                     {
-                        temp = Math.Round(((temp / (double)this.rowCount) * 100), 2);
+                        temp = Math.Round(((temp / this.rowCount) * 100), 2);
                         barSeriesBar.Add(temp, dataRow[0].ToString());
                     }
                     else
@@ -252,7 +252,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
                 {
                     if ((temp != 0) && (this.rowCount != 0))
                     {
-                        temp = Math.Round(((temp / (double)this.rowCount) * 100), 2);
+                        temp = Math.Round(((temp / this.rowCount) * 100), 2);
                         pieSeries.Add(temp, dataRow[0].ToString());
                     }
                     else

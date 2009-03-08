@@ -120,7 +120,9 @@ namespace Ferda.Guha.MiningProcessor.Design
         /// Returns numerical values of the categories. These numerical
         /// values can be returned only for the <c>ordinal, cyclic ordinal
         /// and cardinal</c> attributes. Otherwise, <c>null</c> or
-        /// <c>double[0]</c> is returned
+        /// <c>double[0]</c> is returned. The value is returned, only
+        /// if the category contains no intervals and only one enumeration.
+        /// Otherwise, null is returned.
         /// </summary>
         /// <returns>
         /// Numerical values of the categories. These numerical

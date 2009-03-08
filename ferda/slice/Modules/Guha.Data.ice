@@ -115,7 +115,7 @@ module Ferda {
 			struct ValueFrequencyPair 
 			{
 				string value;
-				int frequency;
+				double frequency;
 			};
 			sequence<ValueFrequencyPair> ValueFrequencyPairSeq;
 					

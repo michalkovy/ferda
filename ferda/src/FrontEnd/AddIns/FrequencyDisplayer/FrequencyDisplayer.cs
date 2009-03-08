@@ -50,7 +50,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
         /// <summary>
         /// Total count of rows in the table.
         /// </summary>
-        private long rowCount;
+        private double rowCount;
 
         /// <summary>
         /// Datatable containing data from the SQL query
@@ -127,7 +127,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
         /// <param name="valfreq">Values and Frequency pair</param>
         private void ComputeRowCount(ValuesAndFrequencies valfreq)
         {
-            long count = 0;
+            double count = 0;
             foreach (ValueFrequencyPair pair in valfreq.data)
             {
                 count += pair.frequency;
