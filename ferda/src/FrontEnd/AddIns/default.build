@@ -547,6 +547,12 @@
         <exclude name="SetPrimaryKeys/obj/**.*"/>
       </sources>
     </csc>
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+			<fileset basedir="SetPrimaryKeys/Help">
+				<include name="*.*" /> 
+			</fileset>
+		</copy>
+		
     
     <csc target="library" output="${path::combine(addInsBuild.dir,'EditFuzzyCategories.dll')}" debug="${debug}" optimize="${optimize}">
     	<references>
@@ -577,12 +583,12 @@
 		</sources>
     </csc>
     
-    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
-    		  <fileset basedir="SetPrimaryKeys/Help">
-     		   <include name="*.*" /> 
-     		 </fileset>
-    		</copy>
-    
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+			<fileset basedir="EditFuzzyCategories/Help">
+				<include name="*.*" /> 
+			</fileset>
+		</copy>
+		
 	</target>
 	<target name="clean">
 		<delete failonerror="false">

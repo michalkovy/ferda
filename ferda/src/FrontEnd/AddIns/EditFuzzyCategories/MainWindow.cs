@@ -412,6 +412,8 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
         /// <param name="e">Event parameters</param>
         private void HelpButton_Click(object sender, EventArgs e)
         {
+            ownerOfAddIn.OpenPdf(ownerOfAddIn.GetBinPath() + 
+                "\\AddIns\\Help\\EditFuzzyCategories.pdf");
         }
 
         #endregion
