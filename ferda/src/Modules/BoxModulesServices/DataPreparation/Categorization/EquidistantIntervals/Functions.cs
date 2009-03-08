@@ -225,7 +225,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 delegate
                 {
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
-                    GenericColumn tmp2 = GetGenericColumn(fallOnError);
+                    GenericColumn tmp2 = Public.GetGenericColumn(fallOnError, _boxModule,
+                        _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
                     if (tmp != null && tmp2 != null)
                     {
                         Dictionary<string, int> categoriesFrequencies = tmp.GetFrequencies(
@@ -244,20 +245,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 },
                 _boxModule.StringIceIdentity
                 );
-        }
-
-        /// <summary>
-        /// Gets proxy of the connected column box
-        /// </summary>
-        /// <param name="fallOnError"></param>
-        /// <returns></returns>
-        public ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError)
-        {
-            return SocketConnections.GetPrx<ColumnFunctionsPrx>(
-                _boxModule,
-                Public.SockColumn,
-                ColumnFunctionsPrxHelper.checkedCast,
-                fallOnError);
         }
 
         /// <summary>
@@ -291,57 +278,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         private CacheFlag _cacheFlagColumn = new CacheFlag();
         private GenericColumn _cachedValueColumn = null;
 
-        /// <summary>
-        /// Gets generic column connected to the attribute
-        /// </summary>
-        /// <param name="fallOnError"></param>
-        /// <returns></returns>
-        public GenericColumn GetGenericColumn(bool fallOnError)
-        {
-            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
-            if (prx == null)
-                return null;
-            ColumnInfo column = prx.getColumnInfo();
-
-            DatabaseConnectionSettingHelper connSetting =
-                new DatabaseConnectionSettingHelper(column.dataTable.databaseConnectionSetting);
-
-            Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
-            cacheSetting.Add(
-                Datasource.Database.BoxInfo.typeIdentifier + Datasource.Database.Functions.PropConnectionString,
-                connSetting);
-            cacheSetting.Add(Datasource.DataTable.BoxInfo.typeIdentifier + Datasource.DataTable.Functions.PropName,
-                             column.dataTable.dataTableName);
-            cacheSetting.Add(
-                Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropSelectExpression,
-                column.columnSelectExpression);
-            cacheSetting.Add(Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropCardinality,
-                 column.cardinality);
-
-            if (_cacheFlagColumn.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
-                || (_cachedValueColumn == null && fallOnError))
-            {
-                _cachesReloadFlag = System.Guid.NewGuid();
-                _cachedValueColumn = ExceptionsHandler.GetResult<GenericColumn>(
-                    fallOnError,
-                    delegate
-                    {
-                        return
-                            GenericDatabaseCache.GetGenericDatabase(connSetting)
-                            [column.dataTable.dataTableName].GetGenericColumn(
-                            column.columnSelectExpression, column);
-                    },
-                    delegate
-                    {
-                        return null;
-                    },
-                    _boxModule.StringIceIdentity
-                    );
-            }
-            return _cachedValueColumn;
-        }
-
-
         private CacheFlag _cacheFlag = new CacheFlag();
         private Attribute<IComparable> _cachedValue = null;
 
@@ -354,7 +290,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         public Attribute<IComparable> GetAttribute(bool fallOnError)
         {
             //getting the proxy of a column
-            ColumnFunctionsPrx columnPrx = GetColumnFunctionsPrx(fallOnError);
+            ColumnFunctionsPrx columnPrx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
             if (columnPrx == null)
                 return null;
 
@@ -415,7 +351,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                         _nullCategoryName = null;
 
                         //getting the column
-                        GenericColumn column = GetGenericColumn(fallOnError);
+                        GenericColumn column = Public.GetGenericColumn(fallOnError,_boxModule,
+                            _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
                         if (column == null)
                             return null;
 
@@ -653,12 +590,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                         // 0.3 sec is ticks * 3 000 000
                         {
                             // get primary key
-                            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+                            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
                             if (prx == null)
                                 return null;
                             string[] pks = prx.getColumnInfo().dataTable.primaryKeyColumns;
 
-                            GenericColumn gc = GetGenericColumn(fallOnError);
+                            GenericColumn gc = Public.GetGenericColumn(fallOnError, _boxModule,
+                                _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
                             Attribute<IComparable> att = GetAttribute(true);
                             //if (String.IsNullOrEmpty(_lastReloadFlag.ToString()) || _lastReloadFlag != _cachesReloadFlag)
                             {
@@ -779,7 +717,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 delegate
                 {
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
-                    GenericColumn tmp2 = GetGenericColumn(fallOnError);
+                    GenericColumn tmp2 = Public.GetGenericColumn(fallOnError, _boxModule,
+                        _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
                     if (tmp != null && tmp2 != null)
                     {
                         if (!tmp2.IsNumericDataType)
@@ -816,9 +755,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 fallOnError,
                 delegate
                 {
-                    ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+                    ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
-                    GenericColumn tmp2 = GetGenericColumn(fallOnError);
+                    GenericColumn tmp2 = Public.GetGenericColumn(fallOnError, _boxModule,
+                        _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
                     if (tmp != null && tmp2 != null && prx != null)
                     {
                         CardinalityEnum columnCardinality = prx.getColumnInfo().cardinality;
@@ -872,7 +812,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         /// <returns></returns>
         public override string GetColumnName(Current current__)
         {
-            return GetColumnFunctionsPrx(true).getColumnInfo().columnSelectExpression;
+            return Public.GetColumnFunctionsPrx(true,_boxModule).getColumnInfo().columnSelectExpression;
         }
 
         /// <summary>
@@ -988,7 +928,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         /// <returns></returns>
         public override string GetSourceDataTableId(Current current__)
         {
-            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(true);
+            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(true,_boxModule);
             if (prx != null)
                 return prx.GetSourceDataTableId();
             return null;
@@ -1031,12 +971,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         /// <returns>a count vector</returns>
         public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, string detailIdColumn, Current current__)
         {
-            GenericColumn _column = GetGenericColumn(true);
+            GenericColumn _column = Public.GetGenericColumn(true, _boxModule,
+                _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
 
             string detailId = String.Empty;
             if (String.IsNullOrEmpty(detailIdColumn))
                 detailId =
-            GetColumnFunctionsPrx(true).getColumnInfo().dataTable.primaryKeyColumns[0];
+            Public.GetColumnFunctionsPrx(true,_boxModule).getColumnInfo().dataTable.primaryKeyColumns[0];
             else
                 detailId = detailIdColumn;
 
@@ -1090,7 +1031,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         /// <returns>ValuesAndFrequencies structure</returns>
         public override ValuesAndFrequencies GetColumnValuesAndFrequencies(Current current__)
         {
-            return GetColumnFunctionsPrx(true).getDistinctsAndFrequencies();
+            return Public.GetColumnFunctionsPrx(true,_boxModule).getDistinctsAndFrequencies();
         }
 
         #endregion
