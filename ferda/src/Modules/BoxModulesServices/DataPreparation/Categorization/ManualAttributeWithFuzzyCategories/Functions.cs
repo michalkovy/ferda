@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ferda.Guha.Data;
+using Ferda.Guha.Attribute;
 using Ferda.Guha.MiningProcessor;
 using Ice;
 
@@ -37,6 +38,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
 
         protected Ferda.Modules.BoxModuleI _boxModule;
         protected Ferda.Modules.Boxes.IBoxInfo _boxInfo;
+        public const string SocketFuzzyCategories = "FuzzyCategories";
 
         #endregion
 
@@ -74,6 +76,19 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
             get
             {
                 return Public.Cardinality(_boxModule);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the fuzzy sets edited by the user in the
+        /// trapezoidal form. 
+        /// </summary>
+        public TrapezoidalFuzzySets FuzzySets
+        {
+            get
+            {
+                return TrapezoidalFuzzySets.Deserialize(
+                    _boxModule.GetPropertyString(SocketFuzzyCategories));
             }
         }
 
@@ -192,6 +207,23 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         public long GetMaxBitStringCount(Current current__)
         {
             return 0;
+        }
+
+        /// <summary>
+        /// Gets identificators of categories. Names of the categories are used
+        /// as their identificators. The <see cref="Ferda.Guha.Attribute"/> class
+        /// ensures, that the names of categories are unique.
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Identificators of categories</returns>
+        public string[] GetCategoriesIds(Current current__)
+        {
+            List<string> list = new List<string>();
+            foreach (TrapezoidalFuzzySet set in FuzzySets.fuzzySets)
+            {
+                list.Add(set.Name);
+            }
+            return list.ToArray();
         }
 
         public override string HelloWorld(Ice.Current __current)
