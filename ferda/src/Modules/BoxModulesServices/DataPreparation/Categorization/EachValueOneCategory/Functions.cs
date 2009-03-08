@@ -228,7 +228,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                     {
                         _nullCategoryName = null;
                         GenericColumn column = Public.GetGenericColumn(fallOnError,
-                            _boxModule, _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
+                            _boxModule, _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
+                            _cachesReloadFlag);
                         if (column == null)
                             return null;
 
@@ -343,7 +344,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                             string[] pks = prx.getColumnInfo().dataTable.primaryKeyColumns;
 
                             GenericColumn gc = Public.GetGenericColumn(fallOnError, _boxModule,
-                                _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
+                                _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
+                                _cachesReloadFlag);
                             Attribute<IComparable> att = GetAttribute(true);
                             //if (String.IsNullOrEmpty(_lastReloadFlag.ToString()) || _lastReloadFlag != _cachesReloadFlag)
                             {
@@ -471,7 +473,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                     ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
                     GenericColumn tmp2 = Public.GetGenericColumn(fallOnError, _boxModule,
-                        _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
+                        _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
+                        _cachesReloadFlag);
                     if (tmp != null && tmp2 != null && prx != null)
                     {
                         CardinalityEnum columnCardinality = prx.getColumnInfo().cardinality;
@@ -521,7 +524,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 {
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
                     GenericColumn tmp2 = Public.GetGenericColumn(fallOnError, _boxModule, 
-                        _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
+                        _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
+                        _cachesReloadFlag);
                     if (tmp != null && tmp2 != null)
                     {
                         if (!tmp2.IsNumericDataType)
@@ -553,7 +557,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 {
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
                     GenericColumn tmp2 = Public.GetGenericColumn(fallOnError, _boxModule,
-                        _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
+                        _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
+                        _cachesReloadFlag);
                     if (tmp != null && tmp2 != null)
                     {
                         Dictionary<string, int> categoriesFrequencies = tmp.GetFrequencies(
@@ -784,7 +789,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             else
                 detailId = detailIdColumn;
             GenericColumn _column = Public.GetGenericColumn(true, _boxModule,
-                _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
+                _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
+                _cachesReloadFlag);
             DataTable _table = _column.GetCountVector(
                 masterIdColumn, masterDatatableName, detailId);
             int[] result = new int[_table.Rows.Count];
