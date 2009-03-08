@@ -195,6 +195,71 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.AutomaticAttributeW
             return 0;
         }
 
+        /// <summary>
+        /// Returns identification (category name) of a
+        /// category that contains missing information.
+        /// If fuzzy case, a implementation decision is that no fuzzy category
+        /// contains a missing information, because the fuzzy categories are
+        /// constructed from cardinal domains. If the domain contains a value
+        /// that is considered missing (e.g. -1), the domain is not fully
+        /// cardinal. 
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Missing information category name
+        /// </returns>
+        public string[] GetMissingInformationCategoryId(Current current__)
+        {
+            return new string[0];
+        }
+
+        /// <summary>
+        /// <para>
+        /// Returns numerical values of the categories. These numerical
+        /// values can be returned only for the <c>ordinal, cyclic ordinal
+        /// and cardinal</c> attributes. Otherwise, <c>null</c> or
+        /// <c>double[0]</c> is returned. The value is returned, only
+        /// if the category contains no intervals and only one enumeration.
+        /// Otherwise, null is returned.
+        /// </para>
+        /// <para>
+        /// In the fuzzy case, each fuzzy category consists of several crisp
+        /// values, therefore numeric value for one category cannot be 
+        /// assigned.
+        /// </para>
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>
+        /// Numerical values of the categories. These numerical
+        /// values can be returned only for the <c>ordinal, cyclic ordinal
+        /// and cardinal</c> attributes. Otherwise, <c>null</c> or
+        /// <c>double[0]</c> is returned
+        /// </returns>
+        public double[] GetCategoriesNumericValues(Current current__)
+        {
+            return new double[0];
+        }
+
+        /// <summary>
+        /// <para>
+        /// Returns serialized attribute <see cref="Ferda.Guha.Attribute"/>.
+        /// This fucntion was added to the Slice desing for
+        /// the PMML support - it was removed from 
+        /// <see cref="Ferda.Modules.Boxes.DataPreparation.AttributeFunctions"/>.
+        /// </para>
+        /// <para>
+        /// The fuzzy attributes work differently and are not created using
+        /// the <see cref="Ferda.Guha.Attribute"/>. Therefore the functions
+        /// returns an empty string. This affects functionality of the
+        /// PMMLBuilder and ETreeClassifier boxes. 
+        /// </para>
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Serialized attribute</returns>
+        public string getAttribute(Current current__)
+        {
+            return string.Empty;
+        }
+
         public override string HelloWorld(Ice.Current __current)
         {
             return "Hello World!";
