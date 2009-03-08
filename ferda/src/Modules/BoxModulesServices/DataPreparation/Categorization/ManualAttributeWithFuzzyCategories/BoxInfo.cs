@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Ferda.Modules;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWithFuzzyCategories
 {
@@ -99,6 +100,27 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
             return null;
         }
 
+        /// <summary>
+        /// Returns read-only property values for displaying in propertygrid
+        /// </summary>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <param name="boxModule">The boxmodule.</param>
+        /// <returns></returns>
+        public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
+        {
+            LongTI result = new LongTI();
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            switch (propertyName)
+            {
+                case Public.SockCountOfCategories:
+                    result.longValue = Func.FuzzySets.fuzzySets.Length;
+                    return result;
+                default:
+                    throw new NotImplementedException();
+            }
+            return null;
+        }
+
         #region Type Identifier
 
         /// <summary>
@@ -128,7 +150,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
 
         /* Other functions to override
     * public virtual PropertyValue GetPropertyObjectFromInterface(string propertyName, Ice.ObjectPrx objectPrx)
-    * public virtual PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
     * public virtual bool IsPropertySet(string propertyName, PropertyValue propertyValue)
     * public virtual DynamicHelpItem[] GetDynamicHelpItems(string[] localePrefs, BoxModuleI boxModule)
     * public virtual void RunAction(string actionName, BoxModuleI boxModule)

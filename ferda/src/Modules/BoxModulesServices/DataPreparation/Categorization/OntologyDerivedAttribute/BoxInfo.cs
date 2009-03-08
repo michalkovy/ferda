@@ -191,7 +191,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             {
                 case Functions.PropIncludeNullCategory:
                     return Func.IncludeNullCategory;
-                case Functions.PropCountOfCategories:
+                case Public.SockCountOfCategories:
                     return Func.Count;
                 default:
                     throw new NotImplementedException();

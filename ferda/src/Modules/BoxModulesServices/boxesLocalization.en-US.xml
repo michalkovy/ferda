@@ -1286,18 +1286,6 @@
 				<Hint>Runs a module enabling editing of fuzzy categories</Hint>
 			</Socket>
 			<Socket>
-				<Name>XCategory</Name>
-				<Label>X-Category</Label>
-				<Hint>Category for missing values.</Hint>
-			</Socket>
-			<!--
-                        <Socket>
-                                <Name>IncludeNullCategory</Name>
-                                <Label>Include null Category</Label>
-                                <Hint>Category with null values.</Hint>
-                        </Socket>
-                        -->
-			<Socket>
 				<Name>Domain</Name>
 				<Label>Domain</Label>
 				<Hint>Decide if whole domain of column will be categorized or only some subdomain.</Hint>
@@ -1423,18 +1411,6 @@
 				<Label>Number of intervals.</Label>
 				<Hint>Enter number of intervals.</Hint>
 			</Socket>
-			<Socket>
-				<Name>XCategory</Name>
-				<Label>X-Category</Label>
-				<Hint>Category for missing values.</Hint>
-			</Socket>
-			<!--
-                        <Socket>
-                                <Name>IncludeNullCategory</Name>
-                                <Label>Include null Category</Label>
-                                <Hint>Category with null values.</Hint>
-                        </Socket>
-                        -->
 			<Socket>
 				<Name>Domain</Name>
 				<Label>Domain</Label>

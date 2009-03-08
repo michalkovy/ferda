@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ferda.Guha.Data;
+using Ferda.Modules.Helpers.Caching;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization
 {
@@ -326,6 +327,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
         public const string SockCardinality = "Cardinality";
 
         /// <summary>
+        /// Socket showing the count of categories in the attribute
+        /// </summary>
+        public const string SockCountOfCategories = "CountOfCategories";
+
+        /// <summary>
         /// Returns the cardinality of an attribute box (there has to be
         /// a socket named Cardinality). 
         /// </summary>
@@ -336,6 +342,78 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
             return (CardinalityEnum)Enum.Parse(
                 typeof(CardinalityEnum),
                 _boxModule.GetPropertyString(SockCardinality));
+        }
+
+        /// <summary>
+        /// Gets the proxy of the connected column
+        /// </summary>
+        /// <param name="fallOnError">If the function should throw an exception on error</param>
+        /// <param name="_boxModule">The box module, which column functions
+        /// should be retrieved.</param>
+        /// <returns>Proxy of the connected column</returns>
+        public static ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError, BoxModuleI _boxModule)
+        {
+            return SocketConnections.GetPrx<ColumnFunctionsPrx>(
+                _boxModule,
+                Public.SockColumn,
+                ColumnFunctionsPrxHelper.checkedCast,
+                fallOnError);
+        }
+
+        /// <summary>
+        /// The method retrieves a generic column structure (structure accessing
+        /// column of a data table) from the cache or computed from the database.
+        /// </summary>
+        /// <param name="fallOnError">Iff the method should fall on error</param>
+        /// <param name="_boxModule">The box module involved</param>
+        /// <param name="_cacheFlagColumn">The cache flag</param>
+        /// <param name="_cachedValueColumn">The cached column</param>
+        /// <param name="_cachesReloadFlag">Unique reloading flag</param>
+        /// <returns>A generic column</returns>
+        public static GenericColumn GetGenericColumn(bool fallOnError, BoxModuleI _boxModule,
+            CacheFlag _cacheFlagColumn, GenericColumn _cachedValueColumn,
+            Guid _cachesReloadFlag)
+        {
+            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError,_boxModule);
+            if (prx == null)
+                return null;
+            ColumnInfo column = prx.getColumnInfo();
+
+            DatabaseConnectionSettingHelper connSetting =
+                new DatabaseConnectionSettingHelper(column.dataTable.databaseConnectionSetting);
+
+            Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
+            cacheSetting.Add(
+                Datasource.Database.BoxInfo.typeIdentifier + Datasource.Database.Functions.PropConnectionString,
+                connSetting);
+            cacheSetting.Add(Datasource.DataTable.BoxInfo.typeIdentifier + Datasource.DataTable.Functions.PropName,
+                             column.dataTable.dataTableName);
+            cacheSetting.Add(
+                Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropSelectExpression,
+                column.columnSelectExpression);
+
+            if (_cacheFlagColumn.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
+                || (_cachedValueColumn == null && fallOnError))
+            {
+                _cachesReloadFlag = System.Guid.NewGuid();
+                _cachedValueColumn = ExceptionsHandler.GetResult<GenericColumn>(
+                    fallOnError,
+                    delegate
+                    {
+                        return
+                            GenericDatabaseCache.GetGenericDatabase(connSetting)
+                            [column.dataTable.dataTableName].GetGenericColumn(
+                            column.columnSelectExpression, column);
+
+                    },
+                    delegate
+                    {
+                        return null;
+                    },
+                    _boxModule.StringIceIdentity
+                    );
+            }
+            return _cachedValueColumn;
         }
     }
 }

@@ -44,7 +44,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         #region Properties
 
         public const string PropNameInBooleanAttributes = "NameInBooleanAttributes";
-        public const string PropCountOfCategories = "CountOfCategories";
         public const string PropClosedFrom = "ClosedFrom";
         public const string PropXCategory = "XCategory";
         public const string PropIncludeNullCategory = "IncludeNullCategory";
@@ -91,7 +90,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         {
             get
             {
-                return _boxModule.GetPropertyLong(PropCountOfCategories);
+                return _boxModule.GetPropertyLong(Public.SockCountOfCategories);
             }
         }
 
@@ -394,7 +393,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             cacheSetting.Add(BoxInfo.typeIdentifier + PropDomain, Domain.ToString());
             cacheSetting.Add(BoxInfo.typeIdentifier + PropFrom, From);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropTo, To);
-            cacheSetting.Add(BoxInfo.typeIdentifier + PropCountOfCategories, (long)Count);
+            cacheSetting.Add(BoxInfo.typeIdentifier + Public.SockCountOfCategories, (long)Count);
             cacheSetting.Add(BoxInfo.typeIdentifier + PropClosedFrom, ClosedFrom);
 
             //count of categories
