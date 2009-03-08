@@ -226,7 +226,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 {
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
                     GenericColumn tmp2 = Public.GetGenericColumn(fallOnError, _boxModule,
-                        _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
+                        _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
+                        _cachesReloadFlag);
                     if (tmp != null && tmp2 != null)
                     {
                         Dictionary<string, int> categoriesFrequencies = tmp.GetFrequencies(
@@ -352,7 +353,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
 
                         //getting the column
                         GenericColumn column = Public.GetGenericColumn(fallOnError,_boxModule,
-                            _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
+                            _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
+                            _cachesReloadFlag);
                         if (column == null)
                             return null;
 
@@ -596,7 +598,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                             string[] pks = prx.getColumnInfo().dataTable.primaryKeyColumns;
 
                             GenericColumn gc = Public.GetGenericColumn(fallOnError, _boxModule,
-                                _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
+                                _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
+                                _cachesReloadFlag);
                             Attribute<IComparable> att = GetAttribute(true);
                             //if (String.IsNullOrEmpty(_lastReloadFlag.ToString()) || _lastReloadFlag != _cachesReloadFlag)
                             {
@@ -718,7 +721,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                 {
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
                     GenericColumn tmp2 = Public.GetGenericColumn(fallOnError, _boxModule,
-                        _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
+                        _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
+                        _cachesReloadFlag);
                     if (tmp != null && tmp2 != null)
                     {
                         if (!tmp2.IsNumericDataType)
@@ -758,7 +762,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
                     ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
                     GenericColumn tmp2 = Public.GetGenericColumn(fallOnError, _boxModule,
-                        _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
+                        _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
+                        _cachesReloadFlag);
                     if (tmp != null && tmp2 != null && prx != null)
                     {
                         CardinalityEnum columnCardinality = prx.getColumnInfo().cardinality;
@@ -972,7 +977,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, string detailIdColumn, Current current__)
         {
             GenericColumn _column = Public.GetGenericColumn(true, _boxModule,
-                _cacheFlagColumn, _cachedValueColumn, _cachesReloadFlag);
+                _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
+                _cachesReloadFlag);
 
             string detailId = String.Empty;
             if (String.IsNullOrEmpty(detailIdColumn))

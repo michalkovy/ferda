@@ -368,15 +368,23 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
         /// <param name="_boxModule">The box module involved</param>
         /// <param name="_cacheFlagColumn">The cache flag</param>
         /// <param name="_cachedValueColumn">The cached column</param>
-        /// <param name="_cachesReloadFlag">Unique reloading flag</param>
+        /// <param name="_cachesReloadFlag">Unique reloading flag, passed as
+        /// out parameter. It is renewed, when the column is reloaded
+        /// from the database.</param>
+        /// <param name="_cachesReloadFlagIn">The old unique reloading flag,
+        /// which is passed to the <paramref name="_cachesReloadFlag"/>
+        /// parameter when nothing is loaded from the database.</param>
         /// <returns>A generic column</returns>
         public static GenericColumn GetGenericColumn(bool fallOnError, BoxModuleI _boxModule,
             CacheFlag _cacheFlagColumn, GenericColumn _cachedValueColumn,
-            Guid _cachesReloadFlag)
+            out Guid _cachesReloadFlag, Guid _cachesReloadFlagIn)
         {
+            _cachesReloadFlag = _cachesReloadFlagIn;
             ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError,_boxModule);
             if (prx == null)
+            {
                 return null;
+            }
             ColumnInfo column = prx.getColumnInfo();
 
             DatabaseConnectionSettingHelper connSetting =
