@@ -234,20 +234,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         }
 
         /// <summary>
-        /// Gets proxy of the connected column box
-        /// </summary>
-        /// <param name="fallOnError"></param>
-        /// <returns></returns>
-        public ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError)
-        {
-            return SocketConnections.GetPrx<ColumnFunctionsPrx>(
-                _boxModule,
-                Public.SockColumn,
-                ColumnFunctionsPrxHelper.checkedCast,
-                fallOnError);
-        }
-
-        /// <summary>
         /// Gets categories names
         /// </summary>
         /// <param name="fallOnError"></param>
@@ -285,7 +271,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         /// <returns></returns>
         public GenericColumn GetGenericColumn(bool fallOnError)
         {
-            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError, _boxModule);
             if (prx == null)
                 return null;
             ColumnInfo column = prx.getColumnInfo();
@@ -348,7 +334,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         public Attribute<IComparable> GetAttribute(bool fallOnError)
         {
             //getting the proxy of a column
-            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
             if (prx == null)
                 return null;
 
@@ -693,7 +679,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                         // 0.3 sec is ticks * 3 000 000
                         {
                             // get primary key
-                            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+                            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
                             if (prx == null)
                                 return null;
                             string[] pks = prx.getColumnInfo().dataTable.primaryKeyColumns;
@@ -854,7 +840,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                 fallOnError,
                 delegate
                 {
-                    ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+                    ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
                     GenericColumn tmp2 = GetGenericColumn(fallOnError);
                     if (tmp != null && tmp2 != null && prx != null)
@@ -908,7 +894,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         /// <returns></returns>
         public override string GetColumnName(Current current__)
         {
-            return GetColumnFunctionsPrx(true).getColumnInfo().columnSelectExpression;
+            return Public.GetColumnFunctionsPrx(true,_boxModule).getColumnInfo().columnSelectExpression;
         }
 
         /// <summary>
@@ -1026,7 +1012,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         /// <returns></returns>
         public override string GetSourceDataTableId(Current current__)
         {
-            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(true);
+            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(true,_boxModule);
             if (prx != null)
                 return prx.GetSourceDataTableId();
             return null;
@@ -1072,7 +1058,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             string detailId = String.Empty;
             if (String.IsNullOrEmpty(detailIdColumn))
                 detailId =
-            GetColumnFunctionsPrx(true).getColumnInfo().dataTable.primaryKeyColumns[0];
+            Public.GetColumnFunctionsPrx(true,_boxModule).getColumnInfo().dataTable.primaryKeyColumns[0];
             else
                 detailId = detailIdColumn;
 
@@ -1127,7 +1113,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         /// <returns>ValuesAndFrequencies structure</returns>
         public override ValuesAndFrequencies GetColumnValuesAndFrequencies(Current current__)
         {
-            return GetColumnFunctionsPrx(true).getDistinctsAndFrequencies();
+            return Public.GetColumnFunctionsPrx(true,_boxModule).getDistinctsAndFrequencies();
         }
 
         #region IFunctions Members

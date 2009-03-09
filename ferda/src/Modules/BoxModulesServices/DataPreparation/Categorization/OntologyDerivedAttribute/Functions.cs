@@ -296,22 +296,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                 fallOnError);
         }
 
-        //TODO smazat - ale možná to bude potøeba pro AddIn - zjistit a ošetøit
-
-        /// <summary>
-        /// Gets proxy of the connected column box - Column interface
-        /// </summary>
-        /// <param name="fallOnError"></param>
-        /// <returns></returns>
-        public ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError)
-        {
-            return SocketConnections.GetPrx<ColumnFunctionsPrx>(
-                _boxModule,
-                Public.SockColumn,
-                ColumnFunctionsPrxHelper.checkedCast,
-                fallOnError);
-        }
-
         /// <summary>
         /// Gets categories names
         /// </summary>
@@ -1222,7 +1206,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         /// <returns></returns>
         public override string GetColumnName(Current current__)
         {
-            return GetColumnFunctionsPrx(true).getColumnInfo().columnSelectExpression;
+            return Public.GetColumnFunctionsPrx(true, _boxModule).getColumnInfo().columnSelectExpression;
         }
 
         /// <summary>
@@ -1369,7 +1353,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         /// <returns>ValuesAndFrequencies structure</returns>
         public override ValuesAndFrequencies GetColumnValuesAndFrequencies(Current current__)
         {
-            return GetColumnFunctionsPrx(true).getDistinctsAndFrequencies();
+            return Public.GetColumnFunctionsPrx(true,_boxModule).getDistinctsAndFrequencies();
         }
 
         #region IFunctions Members

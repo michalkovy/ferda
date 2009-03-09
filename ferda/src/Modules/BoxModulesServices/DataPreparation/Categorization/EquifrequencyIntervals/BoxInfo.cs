@@ -71,7 +71,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                 try
                 {
                     label =
-                    Func.GetColumnFunctionsPrx(false).getColumnInfo().columnSelectExpression;
+                    Public.GetColumnFunctionsPrx(false,boxModule).getColumnInfo().columnSelectExpression;
                 }
                 catch { }
                 return label;
@@ -251,7 +251,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                     );
             }
             // try to invoke methods
-            object dummy = Func.GetColumnFunctionsPrx(true);
+            object dummy = Public.GetColumnFunctionsPrx(true,boxModule);
             dummy = Func.GetAttributeId();
             dummy = Func.GetAttributeNames();
             dummy = Func.GetAttribute(true);
