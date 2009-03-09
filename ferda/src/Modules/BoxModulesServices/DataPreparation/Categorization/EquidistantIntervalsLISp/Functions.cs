@@ -170,6 +170,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
 
         #region Methods
 
+        /// <summary>
+        /// Gets generic column connected to the attribute
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
         public GenericColumn GetGenericColumn(bool fallOnError)
         {
             ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError, _boxModule);
