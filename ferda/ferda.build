@@ -218,6 +218,7 @@
 				<include name="NetronMaths.dll"/>
 				<include name="TeeChart.Lite.dll"/>
 				<include name="TeeChart.Lite.Languages.dll"/>
+				<include name="Mono.Simd.dll"/>
 			</fileset>
 		</copy>
 		<copy todir="${serverbin.dir}">
@@ -231,7 +232,7 @@
 				<include name="System.Data.SQLite.lib"/>
 				<include name="Ice.jar"/>
 				<include name="OWL_API/*"/>
-				<include name="Mono.Simd.dll" />
+				<include name="Mono.Simd.dll"/>
 			</fileset>
 		</copy>
 	</target>
