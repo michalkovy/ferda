@@ -142,6 +142,57 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         #region Methods
 
+        /// <summary>
+        /// Gets generic column connected to the attribute
+        /// </summary>
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
+        public GenericColumn GetGenericColumn(bool fallOnError)
+        {
+            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError, _boxModule);
+            if (prx == null)
+            {
+                return null;
+            }
+            ColumnInfo column = prx.getColumnInfo();
+
+            DatabaseConnectionSettingHelper connSetting =
+                new DatabaseConnectionSettingHelper(column.dataTable.databaseConnectionSetting);
+
+            Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
+            cacheSetting.Add(
+                Datasource.Database.BoxInfo.typeIdentifier + Datasource.Database.Functions.PropConnectionString,
+                connSetting);
+            cacheSetting.Add(Datasource.DataTable.BoxInfo.typeIdentifier + Datasource.DataTable.Functions.PropName,
+                             column.dataTable.dataTableName);
+            cacheSetting.Add(
+                Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropSelectExpression,
+                column.columnSelectExpression);
+
+            if (_cacheFlagColumn.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
+                || (_cachedValueColumn == null && fallOnError))
+            {
+                _cachesReloadFlag = System.Guid.NewGuid();
+                _cachedValueColumn = ExceptionsHandler.GetResult<GenericColumn>(
+                    fallOnError,
+                    delegate
+                    {
+                        return
+                            GenericDatabaseCache.GetGenericDatabase(connSetting)
+                            [column.dataTable.dataTableName].GetGenericColumn(
+                            column.columnSelectExpression, column);
+
+                    },
+                    delegate
+                    {
+                        return null;
+                    },
+                    _boxModule.StringIceIdentity
+                    );
+            }
+            return _cachedValueColumn;
+        }
+
         private void parseFromTo(DbDataTypeEnum dataType, out IComparable from, out IComparable to)
         {
             try
@@ -227,9 +278,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                     delegate
                     {
                         _nullCategoryName = null;
-                        GenericColumn column = Public.GetGenericColumn(fallOnError,
-                            _boxModule, _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
-                            _cachesReloadFlag);
+                        GenericColumn column = GetGenericColumn(fallOnError);
                         if (column == null)
                             return null;
 
@@ -343,9 +392,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                                 return null;
                             string[] pks = prx.getColumnInfo().dataTable.primaryKeyColumns;
 
-                            GenericColumn gc = Public.GetGenericColumn(fallOnError, _boxModule,
-                                _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
-                                _cachesReloadFlag);
+                            GenericColumn gc = GetGenericColumn(fallOnError);
                             Attribute<IComparable> att = GetAttribute(true);
                             //if (String.IsNullOrEmpty(_lastReloadFlag.ToString()) || _lastReloadFlag != _cachesReloadFlag)
                             {
@@ -472,9 +519,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 {
                     ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
-                    GenericColumn tmp2 = Public.GetGenericColumn(fallOnError, _boxModule,
-                        _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
-                        _cachesReloadFlag);
+                    GenericColumn tmp2 = GetGenericColumn(fallOnError);
                     if (tmp != null && tmp2 != null && prx != null)
                     {
                         CardinalityEnum columnCardinality = prx.getColumnInfo().cardinality;
@@ -523,9 +568,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 delegate
                 {
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
-                    GenericColumn tmp2 = Public.GetGenericColumn(fallOnError, _boxModule, 
-                        _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
-                        _cachesReloadFlag);
+                    GenericColumn tmp2 = GetGenericColumn(fallOnError);
                     if (tmp != null && tmp2 != null)
                     {
                         if (!tmp2.IsNumericDataType)
@@ -556,9 +599,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                 delegate
                 {
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
-                    GenericColumn tmp2 = Public.GetGenericColumn(fallOnError, _boxModule,
-                        _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
-                        _cachesReloadFlag);
+                    GenericColumn tmp2 = GetGenericColumn(fallOnError);
                     if (tmp != null && tmp2 != null)
                     {
                         Dictionary<string, int> categoriesFrequencies = tmp.GetFrequencies(
@@ -788,9 +829,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             Public.GetColumnFunctionsPrx(true,_boxModule).getColumnInfo().dataTable.primaryKeyColumns[0];
             else
                 detailId = detailIdColumn;
-            GenericColumn _column = Public.GetGenericColumn(true, _boxModule,
-                _cacheFlagColumn, _cachedValueColumn, out _cachesReloadFlag,
-                _cachesReloadFlag);
+            GenericColumn _column = GetGenericColumn(true);
             DataTable _table = _column.GetCountVector(
                 masterIdColumn, masterDatatableName, detailId);
             int[] result = new int[_table.Rows.Count];
