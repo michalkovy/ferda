@@ -154,7 +154,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         /// <returns></returns>
         public override string GetColumnName(Current current__)
         {
-            return GetColumnFunctionsPrx(true).getColumnInfo().columnSelectExpression;
+            return Public.GetColumnFunctionsPrx(true,_boxModule).getColumnInfo().columnSelectExpression;
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             string detailId = String.Empty;
             if (String.IsNullOrEmpty(detailIdColumn))
                 detailId =
-            GetColumnFunctionsPrx(true).getColumnInfo().dataTable.primaryKeyColumns[0];
+            Public.GetColumnFunctionsPrx(true,_boxModule).getColumnInfo().dataTable.primaryKeyColumns[0];
             else
                 detailId = detailIdColumn;
             GenericColumn _column = GetGenericColumn(true);
@@ -335,7 +335,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         /// <returns></returns>
         public override string GetSourceDataTableId(Current current__)
         {
-            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(true);
+            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(true,_boxModule);
             if (prx != null)
                 return prx.GetSourceDataTableId();
             return null;
@@ -369,7 +369,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         /// <returns>ValuesAndFrequencies structure</returns>
         public override ValuesAndFrequencies GetColumnValuesAndFrequencies(Current current__)
         {
-            return GetColumnFunctionsPrx(true).getDistinctsAndFrequencies();
+            return Public.GetColumnFunctionsPrx(true,_boxModule).getDistinctsAndFrequencies();
         }
 
         #region Methods
@@ -385,7 +385,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                 fallOnError,
                 delegate
                 {
-                    ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+                    ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
                     Attribute<IComparable> tmp = GetAttribute(fallOnError);
                     GenericColumn tmp2 = GetGenericColumn(fallOnError);
                     if (tmp != null && tmp2 != null && prx != null)
@@ -477,7 +477,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         /// <returns></returns>
         public GenericColumn GetGenericColumn(bool fallOnError)
         {
-            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
             if (prx == null)
                 return null;
             ColumnInfo column = prx.getColumnInfo();
@@ -549,7 +549,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                         // 0.3 sec is ticks * 3 000 000
                         {
                             // get primary key
-                            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+                            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
                             if (prx == null)
                                 return null;
                             string[] pks = prx.getColumnInfo().dataTable.primaryKeyColumns;
@@ -703,7 +703,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         public Attribute<IComparable> GetAttribute(bool fallOnError)
         {
             //getting the proxy of a column
-            ColumnFunctionsPrx prx = GetColumnFunctionsPrx(fallOnError);
+            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError,_boxModule);
             if (prx == null)
             {
                 return null;
@@ -865,34 +865,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
                 },
                 _boxModule.StringIceIdentity
                 );
-        }
-
-        /// <summary>
-        /// Gets proxy of the connected column box
-        /// </summary>
-        /// <param name="fallOnError"></param>
-        /// <returns></returns>
-        public ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError)
-        {
-            BoxModulePrx boxModuleParam1;
-            try
-            {
-                BoxModulePrx boxModuleParamNew = _boxModule.MyProxy.getConnections("Column")[0];
-                boxModuleParam1 = boxModuleParamNew.getConnections("Column")[0];
-            }
-            catch
-            {
-                try
-                {
-                    boxModuleParam1 = _boxModule.MyProxy.getConnections("Column")[0];
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-            return DataPreparation.ColumnFunctionsPrxHelper.checkedCast(
-                boxModuleParam1.getFunctions());
         }
 
         /// <summary>
