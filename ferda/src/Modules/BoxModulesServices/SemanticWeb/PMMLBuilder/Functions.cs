@@ -667,7 +667,12 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// <returns>Length of the data matrix in string representation</returns>
         protected string GetDataMatrixLength()
         {
-            return _bsg[0].GetBitString(_bsg[0].GetCategoriesIds()[0]).length.ToString();
+            double result = 0;
+            foreach (ValueFrequencyPair pair in _bsg[0].GetColumnValuesAndFrequencies().data)
+            {
+                result += pair.frequency;
+            }
+            return result.ToString();
         }
 
         /// <summary>

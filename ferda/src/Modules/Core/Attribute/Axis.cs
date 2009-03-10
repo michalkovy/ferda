@@ -441,7 +441,7 @@ namespace Ferda.Guha.Attribute
         /// </summary>
         /// <param name="dataTable">The table with one column sorted by primary key.</param>
         /// <returns></returns>
-        public Dictionary<string, BitStringIce> GetBitStrings(DataTable dataTable)
+        public Dictionary<string, CrispBitStringIce> GetBitStrings(DataTable dataTable)
         {
             Disabled = false;
             Build();
@@ -457,13 +457,13 @@ namespace Ferda.Guha.Attribute
 
             int arraySize = (length + _blockSize - 1) / _blockSize; // rounding up...
             
-            Dictionary<string, BitStringIce> result = new Dictionary<string, BitStringIce>();
+            Dictionary<string, CrispBitStringIce> result = new Dictionary<string, CrispBitStringIce>();
             
             foreach (KeyValuePair<string, Category<T>> pair in _attribute)
             {
                 long[] tmpBitArray = new long[arraySize];
                 tmpBitArray.Initialize();
-                result.Add(pair.Key, new BitStringIce(tmpBitArray, length));
+                result.Add(pair.Key, new CrispBitStringIce(tmpBitArray, length));
             }
 
             // PROCESS DATA
@@ -521,7 +521,7 @@ namespace Ferda.Guha.Attribute
         /// <param name="dataTable">The table with one column sorted by primary key.</param>
         /// <param name="countVector">Count vector for purposes of relational DM.</param>
         /// <returns></returns>
-        public Dictionary<string, BitStringIce> GetBitStrings(DataTable dataTable, int [] countVector)
+        public Dictionary<string, CrispBitStringIce> GetBitStrings(DataTable dataTable, int [] countVector)
         {
             Disabled = false;
             Build();
@@ -537,13 +537,13 @@ namespace Ferda.Guha.Attribute
 
             int arraySize = (length + _blockSize - 1) / _blockSize; // rounding up...
 
-            Dictionary<string, BitStringIce> result = new Dictionary<string, BitStringIce>();
+            Dictionary<string, CrispBitStringIce> result = new Dictionary<string, CrispBitStringIce>();
 
             foreach (KeyValuePair<string, Category<T>> pair in _attribute)
             {
                 long[] tmpBitArray = new long[arraySize];
                 tmpBitArray.Initialize();
-                result.Add(pair.Key, new BitStringIce(tmpBitArray, length));
+                result.Add(pair.Key, new CrispBitStringIce(tmpBitArray, length));
             }
 
             // PROCESS DATA

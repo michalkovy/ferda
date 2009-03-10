@@ -43,10 +43,18 @@ module Ferda {
 
 				class BitStringIce
 				{
-					Ferda::Modules::LongSeq value;
-					int length;
 				};
 				
+        class CrispBitStringIce extends BitStringIce
+        {
+					Ferda::Modules::LongSeq value;
+					int length;                  
+        };
+        
+        class FuzzyBitStringIce extends BitStringIce
+        {
+          Ferda::Modules::FloatSeq value;
+        };
 								
 				struct BitStringIceWithCategoryId
 				{

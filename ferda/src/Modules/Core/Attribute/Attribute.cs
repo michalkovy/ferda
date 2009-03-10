@@ -288,7 +288,13 @@ namespace Ferda.Guha.Attribute
         /// <returns></returns>
         public Dictionary<string, BitStringIce> GetBitStrings(DataTable dataTable)
         {
-            return Axis.GetBitStrings(dataTable);
+            Dictionary<string, BitStringIce> res = new Dictionary<string, BitStringIce>();
+            Dictionary<string, CrispBitStringIce> cache = Axis.GetBitStrings(dataTable);
+            foreach (string s in Axis.GetBitStrings(dataTable).Keys)
+            {
+                res.Add(s, cache[s] as BitStringIce);
+            }
+            return res;
         }
 
         #endregion
