@@ -367,6 +367,13 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         private Guid _lastReloadFlag = System.Guid.Empty;
         private Dictionary<string, BitStringIce> _cachedValueBitStrings = null;
         private long _lastBSQueryTicks = 0;
+        /// <summary>
+        /// Gets a dictionary of names of categories and corresponding bit strings.
+        /// The method either uses a cache, or computes the bit strings from
+        /// columns.
+        /// </summary>
+        /// <param name="fallOnError">If the method should fall on error</param>
+        /// <returns>Dictionary containing categories names and bit strings</returns>
         public Dictionary<string, BitStringIce> GetBitStrings(bool fallOnError)
         {
             lock (this)
@@ -418,6 +425,12 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             }
         }
 
+        /// <summary>
+        /// Gets the bit string of a given category. 
+        /// </summary>
+        /// <param name="categoryName">Name of the category</param>
+        /// <param name="fallOnError">If the method should fall on error</param>
+        /// <returns>The bit string</returns>
         public BitStringIce GetBitString(string categoryName, bool fallOnError)
         {
             // categoryName is "" if it should be null (throught middleware)
