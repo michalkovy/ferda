@@ -115,10 +115,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                             Categorization.Public.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
-                        //the property setting - here setting the "nameInLiterals" 
+                        //the property setting - here setting the "nameInBooleaAttributes" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.EachValueOneCategory.Functions.PropNameInBooleanAttributes;
+                            Categorization.Public.SockNameInBooleanAttributes;
                         propSetting.value = nameInLiteralsValue;
 
                         //creating the new (single) module
@@ -136,10 +136,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                             Categorization.Public.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
-                        //the property setting - here setting the "nameInLiterals" 
+                        //the property setting - here setting the "nameInBooleaAttributes" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.EquidistantIntervals.Functions.PropNameInBooleanAttributes;
+                            Categorization.Public.SockNameInBooleanAttributes;
                         propSetting.value = nameInLiteralsValue;
 
                         //creating the new (single) module
@@ -157,10 +157,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                             Categorization.Public.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
-                        //the property setting - here setting the "nameInLiterals" 
+                        //the property setting - here setting the "nameInBooleaAttributes" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.EquidistantIntervalsLISp.Functions.PropNameInBooleanAttributes;
+                            Categorization.Public.SockNameInBooleanAttributes;
                         propSetting.value = nameInLiteralsValue;
 
                         //creating the new (single) module
@@ -178,10 +178,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                             Categorization.Public.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
-                        //the property setting - here setting the "nameInLiterals" 
+                        //the property setting - here setting the "nameInBooleaAttributes" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.EquifrequencyIntervals.Functions.PropNameInBooleanAttributes;
+                            Categorization.Public.SockNameInBooleanAttributes;
                         propSetting.value = nameInLiteralsValue;
 
                         //creating the new (single) module
@@ -199,10 +199,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                             Categorization.OntologyDerivedAttribute.Functions.SockOntologyEnablingColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
-                        //the property setting - here setting the "nameInLiterals" 
+                        //the property setting - here setting the "nameInBooleaAttributes" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.OntologyDerivedAttribute.Functions.PropNameInLiterals;
+                            Categorization.Public.SockNameInBooleanAttributes;
                         propSetting.value = nameInLiteralsValue;
 
                         //creating the new (single) module
@@ -220,10 +220,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                             Categorization.Public.SockColumn;
                         moduleConnection.boxModuleParam = boxModule.MyProxy;
 
-                        //the property setting - here setting the "nameInLiterals" 
+                        //the property setting - here setting the "nameInBooleaAttributes" 
                         //property of the attribute to the name of the column
                         propSetting.propertyName =
-                            Categorization.StaticAttribute.Functions.PropNameInBooleanAttributes;
+                            Categorization.Public.SockNameInBooleanAttributes;
                         propSetting.value = nameInLiteralsValue;
 
                         //creating the new (single) module
@@ -231,6 +231,27 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
                             new ModulesConnection[] { moduleConnection };
                         singleModule.newBoxModuleIdentifier =
                             Categorization.StaticAttribute.BoxInfo.typeIdentifier;
+                        singleModule.propertySetting =
+                            new PropertySetting[] { propSetting };
+                        break;
+
+                    case "ManualAttributeWithFuzzyCategories":
+                        //creating the info about the connections of the new module
+                        moduleConnection.socketName =
+                            Categorization.Public.SockColumn;
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+
+                        //the property setting - here setting the "nameInBooleaAttributes" 
+                        //property of the attribute to the name of the column
+                        propSetting.propertyName =
+                            Categorization.Public.SockNameInBooleanAttributes;
+                        propSetting.value = nameInLiteralsValue;
+
+                        //creating the new (single) module
+                        singleModule.modulesConnection =
+                            new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier =
+                            Categorization.ManualAttributeWithFuzzyCategories.BoxInfo.typeIdentifier;
                         singleModule.propertySetting =
                             new PropertySetting[] { propSetting };
                         break;

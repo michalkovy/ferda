@@ -556,6 +556,9 @@
 			<ModulesAskingForCreation>
 				<Name>StaticAttribute</Name>
 			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>ManualAttributeWithFuzzyCategories</Name>
+			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</Box>
 	<Box>
@@ -853,6 +856,9 @@
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>StaticAttribute</Name>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>ManualAttributeWithFuzzyCategories</Name>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</Box>
@@ -21013,6 +21019,9 @@
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>StaticAttribute</Name>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>ManualAttributeWithFuzzyCategories</Name>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</Box>

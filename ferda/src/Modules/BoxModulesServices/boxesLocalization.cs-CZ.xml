@@ -370,6 +370,11 @@
 				<Label>Static attribute</Label>
 				<Hint>User can edit categories</Hint>
 			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>ManualAttributeWithFuzzyCategories</Name>
+				<Label>Manuální atribut s fuzzy kategoriemi</Label>
+				<Hint>Fuzzy kategorie jsou vytvářeny uživatelem.</Hint>
+			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
@@ -568,7 +573,12 @@
 			<ModulesAskingForCreation>
 				<Name>StaticAttribute</Name>
 				<Label>Statický atribut</Label>
-				<Hint>Kategorie mohou být upravovány uživatelem</Hint>
+				<Hint>Kategorie mohou být upravovány uživatelem.</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>ManualAttributeWithFuzzyCategories</Name>
+				<Label>Manuální atribut s fuzzy kategoriemi</Label>
+				<Hint>Fuzzy kategorie jsou vytvářeny uživatelem.</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
@@ -11618,6 +11628,11 @@
 				<Name>StaticAttribute</Name>
 				<Label>Statický atribut</Label>
 				<Hint>Uživatel může upravovat kategorie ručně</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>ManualAttributeWithFuzzyCategories</Name>
+				<Label>Manuální atribut s fuzzy kategoriemi</Label>
+				<Hint>Fuzzy kategorie jsou vytvářeny uživatelem.</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>

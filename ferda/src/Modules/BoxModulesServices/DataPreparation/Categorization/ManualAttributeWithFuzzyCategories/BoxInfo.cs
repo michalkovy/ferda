@@ -163,14 +163,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
                     "There has to be at least one category or interval created in the static attribute");
             }
 
-            //if (String.IsNullOrEmpty(Func.NameInBooleanAttributes))
-            //    throw Exceptions.BadValueError(
-            //        null,
-            //        boxModule.StringIceIdentity,
-            //        "Property \"Name in Boolean attributes\" can not be empty string.",
-            //        new string[] { Functions.PropNameInBooleanAttributes },
-            //        restrictionTypeEnum.OtherReason
-            //        );
+            if (String.IsNullOrEmpty(Func.NameInBooleanAttributes))
+                throw Exceptions.BadValueError(
+                    null,
+                    boxModule.StringIceIdentity,
+                    "Property \"Name in Boolean attributes\" can not be empty string.",
+                    new string[] { Public.SockNameInBooleanAttributes },
+                    restrictionTypeEnum.OtherReason
+                    );
 
             object dummy = Func.GetCategoriesAndFrequencies(true);
             //dummy = Func.GetBitStrings(true);

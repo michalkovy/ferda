@@ -43,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FerdaBoxInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="FerdaData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d30deff6fe5fc56, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\FrontEnd\FerdaData.dll</HintPath>
+    </Reference>
     <Reference Include="FrontEndAddInHelper, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ae6a6aaec07c9505, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\FrontEnd\FrontEndAddInHelper.dll</HintPath>
