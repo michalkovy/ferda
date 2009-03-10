@@ -50,7 +50,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
             string label = String.Empty;
-            if (Func.NameInBooleanAttributes != string.Empty && Func.NameInBooleanAttributes != null)
+            if (!string.IsNullOrEmpty(Func.NameInBooleanAttributes))
             {
                 return Func.NameInBooleanAttributes;
             }
@@ -220,7 +220,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
                     null,
                     boxModule.StringIceIdentity,
                     "Property \"Name in Boolean attributes\" can not be empty string.",
-                    new string[] { Functions.PropNameInBooleanAttributes },
+                    new string[] { Public.SockNameInBooleanAttributes },
                     restrictionTypeEnum.OtherReason
                     );
 

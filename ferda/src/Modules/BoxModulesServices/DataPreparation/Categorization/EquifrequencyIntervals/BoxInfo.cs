@@ -275,7 +275,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
                       null,
                       boxModule.StringIceIdentity,
                       "Property \"Name in Boolean attributes\" can not be empty string.",
-                      new string[] { Functions.PropNameInBooleanAttributes },
+                      new string[] { Public.SockNameInBooleanAttributes },
                       restrictionTypeEnum.OtherReason
                       );
 
