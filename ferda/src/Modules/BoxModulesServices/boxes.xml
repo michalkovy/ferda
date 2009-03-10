@@ -2167,7 +2167,7 @@
 				<TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
 				<CategoryName>Categories</CategoryName>
 				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
+				<ReadOnly>true</ReadOnly>
 				<Default>1</Default>
 				<NumericalRestrictions>
 					<Restriction>
