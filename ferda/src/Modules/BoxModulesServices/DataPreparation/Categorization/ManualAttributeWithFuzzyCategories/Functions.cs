@@ -24,6 +24,7 @@ using System.Text;
 using Ferda.Guha.Data;
 using Ferda.Guha.Attribute;
 using Ferda.Guha.MiningProcessor;
+using Ferda.Modules.Helpers.Caching;
 using Ice;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWithFuzzyCategories
@@ -39,6 +40,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         protected Ferda.Modules.BoxModuleI _boxModule;
         protected Ferda.Modules.Boxes.IBoxInfo _boxInfo;
         public const string SocketFuzzyCategories = "FuzzyCategories";
+
+        private CacheFlag _cacheFlagColumn = new CacheFlag();
+        private GenericColumn _cachedValueColumn = null;
+        private Guid _cachesReloadFlag = System.Guid.NewGuid();
 
         #endregion
 
@@ -97,17 +102,54 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         #region Methods
 
         /// <summary>
-        /// Gets the proxy of the connected column
+        /// Gets generic column connected to the attribute
         /// </summary>
-        /// <param name="fallOnError">If the function should throw an exception on error</param>
-        /// <returns>Proxy of the connected column</returns>
-        public ColumnFunctionsPrx GetColumnFunctionsPrx(bool fallOnError)
+        /// <param name="fallOnError"></param>
+        /// <returns></returns>
+        public GenericColumn GetGenericColumn(bool fallOnError)
         {
-            return SocketConnections.GetPrx<ColumnFunctionsPrx>(
-                _boxModule,
-                Public.SockColumn,
-                ColumnFunctionsPrxHelper.checkedCast,
-                fallOnError);
+            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError, _boxModule);
+            if (prx == null)
+            {
+                return null;
+            }
+            ColumnInfo column = prx.getColumnInfo();
+
+            DatabaseConnectionSettingHelper connSetting =
+                new DatabaseConnectionSettingHelper(column.dataTable.databaseConnectionSetting);
+
+            Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
+            cacheSetting.Add(
+                Datasource.Database.BoxInfo.typeIdentifier + Datasource.Database.Functions.PropConnectionString,
+                connSetting);
+            cacheSetting.Add(Datasource.DataTable.BoxInfo.typeIdentifier + Datasource.DataTable.Functions.PropName,
+                             column.dataTable.dataTableName);
+            cacheSetting.Add(
+                Datasource.Column.BoxInfo.typeIdentifier + Datasource.Column.Functions.PropSelectExpression,
+                column.columnSelectExpression);
+
+            if (_cacheFlagColumn.IsObsolete(connSetting.LastReloadRequest, cacheSetting)
+                || (_cachedValueColumn == null && fallOnError))
+            {
+                _cachesReloadFlag = System.Guid.NewGuid();
+                _cachedValueColumn = ExceptionsHandler.GetResult<GenericColumn>(
+                    fallOnError,
+                    delegate
+                    {
+                        return
+                            GenericDatabaseCache.GetGenericDatabase(connSetting)
+                            [column.dataTable.dataTableName].GetGenericColumn(
+                            column.columnSelectExpression, column);
+
+                    },
+                    delegate
+                    {
+                        return null;
+                    },
+                    _boxModule.StringIceIdentity
+                    );
+            }
+            return _cachedValueColumn;
         }
 
         #endregion
@@ -122,7 +164,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// <returns></returns>
         public string GetColumnName(Current current__)
         {
-            return GetColumnFunctionsPrx(true).getColumnInfo().columnSelectExpression;
+            return Public.GetColumnFunctionsPrx(true, _boxModule).getColumnInfo().columnSelectExpression;
         }
 
         /// <summary>
@@ -133,7 +175,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// <returns>ValuesAndFrequencies structure</returns>
         public ValuesAndFrequencies GetColumnValuesAndFrequencies(Current current__)
         {
-            return GetColumnFunctionsPrx(true).getDistinctsAndFrequencies();
+            return Public.GetColumnFunctionsPrx(true, _boxModule).getDistinctsAndFrequencies();
         }
 
         /// <summary>

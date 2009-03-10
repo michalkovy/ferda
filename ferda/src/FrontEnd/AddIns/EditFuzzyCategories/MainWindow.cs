@@ -82,9 +82,12 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
         public MainWindow(ResourceManager resManager, double minimum, double maximum, IOwnerOfAddIn ownerOfAddIn,
             TrapezoidalFuzzySets fSets)
         {
-            foreach (TrapezoidalFuzzySet set in fSets.fuzzySets)
+            if (fSets != null)
             {
-                this.fuzzySets.Add(set.Name, set);
+                foreach (TrapezoidalFuzzySet set in fSets.fuzzySets)
+                {
+                    this.fuzzySets.Add(set.Name, set);
+                }
             }
 
             this.ownerOfAddIn = ownerOfAddIn;
