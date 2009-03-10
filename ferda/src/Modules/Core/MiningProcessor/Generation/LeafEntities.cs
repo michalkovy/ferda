@@ -820,11 +820,12 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 {
                     BitStringIceWithCategoryId _bs =
                         _bufferInstance.GetBitString(currentBitString);
+                    CrispBitStringIce crisp = _bs.bitString as CrispBitStringIce;
                     yield return new BitString(
                                 new BitStringIdentifier(
                                 _attributeGuid, _bs.categoryId),
-                                _bs.bitString.length,
-                                _bs.bitString.value);
+                                crisp.length,
+                                crisp.value);
 
                     currentBitString++;
                 }
@@ -835,11 +836,12 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     {
                         if (tempString != null)
                         {
+                            CrispBitStringIce crisp = tempString.bitString as CrispBitStringIce;
                             IBitString result = new BitString(
                                 new BitStringIdentifier(
                                 _attributeGuid, tempString.categoryId),
-                                tempString.bitString.length,
-                                tempString.bitString.value);
+                                crisp.length,
+                                crisp.value);
 
                             SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
                             if (parentSkipSetting != null)

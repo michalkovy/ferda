@@ -587,7 +587,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                         yield return new KeyValuePair<string, BitStringIce>(
                             _yieldStringName,
-                            new BitStringIce(_tmpString, CountVector.Length));
+                            new CrispBitStringIce(_tmpString, CountVector.Length));
                         evaluator.Flush();
                     }
                 }

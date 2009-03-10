@@ -19,6 +19,8 @@ module Ferda {
 		sequence<double> DoubleSeq;
 		sequence<DoubleSeq> DoubleSeqSeq;
 
+    sequence<float> FloatSeq;
+
 		sequence<bool> BoolOpt;
 		sequence<short> ShortOpt;
 		sequence<int> IntOpt;

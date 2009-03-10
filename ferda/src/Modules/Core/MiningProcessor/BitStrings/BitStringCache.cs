@@ -256,7 +256,16 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             BitStringIce bs = GetBitStringGeneratorPrx(key.AttributeGuid).GetBitString(key.CategoryId);
             
             _iceTicks += DateTime.Now.Ticks - before;
-            return new BitString(key, bs.length, bs.value);
+            if (bs is CrispBitStringIce)
+            {
+                CrispBitStringIce crisp = bs as CrispBitStringIce;
+                return new BitString(key, crisp.length, crisp.value);
+            }
+            else
+            {
+                FuzzyBitStringIce fuzzy = bs as FuzzyBitStringIce;
+                return new FuzzyBitString(key, fuzzy.value, false);
+            }
         }
 
         /// <summary>
