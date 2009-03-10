@@ -98,6 +98,18 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
             }
         }
 
+        /// <summary>
+        /// Gets the NameInBooleanAttributes property
+        /// </summary>
+        public string NameInBooleanAttributes
+        {
+            get
+            {
+                return _boxModule.GetPropertyString(
+                    Public.SockNameInBooleanAttributes);
+            }
+        }
+
         #endregion
 
         #region Methods

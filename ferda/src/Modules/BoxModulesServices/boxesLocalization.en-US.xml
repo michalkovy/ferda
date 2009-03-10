@@ -385,6 +385,11 @@
 				<Label>Static attribute</Label>
 				<Hint>User can edit categories</Hint>
 			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>ManualAttributeWithFuzzyCategories</Name>
+				<Label>Manual attribute with fuzzy categorie</Label>
+				<Hint>The user defines his own fuzzy categories.</Hint>
+			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
@@ -584,6 +589,11 @@
 				<Name>StaticAttribute</Name>
 				<Label>Static attribute</Label>
 				<Hint>User can edit categories</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>ManualAttributeWithFuzzyCategories</Name>
+				<Label>Manual attribute with fuzzy categorie</Label>
+				<Hint>The user defines his own fuzzy categories.</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
@@ -11635,6 +11645,11 @@
 				<Name>StaticAttribute</Name>
 				<Label>Static attribute</Label>
 				<Hint>User can edit categories</Hint>
+			</ModulesAskingForCreation>
+			<ModulesAskingForCreation>
+				<Name>ManualAttributeWithFuzzyCategories</Name>
+				<Label>Manual attribute with fuzzy categorie</Label>
+				<Hint>The user defines his own fuzzy categories.</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
