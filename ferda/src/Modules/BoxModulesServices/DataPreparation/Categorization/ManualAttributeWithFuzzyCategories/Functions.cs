@@ -42,9 +42,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         protected Ferda.Modules.Boxes.IBoxInfo _boxInfo;
         public const string SocketFuzzyCategories = "FuzzyCategories";
 
+        //caches and flags used for retrieving column
         private CacheFlag _cacheFlagColumn = new CacheFlag();
         private GenericColumn _cachedValueColumn = null;
         private Guid _cachesReloadFlag = System.Guid.NewGuid();
+
+        //caches and flags used for retrieving bit strings
+        private Guid _lastReloadFlag = System.Guid.Empty;
+        private Dictionary<string, BitStringIce> _cachedValueBitStrings = null;
 
         #endregion
 
@@ -252,6 +257,109 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
             else
                 return pair.frequency * (trapezoidalFuzzySet.B - value)
                     / (trapezoidalFuzzySet.B - trapezoidalFuzzySet.C);
+        }
+
+        /// <summary>
+        /// Gets the bit string of a given category. 
+        /// </summary>
+        /// <param name="categoryName">Name of the category</param>
+        /// <param name="fallOnError">If the method should fall on error</param>
+        /// <returns>The bit string</returns>
+        public BitStringIce GetBitString(string categoryName, bool fallOnError)
+        {
+            // categoryName is "" if it should be null (throught middleware)
+            if (String.IsNullOrEmpty(categoryName))
+                if (fallOnError)
+                    throw Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
+                                                 "String.IsNullOrEmpty(categoryName) in public BitStringIce GetBitString(string categoryName, bool fallOnError)");
+                else
+                    return null;
+
+            lock (this)
+            {
+                return ExceptionsHandler.GetResult<BitStringIce>(
+                    fallOnError,
+                    delegate
+                    {
+                        Dictionary<string, BitStringIce> cachedValueBitStrings = GetBitStrings(fallOnError);
+                        if (cachedValueBitStrings == null)
+                        {
+                            if (fallOnError)
+                                throw Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
+                                                                 "cachedValueBitStrings == null in public BitStringIce GetBitString(string categoryName, bool fallOnError)");
+                            else
+                                return null;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                return cachedValueBitStrings[categoryName];
+                            }
+                            catch (KeyNotFoundException e)
+                            {
+                                throw Exceptions.BoxRuntimeError(e, _boxModule.StringIceIdentity,
+                                                                 "Category named " + categoryName +
+                                                                 " was not found in the attribute.");
+                            }
+                        }
+                    },
+                    delegate
+                    {
+                        return null;
+                    },
+                    _boxModule.StringIceIdentity
+                    );
+            }
+        }
+
+        /// <summary>
+        /// Gets a dictionary of names of categories and corresponding bit strings.
+        /// The method either uses a cache, or computes the bit strings from
+        /// columns.
+        /// </summary>
+        /// <param name="fallOnError">If the method should fall on error</param>
+        /// <returns>Dictionary containing categories names and bit strings</returns>
+        public Dictionary<string, BitStringIce> GetBitStrings(bool fallOnError)
+        {
+            lock (this)
+            {
+                return ExceptionsHandler.GetResult<Dictionary<string, BitStringIce>>(
+                    fallOnError,
+                    delegate
+                    {
+                        if (_cachedValueBitStrings == null
+                            || _lastReloadFlag == System.Guid.Empty
+                            || _lastReloadFlag != _cachesReloadFlag
+                            )
+                        {
+                            // get primary key
+                            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(fallOnError, _boxModule);
+                            if (prx == null)
+                                return null;
+                            string[] pks = prx.getColumnInfo().dataTable.primaryKeyColumns;
+
+                            GenericColumn gc = GetGenericColumn(fallOnError);
+                            //Attribute<IComparable> att = GetAttribute(true);
+
+                            //if (gc == null || att == null)
+                            //{
+                            //    _cachedValueBitStrings = null;
+                            //    return null;
+                            //}
+                            //_cachedValueBitStrings = att.GetBitStrings(gc.GetSelect(pks));
+
+                            //_lastReloadFlag = _cachesReloadFlag;
+                        }
+                        return _cachedValueBitStrings;
+                    },
+                    delegate
+                    {
+                        return null;
+                    },
+                    _boxModule.StringIceIdentity
+                    );
+            }
         }
 
         #endregion
@@ -468,7 +576,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// <returns>BitString</returns>
         public override BitStringIce GetBitString(string categoryId, Current current__)
         {
-            return null;
+            return GetBitString(categoryId, true);
         }
 
         /// <summary>
