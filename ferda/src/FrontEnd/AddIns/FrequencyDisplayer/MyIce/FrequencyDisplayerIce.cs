@@ -141,6 +141,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
 
             List<string> iceIds = new List<string>(boxModuleParam.getFunctionsIceIds());
             ValuesAndFrequencies valfreq;
+            double rowCount = 0;
             //the box has column functionality
             if (iceIds.Contains(
                 "::Ferda::Modules::Boxes::DataPreparation::ColumnFunctions"))
@@ -149,6 +150,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
                     ColumnFunctionsPrxHelper.checkedCast(boxModuleParam.getFunctions());
                 //getting the values and frequencies
                 valfreq = prx.getDistinctsAndFrequencies();
+                rowCount = ComputeRowCount(valfreq);
             }
             else
             {
@@ -161,6 +163,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
 
                     //getting the values and frequencies
                     valfreq = prx.getCategoriesAndFrequencies();
+                    rowCount = ComputeRowCount(prx.GetColumnValuesAndFrequencies());
                 }
                 else
                 {
@@ -169,7 +172,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
             }
             //constructing the control
             Ferda.FrontEnd.AddIns.FrequencyDisplayer.FrequencyDisplayer control =
-                new FrequencyDisplayer(resManager, valfreq, ownerOfAddIn);
+                new FrequencyDisplayer(resManager, valfreq, ownerOfAddIn, rowCount);
             ownerOfAddIn.ShowDockableControl(control, label + " " +
                 resManager.GetString("ColumnFrequency"));
         }
@@ -192,6 +195,22 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer.MyIce
             localizationString = locale;
             locale = "Ferda.FrontEnd.AddIns.FrequencyDisplayer.Localization_" + locale;
             resManager = new ResourceManager(locale, Assembly.GetExecutingAssembly());
+        }
+
+        /// <summary>
+        /// Computes the number of rows in the data table
+        /// (from the frequencies of attributes)
+        /// </summary>
+        /// <param name="valfreq">Values and Frequency pair</param>
+        private double ComputeRowCount(ValuesAndFrequencies valfreq)
+        {
+            double count = 0;
+            foreach (ValueFrequencyPair pair in valfreq.data)
+            {
+                count += pair.frequency;
+            }
+
+            return count;
         }
 
         #endregion

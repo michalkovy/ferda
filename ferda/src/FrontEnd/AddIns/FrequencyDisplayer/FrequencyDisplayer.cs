@@ -79,16 +79,17 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
         /// Owner of the addin (usually the FrontEnd environment)</param>
         /// <param name="valfreq">Pairs of values and frequencies to form
         /// the tables and graphs</param>
+        /// <param name="rowCount">Count of the rows (computed from
+        /// column in the fuzzy case and from attribute in the crisp case)</param>
         public FrequencyDisplayer(ResourceManager resManager, ValuesAndFrequencies valfreq,
-            IOwnerOfAddIn ownerOfAddIn)
+            IOwnerOfAddIn ownerOfAddIn, double rowCount)
         {
             this.resManager = resManager;
             this.ownerOfAddIn = ownerOfAddIn;
+            this.rowCount = rowCount;
 
             //implicitly sorting by the first column
             comparer.column = 0;
-            //compute the row count
-            ComputeRowCount(valfreq);
 
             InitializeComponent();
             ListViewInit();
@@ -121,22 +122,6 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
         #region Private methods
 
         /// <summary>
-        /// Computes the number of rows in the data table
-        /// (from the frequencies of attributes)
-        /// </summary>
-        /// <param name="valfreq">Values and Frequency pair</param>
-        private void ComputeRowCount(ValuesAndFrequencies valfreq)
-        {
-            double count = 0;
-            foreach (ValueFrequencyPair pair in valfreq.data)
-            {
-                count += pair.frequency;
-            }
-
-            rowCount = count;
-        }
-
-        /// <summary>
         /// Creates the temporary table that is used for the graph creation
         /// and stores it to the local variable
         /// </summary>
@@ -158,7 +143,7 @@ namespace Ferda.FrontEnd.AddIns.FrequencyDisplayer
 
             //adding the second column
             column = new DataColumn();
-            column.DataType = typeof(System.Int32);
+            column.DataType = typeof(System.Double);
             column.ColumnName = "DistinctsFrequency";
             column.ReadOnly = true;
             column.Unique = false;
