@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ferda.Modules;
+using Ferda.Guha.Data;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWithFuzzyCategories
 {
@@ -126,6 +127,53 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
                     throw new NotImplementedException();
             }
             return null;
+        }
+
+        /// <summary>
+        /// Validation of the box
+        /// </summary>
+        /// <param name="boxModule">The boxmodule</param>
+        public override void Validate(BoxModuleI boxModule)
+        {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            
+            ColumnFunctionsPrx colPrs = Public.GetColumnFunctionsPrx(true, boxModule);
+
+            if (colPrs.getColumnInfo().cardinality != CardinalityEnum.Cardinal)
+            {
+                throw Exceptions.BadParamsError(null,
+                                    boxModule.StringIceIdentity,
+                                    "Fuzzy categories can be created only from cardinal columns. Set the semantics of the column to cardinal",
+                                    restrictionTypeEnum.OtherReason);
+            }
+
+            if (!GenericColumn.GetIsNumericDataType(colPrs.getColumnInfo().dataType))
+            {
+                throw Exceptions.BadParamsError(null,
+                                    boxModule.StringIceIdentity,
+                                    "The data type of the column is not supported for creation of fuzzy categories. Currently all numeric data types are supported.",
+                                    restrictionTypeEnum.OtherReason);
+            }
+
+            if (Func.FuzzySets == null)
+            {
+                throw Exceptions.BoxRuntimeError(
+                    null,
+                    boxModule.StringIceIdentity,
+                    "There has to be at least one category or interval created in the static attribute");
+            }
+
+            //if (String.IsNullOrEmpty(Func.NameInBooleanAttributes))
+            //    throw Exceptions.BadValueError(
+            //        null,
+            //        boxModule.StringIceIdentity,
+            //        "Property \"Name in Boolean attributes\" can not be empty string.",
+            //        new string[] { Functions.PropNameInBooleanAttributes },
+            //        restrictionTypeEnum.OtherReason
+            //        );
+
+            object dummy = Func.GetCategoriesAndFrequencies(true);
+            //dummy = Func.GetBitStrings(true);
         }
 
         #region Type Identifier
