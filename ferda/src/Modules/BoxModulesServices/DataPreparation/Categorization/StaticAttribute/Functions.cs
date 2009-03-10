@@ -36,7 +36,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
     {
         #region Properties
 
-        public const string PropNameInBooleanAttributes = "NameInBooleanAttributes";
         public const string PropXCategory = "XCategory";
         public const string PropIncludeNullCategory = "IncludeNullCategory";
         public const string PropDomain = "Domain";
@@ -70,7 +69,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         /// </summary>
         public string NameInBooleanAttributes
         {
-            get { return _boxModule.GetPropertyString(PropNameInBooleanAttributes); }
+            get { return _boxModule.GetPropertyString(Public.SockNameInBooleanAttributes); }
         }
 
 

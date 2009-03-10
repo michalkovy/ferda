@@ -46,7 +46,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
 
         #region Properties
 
-        public const string PropNameInLiterals = "NameInBooleanAttributes";
         public const string PropClosedFrom = "ClosedFrom";
         public const string PropXCategory = "XCategory";
         public const string PropIncludeNullCategory = "IncludeNullCategory";
@@ -72,7 +71,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         /// </summary>
         public string NameInLiterals
         {
-            get { return _boxModule.GetPropertyString(PropNameInLiterals); }
+            get { return _boxModule.GetPropertyString(Public.SockNameInBooleanAttributes); }
         }
 
         /// <summary>

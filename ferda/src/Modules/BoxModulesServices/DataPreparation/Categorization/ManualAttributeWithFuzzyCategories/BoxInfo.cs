@@ -72,7 +72,22 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// <returns>The user label</returns>
         public override string GetDefaultUserLabel(Ferda.Modules.BoxModuleI boxModule)
         {
-            return null;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            string label = String.Empty;
+            if (!string.IsNullOrEmpty(Func.NameInBooleanAttributes))
+            {
+                return Func.NameInBooleanAttributes;
+            }
+            else
+            {
+                try
+                {
+                    label =
+                    Public.GetColumnFunctionsPrx(false, boxModule).getColumnInfo().columnSelectExpression;
+                }
+                catch { }
+                return label;
+            }  
         }
 
         /// <summary>

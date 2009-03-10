@@ -306,7 +306,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                     null,
                     boxModule.StringIceIdentity,
                     "Property \"Name in results\" can not be empty string.",
-                    new string[] { Functions.PropNameInLiterals },
+                    new string[] { Public.SockNameInBooleanAttributes },
                     restrictionTypeEnum.OtherReason
                     );
 

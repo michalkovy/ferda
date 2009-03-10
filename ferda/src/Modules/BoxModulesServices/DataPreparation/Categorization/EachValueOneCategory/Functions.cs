@@ -80,7 +80,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         public string NameInBooleanAttributes
         {
             get {
-                return _boxModule.GetPropertyString(PropNameInBooleanAttributes);
+                return _boxModule.GetPropertyString(Public.SockNameInBooleanAttributes);
             }
         }
 

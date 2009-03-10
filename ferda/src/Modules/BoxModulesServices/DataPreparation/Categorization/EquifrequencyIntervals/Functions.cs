@@ -43,7 +43,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
 
         #region Properties
 
-        public const string PropNameInBooleanAttributes = "NameInBooleanAttributes";
         public const string PropClosedFrom = "ClosedFrom";
         public const string PropXCategory = "XCategory";
         public const string PropIncludeNullCategory = "IncludeNullCategory";
@@ -66,7 +65,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
         /// </summary>
         public string NameInBooleanAttributes
         {
-            get { return _boxModule.GetPropertyString(PropNameInBooleanAttributes); }
+            get { return _boxModule.GetPropertyString(Public.SockNameInBooleanAttributes); }
         }
 
         /// <summary>
