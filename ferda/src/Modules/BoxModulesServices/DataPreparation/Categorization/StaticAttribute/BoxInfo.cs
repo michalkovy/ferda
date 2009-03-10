@@ -225,7 +225,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             }
 
             dummy = Func.GetCategoriesAndFrequencies(true);
-
+            
             dummy = Func.GetBitStrings(true);
 
             Debug.Assert(dummy == null);
