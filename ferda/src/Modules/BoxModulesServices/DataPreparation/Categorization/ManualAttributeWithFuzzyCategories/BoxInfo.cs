@@ -113,7 +113,14 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
             switch (propertyName)
             {
                 case Public.SockCountOfCategories:
-                    result.longValue = Func.FuzzySets.fuzzySets.Length;
+                    if (Func.FuzzySets != null)
+                    {
+                        result.longValue = Func.FuzzySets.fuzzySets.Length;
+                    }
+                    else
+                    {
+                        result.longValue = 0;
+                    }
                     return result;
                 default:
                     throw new NotImplementedException();
