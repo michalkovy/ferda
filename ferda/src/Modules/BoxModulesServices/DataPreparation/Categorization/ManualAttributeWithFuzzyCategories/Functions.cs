@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Data;
 using Ferda.Guha.Data;
 using Ferda.Guha.Attribute;
 using Ferda.Guha.MiningProcessor;
@@ -33,7 +34,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
     /// Class is providing ICE functionality of the SampleBoxModule
     /// box module
     /// </summary>
-    public class Functions : FuzzyAttributeFunctionsDisp_, Ferda.Modules.IFunctions
+    public class Functions : AttributeFunctionsDisp_, Ferda.Modules.IFunctions
     {
         #region Fields
 
@@ -152,9 +153,111 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
             return _cachedValueColumn;
         }
 
+        /// <summary>
+        /// Gets categories and frequencies
+        /// </summary>
+        /// <param name="fallOnError">If the method should fall on error</param>
+        /// <returns>Values and frequencies structure</returns>
+        public ValuesAndFrequencies GetCategoriesAndFrequencies(bool fallOnError)
+        {
+            return ExceptionsHandler.GetResult<ValuesAndFrequencies>(
+                fallOnError,
+                delegate
+                {
+                    if (FuzzySets == null)
+                    {
+                        return null;
+                    }
+                    ValuesAndFrequencies vls = Public.GetColumnFunctionsPrx(fallOnError,
+                        _boxModule).getDistinctsAndFrequencies();
+                    if (vls != null)
+                    {
+                        if (!GenericColumn.GetIsNumericDataType(vls.dataType))
+                        {
+                            return null;
+                        }
+
+                        //result
+                        ValuesAndFrequencies result = new ValuesAndFrequencies();
+                        result.dataType = vls.dataType;
+
+                        TrapezoidalFuzzySet [] tmpSet = FuzzySets.fuzzySets;
+                        ValueFrequencyPair[] list = new ValueFrequencyPair[tmpSet.Length];
+                        int j = 0;
+                        for (int i = 0; i < tmpSet.Length; i++)
+                        {
+                            ValueFrequencyPair pair = new ValueFrequencyPair();
+                            pair.value = tmpSet[i].Name;
+
+                            double freq = 0;
+                            foreach (ValueFrequencyPair p in vls.data)
+                            {
+                                freq += MemgershipDegree(tmpSet[i], p);
+                            }
+                            pair.frequency = freq;
+                            list[j] = pair;
+                            j++;
+                        }
+                        result.data = list;
+                        return result;
+                    }
+                    return null;
+                },
+                delegate
+                {
+                    return null;
+                },
+                _boxModule.StringIceIdentity
+                );
+        }
+
+        /// <summary>
+        /// Computes a memgership degree of the trapezoidal fuzzy function in
+        /// the parameter <paramref name="trapezoidalFuzzySet"/> for given
+        /// data. The data represents one distinct value of the column and
+        /// its frequency. 
+        /// </summary>
+        /// <param name="trapezoidalFuzzySet">The trapezoidal fuzzy set</param>
+        /// <param name="pair">The distinct value and frequency pair of the
+        /// data.</param>
+        /// <returns>
+        /// Membership degree of a distinct value in the
+        /// column (the membership degree is multipied by its frequency)
+        /// </returns>
+        private double MemgershipDegree(TrapezoidalFuzzySet trapezoidalFuzzySet, 
+            ValueFrequencyPair pair)
+        {
+            double value = Convert.ToDouble(pair.value);
+            if (value < trapezoidalFuzzySet.A)
+                return 0;
+            if (value > trapezoidalFuzzySet.B)
+                return 0;
+            if (value >= trapezoidalFuzzySet.D && value <= trapezoidalFuzzySet.C)
+                return pair.frequency; //frequency
+            if (value < trapezoidalFuzzySet.D)
+                return pair.frequency * (value - trapezoidalFuzzySet.A)
+                    / (trapezoidalFuzzySet.D - trapezoidalFuzzySet.A);
+            else
+                return pair.frequency * (trapezoidalFuzzySet.B - value)
+                    / (trapezoidalFuzzySet.B - trapezoidalFuzzySet.C);
+        }
+
         #endregion
 
         #region ICE functions
+
+        /// <summary>
+        /// Gets attribute names
+        /// </summary>
+        /// <param name="current__">ICE stuff</param>
+        /// <returns>Attribute names</returns>
+        public override GuidAttributeNamePair[] GetAttributeNames(Current current__)
+        {
+            return new GuidAttributeNamePair[]
+                {
+                    new GuidAttributeNamePair(Guid, Public.SockNameInBooleanAttributes),
+                };
+        }
 
         /// <summary>
         /// Gets the name of the column from which the attribute and bit string generator
@@ -162,7 +265,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// </summary>
         /// <param name="current__">ICE stuff</param>
         /// <returns></returns>
-        public string GetColumnName(Current current__)
+        public override string GetColumnName(Current current__)
         {
             return Public.GetColumnFunctionsPrx(true, _boxModule).getColumnInfo().columnSelectExpression;
         }
@@ -173,7 +276,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// the PMML support.
         /// </summary>
         /// <returns>ValuesAndFrequencies structure</returns>
-        public ValuesAndFrequencies GetColumnValuesAndFrequencies(Current current__)
+        public override ValuesAndFrequencies GetColumnValuesAndFrequencies(Current current__)
         {
             return Public.GetColumnFunctionsPrx(true, _boxModule).getDistinctsAndFrequencies();
         }
@@ -183,7 +286,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// </summary>
         /// <param name="current__">ICE stuff</param>
         /// <returns>Identification of the attribute</returns>
-        public GuidStruct GetAttributeId(Current current__)
+        public override GuidStruct GetAttributeId(Current current__)
         {
             return Guid;
         }
@@ -193,7 +296,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// </summary>
         /// <param name="current__">ICE stuff</param>
         /// <returns>Attribute cardinality</returns>
-        public CardinalityEnum GetAttributeCardinality(Current current__)
+        public override CardinalityEnum GetAttributeCardinality(Current current__)
         {
             return Cardinality;
         }
@@ -213,7 +316,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// <param name="detailIdColumn">Detail data table ID column</param>
         /// <param name="current__">ICE stuff</param>
         /// <returns>a count vector</returns>
-        public int[] GetCountVector(string masterIdColumn, string masterDatatableName, string detailIdColumn, Current current__)
+        public override int[] GetCountVector(string masterIdColumn, string masterDatatableName, string detailIdColumn, Current current__)
         {
             throw Exceptions.BoxRuntimeError(null, BoxInfo.typeIdentifier,
                 "The attribute with fuzzy categories does not support count vector computing");
@@ -233,7 +336,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// <returns>True iff there is a next bit string in the output
         /// <paramref name="bitString"/></returns>
         /// <param name="current__">ICE stuff</param>
-        public bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
+        public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
         {
             bitString = new BitStringIceWithCategoryId();
             return false;
@@ -246,7 +349,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// </summary>
         /// <param name="current__">ICE stuff</param>
         /// <returns>Maximal number of bit strings</returns>
-        public long GetMaxBitStringCount(Current current__)
+        public override long GetMaxBitStringCount(Current current__)
         {
             return 0;
         }
@@ -258,7 +361,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// </summary>
         /// <param name="current__">ICE stuff</param>
         /// <returns>Identificators of categories</returns>
-        public string[] GetCategoriesIds(Current current__)
+        public override string[] GetCategoriesIds(Current current__)
         {
             List<string> list = new List<string>();
             foreach (TrapezoidalFuzzySet set in FuzzySets.fuzzySets)
@@ -280,7 +383,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// <param name="current__">ICE stuff</param>
         /// <returns>Missing information category name
         /// </returns>
-        public string[] GetMissingInformationCategoryId(Current current__)
+        public override string[] GetMissingInformationCategoryId(Current current__)
         {
             return new string[0];
         }
@@ -307,7 +410,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// and cardinal</c> attributes. Otherwise, <c>null</c> or
         /// <c>double[0]</c> is returned
         /// </returns>
-        public double[] GetCategoriesNumericValues(Current current__)
+        public override double[] GetCategoriesNumericValues(Current current__)
         {
             return new double[0];
         }
@@ -328,14 +431,45 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// </summary>
         /// <param name="current__">ICE stuff</param>
         /// <returns>Serialized attribute</returns>
-        public string getAttribute(Current current__)
+        public override string getAttribute(Current current__)
         {
             return string.Empty;
         }
 
-        public override string HelloWorld(Ice.Current __current)
+        /// <summary>
+        /// Gets categories and their frequencies in the attribute
+        /// </summary>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>Values and frequencies pair</returns>
+        public override ValuesAndFrequencies getCategoriesAndFrequencies(Current current__)
         {
-            return "Hello World!";
+            return GetCategoriesAndFrequencies(true);
+        }
+
+        /// <summary>
+        /// Returns a bit string for category in the 
+        /// <paramref name="categoryId"/> parameter.
+        /// </summary>
+        /// <param name="categoryId">Category identification
+        /// (name of the category)</param>
+        /// <param name="current__">Ice stuff</param>
+        /// <returns>BitString</returns>
+        public override BitStringIce GetBitString(string categoryId, Current current__)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Gets source datatable id
+        /// </summary>
+        /// <param name="current__">ICEstuff</param>
+        /// <returns></returns>
+        public override string GetSourceDataTableId(Current current__)
+        {
+            ColumnFunctionsPrx prx = Public.GetColumnFunctionsPrx(true, _boxModule);
+            if (prx != null)
+                return prx.GetSourceDataTableId();
+            return null;
         }
 
         #endregion

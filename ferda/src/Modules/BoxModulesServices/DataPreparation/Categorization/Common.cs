@@ -332,6 +332,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
         public const string SockCountOfCategories = "CountOfCategories";
 
         /// <summary>
+        /// Socket getting the name in Boolean attributes property
+        /// </summary>
+        public const string SockNameInBooleanAttributes = "NameInBooleanAttributes";
+
+        /// <summary>
         /// Returns the cardinality of an attribute box (there has to be
         /// a socket named Cardinality). 
         /// </summary>
