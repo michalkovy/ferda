@@ -387,7 +387,7 @@
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>ManualAttributeWithFuzzyCategories</Name>
-				<Label>Manual attribute with fuzzy categorie</Label>
+				<Label>Manual attribute with fuzzy categories</Label>
 				<Hint>The user defines his own fuzzy categories.</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
@@ -592,7 +592,7 @@
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>ManualAttributeWithFuzzyCategories</Name>
-				<Label>Manual attribute with fuzzy categorie</Label>
+				<Label>Manual attribute with fuzzy categories</Label>
 				<Hint>The user defines his own fuzzy categories.</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
@@ -11643,7 +11643,7 @@
 			</ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>ManualAttributeWithFuzzyCategories</Name>
-				<Label>Manual attribute with fuzzy categorie</Label>
+				<Label>Manual attribute with fuzzy categories</Label>
 				<Hint>The user defines his own fuzzy categories.</Hint>
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>

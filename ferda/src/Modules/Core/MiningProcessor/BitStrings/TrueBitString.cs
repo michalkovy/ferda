@@ -108,7 +108,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <returns>Result of NOT operation</returns>
         public IBitString Not()
         {
-            throw new NotSupportedException("Negation of false bit string is not supported.");
+            throw new NotSupportedException("Negation of true bit string is not supported.");
         }
 
         /// <summary>

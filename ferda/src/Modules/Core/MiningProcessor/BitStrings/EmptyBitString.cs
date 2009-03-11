@@ -119,18 +119,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             BitString bs = source as BitString;
             if (bs != null)
                 return bs.And(this);
-            else
-                return andSpecial(source);
+            FuzzyBitString fbs = source as FuzzyBitString;
+            if (fbs != null)
+                return fbs.And(this);
+            
+            return andSpecial(source);
         }
-
-        //public IBitString AndCloned(IBitString source)
-        //{
-        //    BitString bs = source as BitString;
-        //    if (bs != null)
-        //        return bs.AndCloned(this);
-        //    else
-        //        return andSpecial(source, false);
-        //}
         
         #endregion
 
@@ -184,18 +178,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             BitString bs = source as BitString;
             if (bs != null)
                 return bs.Or(this);
-            else
+            FuzzyBitString fbs = source as FuzzyBitString;
+            if (fbs != null)
+                return fbs.Or(this);
+            
                 return orSpecial(source);
         }
-
-        //public IBitString OrCloned(IBitString source)
-        //{
-        //    BitString bs = source as BitString;
-        //    if (bs != null)
-        //        return bs.OrCloned(this);
-        //    else
-        //        return andSpecial(source, false);
-        //}
         
         #endregion
 
