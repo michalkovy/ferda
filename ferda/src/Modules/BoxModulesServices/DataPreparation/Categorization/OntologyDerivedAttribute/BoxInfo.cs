@@ -62,9 +62,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
             string label = String.Empty;
-            if (Func.NameInLiterals != string.Empty && Func.NameInLiterals != null)
+            if (string.IsNullOrEmpty(Public.NameInBooleanAttributes(boxModule)))
             {
-                return Func.NameInLiterals;
+                return Public.NameInBooleanAttributes(boxModule);
             }
             else
             {
@@ -301,7 +301,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             dummy = Func.GetBitStrings(true);
             Debug.Assert(dummy == null);
 
-            if (String.IsNullOrEmpty(Func.NameInLiterals))
+            if (String.IsNullOrEmpty(Public.NameInBooleanAttributes(boxModule)))
                 throw Exceptions.BadValueError(
                     null,
                     boxModule.StringIceIdentity,

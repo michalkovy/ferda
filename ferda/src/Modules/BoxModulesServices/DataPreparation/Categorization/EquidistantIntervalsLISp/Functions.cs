@@ -61,14 +61,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         }
 
         /// <summary>
-        /// Name in literals
-        /// </summary>
-        public string NameInBooleanAttributes
-        {
-            get { return _boxModule.GetPropertyString(Public.SockNameInBooleanAttributes); }
-        }
-
-        /// <summary>
         /// Intervals closed from
         /// </summary>
         public Side ClosedFrom
@@ -918,7 +910,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         {
             return new GuidAttributeNamePair[]
                 {
-                    new GuidAttributeNamePair(Guid, NameInBooleanAttributes),
+                    new GuidAttributeNamePair(Guid, Public.NameInBooleanAttributes(_boxModule)),
                 };
         }
 

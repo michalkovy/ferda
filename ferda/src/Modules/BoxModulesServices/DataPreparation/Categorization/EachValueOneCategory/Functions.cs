@@ -60,7 +60,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         #region Properties
 
-        public const string PropNameInBooleanAttributes = "NameInBooleanAttributes";
         public const string PropXCategory = "XCategory";
         public const string PropIncludeNullCategory = "IncludeNullCategory";
         public const string PropDomain = "Domain";
@@ -75,13 +74,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         public GuidStruct Guid
         {
             get { return BoxInfoHelper.GetGuidStructFromProperty("Guid", _boxModule); }
-        }
-
-        public string NameInBooleanAttributes
-        {
-            get {
-                return _boxModule.GetPropertyString(Public.SockNameInBooleanAttributes);
-            }
         }
 
         public LongTI CountOfCategories
@@ -742,7 +734,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
         {
             return new GuidAttributeNamePair[]
                 {
-                    new GuidAttributeNamePair(Guid, NameInBooleanAttributes),
+                    new GuidAttributeNamePair(Guid, 
+                        Public.NameInBooleanAttributes(_boxModule)),
                 };
         }
 

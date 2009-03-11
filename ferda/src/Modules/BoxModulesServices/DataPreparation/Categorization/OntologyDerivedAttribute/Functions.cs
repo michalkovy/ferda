@@ -67,14 +67,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         }
 
         /// <summary>
-        /// Name in literals
-        /// </summary>
-        public string NameInLiterals
-        {
-            get { return _boxModule.GetPropertyString(Public.SockNameInBooleanAttributes); }
-        }
-
-        /// <summary>
         /// Intervals closed from
         /// </summary>
         public Side ClosedFrom
@@ -1168,7 +1160,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         {
             return new GuidAttributeNamePair[]
                 {
-                    new GuidAttributeNamePair(Guid, NameInLiterals),
+                    new GuidAttributeNamePair(Guid, 
+                        Public.NameInBooleanAttributes(_boxModule)),
                 };
         }
 

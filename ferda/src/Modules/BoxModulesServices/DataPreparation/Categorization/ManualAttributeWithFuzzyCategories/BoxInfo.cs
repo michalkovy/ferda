@@ -23,6 +23,8 @@ using System.Collections.Generic;
 using System.Text;
 using Ferda.Modules;
 using Ferda.Guha.Data;
+using FixedAtom = Ferda.Modules.Boxes.GuhaMining.FixedAtom;
+using AtomSetting = Ferda.Modules.Boxes.GuhaMining.AtomSetting;
 
 namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWithFuzzyCategories
 {
@@ -101,7 +103,62 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// </returns>
         public override Ferda.Modules.ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, Ferda.Modules.BoxModuleI boxModule)
         {
-            return new ModulesAskingForCreation[] { };
+            //getting the information what is in the config files
+            Dictionary<string, ModulesAskingForCreation> modulesAFC =
+                getModulesAskingForCreationNonDynamic(localePrefs);
+            //creating the structure that will be returned
+            List<ModulesAskingForCreation> result =
+                new List<ModulesAskingForCreation>();
+
+            ModulesConnection moduleConnection;
+            ModuleAskingForCreation singleModule;
+
+            foreach (string moduleAFCname in modulesAFC.Keys)
+            {
+                singleModule = new ModuleAskingForCreation();
+                moduleConnection = new ModulesConnection();
+
+                switch (moduleAFCname)
+                {
+                    case "FixedAtom":
+                        //creating the info about the connections of the new module
+                        moduleConnection.socketName =
+                            FixedAtom.Functions.SockBitStringGenerator;
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+
+                        //creating the new (single) module
+                        singleModule.modulesConnection =
+                            new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier =
+                            FixedAtom.BoxInfo.typeIdentifier;
+                        singleModule.propertySetting = new PropertySetting[] { };
+                        break;
+
+                    case "AtomSetting":
+                        //creating the info about the connections of the new module
+                        moduleConnection.socketName =
+                            AtomSetting.Functions.SockBitStringGenerator;
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+
+                        //creating the new (single) module
+                        singleModule.modulesConnection =
+                            new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier =
+                            AtomSetting.BoxInfo.typeIdentifier;
+                        singleModule.propertySetting = new PropertySetting[] { };
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                //setting the newModules property of each modules for intearction
+                modulesAFC[moduleAFCname].newModules =
+                    new ModuleAskingForCreation[] { singleModule };
+                result.Add(modulesAFC[moduleAFCname]);
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>

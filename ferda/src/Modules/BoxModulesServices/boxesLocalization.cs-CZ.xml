@@ -1383,11 +1383,6 @@
 				<Label>Nastavení atomu</Label>
 				<Hint>Vytváří nastavení koeficientu, kde uživatel může definovat typ koeficientů a maximální délku.</Hint>
 			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>StaticAttribute</Name>
-				<Label>Statický atribut</Label>
-				<Hint>Vytváří atribut, který může být manuálně upravován.</Hint>
-			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
