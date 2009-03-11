@@ -691,7 +691,36 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
             else
             {
-                
+                float nineFTppSum = nineFT.pp.Sum;
+                float nineFTpxSum = nineFT.px.Sum;
+                float nineFTpnSum = nineFT.pn.Sum;
+                float nineFTxpSum = nineFT.xp.Sum;
+                float nineFTxxSum = nineFT.xx.Sum;
+                float nineFTxnSum = nineFT.xn.Sum;
+
+                fft.f111 = pA.And(pS.And(pC)).Sum;
+                fft.f1x1 = pA.And(nineFT.px).Sum;
+                fft.f101 = pA.And(nineFT.pn).Sum;
+
+                fft.fx11 = xA.And(pS.And(pC)).Sum;
+                fft.fxx1 = xA.And(nineFT.px).Sum;
+                fft.fx01 = xA.And(nineFT.pn).Sum;
+
+                fft.f011 = nineFTppSum - fft.f111 - fft.fx11;
+                fft.f0x1 = nineFTpxSum - fft.f1x1 - fft.fxx1;
+                fft.f001 = nineFTpnSum - fft.f101 - fft.fx01;
+
+                fft.f11x = pA.And(nineFT.xp).Sum;
+                fft.f1xx = pA.And(nineFT.xx).Sum;
+                fft.f10x = pA.And(nineFT.xn).Sum;
+
+                fft.fx1x = xA.And(nineFT.xp).Sum;
+                fft.fxxx = xA.And(nineFT.xx).Sum;
+                fft.fx0x = xA.And(nineFT.xn).Sum;
+
+                fft.f01x = nineFTxpSum - fft.f11x - fft.fx1x;
+                fft.f0xx = nineFTxxSum - fft.f1xx - fft.fxxx;
+                fft.f00x = nineFTxnSum - fft.f10x - fft.fx0x;
             }
 			
 			ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
