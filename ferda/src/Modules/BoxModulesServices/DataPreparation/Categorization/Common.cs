@@ -364,5 +364,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization
                 ColumnFunctionsPrxHelper.checkedCast,
                 fallOnError);
         }
+
+        /// <summary>
+        /// Gets the value of the property "NameInBooleanAttributes" of 
+        /// a given box module
+        /// </summary>
+        /// <param name="_boxModule">Box module</param>
+        /// <returns>Property of the box module</returns>
+        public static string NameInBooleanAttributes(BoxModuleI _boxModule)
+        {
+            return _boxModule.GetPropertyString(Public.SockNameInBooleanAttributes);
+        }
     }
 }

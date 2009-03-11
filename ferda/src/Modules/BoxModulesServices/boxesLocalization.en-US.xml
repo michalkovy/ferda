@@ -1388,11 +1388,6 @@
 				<Label>Atom Setting</Label>
 				<Hint>Creates a coefficient setting where user can set the type of coefficient and maximal and minimal lengths.</Hint>
 			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>StaticAttribute</Name>
-				<Label>Static attribute</Label>
-				<Hint>Creates a static attribute which can be manually edited.</Hint>
-			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>

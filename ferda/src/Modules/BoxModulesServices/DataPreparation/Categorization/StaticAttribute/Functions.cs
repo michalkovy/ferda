@@ -64,15 +64,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             }
         }
 
-        /// <summary>
-        /// Name in literals
-        /// </summary>
-        public string NameInBooleanAttributes
-        {
-            get { return _boxModule.GetPropertyString(Public.SockNameInBooleanAttributes); }
-        }
-
-
         /* protected string IncludeNullCategory
          {
              get
@@ -198,7 +189,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         {
             return new GuidAttributeNamePair[]
                 {
-                    new GuidAttributeNamePair(Guid, NameInBooleanAttributes),
+                    new GuidAttributeNamePair(Guid, Public.NameInBooleanAttributes(_boxModule)),
                 };
         }
 

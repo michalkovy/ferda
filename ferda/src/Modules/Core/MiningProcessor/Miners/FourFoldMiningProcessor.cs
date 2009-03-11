@@ -650,8 +650,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 int nineFTpnSum = Convert.ToInt32(nineFT.pn.Sum);
                 int nineFTxnSum = Convert.ToInt32(nineFT.xn.Sum);
 
-                
-
                 int f111, fx11, f1x1, fxx1;
                 int f11x, fx1x, f1xx, fxxx;
 

@@ -439,7 +439,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         {
             return new GuidAttributeNamePair[]
                 {
-                    new GuidAttributeNamePair(Guid, Public.SockNameInBooleanAttributes),
+                    new GuidAttributeNamePair(Guid, Public.NameInBooleanAttributes(_boxModule)),
                 };
         }
 

@@ -2271,9 +2271,6 @@
 			<ModulesAskingForCreation>
 				<Name>AtomSetting</Name>
 			</ModulesAskingForCreation>
-			<ModulesAskingForCreation>
-				<Name>StaticAttribute</Name>
-			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</Box>
 	<Box>

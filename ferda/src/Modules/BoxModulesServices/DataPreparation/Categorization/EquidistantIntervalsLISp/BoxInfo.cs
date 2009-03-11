@@ -60,9 +60,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
             string label = String.Empty;
-            if (Func.NameInBooleanAttributes != string.Empty && Func.NameInBooleanAttributes != null)
+            if (string.IsNullOrEmpty(Public.NameInBooleanAttributes(boxModule)))
             {
-                return Func.NameInBooleanAttributes;
+                return Public.NameInBooleanAttributes(boxModule);
             }
             else
             {
@@ -255,7 +255,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             dummy = Func.GetBitStrings(true);
             Debug.Assert(dummy == null);
 
-            if (String.IsNullOrEmpty(Func.NameInBooleanAttributes))
+            if (String.IsNullOrEmpty(Public.NameInBooleanAttributes(boxModule)))
                 throw Exceptions.BadValueError(
                     null,
                     boxModule.StringIceIdentity,
