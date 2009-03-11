@@ -1,9 +1,8 @@
-// BitStringIce.cs - Bit string for Ice
+ï»¿// FuzzyBitStringIce.cs - fuzzy bit string for Ice
 //
-// Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
-// Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
+// Authors: Martin RalbovskÃ½ <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2006 Tomáš Kuchaø
+// Copyright (c) 2009 Martin RalbovskÃ½
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,11 +25,8 @@ using System.Text;
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Represents a bit string that is passed from the attribute to the
-    /// mining processor via the Ice layer. This bit string does not implement
-    /// any field, all the necessary fields are implemented in 
-    /// <see cref="CrispBitStringIce"/> and <see cref="FuzzyBitStringIce"/>,
-    /// which stand for crisp and fuzzy bit strings.
+    /// Represents a fuzzy bit string that is passed from the attribute to the
+    /// mining processor via the Ice layer. 
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -41,7 +37,13 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public class BitStringIce
+    public class FuzzyBitStringIce
     {
+        /// <summary>
+        /// The value of the bit string, each float of the array correspond to individual
+        /// bit. In contrary with crisp bit string, information about length of the bit
+        /// string is not needed, it is the length of the array. 
+        /// </summary>
+        public float[] value;
     }
 }

@@ -1,9 +1,8 @@
-// BitStringIce.cs - Bit string for Ice
+ï»¿// CrispBitStringIce.cs - crisp bit string for Ice
 //
-// Authors: Tomáš Kuchaø <tomas.kuchar@gmail.com>      
-// Commented by: Martin Ralbovský <martin.ralbovsky@gmail.com>
+// Authors: Martin RalbovskÃ½ <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2006 Tomáš Kuchaø
+// Copyright (c) 2009 Martin RalbovskÃ½
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,11 +25,8 @@ using System.Text;
 namespace Ferda.Guha.MiningProcessor.Design
 {
     /// <summary>
-    /// Represents a bit string that is passed from the attribute to the
-    /// mining processor via the Ice layer. This bit string does not implement
-    /// any field, all the necessary fields are implemented in 
-    /// <see cref="CrispBitStringIce"/> and <see cref="FuzzyBitStringIce"/>,
-    /// which stand for crisp and fuzzy bit strings.
+    /// Represents a crisp bit string that is passed from the attribute to the
+    /// mining processor via the Ice layer. 
     /// </summary>
     /// <remarks>
     /// The original slice design can be found in 
@@ -41,7 +37,18 @@ namespace Ferda.Guha.MiningProcessor.Design
     /// The csd file stands for class diagram, that can be edited with the 
     /// <c>NClass</c> tool, see <see cref="http://nclass.sourceforge.net"/>.
     /// </remarks>
-    public class BitStringIce
+    public class CrispBitStringIce
     {
+        /// <summary>
+        /// Array of long is the storage of individual bits in the bit string,
+        /// one long stores 64 bits.
+        /// </summary>
+        public long[] value;
+
+        /// <summary>
+        /// The length of the bit string in order to determine, how many bits of
+        /// the last long belong to the bit string. 
+        /// </summary>
+        public int length;
     }
 }

@@ -4,8 +4,6 @@
     <Entity type="Class">
       <Name>BitStringIce</Name>
       <Access>Public</Access>
-      <Member type="Field">public Ferda.Modules.LongSeq value</Member>
-      <Member type="Field">public int length</Member>
       <Modifier>None</Modifier>
     </Entity>
     <Entity type="Structure">
@@ -250,6 +248,19 @@
       <Value>MinimalNodeFrequency</Value>
       <Value>MinimalLeafPurityORMinimalNodeFrequency</Value>
     </Entity>
+    <Entity type="Class">
+      <Name>CrispBitStringIce</Name>
+      <Access>Public</Access>
+      <Member type="Field">public long[] value</Member>
+      <Member type="Field">public int length</Member>
+      <Modifier>None</Modifier>
+    </Entity>
+    <Entity type="Class">
+      <Name>FuzzyBitStringIce</Name>
+      <Access>Public</Access>
+      <Member type="Field">public float [] value</Member>
+      <Modifier>None</Modifier>
+    </Entity>
   </Entities>
   <Relations>
     <Relation type="Association" first="1" second="0">
@@ -364,18 +375,20 @@
       <IsAggregation>False</IsAggregation>
       <IsComposition>False</IsComposition>
     </Relation>
+    <Relation type="Dependency" first="0" second="34" />
+    <Relation type="Dependency" first="0" second="35" />
   </Relations>
   <Positions>
     <Shape>
-      <Location left="28" top="18" />
-      <Size width="193" height="124" />
+      <Location left="28" top="53" />
+      <Size width="193" height="93" />
     </Shape>
     <Shape>
       <Location left="323" top="8" />
       <Size width="193" height="124" />
     </Shape>
     <Shape>
-      <Location left="18" top="186" />
+      <Location left="28" top="514" />
       <Size width="193" height="124" />
     </Shape>
     <Shape>
@@ -501,6 +514,14 @@
     <Shape>
       <Location left="18" top="1328" />
       <Size width="264" height="126" />
+    </Shape>
+    <Shape>
+      <Location left="28" top="230" />
+      <Size width="162" height="119" />
+    </Shape>
+    <Shape>
+      <Location left="91" top="371" />
+      <Size width="162" height="109" />
     </Shape>
     <Connection>
       <StartNode isHorizontal="True" location="63" />
@@ -645,6 +666,14 @@
     <Connection>
       <StartNode isHorizontal="True" location="24" />
       <EndNode isHorizontal="True" location="148" />
+    </Connection>
+    <Connection>
+      <StartNode isHorizontal="False" location="69" />
+      <EndNode isHorizontal="False" location="69" />
+    </Connection>
+    <Connection>
+      <StartNode isHorizontal="False" location="182" />
+      <EndNode isHorizontal="False" location="119" />
     </Connection>
   </Positions>
 </ClassProject>
