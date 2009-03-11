@@ -49,7 +49,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
 
         //caches and flags used for retrieving bit strings
         private Guid _lastReloadFlag = System.Guid.Empty;
-        private Dictionary<string, BitStringIce> _cachedValueBitStrings = null;
+        private Dictionary<string, FuzzyBitStringIce> _cachedValueBitStrings = null;
 
         #endregion
 
@@ -229,7 +229,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         }
 
         /// <summary>
-        /// Computes a memgership degree of the trapezoidal fuzzy function in
+        /// Computes a memgership degree of the trapezoidal fuzzy sey in
         /// the parameter <paramref name="trapezoidalFuzzySet"/> for given
         /// data. The data represents one distinct value of the column and
         /// its frequency. 
@@ -260,6 +260,27 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         }
 
         /// <summary>
+        /// Computes membership degree of a trapezoidal fuzzy set for
+        /// given number. 
+        /// </summary>
+        /// <param name="set">The trapezoidal fuzzy set</param>
+        /// <param name="p">Number</param>
+        /// <returns>Membership degree of the number in the trapezoidal fuzzy set.</returns>
+        private float MemgershipDegree(TrapezoidalFuzzySet set, float p)
+        {
+            if (p < set.A)
+                return 0f;
+            if (p > set.B)
+                return 0f;
+            if (p >= set.D && p <= set.C)
+                return 1f;
+            if (p < set.D)
+                return Convert.ToSingle((p - set.A) / (set.D - set.A));
+            else
+                return Convert.ToSingle((set.B - p) / (set.B - set.C));
+        }
+
+        /// <summary>
         /// Gets the bit string of a given category. 
         /// </summary>
         /// <param name="categoryName">Name of the category</param>
@@ -281,7 +302,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
                     fallOnError,
                     delegate
                     {
-                        Dictionary<string, BitStringIce> cachedValueBitStrings = GetBitStrings(fallOnError);
+                        Dictionary<string, FuzzyBitStringIce> cachedValueBitStrings = GetBitStrings(fallOnError);
                         if (cachedValueBitStrings == null)
                         {
                             if (fallOnError)
@@ -294,7 +315,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
                         {
                             try
                             {
-                                return cachedValueBitStrings[categoryName];
+                                BitStringIce bs = cachedValueBitStrings[categoryName] 
+                                    as BitStringIce;
+                                return bs;
                             }
                             catch (KeyNotFoundException e)
                             {
@@ -320,11 +343,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// </summary>
         /// <param name="fallOnError">If the method should fall on error</param>
         /// <returns>Dictionary containing categories names and bit strings</returns>
-        public Dictionary<string, BitStringIce> GetBitStrings(bool fallOnError)
+        public Dictionary<string, FuzzyBitStringIce> GetBitStrings(bool fallOnError)
         {
             lock (this)
             {
-                return ExceptionsHandler.GetResult<Dictionary<string, BitStringIce>>(
+                return ExceptionsHandler.GetResult<Dictionary<string, FuzzyBitStringIce>>(
                     fallOnError,
                     delegate
                     {
@@ -340,16 +363,21 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
                             string[] pks = prx.getColumnInfo().dataTable.primaryKeyColumns;
 
                             GenericColumn gc = GetGenericColumn(fallOnError);
-                            //Attribute<IComparable> att = GetAttribute(true);
 
-                            //if (gc == null || att == null)
-                            //{
-                            //    _cachedValueBitStrings = null;
-                            //    return null;
-                            //}
-                            //_cachedValueBitStrings = att.GetBitStrings(gc.GetSelect(pks));
+                            if (!GenericColumn.GetIsNumericDataType(prx.getColumnInfo().dataType))
+                            {
+                                throw Exceptions.BoxRuntimeError(null, _boxModule.StringIceIdentity,
+                                                                 "The connected column does not have numerical type.");
+                            }
 
-                            //_lastReloadFlag = _cachesReloadFlag;
+                            if (gc == null)
+                            {
+                                _cachedValueBitStrings = null;
+                                return null;
+                            }
+                            _cachedValueBitStrings = ComputeFuzzyBitStrings(gc.GetSelect(pks));
+
+                            _lastReloadFlag = _cachesReloadFlag;
                         }
                         return _cachedValueBitStrings;
                     },
@@ -360,6 +388,42 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
                     _boxModule.StringIceIdentity
                     );
             }
+        }
+
+        /// <summary>
+        /// The method computes the fuzzy bit strings from the data.
+        /// The null values are treated as zero. 
+        /// </summary>
+        /// <param name="dataTable">The column data</param>
+        /// <returns>
+        /// Dictionary of categories and their
+        /// bit strings.
+        /// </returns>
+        private Dictionary<string, FuzzyBitStringIce> ComputeFuzzyBitStrings(DataTable dataTable)
+        {
+            Dictionary<string, FuzzyBitStringIce> result = new Dictionary<string, FuzzyBitStringIce>();
+
+            foreach (TrapezoidalFuzzySet set in FuzzySets.fuzzySets)
+            {
+                FuzzyBitStringIce bitString = new FuzzyBitStringIce();
+                float[] floats = new float[dataTable.Rows.Count];
+
+                for (int i = 0; i < dataTable.Rows.Count; i++)
+                {
+                    if (dataTable.Rows[i][0] is DBNull)
+                    {
+                        floats[i] = 0;
+                    }
+                    else
+                    {
+                        floats[i] = MemgershipDegree(set, Convert.ToSingle(dataTable.Rows[i][0]));
+                    }
+                }
+
+                bitString.value = floats;
+                result.Add(set.Name, bitString);
+            }
+            return result;
         }
 
         #endregion

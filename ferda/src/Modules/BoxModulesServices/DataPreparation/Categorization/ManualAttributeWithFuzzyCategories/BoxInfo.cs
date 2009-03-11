@@ -188,7 +188,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
                     );
 
             object dummy = Func.GetCategoriesAndFrequencies(true);
-            //dummy = Func.GetBitStrings(true);
+            dummy = Func.GetBitStrings(true);
         }
 
         #region Type Identifier
