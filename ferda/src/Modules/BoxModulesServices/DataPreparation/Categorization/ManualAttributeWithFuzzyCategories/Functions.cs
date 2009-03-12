@@ -244,6 +244,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         private double MemgershipDegree(TrapezoidalFuzzySet trapezoidalFuzzySet, 
             ValueFrequencyPair pair)
         {
+            if (pair.value == "Null")
+                return 0;
             double value = Convert.ToDouble(pair.value);
             if (value < trapezoidalFuzzySet.A)
                 return 0;
