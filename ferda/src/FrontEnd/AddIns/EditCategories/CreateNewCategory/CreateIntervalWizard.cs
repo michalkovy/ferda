@@ -569,8 +569,10 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                             break;
 
                         case DbSimpleDataTypeEnum.DoubleSimpleType:
-                        case DbSimpleDataTypeEnum.FloatSimpleType:
                             leftBound = (IComparable)Convert.ToDouble(TextBoxLeftBound.Text);
+                            break;
+                        case DbSimpleDataTypeEnum.FloatSimpleType:
+                            leftBound = (IComparable)Convert.ToSingle(TextBoxLeftBound.Text);
                             break;
 
                         case DbSimpleDataTypeEnum.IntegerSimpleType:
@@ -628,8 +630,10 @@ namespace Ferda.FrontEnd.AddIns.EditCategories.CreateNewCategory
                             break;
 
                         case DbSimpleDataTypeEnum.DoubleSimpleType:
-                        case DbSimpleDataTypeEnum.FloatSimpleType:
                             rightBound = (IComparable)Convert.ToDouble(TextBoxRightBound.Text);
+                            break;
+                        case DbSimpleDataTypeEnum.FloatSimpleType:
+                            rightBound = (IComparable)Convert.ToSingle(TextBoxRightBound.Text);
                             break;
 
                         case DbSimpleDataTypeEnum.IntegerSimpleType:
