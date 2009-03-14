@@ -638,59 +638,59 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
 
-            if (IsNotFuzzyBitString(pA) && IsNotFuzzyBitString(pS) && 
-                IsNotFuzzyBitString(pC) && IsNotFuzzyBitString(xA))
-            {
-                int pASum = Convert.ToInt32(pA.Sum);
-                int xASum = Convert.ToInt32(xA.Sum);
-                int nineFTppSum = Convert.ToInt32(nineFT.pp.Sum);
-                int nineFTpxSum = Convert.ToInt32(nineFT.px.Sum);
-                int nineFTxpSum = Convert.ToInt32(nineFT.xp.Sum);
-                int nineFTxxSum = Convert.ToInt32(nineFT.xx.Sum);
-                int nineFTpnSum = Convert.ToInt32(nineFT.pn.Sum);
-                int nineFTxnSum = Convert.ToInt32(nineFT.xn.Sum);
+            //if (IsNotFuzzyBitString(pA) && IsNotFuzzyBitString(pS) && 
+            //    IsNotFuzzyBitString(pC) && IsNotFuzzyBitString(xA))
+            //{
+            //    int pASum = Convert.ToInt32(pA.Sum);
+            //    int xASum = Convert.ToInt32(xA.Sum);
+            //    int nineFTppSum = Convert.ToInt32(nineFT.pp.Sum);
+            //    int nineFTpxSum = Convert.ToInt32(nineFT.px.Sum);
+            //    int nineFTxpSum = Convert.ToInt32(nineFT.xp.Sum);
+            //    int nineFTxxSum = Convert.ToInt32(nineFT.xx.Sum);
+            //    int nineFTpnSum = Convert.ToInt32(nineFT.pn.Sum);
+            //    int nineFTxnSum = Convert.ToInt32(nineFT.xn.Sum);
 
-                int f111, fx11, f1x1, fxx1;
-                int f11x, fx1x, f1xx, fxxx;
+            //    int f111, fx11, f1x1, fxx1;
+            //    int f11x, fx1x, f1xx, fxxx;
 
-                BitString.CrossAndSum(pA, xA, nineFT.pp, nineFT.px,
-                    pASum, xASum, nineFTppSum, nineFTpxSum,
-                    out f111, out fx11, out f1x1, out fxx1);
-                BitString.CrossAndSum(pA, xA, nineFT.xp, nineFT.xx,
-                    pASum, xASum, nineFTxpSum, nineFTxxSum,
-                    out f11x, out fx1x, out f1xx, out fxxx);
+            //    BitString.CrossAndSum(pA, xA, nineFT.pp, nineFT.px,
+            //        pASum, xASum, nineFTppSum, nineFTpxSum,
+            //        out f111, out fx11, out f1x1, out fxx1);
+            //    BitString.CrossAndSum(pA, xA, nineFT.xp, nineFT.xx,
+            //        pASum, xASum, nineFTxpSum, nineFTxxSum,
+            //        out f11x, out fx1x, out f1xx, out fxxx);
 
-                int f10x, fx0x, f101, fx01;
+            //    int f10x, fx0x, f101, fx01;
 
-                BitString.CrossAndSum(nineFT.pn, nineFT.xn, pA, xA, nineFTpnSum, nineFTxnSum,
-                    pASum, xASum, out f101, out f10x, out fx01, out fx0x);
+            //    BitString.CrossAndSum(nineFT.pn, nineFT.xn, pA, xA, nineFTpnSum, nineFTxnSum,
+            //        pASum, xASum, out f101, out f10x, out fx01, out fx0x);
 
-                fft.f111 = f111;
-                fft.f1x1 = f1x1;
-                fft.f101 = f101;
+            //    fft.f111 = f111;
+            //    fft.f1x1 = f1x1;
+            //    fft.f101 = f101;
 
-                fft.fx11 = fx11;
-                fft.fxx1 = fxx1;
-                fft.fx01 = fx01;
+            //    fft.fx11 = fx11;
+            //    fft.fxx1 = fxx1;
+            //    fft.fx01 = fx01;
 
-                fft.f011 = nineFTppSum - fft.f111 - fft.fx11;
-                fft.f0x1 = nineFTpxSum - fft.f1x1 - fft.fxx1;
-                fft.f001 = nineFTpnSum - fft.f101 - fft.fx01;
+            //    fft.f011 = nineFTppSum - fft.f111 - fft.fx11;
+            //    fft.f0x1 = nineFTpxSum - fft.f1x1 - fft.fxx1;
+            //    fft.f001 = nineFTpnSum - fft.f101 - fft.fx01;
 
-                fft.f11x = f11x;
-                fft.f1xx = f1xx;
-                fft.f10x = f10x;
+            //    fft.f11x = f11x;
+            //    fft.f1xx = f1xx;
+            //    fft.f10x = f10x;
 
-                fft.fx1x = fx1x;
-                fft.fxxx = fxxx;
-                fft.fx0x = fx0x;
+            //    fft.fx1x = fx1x;
+            //    fft.fxxx = fxxx;
+            //    fft.fx0x = fx0x;
 
-                fft.f01x = nineFTxpSum - fft.f11x - fft.fx1x;
-                fft.f0xx = nineFTxxSum - fft.f1xx - fft.fxxx;
-                fft.f00x = nineFTxnSum - fft.f10x - fft.fx0x;
-            }
-            else
-            {
+            //    fft.f01x = nineFTxpSum - fft.f11x - fft.fx1x;
+            //    fft.f0xx = nineFTxxSum - fft.f1xx - fft.fxxx;
+            //    fft.f00x = nineFTxnSum - fft.f10x - fft.fx0x;
+            //}
+            //else
+            //{
                 float nineFTppSum = nineFT.pp.Sum;
                 float nineFTpxSum = nineFT.px.Sum;
                 float nineFTpnSum = nineFT.pn.Sum;
@@ -721,7 +721,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 fft.f01x = nineFTxpSum - fft.f11x - fft.fx1x;
                 fft.f0xx = nineFTxxSum - fft.f1xx - fft.fxxx;
                 fft.f00x = nineFTxnSum - fft.f10x - fft.fx0x;
-            }
+            //}
 			
 			ContingencyTableHelper contingencyTable = new ContingencyTableHelper(
 				fft.ContingencyTable,
@@ -861,7 +861,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// If more than one thread should be used
         /// (makes sense form more then 1 core processors
         /// </summary>
-        private static readonly bool _useThreads = System.Environment.ProcessorCount > 1;
+        //private static readonly bool _useThreads = System.Environment.ProcessorCount > 1;
+        private static readonly bool _useThreads = false;
 
         /// <summary>
         /// How many times did the threads acutally computed contingency
