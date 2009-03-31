@@ -413,7 +413,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
             foreach (QuantifierSetting qs in quant)
             {
                 xmlWriter.WriteStartElement("Extension");
-                xmlWriter.WriteAttributeString("name", "QuantifierTreshold");
+                xmlWriter.WriteAttributeString("name", "QuantifierThreshold");
                 xmlWriter.WriteAttributeString("value",
                     qs.boxTypeIdentifier.Substring(qs.boxTypeIdentifier.LastIndexOf('.')+1));
                 xmlWriter.WriteElementString("Treshold", qs.treshold.ToString().Replace(',','.'));
