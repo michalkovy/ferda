@@ -5682,6 +5682,244 @@
 		</Sockets>
 	</BoxLocalization>
 	<BoxLocalization>
+		<Identifier>GuhaMining.Quantifiers.FourFold.Others.RowsColumns</Identifier>
+		<Label>RowsColums</Label>
+		<Hint>All the rows and columns of the four-fold contingency table (a+b,a+c,b+d,c+d) are above given threshold.</Hint>
+		<Categories>
+			<Category>
+				<Name>GuhaMining.Quantifiers.FourFold</Name>
+				<Label>Guha Mining.Quantifiers.4ft</Label>
+			</Category>
+		</Categories>
+		<Sockets>
+			<Socket>
+				<Name>OperationMode</Name>
+				<Label>Operation Mode</Label>
+				<Hint>Operation mode is important option for SD tasks, for other tasks is option "First set frequencies" required.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>FirstSetFrequencies</Name>
+						<Label>First set frequencies</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>SecondSetFrequencies</Name>
+						<Label>Second set frequencies</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>DifferenceOfFrequencies</Name>
+						<Label>Difference of frequencies</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>DifferenceOfQuantifierValues</Name>
+						<Label>Difference of quantifeir values</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>MissingInformationHandling</Name>
+				<Label>Missing Information Handling</Label>
+				<Hint>Specifies type of handling of the missing information.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Deleting</Name>
+						<Label>Deleting</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Optimistic</Name>
+						<Label>Optimistic</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Secured</Name>
+						<Label>Secured</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>Relation</Name>
+				<Label>Relation</Label>
+				<Hint>Specifies the relation between the specified treshold and significant value of the quantifier.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Greater</Name>
+						<Label>Greater</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>GreaterOrEqual</Name>
+						<Label>Greater or equal</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Equal</Name>
+						<Label>Equal</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>LessOrEqual</Name>
+						<Label>Less or equal</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Less</Name>
+						<Label>Less</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>Treshold</Name>
+				<Label>Treshold</Label>
+				<Hint>Specifies the treshold for comparation with the significant quantifier value.</Hint>
+			</Socket>
+			<Socket>
+				<Name>FromRowBoundary</Name>
+				<Label>From Row Boundary</Label>
+				<Hint>Specifies the type of boundary of the contingency table.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>All</Name>
+						<Label>All</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Half</Name>
+						<Label>Half</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Number</Name>
+						<Label>Number</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>ToRowBoundary</Name>
+				<Label>To Row Boundary</Label>
+				<Hint>Specifies the type of boundary of the contingency table.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>All</Name>
+						<Label>All</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Half</Name>
+						<Label>Half</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Number</Name>
+						<Label>Number</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>FromColumnBoundary</Name>
+				<Label>From Column Boundary</Label>
+				<Hint>Specifies the type of boundary of the contingency table.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>All</Name>
+						<Label>All</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Half</Name>
+						<Label>Half</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Number</Name>
+						<Label>Number</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>ToColumnBoundary</Name>
+				<Label>To Column Boundary</Label>
+				<Hint>Specifies the type of boundary of the contingency table.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>All</Name>
+						<Label>All</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Half</Name>
+						<Label>Half</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Number</Name>
+						<Label>Number</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>FromRowBoundaryIndex</Name>
+				<Label>From Index Row Boundary</Label>
+				<Hint>Specifies the index (from 0) of boundary of the contingency table</Hint>
+			</Socket>
+			<Socket>
+				<Name>ToRowBoundaryIndex</Name>
+				<Label>To Index Row Boundary</Label>
+				<Hint>Specifies the index (from 0) of boundary of the contingency table</Hint>
+			</Socket>
+			<Socket>
+				<Name>FromColumnBoundaryIndex</Name>
+				<Label>From Index Column Boundary</Label>
+				<Hint>Specifies the index (from 0) of boundary of the contingency table</Hint>
+			</Socket>
+			<Socket>
+				<Name>ToColumnBoundaryIndex</Name>
+				<Label>To Index Column Boundary</Label>
+				<Hint>Specifies the index (from 0) of boundary of the contingency table</Hint>
+			</Socket>
+			<Socket>
+				<Name>NeedsNumericValues</Name>
+				<Label>Needs Numeric Values</Label>
+				<Hint>Specifies if the quantifier requires numeric values for evaluation.</Hint>
+			</Socket>
+			<Socket>
+				<Name>SupportedData</Name>
+				<Label>Supported Data</Label>
+				<Hint>Specifies the required semantic type of input data.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Nominal</Name>
+						<Label>Nominal</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Ordinal</Name>
+						<Label>Ordinal</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>OrdinalCyclic</Name>
+						<Label>Ordinal cyclic</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>Cardinal</Name>
+						<Label>Cardinal</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+			<Socket>
+				<Name>Units</Name>
+				<Label>Units</Label>
+				<Hint>Specifies the units to be the contingecy table converted.</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>Irrelevant</Name>
+						<Label>Irrelevant</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>AbsoluteNumber</Name>
+						<Label>Absolute</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>RelativeToActCondition</Name>
+						<Label>Relative to sum of frequencies</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>RelativeToMaxFrequency</Name>
+						<Label>Relative to max frequency</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>RelativeToAllObjects</Name>
+						<Label>Relative to all objects count (numer of rows in analyzed table)</Label>
+					</SelectOption>
+				</SelectOptions>
+			</Socket>
+		</Sockets>
+	</BoxLocalization>
+	<BoxLocalization>
 		<Identifier>GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulczynski</Identifier>
 		<Label>Kulczynski</Label>
 		<Hint>Finds rules that fulfill the condition a/2(1/(a+c) + 1/(a+b)) &gt; p</Hint>

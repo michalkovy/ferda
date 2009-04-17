@@ -125,6 +125,8 @@
     <Compile Include="Quantifiers\FourFold\Others\E\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\Others\Pairing\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\Others\Pairing\Functions.cs" />
+    <Compile Include="Quantifiers\FourFold\Others\RowsColumns\BoxInfo.cs" />
+    <Compile Include="Quantifiers\FourFold\Others\RowsColumns\Functions.cs" />
     <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\AritmeticAverage\BoxInfo.cs" />
     <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\AritmeticAverage\Functions.cs" />
     <Compile Include="Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\Asymetry\BoxInfo.cs" />
@@ -214,6 +216,7 @@
     <Content Include="Quantifiers\FourFold\Others\ComparedImplication\boxIcon.ico" />
     <Content Include="Quantifiers\FourFold\Others\Pairing\boxDesign.svg" />
     <Content Include="Quantifiers\FourFold\Others\Pairing\boxIcon.ico" />
+    <Content Include="Quantifiers\FourFold\Others\RowsColumns\boxIcon.ico" />
     <Content Include="Quantifiers\Notes.txt" />
     <Content Include="Tasks\ETree\boxIcon.ico" />
     <Content Include="Tasks\FourFold\boxDesign.svg" />
@@ -231,6 +234,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="AtomSetting\boxDesign.svg" />
+    <None Include="Quantifiers\FourFold\Others\RowsColumns\boxDesign.svg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SemanticWeb\SemanticWeb2008.csproj">
