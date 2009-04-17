@@ -248,7 +248,7 @@ namespace Ferda.Benchmark
         /// The unsafe (unmanaged) implementation of the Lukasiewicz negation 
         /// N(x) = 1 - x for array of Vector4f.
         /// The method does arithmetic in two operations:
-        /// X -= source and X *= 1(vector)
+        /// X -= source and X += 1(vector)
         /// </summary>
         /// <param name="source">Bit string to be negated</param>
         /// <returns>Negated bit string</returns>

@@ -416,7 +416,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                 xmlWriter.WriteAttributeString("name", "QuantifierThreshold");
                 xmlWriter.WriteAttributeString("value",
                     qs.boxTypeIdentifier.Substring(qs.boxTypeIdentifier.LastIndexOf('.')+1));
-                xmlWriter.WriteElementString("Treshold", qs.treshold.ToString().Replace(',','.'));
+                xmlWriter.WriteElementString("Threshold", qs.treshold.ToString().Replace(',','.'));
                 xmlWriter.WriteEndElement(); //Extension
             }
 
@@ -500,10 +500,12 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                                 xmlWriter.WriteAttributeString("name", "Enumeration");
                                 xmlWriter.WriteAttributeString("value", obj.ToString());
                                 xmlWriter.WriteEndElement(); //Extension
+                                xmlWriter.WriteStartElement("Interval");
+                                xmlWriter.WriteAttributeString("closure", "closedClosed");
+                                xmlWriter.WriteAttributeString("leftMargin", obj.ToString());
+                                xmlWriter.WriteAttributeString("rightMargin", obj.ToString());
+                                xmlWriter.WriteEndElement(); //Interval
                             }
-                            xmlWriter.WriteStartElement("Interval");
-                            xmlWriter.WriteAttributeString("closure", "closedClosed");
-                            xmlWriter.WriteEndElement(); //Interval
                         }
 
                         xmlWriter.WriteEndElement();//DiscretizeBin
