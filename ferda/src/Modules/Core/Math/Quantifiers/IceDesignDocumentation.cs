@@ -136,9 +136,9 @@ namespace Ferda.Guha.Math.Quantifiers.IceDesignDocumentation
     };
 
     /// <summary>
-    /// Qunatifier may be applied on some submatix of contingecy table.
-    /// This enumeration specifies boundery which will be used to get 
-    /// the sumbatrix.
+    /// Quantifier may be applied on some submatrix of contingency table.
+    /// This enumeration specifies boundary which will be used to get 
+    /// the submatrix.
     /// </summary>
     public enum BoundTypeEnum
     {
