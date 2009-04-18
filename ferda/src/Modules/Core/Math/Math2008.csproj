@@ -56,6 +56,7 @@
     <Compile Include="InformationTheory.cs" />
     <Compile Include="ContingencyTable.cs" />
     <Compile Include="Factorial.cs" />
+    <Compile Include="LNFactorialTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Karby-FourFTQuantifiers.cs" />
     <Compile Include="Quantifiers\IceDesignDocumentation.cs" />
