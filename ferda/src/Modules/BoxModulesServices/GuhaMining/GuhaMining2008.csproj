@@ -111,6 +111,8 @@
     <Compile Include="Quantifiers\FourFold\Equivalence\FoundedEquivalence\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\Equivalence\FoundedEquivalence\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\FourFoldQuantifiers.cs" />
+    <Compile Include="Quantifiers\FourFold\FProperty\Fisher\BoxInfo.cs" />
+    <Compile Include="Quantifiers\FourFold\FProperty\Fisher\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\Implicational\FoundedImplication\BoxInfo.cs" />
     <Compile Include="Quantifiers\FourFold\Implicational\FoundedImplication\Functions.cs" />
     <Compile Include="Quantifiers\FourFold\Others\AboveAverageDependence\BoxInfo.cs" />

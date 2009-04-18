@@ -1,9 +1,8 @@
-// Functions.cs - Function objects for the Pairing quantifier box module
+ï»¿// Functions.cs - Function objects for the Fisher quantifier box module
 //
-// Author: Daniel Kupka <kupkd9am@post.cz>
-//          Martin Ralbovský <martin.ralbovsky@gmail.com>
+// Author: Martin RalbovskÃ½ <martin.ralbovsky@gmail.com>
 //
-// Copyright (c) 2006 Tomáš Kuchaø, Martin Ralbovský
+// Copyright (c) 2009 Martin RalbovskÃ½
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,15 +24,12 @@ using Ferda.Guha.Math;
 using Ferda.Guha.Math.Quantifiers;
 using Ice;
 
-namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Pairing
+namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.FProperty.Fisher
 {
     /// <summary>
-    /// Computes the Pairing quantifier
+    /// Computes the Fisher quantifier
     /// </summary>
     /// <remarks>
-    /// The quantifier finds pairing between the a and d field of the
-    /// contingency table. The formula for the quantifier is 
-    /// 2(a^2*d^2)/(a^4 + d^4).
     /// </remarks>
     public class Functions : FourFoldValueDisp_, IFunctions
     {
@@ -42,6 +38,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Pairing
         /// </summary>
         protected BoxModuleI _boxModule;
         //protected IBoxInfo _boxInfo;
+
+        /// <summary>
+        /// The natural logarithms of a factorial table
+        /// </summary>
+        protected LNFactorialTable lnFactTable = null;
 
         #region IFunctions Members
 
@@ -92,10 +93,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Pairing
         {
             get
             {
-                return (RelationEnum)Enum.Parse(
-                                          typeof(RelationEnum),
-                                          _boxModule.GetPropertyString(Common.PropRelation)
-                                          );
+                return RelationEnum.LessOrEqual;
+                //return (RelationEnum)Enum.Parse(
+                //                          typeof(RelationEnum),
+                //                          _boxModule.GetPropertyString(Common.PropRelation)
+                //                          );
             }
         }
 
@@ -111,6 +113,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Pairing
         public override void EndOfUse(Current current__)
         {
             _running = false;
+            lnFactTable = null;
         }
 
         public double Treshold
@@ -160,12 +163,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Pairing
 
         public QuantifierClassEnum[] QuantifierClasses
         {
-            get { return new QuantifierClassEnum[] {}; }
+            get { return new QuantifierClassEnum[] { }; }
         }
 
         public PerformanceDifficultyEnum PerformanceDifficulty
         {
-            get { return PerformanceDifficultyEnum.QuiteEasy; }
+            get { return PerformanceDifficultyEnum.Difficult; }
         }
 
         public bool NeedsNumericValues
@@ -228,14 +231,27 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.Pairing
                 delegate
                 {
                     FourFoldContingencyTable table = new FourFoldContingencyTable(param);
-                    if (table.A == 0 && table.B == 0)
+                    if (table.A * table.D <= table.B * table.C)
                         return Double.NaN;
                     else
                     {
-                        double up = Math.Pow(table.A, 2) * Math.Pow(table.D, 2);
-                        double down = Math.Pow(table.A, 4) + Math.Pow(table.D, 4);
-                        return 2 * up / down;
+                        if (lnFactTable == null)
+                        {
+                            lnFactTable = new LNFactorialTable((int)table.N);
+                        }
+
+                        double dValue = Math.Exp(lnFactTable.GetLNFact(table.R) +
+                            lnFactTable.GetLNFact(table.S) +
+                            lnFactTable.GetLNFact(table.K) +
+                            lnFactTable.GetLNFact(table.L) -
+                            lnFactTable.GetLNFact(table.N) -
+                            lnFactTable.GetLNFact(table.A) -
+                            lnFactTable.GetLNFact(table.R - table.A) -
+                            lnFactTable.GetLNFact(table.K - table.A) -
+                            lnFactTable.GetLNFact(table.N - table.R - table.K));
                     }
+
+                    return 0;
                 },
                 _boxModule.StringIceIdentity
                 );
