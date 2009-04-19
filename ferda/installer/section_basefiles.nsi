@@ -29,8 +29,8 @@ SectionGroup "$(Basefiles)" BaseFiles
 	SetOutPath "$INSTDIR\Server\OWLParser"
 	File /r ..\bin\Server\OWLParser\*.*
 	
-	SetOutPath "$INSTDIR\Server\OWLParser\Ferda\src"
-	File ..\src\Modules\FerdaOWLParser\OWL_API_src\*.*
+	;SetOutPath "$INSTDIR\Server\OWLParser\Ferda\src"
+	;File ..\src\Modules\FerdaOWLParser\OWL_API_src\*.*
 	
 	;SetOutPath "$INSTDIR\Server\BoxModulesServices"
 	;File /r ..\bin\Server\BoxModulesServices\*.*

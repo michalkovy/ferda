@@ -28,6 +28,11 @@ SectionGroup "$(Boxes)" Boxes
 	Section "$(Wizards)" Wizards
 	SetOutPath "$INSTDIR\Server\BoxModulesServices\Wizards"
 	File /r ..\bin\Server\BoxModulesServices\Wizards\*.*
-	SectionEnd	
+	SectionEnd
+
+	Section "$(SemanticWeb)" SemanticWeb
+	SetOutPath "$INSTDIR\Server\BoxModulesServices\SemanticWeb"
+	File /r ..\bin\Server\BoxModulesServices\SemanticWeb\*.*
+	SectionEnd
 	
 SectionGroupEnd

@@ -52,7 +52,8 @@
   LangString Sample ${LANG_ENGLISH} "Sample"
   LangString OntologyRelated ${LANG_ENGLISH} "Ontology related"
   LangString Language ${LANG_ENGLISH} "Language"
-  LangString Wizards ${LANG_ENGLISH} "Wizards"  
+  LangString Wizards ${LANG_ENGLISH} "Wizards"
+  LangString SemanticWeb ${LANG_ENGLISH} "Semantic web"
 
   LangString ShowTable ${LANG_ENGLISH} "Show table"
   LangString FrequencyDisplayer ${LANG_ENGLISH} "Frequency displayer"
@@ -66,6 +67,7 @@
   LangString FormGenerator ${LANG_ENGLISH} "Generator of wizard forms"  
   LangString SetOntologyMapping ${LANG_ENGLISH} "Ontology mapping module"
   LangString SetOntologyPath ${LANG_ENGLISH} "Set ontology path"
+  LangString EditFuzzyCategories ${LANG_ENGLISH} "Edit fuzzy categories"
   
   LangString Integration ${LANG_ENGLISH} "Integration"
   LangString StartMenu ${LANG_ENGLISH} "Add to Start menu"

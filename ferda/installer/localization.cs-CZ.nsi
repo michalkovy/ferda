@@ -50,14 +50,16 @@
   LangString FormEditor ${LANG_CZECH} "Editor formuláøù Ferda Wizard"
   LangString FormGenerator ${LANG_CZECH} "Generátor formuláøù Ferda Wizard"
   LangString SetOntologyMapping ${LANG_CZECH} "Nastavení mapování ontologie"
-  LangString SetOntologyPath ${LANG_CZECH} "Nastavení cesty k ontologii"    
+  LangString SetOntologyPath ${LANG_CZECH} "Nastavení cesty k ontologii"
+  LangString EditFuzzyCategories ${LANG_CZECH} "Editace fuzzy kategorií"
   
   LangString DataPreparation ${LANG_CZECH} "Pøíprava dat"
   LangString GuhaMining ${LANG_CZECH} "GUHA mining"
   LangString Sample ${LANG_CZECH} "Demonstrace"
   LangString OntologyRelated ${LANG_CZECH} "Ontologické krabièky"
   LangString Language ${LANG_CZECH} "Programovací jazyk"
-  LangString Wizards ${LANG_CZECH} "Wizard"      
+  LangString Wizards ${LANG_CZECH} "Wizard"
+  LangString SemanticWeb ${LANG_CZECH} "Sémantický web"
   
   LangString Integration ${LANG_CZECH} "Integrace"
   LangString StartMenu ${LANG_CZECH} "Nabídka Start"

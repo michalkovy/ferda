@@ -6,7 +6,7 @@
   <?define ProgramFiles.dir = "ProgramFilesFolder" ?>  
 <?endif ?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="0ff6bcee-e9bb-4501-a7dd-4d05dea6f16c" Name="Ferda " Language="1033" Version="2.5.0.0" Manufacturer="Ferda Team" UpgradeCode="bbdaee35-e2dd-4411-8de4-5d4198313889">
+	<Product Id="0ff6bcee-e9bb-4501-a7dd-4d05dea6f16c" Name="Ferda " Language="1033" Version="3.0.0.0" Manufacturer="Ferda Team" UpgradeCode="bbdaee35-e2dd-4411-8de4-5d4198313889">
 		<Package InstallerVersion="200" Compressed="yes"/>
 		<Property Id="ALLUSERS" Value="1"/>
 		<Media Id="1" Cabinet="Ferda.cab" EmbedCab="yes"/>
@@ -38,6 +38,9 @@
 					<Directory Id="FrontEnd" Name="FrontEnd">
 						<Component Id="AddInsCommon.dll" Guid="{3C8CA9E9-3EC1-4872-91D1-5AE486B702CC}">
 							<File Id="AddInsCommon.dll" Name="AddInsCommon.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\AddInsCommon.dll"/>
+						</Component>
+						<Component Id="Mono.Simd.dll" Guid="{3586DE53-AE1D-4a14-B9E5-0018ADAEA6A3}">
+							<File Id="Mono.Simd.dll" Name="Mono.Simd.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\Mono.Simd.dll"/>
 						</Component>
 						<Component Id="box.bmp" Guid="{C9748C68-3502-4056-996D-5288938EAFCA}">
 							<File Id="box.bmp" Name="box.bmp" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\box.bmp"/>
@@ -474,6 +477,9 @@
 						<Component Id="libexpat.dll" Guid="{B7969D8C-A8F3-4C01-98DD-6A948032F013}">
 							<File Id="libexpat.dll" Name="libexpat.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\libexpat.dll"/>
 						</Component>
+						<Component Id="Mono.Simd.dll_2" Guid="{59AC9FD5-1EEB-4fd0-BE78-F38F24981FE6}">
+							<File Id="Mono.Simd.dll_2" Name="Mono.Simd.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\libexpat.dll" />
+						</Component>
 						<Component Id="NetworkArchive.xml" Guid="{5B559E8C-1690-4944-9B9F-5A735951E79A}">
 							<File Id="NetworkArchive.xml" Name="NetworkArchive.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\NetworkArchive.xml">
 								<Permission User="Everyone" GenericAll="yes"/>
@@ -557,6 +563,23 @@
 										</Component>
 										<Component Id="Localization.en_US.xml_4" Guid="{F608209F-AC32-4E59-B20B-3BD8BD5F702A}">
 											<File Id="Localization.en_US.xml_4" Name="Localization.en-US.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\DataPreparation\Categorization\EquifrequencyIntervals\Localization.en-US.xml"/>
+										</Component>
+									</Directory>
+									<Directory Id="ManualAttributeWithFuzzyCategories" Name="ManualAttributeWithFuzzyCategories">
+										<Component Id="BoxConfig.xml_100" Guid="{F8F7AFB7-9FB8-4b1d-A595-9F210BE2B2F5}">
+											<File Id="BoxConfig.xml_100" Name="BoxConfig.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\DataPreparation\Categorization\ManualAttributeWithFuzzyCategories\BoxConfig.xml" />
+										</Component>
+										<Component Id="boxDesign.svg_100" Guid="{18A5AC91-3737-43d1-A230-49CF0EBB679E}" >
+											<File Id="boxDesign.svg_100" Name="boxDesign.svg" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\DataPreparation\Categorization\ManualAttributeWithFuzzyCategories\boxDesign.svg"/>
+										</Component>
+										<Component Id="boxIcon.ico_100" Guid="{8AB931BE-6E59-4d4e-90F6-36C628E15E32}">
+											<File Id="boxIcon.ico_100" Name="boxIcon.ico" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\DataPreparation\Categorization\ManualAttributeWithFuzzyCategories\boxIcon.ico"/>
+										</Component>
+										<Component Id="Localization.cs_CZ.xml_100" Guid="{0AC1CA0A-3445-49a1-A4A2-839BA8631E1C}">
+											<File Id="Localization.cs_CZ.xml_100" Name="Localization.cs-CZ.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\DataPreparation\Categorization\ManualAttributeWithFuzzyCategories\Localization.cs-CZ.xml"/>
+										</Component>
+										<Component Id="Localization.en_US.xml_100" Guid="{271EE0BE-8BD8-4358-B5DC-6AE04317755B}">
+											<File Id="Localization.en_US.xml_100" Name="Localization.en-US.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\DataPreparation\Categorization\ManualAttributeWithFuzzyCategories\Localization.en-US.xml"/>
 										</Component>
 									</Directory>
 									<Directory Id="OntologyDerivedAttribute" Name="OntologyDerivedAttribute">
@@ -899,11 +922,20 @@
 												</Component>
 											</Directory>
 											<Directory Id="Fisher" Name="Fisher">
+												<Component Id="BoxConfig.xml_101" Guid="{14275F37-4F5F-4e90-84AD-B8F4B3AB17E0}">
+													<File Id="BoxConfig.xml_101" Name="BoxConfig.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\Fisher\BoxConfig.xml"/>
+												</Component>
 												<Component Id="boxDesign.svg_25" Guid="{7E673ED6-25F6-4BB6-99D6-4E0FB8C9B668}">
 													<File Id="boxDesign.svg_25" Name="boxDesign.svg" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\Fisher\boxDesign.svg"/>
 												</Component>
 												<Component Id="boxIcon.ico_27" Guid="{98D438DB-431F-400C-B9B2-18466179B5CC}">
 													<File Id="boxIcon.ico_27" Name="boxIcon.ico" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\Fisher\boxIcon.ico"/>
+												</Component>
+												<Component Id="Localization.cs_CZ.xml_101" Guid="{8D9FD708-2AA6-41d4-A459-EB32B47760AF}">
+													<File Id="Localization.cs_CZ.xml_101" Name="Localization.cs_CZ.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\Fisher\Localization.cs-CZ.xml" />
+												</Component>
+												<Component Id="Localization.en_US.xml_101" Guid="{3BB5BB3C-4A79-4d64-A551-3A383071B97A}">
+													<File Id="Localization.en_US.xml_101" Name="Localization.en-US.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\Fisher\Localization.en-US.xml"/>
 												</Component>
 											</Directory>
 											<Directory Id="SimpleDeviation" Name="SimpleDeviation">
@@ -1051,6 +1083,23 @@
 												</Component>
 												<Component Id="Localization.en_US.xml_28" Guid="{020972C3-3E55-4BFC-B9B7-670A7B84964B}">
 													<File Id="Localization.en_US.xml_28" Name="Localization.en-US.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\Pairing\Localization.en-US.xml"/>
+												</Component>
+											</Directory>
+											<Directory Id="RowsColumns" Name="RowsColumns">
+												<Component Id="BoxConfig.xml_102" Guid="{3D6A054E-6E2A-4b22-AB50-16DE7B8C66C3}">
+													<File Id="BoxConfig.xml_102" Name="BoxConfig.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\RowsColumns\BoxConfig.xml"/>
+												</Component>
+												<Component Id="boxDesign.svg_102" Guid="{D28DC1B9-1614-46ea-80B7-C5639E23E1A4}">
+													<File Id="boxDesign.svg_102" Name="boxDesign.svg" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\RowsColumns\boxDesign.svg"/>
+												</Component>
+												<Component Id="boxIcon.ico_102" Guid="{073FE9A3-E565-4d89-9592-8A0A5BE7D1F9}">
+													<File Id="boxIcon.ico_102" Name="boxIcon.ico" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\RowsColumns\boxIcon.ico"/>
+												</Component>
+												<Component Id="Localization.cs_CZ.xml_102" Guid="{B0DA527C-2BA1-4bfb-9D72-88CF3C1ABACA}">
+													<File Id="Localization.cs_CZ.xml_102" Name="Localization.cs-CZ.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\RowsColumns\Localization.cs-CZ.xml"/>
+												</Component>
+												<Component Id="Localization.en_US.xml_102" Guid="{4E65C9AC-EA88-40b1-804B-22AB449DF72A}">
+													<File Id="Localization.en_US.xml_102" Name="Localization.en-US.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\RowsColumns\Localization.en-US.xml"/>
 												</Component>
 											</Directory>
 										</Directory>
@@ -1807,6 +1856,25 @@
 									</Component>
 								</Directory>
 							</Directory>
+							<Directory Id="SemanticWeb" Name="SemanticWeb">
+								<Directory Id="PMMLBuilder" Name="PMMLBuilder">
+									<Component Id="BoxConfig.xml_103" Guid="{DCD82DDC-8D15-4245-9C94-ED1A654D9C2A}">
+										<File Id="BoxConfig.xml_103" Name="BoxConfig.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\SemanticWeb\PMMLBuilder\BoxConfig.xml"/>
+									</Component>
+									<Component Id="boxDesign.svg_103" Guid="{FB194405-1F8E-45a4-8F10-8C551BCDCDC0}">
+										<File Id="boxDesign.svg_103" Name="boxDesign.svg" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\SemanticWeb\PMMLBuilder\boxDesign.svg"/>
+									</Component>
+									<Component Id="boxIcon.ico_103" Guid="{95EFC97F-7671-47f3-B7C3-3791A8C2E02B}">
+										<File Id="boxIcon.ico_103" Name="boxIcon.ico" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\SemanticWeb\PMMLBuilder\boxIcon.ico"/>
+									</Component>
+									<Component Id="Localization.cs_CZ.xml_103" Guid="{91400661-4D79-44df-A6DB-15627659DCE5}">
+										<File Id="Localization.cs_CZ.xml_103" Name="Localization.cs-CZ.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\SemanticWeb\PMMLBuilder\Localization.cs-CZ.xml"/>
+									</Component>
+									<Component Id="Localization.en_US.xml_103" Guid="{37DA4D3B-64A5-4465-BE10-8972EE27B54A}">
+										<File Id="Localization.en_US.xml_103" Name="Localization.en-US.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\SemanticWeb\PMMLBuilder\Localization.en-US.xml"/>
+									</Component>
+								</Directory>
+							</Directory>
 							<Directory Id="Wizards" Name="Wizards">
 								<Directory Id="Wizard" Name="Wizard">
 									<Component Id="BoxConfig.xml_71" Guid="{46F779C3-B180-40C4-9550-3667D566B9C8}">
@@ -2034,6 +2102,8 @@
 			<ComponentRef Id="FrontEndAddInHelper.dll"/>
 			<ComponentRef Id="FrontEndConfig.xml"/>
 			<ComponentRef Id="Glacier2.dll_1"/>
+			<ComponentRef Id="Mono.Simd.dll"/>
+			<ComponentRef Id="Mono.Simd.dll_2"/>
 			<ComponentRef Id="Ice.dll_1"/>
 			<ComponentRef Id="Ice.jar"/>
 			<ComponentRef Id="IceBox.dll_1"/>
@@ -2516,7 +2586,6 @@
 			<ComponentRef Id="Localization.cs_CZ.xml_69"/>
 			<ComponentRef Id="Localization.en_US.xml_69"/>
 			<ComponentRef Id="BoxConfig.xml_70"/>
-			<ComponentRef Id="boxDesign.svg_76"/>
 			<ComponentRef Id="boxIcon.ico_80"/>
 			<ComponentRef Id="Localization.cs_CZ.xml_70"/>
 			<ComponentRef Id="Localization.en_US.xml_70"/>
@@ -2535,6 +2604,30 @@
 			<ComponentRef Id="BoxConfig.xml_74"/>
 			<ComponentRef Id="Localization.cs_CZ.xml_74"/>
 			<ComponentRef Id="Localization.en_US.xml_74"/>
+			<ComponentRef Id="boxDesign.svg_76" />
+			<!-- ManualAttributeWithFuzzyCagetories -->
+			<ComponentRef Id="BoxConfig.xml_100"/>
+			<ComponentRef Id="Localization.cs_CZ.xml_100"/>
+			<ComponentRef Id="Localization.en_US.xml_100"/>
+			<ComponentRef Id="boxDesign.svg_100" />
+			<ComponentRef Id="boxIcon.ico_100" />			
+			<!-- Fisher quantifier -->
+			<ComponentRef Id="BoxConfig.xml_101"/>
+			<ComponentRef Id="Localization.cs_CZ.xml_101"/>
+			<ComponentRef Id="Localization.en_US.xml_101"/>
+			<!-- RowsColumns quantifier -->
+			<ComponentRef Id="BoxConfig.xml_102"/>
+			<ComponentRef Id="Localization.cs_CZ.xml_102"/>
+			<ComponentRef Id="Localization.en_US.xml_102"/>
+			<ComponentRef Id="boxDesign.svg_102" />
+			<ComponentRef Id="boxIcon.ico_102" />
+			<!-- PMMLBuilder -->
+			<ComponentRef Id="BoxConfig.xml_103"/>
+			<ComponentRef Id="Localization.cs_CZ.xml_103"/>
+			<ComponentRef Id="Localization.en_US.xml_103"/>
+			<ComponentRef Id="boxDesign.svg_103" />
+			<ComponentRef Id="boxIcon.ico_103" />
+			
 			<ComponentRef Id="wizardGenerated.ico"/>
 			<ComponentRef Id="OWLParserI.class"/>
 			<ComponentRef Id="Service.class"/>
