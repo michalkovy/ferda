@@ -76,6 +76,12 @@ Section "$(ShowTable)" ShowTable
   WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "ShowTable" "" 
 SectionEnd
 
+Section "$(EditFuzzyCategories)" EditFuzzyCategories
+  SetOutPath "$INSTDIR\FrontEnd\AddIns\"
+  File ..\bin\FrontEnd\AddIns\EditFuzzyCategories.*
+  WriteRegStr HKCU "Software\Ferda DataMiner\AddIns" "EditFuzzyCategories" "" 
+SectionEnd
+
 ;addins help
 Section
 	SetOutPath "$INSTDIR\FrontEnd\AddIns\Help"
