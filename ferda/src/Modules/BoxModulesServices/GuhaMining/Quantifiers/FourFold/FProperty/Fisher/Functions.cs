@@ -188,7 +188,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.FProperty.Fisher
 
         public bool SupportsFloatContingencyTable
         {
-            get { return true; }
+            get { return false; }
         }
 
         #endregion
@@ -227,34 +227,48 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.FProperty.Fisher
         /// <returns>The value of the quantifier</returns>
         public override double ComputeValue(QuantifierEvaluateSetting param, Current current__)
         {
-            return ExceptionsHandler.TryCatchMethodThrow<double>(
-                delegate
-                {
+            //return ExceptionsHandler.TryCatchMethodThrow<double>(
+            //    delegate
+            //    {
                     FourFoldContingencyTable table = new FourFoldContingencyTable(param);
                     if (table.A * table.D <= table.B * table.C)
                         return Double.NaN;
-                    else
-                    {
-                        if (lnFactTable == null)
-                        {
-                            lnFactTable = new LNFactorialTable((int)table.N);
-                        }
 
-                        double dValue = Math.Exp(lnFactTable.GetLNFact(table.R) +
-                            lnFactTable.GetLNFact(table.S) +
-                            lnFactTable.GetLNFact(table.K) +
-                            lnFactTable.GetLNFact(table.L) -
-                            lnFactTable.GetLNFact(table.N) -
-                            lnFactTable.GetLNFact(table.A) -
-                            lnFactTable.GetLNFact(table.R - table.A) -
-                            lnFactTable.GetLNFact(table.K - table.A) -
-                            lnFactTable.GetLNFact(table.N - table.R - table.K));
+                    if (lnFactTable == null)
+                    {
+                        lnFactTable = new LNFactorialTable((int)table.N);
                     }
 
-                    return 0;
-                },
-                _boxModule.StringIceIdentity
-                );
+                    double dValue = Math.Exp(
+                        lnFactTable.GetLNFact(table.R) +
+                        lnFactTable.GetLNFact(table.S) +
+                        lnFactTable.GetLNFact(table.K) +
+                        lnFactTable.GetLNFact(table.L) -
+                        lnFactTable.GetLNFact(table.N) -
+                        lnFactTable.GetLNFact(table.A) -
+                        lnFactTable.GetLNFact(table.R - table.A) -
+                        lnFactTable.GetLNFact(table.K - table.A) -
+                        lnFactTable.GetLNFact(table.N - table.R - table.K + table.A));
+
+                    int minRK = (int) Math.Min(table.R, table.K);
+                    double dSum = dValue;
+                    int c = (int)(table.N - table.R - table.K);
+
+                    for (int i = (int)table.A + 1; i <= minRK; i++)
+                    {
+                        double dDelta = ((double)(table.R - i + 1) * (table.K - i + 1)) /
+                            (i * (c + i));
+                        if (dDelta == 0)
+                            break;
+
+                        dValue = dValue * dDelta;
+                        dSum += dValue;
+                    }
+
+                    return dSum;
+                //},
+                //_boxModule.StringIceIdentity
+                //);
         }
 
         #endregion
