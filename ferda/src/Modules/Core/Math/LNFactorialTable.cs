@@ -63,6 +63,8 @@ namespace Ferda.Guha.Math
         public double GetLNFact(double i)
         {
             int index = (int)i;
+            if (i == 0)
+                return 0; //factorial of 0 is 1, ln of 1 is zero
             if (i > n || i < 0)
             {
                 return Double.NaN; 
