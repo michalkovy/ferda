@@ -2137,15 +2137,6 @@
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
 			<Socket>
-				<Name>ClosedFrom</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
-			<Socket>
 				<Name>FuzzyCategories</Name>
 				<SocketTypes>
 					<BoxType>
@@ -2216,22 +2207,6 @@
 				<CategoryName>Domain</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-			</Property>
-			<Property>
-				<Name>ClosedFrom</Name>
-				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<CategoryName>Intervals</CategoryName>
-				<SelectOptions>
-					<SelectOption>
-						<Name>Left</Name>
-					</SelectOption>
-					<SelectOption>
-						<Name>Right</Name>
-					</SelectOption>
-				</SelectOptions>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
-				<Default>Left</Default>
 			</Property>
 			<Property>
 				<Name>Cardinality</Name>
@@ -2353,15 +2328,6 @@
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
-			<Socket>
-				<Name>ClosedFrom</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
 		</Sockets>
 		<Properties>
 			<Property>
@@ -2424,22 +2390,6 @@
 				<CategoryName>Domain</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-			</Property>
-			<Property>
-				<Name>ClosedFrom</Name>
-				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<CategoryName>Intervals</CategoryName>
-				<SelectOptions>
-					<SelectOption>
-						<Name>Left</Name>
-					</SelectOption>
-					<SelectOption>
-						<Name>Right</Name>
-					</SelectOption>
-				</SelectOptions>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
-				<Default>Left</Default>
 			</Property>
 			<Property>
 				<Name>Cardinality</Name>

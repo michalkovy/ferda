@@ -1343,21 +1343,6 @@
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
-			<Socket>
-				<Name>ClosedFrom</Name>
-				<Label>Closed from</Label>
-				<Hint>Intervals are closed from specified side.</Hint>
-				<SelectOptions>
-					<SelectOption>
-						<Name>Left</Name>
-						<Label>Left</Label>
-					</SelectOption>
-					<SelectOption>
-						<Name>Right</Name>
-						<Label>Right</Label>
-					</SelectOption>
-				</SelectOptions>
-			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
@@ -1371,10 +1356,6 @@
 			<PropertyCategory>
 				<Name>Semantic</Name>
 				<Label>Semantic</Label>
-			</PropertyCategory>
-			<PropertyCategory>
-				<Name>Intervals</Name>
-				<Label>Intervals</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 		<ModulesAskingForCreationSeq>
@@ -1464,21 +1445,6 @@
 					</SelectOption>
 				</SelectOptions>
 			</Socket>
-			<Socket>
-				<Name>ClosedFrom</Name>
-				<Label>Closed from</Label>
-				<Hint>Intervals are closed from specified side.</Hint>
-				<SelectOptions>
-					<SelectOption>
-						<Name>Left</Name>
-						<Label>Left</Label>
-					</SelectOption>
-					<SelectOption>
-						<Name>Right</Name>
-						<Label>Right</Label>
-					</SelectOption>
-				</SelectOptions>
-			</Socket>
 		</Sockets>
 		<PropertyCategories>
 			<PropertyCategory>
@@ -1492,10 +1458,6 @@
 			<PropertyCategory>
 				<Name>Semantic</Name>
 				<Label>Semantic</Label>
-			</PropertyCategory>
-			<PropertyCategory>
-				<Name>Intervals</Name>
-				<Label>Intervals</Label>
 			</PropertyCategory>
 		</PropertyCategories>
 		<ModulesAskingForCreationSeq>
