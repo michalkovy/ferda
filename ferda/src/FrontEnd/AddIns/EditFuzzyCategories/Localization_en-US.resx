@@ -189,4 +189,10 @@
   <data name="ItemNotSelected" xml:space="preserve">
     <value>No fuzzy category is selected</value>
   </data>
+  <data name="LCFAR" xml:space="preserve">
+    <value>No overlapping maxims - LCFAR</value>
+  </data>
+  <data name="Overlapping" xml:space="preserve">
+    <value>The peak value of the new trapezoid is overlapping with peak value of other already defined trapeziod. This is not allowed in LFCAR.</value>
+  </data>
 </root>

@@ -189,4 +189,10 @@
   <data name="ItemNotSelected" xml:space="preserve">
     <value>Není vybrána žádná fuzzy kategorie</value>
   </data>
+  <data name="LCFAR" xml:space="preserve">
+    <value>Nepřekrývající se maxima  - LCFAR</value>
+  </data>
+  <data name="Overlapping" xml:space="preserve">
+    <value>choběžníku. V LCFAR toto není povoleno.</value>
+  </data>
 </root>
