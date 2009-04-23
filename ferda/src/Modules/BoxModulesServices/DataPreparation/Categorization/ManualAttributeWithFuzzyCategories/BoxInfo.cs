@@ -232,7 +232,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
                 throw Exceptions.BoxRuntimeError(
                     null,
                     boxModule.StringIceIdentity,
-                    "There has to be at least one category or interval created in the static attribute");
+                    "There has to be at least one category or interval created in the attribute with fuzzy categories.");
             }
 
             if (String.IsNullOrEmpty(Func.NameInBooleanAttributes))

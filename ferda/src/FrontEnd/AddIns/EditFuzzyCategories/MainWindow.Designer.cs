@@ -50,6 +50,7 @@
             this.EditFCButton = new System.Windows.Forms.Button();
             this.SaveFCButton = new System.Windows.Forms.Button();
             this.HelpButton = new System.Windows.Forms.Button();
+            this.CHBLCFAR = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.TrapezoidPB)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,9 +58,9 @@
             // 
             this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.CancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.CancelButton.Location = new System.Drawing.Point(730, 354);
+            this.CancelButton.Location = new System.Drawing.Point(730, 365);
             this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(104, 39);
+            this.CancelButton.Size = new System.Drawing.Size(104, 28);
             this.CancelButton.TabIndex = 0;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseVisualStyleBackColor = true;
@@ -68,9 +69,9 @@
             // 
             this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.OKButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.OKButton.Location = new System.Drawing.Point(610, 354);
+            this.OKButton.Location = new System.Drawing.Point(610, 365);
             this.OKButton.Name = "OKButton";
-            this.OKButton.Size = new System.Drawing.Size(114, 40);
+            this.OKButton.Size = new System.Drawing.Size(114, 29);
             this.OKButton.TabIndex = 1;
             this.OKButton.Text = "OK";
             this.OKButton.UseVisualStyleBackColor = true;
@@ -204,7 +205,7 @@
             // 
             // RemoveFCButton
             // 
-            this.RemoveFCButton.Location = new System.Drawing.Point(610, 299);
+            this.RemoveFCButton.Location = new System.Drawing.Point(610, 313);
             this.RemoveFCButton.Name = "RemoveFCButton";
             this.RemoveFCButton.Size = new System.Drawing.Size(224, 23);
             this.RemoveFCButton.TabIndex = 18;
@@ -214,7 +215,7 @@
             // 
             // EditFCButton
             // 
-            this.EditFCButton.Location = new System.Drawing.Point(610, 273);
+            this.EditFCButton.Location = new System.Drawing.Point(610, 290);
             this.EditFCButton.Name = "EditFCButton";
             this.EditFCButton.Size = new System.Drawing.Size(224, 23);
             this.EditFCButton.TabIndex = 19;
@@ -234,7 +235,7 @@
             // 
             // HelpButton
             // 
-            this.HelpButton.Location = new System.Drawing.Point(610, 325);
+            this.HelpButton.Location = new System.Drawing.Point(610, 336);
             this.HelpButton.Name = "HelpButton";
             this.HelpButton.Size = new System.Drawing.Size(224, 23);
             this.HelpButton.TabIndex = 21;
@@ -242,12 +243,23 @@
             this.HelpButton.UseVisualStyleBackColor = true;
             this.HelpButton.Click += new System.EventHandler(this.HelpButton_Click);
             // 
+            // CHBLCFAR
+            // 
+            this.CHBLCFAR.AutoSize = true;
+            this.CHBLCFAR.Location = new System.Drawing.Point(610, 267);
+            this.CHBLCFAR.Name = "CHBLCFAR";
+            this.CHBLCFAR.Size = new System.Drawing.Size(178, 17);
+            this.CHBLCFAR.TabIndex = 22;
+            this.CHBLCFAR.Text = "No overlapping maxims - LCFAR";
+            this.CHBLCFAR.UseVisualStyleBackColor = true;
+            // 
             // MainWindow
             // 
             this.AcceptButton = this.OKButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(846, 402);
+            this.Controls.Add(this.CHBLCFAR);
             this.Controls.Add(this.HelpButton);
             this.Controls.Add(this.SaveFCButton);
             this.Controls.Add(this.EditFCButton);
@@ -300,5 +312,6 @@
         private System.Windows.Forms.Button EditFCButton;
         private System.Windows.Forms.Button SaveFCButton;
         private System.Windows.Forms.Button HelpButton;
+        private System.Windows.Forms.CheckBox CHBLCFAR;
     }
 }
