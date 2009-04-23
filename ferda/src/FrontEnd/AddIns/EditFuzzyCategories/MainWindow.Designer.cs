@@ -248,9 +248,9 @@
             this.CHBLCFAR.AutoSize = true;
             this.CHBLCFAR.Location = new System.Drawing.Point(610, 267);
             this.CHBLCFAR.Name = "CHBLCFAR";
-            this.CHBLCFAR.Size = new System.Drawing.Size(178, 17);
+            this.CHBLCFAR.Size = new System.Drawing.Size(120, 17);
             this.CHBLCFAR.TabIndex = 22;
-            this.CHBLCFAR.Text = "No overlapping maxims - LCFAR";
+            this.CHBLCFAR.Text = "LCFAR compatibility";
             this.CHBLCFAR.UseVisualStyleBackColor = true;
             // 
             // MainWindow
@@ -312,6 +312,6 @@
         private System.Windows.Forms.Button EditFCButton;
         private System.Windows.Forms.Button SaveFCButton;
         private System.Windows.Forms.Button HelpButton;
-        private System.Windows.Forms.CheckBox CHBLCFAR;
+        public System.Windows.Forms.CheckBox CHBLCFAR;
     }
 }

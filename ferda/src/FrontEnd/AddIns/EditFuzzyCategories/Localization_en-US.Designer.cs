@@ -223,7 +223,7 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No overlapping maxims - LCFAR.
+        ///   Looks up a localized string similar to LCFAR compatibility.
         /// </summary>
         internal static string LCFAR {
             get {
