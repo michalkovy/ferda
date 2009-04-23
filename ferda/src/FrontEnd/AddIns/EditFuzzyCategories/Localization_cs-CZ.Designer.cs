@@ -223,7 +223,7 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nepřekrývající se maxima  - LCFAR.
+        ///   Looks up a localized string similar to LCFAR kompatibilita.
         /// </summary>
         internal static string LCFAR {
             get {

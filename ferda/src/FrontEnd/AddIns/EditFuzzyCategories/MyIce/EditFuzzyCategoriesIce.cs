@@ -202,6 +202,8 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
                 maximum = Convert.ToDouble(prop.stringValue);
             }
 
+            double[] distincts = GetDistincts(prx.getDistinctsAndFrequencies());
+
             StringT vbefore = (StringT)valueBefore;
             TrapezoidalFuzzySets fuzzySets = TrapezoidalFuzzySets.Deserialize(vbefore.stringValue);
 
@@ -210,11 +212,32 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
 
             if (result == DialogResult.OK)
             {
+                //checking the LFCAR compatibility
+                if (wind.CHBLCFAR.Checked)
+                {
+                    //TODOOOOOO
+                }
+
                 vbefore.stringValue = TrapezoidalFuzzySets.Serialize(wind.GetSets());
                 return vbefore;
             }
 
             return valueBefore;
+        }
+
+        /// <summary>
+        /// Gets distinct values from distinct values and frequencies
+        /// </summary>
+        /// <param name="valuesAndFrequencies">The values and frequencies structure</param>
+        /// <returns>Distinct values</returns>
+        private double[] GetDistincts(ValuesAndFrequencies valuesAndFrequencies)
+        {
+            double [] result = new double[valuesAndFrequencies.data.Length];
+            for (int i = 0; i < valuesAndFrequencies.data.Length; i++)
+            {
+                result[i] = Convert.ToDouble(valuesAndFrequencies.data[i].value);
+            }
+            return result;
         }
 
         #endregion

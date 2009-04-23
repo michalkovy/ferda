@@ -313,28 +313,28 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
                 return;
             }
 
-            if (CHBLCFAR.Checked)
-            {
-                //checking that the maximum of the new trapezoid is not 
-                //overlapping with maximum of already created trapezoid
-                foreach (TrapezoidalFuzzySet set in fuzzySets.Values)
-                {
-                    if (d > set.D && d < set.C)
-                    {
-                        MessageBox.Show(resourceManager.GetString("Overlapping"),
-                            resourceManager.GetString("Error"),
-                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        return;
-                    }
-                    if (c < set.C && c > set.D)
-                    {
-                        MessageBox.Show(resourceManager.GetString("Overlapping"),
-                            resourceManager.GetString("Error"),
-                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        return;
-                    }
-                }
-            }
+            //if (CHBLCFAR.Checked)
+            //{
+            //    //checking that the maximum of the new trapezoid is not 
+            //    //overlapping with maximum of already created trapezoid
+            //    foreach (TrapezoidalFuzzySet set in fuzzySets.Values)
+            //    {
+            //        if (d > set.D && d < set.C)
+            //        {
+            //            MessageBox.Show(resourceManager.GetString("Overlapping"),
+            //                resourceManager.GetString("Error"),
+            //                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //            return;
+            //        }
+            //        if (c < set.C && c > set.D)
+            //        {
+            //            MessageBox.Show(resourceManager.GetString("Overlapping"),
+            //                resourceManager.GetString("Error"),
+            //                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //            return;
+            //        }
+            //    }
+            //}
 
             //filling a new trapeziodal fuzzy set structure
             TrapezoidalFuzzySet fs = new TrapezoidalFuzzySet();
