@@ -22,6 +22,13 @@
                     Initial version of the document
                 </revremark>
             </revision>
+            <revision>
+                <revnumber>1.1</revnumber>
+                <date>2009-04-23</date>
+                <revremark>
+                    Added the LCFAR checkbox
+                </revremark>
+            </revision>
         </revhistory>
         -->
     </articleinfo>
@@ -104,6 +111,16 @@
             </para>
         </section>
         <section>
+            <title>Enabling and disabling the LCFAR compliant fuzzy categories</title>
+            <para>
+                Fuzzy association rules mining can be either based on the fuzzy set theory or
+                on a fuzzy logic. In the fuzzy set theory, trapezoidal fuzzy set can have 
+                overlapping peaks (parts of the fuzzy set where the value is 1). In the logical
+                based Logical calculi of fuzzy association rules (LCFAR), this is not allowed. 
+                For more details see <citation>Ralbovsky</citation>.
+            </para>
+        </section>
+        <section>
             <title>Removing a fuzzy category</title>
             <para>
                 In order to remove a fuzzy category, user selects a category from the
@@ -135,4 +152,22 @@
             </para>
         </section>
     </section>
+    <bibliography>
+        <biblioentry>
+            <abbrev>Ralbovsky</abbrev>
+            <authorgroup>
+                <author>
+                    <firstname>Martin</firstname>
+                    <surname>Ralbovský</surname>
+                </author>
+            </authorgroup>
+            <title>Fuzzy GUHA</title>
+            <pubdate>2009</pubdate>
+            <publisher>
+                <publishername>
+                    Doctoral dissertation thesis at University of Economics, Prague
+                </publishername>
+            </publisher>
+        </biblioentry>
+    </bibliography>
 </article>
