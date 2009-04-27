@@ -98,6 +98,23 @@ namespace Ferda.Guha.Attribute
                 return (TrapezoidalFuzzySet)deserialized;
             }
         }
+
+        /// <summary>
+        /// Determines, if the membership degree of a value in parameter
+        /// <paramref name="value"/> of the trapezoidal fuzzy set
+        /// <paramref name="set"/> is greater than zero
+        /// </summary>
+        /// <param name="value">The examined value</param>
+        /// <param name="set">The examined set</param>
+        /// <returns>Iff the membership degree of the value is 
+        /// greater than zero</returns>
+        public static bool AboveZeroValue(double value, TrapezoidalFuzzySet set)
+        {
+            if (value > set.A && value < set.B)
+                return true;
+            else
+                return false;
+        }
     }
 
     /// <summary>
@@ -151,6 +168,28 @@ namespace Ferda.Guha.Attribute
                 object deserialized = deserializer.Deserialize(reader);
                 return (TrapezoidalFuzzySets)deserialized;
             }
+        }
+
+        /// <summary>
+        /// Determines, if the membership degree of a value in parameter
+        /// <paramref name="value"/> of the trapezoidal fuzzy set
+        /// <paramref name="sets"/> is greater than zero.
+        /// </summary>
+        /// <param name="value">The examined value</param>
+        /// <param name="sets">The examined trapezoidal sets</param>
+        /// <returns>Iff the membership degree of the value is 
+        /// greater than zero</returns>
+        public static bool AboveZeroValue(double value, TrapezoidalFuzzySets sets)
+        {
+            foreach (TrapezoidalFuzzySet set in sets.fuzzySets)
+            {
+                if (TrapezoidalFuzzySet.AboveZeroValue(value, set))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

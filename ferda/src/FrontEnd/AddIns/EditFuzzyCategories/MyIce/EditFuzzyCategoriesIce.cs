@@ -207,17 +207,11 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
             StringT vbefore = (StringT)valueBefore;
             TrapezoidalFuzzySets fuzzySets = TrapezoidalFuzzySets.Deserialize(vbefore.stringValue);
 
-            MainWindow wind = new MainWindow(resManager, minimum, maximum, ownerOfAddIn, fuzzySets);
+            MainWindow wind = new MainWindow(resManager, minimum, maximum, ownerOfAddIn, fuzzySets, distincts);
             DialogResult result = ownerOfAddIn.ShowDialog(wind);
 
             if (result == DialogResult.OK)
             {
-                //checking the LFCAR compatibility
-                if (wind.CHBLCFAR.Checked)
-                {
-                    //TODOOOOOO
-                }
-
                 vbefore.stringValue = TrapezoidalFuzzySets.Serialize(wind.GetSets());
                 return vbefore;
             }

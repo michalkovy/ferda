@@ -75,6 +75,7 @@
             this.OKButton.TabIndex = 1;
             this.OKButton.Text = "OK";
             this.OKButton.UseVisualStyleBackColor = true;
+            this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
             // 
             // NewFCLabel
             // 
@@ -282,7 +283,7 @@
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.CancelButton);
             this.Name = "MainWindow";
-            this.Text = "MainWindow";
+            this.Text = "b";
             ((System.ComponentModel.ISupportInitialize)(this.TrapezoidPB)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -312,6 +313,6 @@
         private System.Windows.Forms.Button EditFCButton;
         private System.Windows.Forms.Button SaveFCButton;
         private System.Windows.Forms.Button HelpButton;
-        public System.Windows.Forms.CheckBox CHBLCFAR;
+        private System.Windows.Forms.CheckBox CHBLCFAR;
     }
 }
