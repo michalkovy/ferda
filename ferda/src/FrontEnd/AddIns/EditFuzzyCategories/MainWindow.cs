@@ -71,6 +71,8 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
         /// </summary>
         private IOwnerOfAddIn ownerOfAddIn;
 
+        private double[] distincts;
+
         #region Constructor
 
         /// <summary>
@@ -79,8 +81,10 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
         /// <param name="resManager">The resource manager</param>
         /// <param name="minimum">Minimal value of the attribute</param>
         /// <param name="maximum">Maximal value of the attribute</param>
+        /// <param name="distincts">The distinct values of the column
+        /// for LCFAR checking</param>
         public MainWindow(ResourceManager resManager, double minimum, double maximum, IOwnerOfAddIn ownerOfAddIn,
-            TrapezoidalFuzzySets fSets)
+            TrapezoidalFuzzySets fSets, double [] distincts)
         {
             if (fSets != null)
             {
@@ -93,6 +97,7 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
             this.ownerOfAddIn = ownerOfAddIn;
             this.minimum = minimum;
             this.maximum = maximum;
+            this.distincts = distincts;
             resourceManager = resManager;
             InitializeComponent();
             InitializeGraph();
@@ -443,6 +448,28 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
                 "\\AddIns\\Help\\EditFuzzyCategories.pdf");
         }
 
+        /// <summary>
+        /// This event checks, if the created fuzzy sets are LCFAR compatible -
+        /// that is every distinct value of the column is covered at least with one
+        /// fuzzy category, that has for this value greater membership degree
+        /// than zero. 
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">Event parameters</param>
+        private void OKButton_Click(object sender, EventArgs e)
+        {
+            if (CHBLCFAR.Checked)
+            {
+                foreach (double distinct in distincts)
+                {
+                    //if (G
+                }
+            }
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+        }
+
+
         #endregion
+
     }
 }
