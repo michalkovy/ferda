@@ -114,10 +114,17 @@
             <title>Enabling and disabling the LCFAR compliant fuzzy categories</title>
             <para>
                 Fuzzy association rules mining can be either based on the fuzzy set theory or
-                on a fuzzy logic. In the fuzzy set theory, trapezoidal fuzzy set can have 
-                overlapping peaks (parts of the fuzzy set where the value is 1). In the logical
-                based Logical calculi of fuzzy association rules (LCFAR), this is not allowed. 
+                on a fuzzy logic. In the fuzzy set theory, trapezoidal fuzzy sets ca
+                be defined randomly. In the logic
+                based Logical calculi of fuzzy association rules (LCFAR), for each distinct
+                value of the column, there has to exist a fuzzy category, that has a non zero
+                membership degree for this value. 
                 For more details see <citation>Ralbovsky</citation>.
+            </para>
+            <para>
+                If the <classname>LCFAR compatibility</classname> check box is checked,
+                on clicking on the <classname>OK</classname> button, the module verifies this
+                condition. 
             </para>
         </section>
         <section>
