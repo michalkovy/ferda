@@ -1272,7 +1272,7 @@
 			</Socket>
 			<Socket>
 				<Name>NameInBooleanAttributes</Name>
-				<Label>Název v Boolských atributech</Label>
+				<Label>Název ve fuzzy atributech</Label>
 				<Hint>Název, který bude použitý pro tvorbu Boolských atributů</Hint>
 			</Socket>
 			<Socket>
@@ -1384,7 +1384,7 @@
 			</Socket>
 			<Socket>
 				<Name>NameInBooleanAttributes</Name>
-				<Label>Název v Boolských atributech</Label>
+				<Label>Název ve fuzzy atributech</Label>
 				<Hint>Název, který bude použitý pro tvorbu Boolských atributů</Hint>
 			</Socket>
 			<Socket>
