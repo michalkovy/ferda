@@ -1277,8 +1277,8 @@
 			</Socket>
 			<Socket>
 				<Name>CountOfCategories</Name>
-				<Label>Počet kategorií.</Label>
-				<Hint>Počet kategorií v atributů..</Hint>
+				<Label>Počet fuzzy kategorií.</Label>
+				<Hint>Počet fuzzy kategorií vytvořených uživatelem</Hint>
 			</Socket>
 			<Socket>
 				<Name>FuzzyCategories</Name>
@@ -1389,8 +1389,8 @@
 			</Socket>
 			<Socket>
 				<Name>CountOfCategories</Name>
-				<Label>Počet kategorií.</Label>
-				<Hint>Počet kategorií v atributů..</Hint>
+				<Label>Počet fuzzy kategorií.</Label>
+				<Hint>Zadejte počet fuzzy kategorií, které se vytvoří</Hint>
 			</Socket>
 			<Socket>
 				<Name>Domain</Name>
