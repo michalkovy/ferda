@@ -1282,7 +1282,7 @@
 			</Socket>
 			<Socket>
 				<Name>NameInBooleanAttributes</Name>
-				<Label>Name in Boolean Attributes</Label>
+				<Label>Name in fuzzy attributes</Label>
 				<Hint>The name that will be used for construction of Boolean attributes from this attribute.</Hint>
 			</Socket>
 			<Socket>
@@ -1389,7 +1389,7 @@
 			</Socket>
 			<Socket>
 				<Name>NameInBooleanAttributes</Name>
-				<Label>Name in Boolean Attributes</Label>
+				<Label>Name in fuzzy attributes</Label>
 				<Hint>The name that will be used for construction of Boolean attributes from this attribute.</Hint>
 			</Socket>
 			<Socket>
