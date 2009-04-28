@@ -195,4 +195,7 @@
   <data name="Overlapping" xml:space="preserve">
     <value>choběžníku. V LCFAR toto není povoleno.</value>
   </data>
+  <data name="LCFARIncompatible" xml:space="preserve">
+    <value>Jedna z hodnot sloupce není nenulově pokryta žádnou z fuzzy kategorií, což není kompatibilní s LCFAR.</value>
+  </data>
 </root>

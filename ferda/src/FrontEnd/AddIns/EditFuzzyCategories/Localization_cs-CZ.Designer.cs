@@ -232,6 +232,15 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Jedna z hodnot sloupce není nenulově pokryta žádnou z fuzzy kategorií, což není kompatibilní s LCFAR..
+        /// </summary>
+        internal static string LCFARIncompatible {
+            get {
+                return ResourceManager.GetString("LCFARIncompatible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jméno:.
         /// </summary>
         internal static string NewFCName {

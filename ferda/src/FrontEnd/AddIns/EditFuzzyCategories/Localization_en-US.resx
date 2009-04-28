@@ -195,4 +195,7 @@
   <data name="Overlapping" xml:space="preserve">
     <value>The peak value of the new trapezoid is overlapping with peak value of other already defined trapeziod. This is not allowed in LFCAR.</value>
   </data>
+  <data name="LCFARIncompatible" xml:space="preserve">
+    <value>One of the distinct values of the column is not covered by any fuzzy category. This is not compatible with LCFAR.</value>
+  </data>
 </root>

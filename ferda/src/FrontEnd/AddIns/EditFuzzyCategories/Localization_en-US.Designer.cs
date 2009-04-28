@@ -232,6 +232,15 @@ namespace EditFuzzyCategories {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One of the distinct values of the column is not covered by any fuzzy category. This is not compatible with LCFAR..
+        /// </summary>
+        internal static string LCFARIncompatible {
+            get {
+                return ResourceManager.GetString("LCFARIncompatible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name:.
         /// </summary>
         internal static string NewFCName {
