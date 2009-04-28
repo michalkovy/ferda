@@ -460,12 +460,21 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories
         {
             if (CHBLCFAR.Checked)
             {
+                TrapezoidalFuzzySets sets = GetSets();
+
                 foreach (double distinct in distincts)
                 {
-                    //if (G
+                    if (!TrapezoidalFuzzySets.AboveZeroValue(distinct, sets))
+                    {
+                        MessageBox.Show(resourceManager.GetString("LCFARIncompatible"),
+                            resourceManager.GetString("Error"),
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        this.DialogResult = DialogResult.None;
+                        return;
+                    }
                 }
             }
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.DialogResult = DialogResult.OK;
         }
 
 
