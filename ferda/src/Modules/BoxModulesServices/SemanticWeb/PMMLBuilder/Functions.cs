@@ -486,9 +486,9 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                             xmlWriter.WriteAttributeString("closure",
                                 GetPMMLClosure(category.Intervals[i]));
                             xmlWriter.WriteAttributeString("leftMargin",
-                                category.Intervals[i].LeftValue.ToString());
+                                category.Intervals[i].LeftValue.ToString().Replace(',', '.'));
                             xmlWriter.WriteAttributeString("rightMargin",
-                                category.Intervals[i].RightValue.ToString());
+                                category.Intervals[i].RightValue.ToString().Replace(',', '.'));
                             xmlWriter.WriteEndElement(); //Interval
                         }
 
