@@ -229,6 +229,11 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
             double [] result = new double[valuesAndFrequencies.data.Length];
             for (int i = 0; i < valuesAndFrequencies.data.Length; i++)
             {
+                if (valuesAndFrequencies.data[i].value == null ||
+                    valuesAndFrequencies.data[i].value == "Null")
+                {
+                    continue;
+                }
                 result[i] = Convert.ToDouble(valuesAndFrequencies.data[i].value);
             }
             return result;
