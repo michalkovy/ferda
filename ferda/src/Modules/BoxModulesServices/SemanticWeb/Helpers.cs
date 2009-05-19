@@ -157,8 +157,14 @@ namespace Ferda.Modules.Boxes.SemanticWeb.Helpers
             quantifiers = new Dictionary<string, double>();
             foreach (string name in quant.Quantifeirs.Keys)
             {
-                quantifiers.Add(quant.Quantifeirs[name].LocalizedLabel.Replace(" ", string.Empty),
-                    quant.Quantifeirs[name].Value(hyp, allObjectsCount));
+                string label = quant.Quantifeirs[name].LocalizedLabel.Replace(" ", string.Empty);
+                double value = double.NaN;
+                try
+                {
+                    value = quant.Quantifeirs[name].Value(hyp, allObjectsCount);
+                }
+                catch { }
+                quantifiers.Add(label, value);
             }
         }
     }
