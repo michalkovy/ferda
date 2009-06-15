@@ -539,9 +539,9 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                         for (int i = 0; i < category.Enumeration.Count; i++)
                         {
                             xmlWriter.WriteStartElement("row");
-                            xmlWriter.WriteElementString(columnName, 
+                            xmlWriter.WriteElementString("column", 
                                 category.Enumeration[i].ToString());
-                            xmlWriter.WriteElementString(attrName, category.Name);
+                            xmlWriter.WriteElementString("field", category.Name);
                             xmlWriter.WriteEndElement(); //row
                         }
                     }
