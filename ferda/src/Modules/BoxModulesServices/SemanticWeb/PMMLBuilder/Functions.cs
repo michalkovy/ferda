@@ -461,6 +461,9 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                 xmlWriter.WriteAttributeString("dataType",
                     DBDataTypeToPMMLDataType(vaf.dataType));
 
+                string columnName = generator.GetColumnName();
+                xmlWriter.WriteAttributeString("name", columnName);
+
                 //deserializing attribute
                 Attribute<IComparable> attr =
                     Ferda.Guha.Attribute.Serializer.RetypeAttributeSerializable(
@@ -515,7 +518,6 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                 }
                 else
                 {
-                    string columnName = generator.GetColumnName();
                     string attrName = GetAttributeName(generator);
 
                     xmlWriter.WriteStartElement("MapValues");
