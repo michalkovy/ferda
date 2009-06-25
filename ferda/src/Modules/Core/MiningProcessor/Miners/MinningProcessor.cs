@@ -47,7 +47,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         void ComputeAllObjectsCount(CategorialAttributeTrace[] attributes);
         /// <summary>
         /// Computes all objects from list of Boolean attributes
-        /// (represted by 
+        /// (represented by 
         /// <see cref="T:Ferda.Guha.MiningProcessor.Generation.IEntityEnumerator"/>).
         /// </summary>
         /// <param name="attribute">Boolean attributes</param>
@@ -405,6 +405,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
         private readonly TaskRunParams _taskParams;
 
         /// <summary>
+        /// The bit string generator provider of the task
+        /// </summary>
+        private readonly BitStringGeneratorProviderPrx _taskFuncPrx;
+
+        /// <summary>
         /// Run parameters of the task
         /// </summary>
         public TaskRunParams TaskParams
@@ -613,6 +618,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             _taskParams = taskParams;
             _booleanAttributes = booleanAttributes;
             _categorialAttributes = categorialAttributes;
+            _taskFuncPrx = taskFuncPrx;
 
             ProgressSetValue(-1, "Preparing quantifiers");
 
@@ -671,17 +677,52 @@ namespace Ferda.Guha.MiningProcessor.Miners
         {
             if (_allObjectsCount > 0)
                 return;
-            //tohle bylo v opravene verzi
             //if (attribute is EmptyTrace)
             //    return;
 
             //puvodni verze
             if (!(attribute is EmptyTrace))
-                return;
-            foreach (IBitString s in attribute)
             {
-                _allObjectsCount = s.Length;
+                foreach (IBitString s in attribute)
+                {
+                    _allObjectsCount = s.Length;
+                    return;
+                }
+            }
+            //foreach (IBitString s in attribute)
+            //{
+            //    _allObjectsCount = s.Length;
+            //    return;
+            //}
+        }
+
+        /// <summary>
+        /// The method that computes the _allObjectsCount field for the first
+        /// time. This method is used in order to avoid null references to the 
+        /// IBitString enumerators. 
+        /// </summary>
+        public void FirstComputeAllObjectsCount()
+        {
+            if (_taskFuncPrx.GetBitStringGenerators().Length == 0)
+            {
                 return;
+            }
+            BitStringGeneratorPrx bsGen = _taskFuncPrx.GetBitStringGenerators()[0];
+            if (bsGen.GetCategoriesIds().Length == 0)
+            {
+                return;
+            }
+            string category = bsGen.GetCategoriesIds()[0];
+            BitStringIce bs = bsGen.GetBitString(category);
+            if (bs is FuzzyBitStringIce)
+            {
+                FuzzyBitStringIce fbs = bs as FuzzyBitStringIce;
+                _allObjectsCount = fbs.value.Length;
+            }
+            else
+            {
+                CrispBitStringIce cbs = bs as CrispBitStringIce;
+                _allObjectsCount = cbs.length;
             }
         }
 
@@ -791,7 +832,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
 
             IEntityEnumerator finalResult = Factory.Create(setting, miningProcessorBase, semantic);
-            miningProcessorBase.ComputeAllObjectsCount(finalResult);
+            //tady dat jiny zpusob pocitani _allObjectsCount
+            miningProcessorBase.FirstComputeAllObjectsCount();
+
+            //miningProcessorBase.ComputeAllObjectsCount(finalResult);
+
             return finalResult;
         }
 
