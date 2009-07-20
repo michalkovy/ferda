@@ -56,6 +56,7 @@
 		<replica-group id="FerdaSemanticWebBoxesReplicaAdapter">
 			<load-balancing type="round-robin" n-replicas="1"/>
 			<object identity="SemanticWeb.PMMLBuilder" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
+			<object identity="SemanticWeb.SEWEBARPublisher" type="::Ferda::Modules::BoxModuleFactoryCreator"/>
 		</replica-group>
 		<replica-group id="FerdaGuhaMiningBoxesReplicaAdapter">
 			<load-balancing type="round-robin" n-replicas="1"/>

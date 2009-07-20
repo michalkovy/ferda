@@ -21888,4 +21888,30 @@
 			</Property>
 		</Properties>
 	</Box>
+	<Box>
+		<Identifier>SemanticWeb.SEWEBARPublisher</Identifier>
+		<IconPath>boxIcon.ico</IconPath>
+		<DesignPath>boxDesign.svg</DesignPath>
+		<Categories>
+			<string>SemanticWeb</string>
+		</Categories>
+		<Actions>
+			<Action>
+				<Name>PublishToSEWEBAR</Name>
+				<IconPath>exportToSewebar.ico</IconPath>
+			</Action>
+		</Actions>
+		<Sockets>
+			<Socket>
+				<Name>PMMLBuilder</Name>
+				<SocketTypes>
+					<BoxType>
+						<FunctionIceId>::Ferda::Modules::Boxes::SemanticWeb::PMMLBuilder::PMMLBuilderFunctions</FunctionIceId>
+					</BoxType>
+				</SocketTypes>
+				<MoreThanOne>false</MoreThanOne>
+			</Socket>
+		</Sockets>
+	</Box>
+	
 </Boxes>

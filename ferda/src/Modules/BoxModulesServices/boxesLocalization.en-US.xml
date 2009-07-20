@@ -12121,4 +12121,29 @@
 			</Socket>
 		</Sockets>
 	</BoxLocalization>
+	<BoxLocalization>
+		<Identifier>SemanticWeb.SEWEBARPublisher</Identifier>
+		<Label>SEWEBAR Publisher</Label>
+		<Hint>Publishes the PMML report to a web repository</Hint>
+		<Categories>
+			<Category>
+				<Name>SemanticWeb</Name>
+				<Label>Semantic Web</Label>
+			</Category>
+		</Categories>
+		<Actions>
+			<Action>
+				<Name>PublishToSEWEBAR</Name>
+				<Label>Publish PMML to Sewebar</Label>
+				<Hint>Publishes the PMML report to a web repository</Hint>
+			</Action>
+		</Actions>
+		<Sockets>
+			<Socket>
+				<Name>PMMLBuilder</Name>
+				<Label>PMML Builder</Label>
+				<Hint>The box that builds PMML</Hint>
+			</Socket>
+		</Sockets>
+	</BoxLocalization>
 </BoxesLocalization>
