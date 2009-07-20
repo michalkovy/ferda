@@ -33,6 +33,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb
       protected override void registerBoxes()
       {
           registerBox(PMMLBuilder.BoxInfo.typeIdentifier, new PMMLBuilder.BoxInfo());
+          registerBox(SEWEBARPublisher.BoxInfo.typeIdentifier, new SEWEBARPublisher.BoxInfo());
       }
     }
 }
