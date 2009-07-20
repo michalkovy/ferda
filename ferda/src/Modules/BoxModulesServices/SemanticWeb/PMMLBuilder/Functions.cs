@@ -201,10 +201,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// </summary>
         public void SavePMMLToFile()
         {
-            if (PMML == null)
-            {
-                PMML = BuildPMML();
-            }
+            PMML = BuildPMML();
 
             //deleting the file if it exists
             if (File.Exists(PMMLFile))
