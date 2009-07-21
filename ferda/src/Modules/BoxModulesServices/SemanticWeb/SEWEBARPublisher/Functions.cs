@@ -51,6 +51,5 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         }
 
         #endregion
-
     }
 }
