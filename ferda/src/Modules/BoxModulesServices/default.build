@@ -56,6 +56,7 @@
 		  <include name="${path::combine(build.dir,'FerdaAttribute.dll')}"/>
 		  <include name="${path::combine(lib.dir,'Ice.dll')}"/>
 		  <include name="${path::combine(lib.dir,'IceBox.dll')}"/>
+			<include name="${path::combine(lib.dir,'CookComputing.XmlRpcV2.dll')}"/>
 		  <include name="System.dll"/>
 		  <include name="System.Data.dll"/>
 		  <include name="System.Xml.dll"/>

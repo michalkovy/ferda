@@ -233,6 +233,7 @@
 				<include name="Ice.jar"/>
 				<include name="OWL_API/*"/>
 				<include name="Mono.Simd.dll"/>
+				<include name="CookComputing.XmlRpcV2.dll"/>
 			</fileset>
 		</copy>
 	</target>
