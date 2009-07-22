@@ -147,18 +147,18 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         /// </exception>
         public override void RunAction(string actionName, BoxModuleI boxModule)
         {
-            //Validate(boxModule);
+            Validate(boxModule);
 
-            //Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
 
-            //switch (actionName)
-            //{
-            //    case "SavePMMLToFile":
-            //        Func.SavePMMLToFile();
-            //        break;
-            //    default:
-            //        throw Exceptions.NameNotExistError(null, actionName);
-            //}
+            switch (actionName)
+            {
+                case "PublishToSEWEBAR":
+                    Func.PublishToSEWEBAR();
+                    break;
+                default:
+                    throw Exceptions.NameNotExistError(null, actionName);
+            }
         }
 
         #region Type Identifier
