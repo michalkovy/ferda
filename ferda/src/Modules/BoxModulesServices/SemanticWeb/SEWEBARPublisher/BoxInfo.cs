@@ -186,6 +186,27 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
             get { return typeIdentifier; }
         }
 
+        /// <summary>
+        /// Gets value of readonly property value.
+        /// </summary>
+        /// <param name="propertyName">Name of readonly property.</param>
+        /// <param name="boxModule">Box module.</param>
+        /// <returns>
+        /// A <see cref="T:Ferda.Modules.PropertyValue"/> of
+        /// readonly property named <c>propertyName</c>.
+        /// </returns>
+        public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
+        {
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+            switch (propertyName)
+            {
+                case Functions.SockArticleId:
+                    return Func.ArticleId;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         #endregion
 
         /* Other functions to override

@@ -110,11 +110,12 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         /// <summary>
         /// The ID of the article to be published
         /// </summary>
-        public long ArticleId
+        public IntTI ArticleId
         {
             get
             {
-                return boxModule.GetPropertyLong(SockArticleId);
+                //return boxModule.GetPropertyInt(SockArticleId);
+                return new IntTI(-1);
             }
         }
 
@@ -181,21 +182,28 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
 
         #region Public methods
 
+        /// <summary>
+        /// The main method that publishes the PMML article to SEWEBAR Joomla! web
+        /// service
+        /// </summary>
         public void PublishToSEWEBAR()
         {
             ISewebar proxy = XmlRpcProxyGen.Create<ISewebar>();
             string response =
-                proxy.uploadXML("text", UserName, Password, ArticleTitle, ArticleId);
+                proxy.uploadXML("text", UserName, Password, ArticleTitle, (int)ArticleId);
         }
 
         #endregion
     }
 
-    [XmlRpcUrl("http://sewebar-dev.vse.cz/xmlrpc")]
+    /// <summary>
+    /// The interface for the web service
+    /// </summary>
+    [XmlRpcUrl("http://sewebar-dev.vse.cz/xmlrpc/")]
     public interface ISewebar : IXmlRpcProxy
     {
-        [XmlRpcMethod("uploadXML")]
+        [XmlRpcMethod("uploadXML.uploadFile")]
         string uploadXML(string articleText, string userName, 
-            string password, string articleTitle, long articleId);
+            string password, string articleTitle, int articleId);
     }
 }
