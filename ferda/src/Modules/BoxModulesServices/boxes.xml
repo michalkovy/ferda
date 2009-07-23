@@ -21921,7 +21921,7 @@
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
 			<Socket>
-				<Name>ServerFile</Name>
+				<Name>Password</Name>
 				<SocketTypes>
 					<BoxType>
 						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
@@ -21938,15 +21938,7 @@
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>	
-			<Socket>
-				<Name>Password</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::StringTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>	
+				
 			<Socket>
 				<Name>ArticleTitle</Name>
 				<SocketTypes>
@@ -21960,30 +21952,27 @@
 				<Name>ArticleId</Name>
 				<SocketTypes>
 					<BoxType>
-						<FunctionIceId>::Ferda::Modules::LongTInterface</FunctionIceId>
+						<FunctionIceId>::Ferda::Modules::IntTInterface</FunctionIceId>
 					</BoxType>
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
-			</Socket>	
+			</Socket>
+			
 		</Sockets>
 		<Properties>
 			<Property>
 				<Name>XMLRPCHost</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>Connection</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
 				<Default>sewebar-dev.vse.cz</Default>
 			</Property>
-			<Property>
-				<Name>ServerFile</Name>
-				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
-				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
-				<Default>/xmlrpc/</Default>
-			</Property>
+			
 			<Property>
 				<Name>UserName</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>Authentication</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
 				<Default>admin</Default>
@@ -21991,6 +21980,7 @@
 			<Property>
 				<Name>Password</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>Authentication</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
 				<Default>studentFIS</Default>
@@ -21998,17 +21988,20 @@
 			<Property>
 				<Name>ArticleTitle</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
+				<CategoryName>Article</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
 				<Default>PokusnyClanek</Default>
 			</Property>
 			<Property>
 				<Name>ArticleId</Name>
-				<TypeClassIceId>::Ferda::Modules::LongT</TypeClassIceId>
+				<TypeClassIceId>::Ferda::Modules::IntT</TypeClassIceId>
+				<CategoryName>Article</CategoryName>
 				<Visible>true</Visible>
-				<ReadOnly>false</ReadOnly>
+				<ReadOnly>true</ReadOnly>
 				<Default>-1</Default>
 			</Property>
+			
 		</Properties>
 	</Box>
 </Boxes>

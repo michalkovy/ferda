@@ -12149,11 +12149,7 @@
 				<Label>XML-RPC host</Label>
 				<Hint>The host of the XML RPC web service</Hint>
 			</Socket>
-			<Socket>
-				<Name>ServerFile</Name>
-				<Label>Server file</Label>
-				<Hint>The file of the web service</Hint>
-			</Socket>
+			
 			<Socket>
 				<Name>UserName</Name>
 				<Label>User name</Label>
@@ -12162,7 +12158,7 @@
 			<Socket>
 				<Name>Password</Name>
 				<Label>Password</Label>
-				<Hint></Hint>
+				<Hint/>
 			</Socket>
 			<Socket>
 				<Name>ArticleTitle</Name>
@@ -12174,6 +12170,21 @@
 				<Label>Article ID</Label>
 				<Hint>ID of the article to be published in SEWEBAR</Hint>
 			</Socket>
+			
 		</Sockets>
+		<PropertyCategories>
+			<PropertyCategory>
+				<Name>Connection</Name>
+				<Label>Connection</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Authentication</Name>
+				<Label>Authentication</Label>
+			</PropertyCategory>
+			<PropertyCategory>
+				<Name>Article</Name>
+				<Label>Article</Label>
+			</PropertyCategory>
+		</PropertyCategories>
 	</BoxLocalization>
 </BoxesLocalization>
