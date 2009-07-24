@@ -21897,6 +21897,10 @@
 		</Categories>
 		<Actions>
 			<Action>
+				<Name>ListUserFiles</Name>
+				<IconPath>listUserFiles.ico</IconPath>
+			</Action>
+			<Action>
 				<Name>PublishToSEWEBAR</Name>
 				<IconPath>exportToSewebar.ico</IconPath>
 			</Action>
@@ -21948,15 +21952,7 @@
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
-			<Socket>
-				<Name>ArticleId</Name>
-				<SocketTypes>
-					<BoxType>
-						<FunctionIceId>::Ferda::Modules::IntTInterface</FunctionIceId>
-					</BoxType>
-				</SocketTypes>
-				<MoreThanOne>false</MoreThanOne>
-			</Socket>
+			
 			
 		</Sockets>
 		<Properties>
@@ -21964,9 +21960,21 @@
 				<Name>XMLRPCHost</Name>
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
 				<CategoryName>Connection</CategoryName>
+				<SelectOptions>
+					<SelectOption>
+						<Name>http://sewebar-dev.vse.cz/xmlrpc/</Name>
+					</SelectOption>
+					<SelectOption>
+						<Name>http://sewebar.vse.cz/tinnitus/xmlrpc/</Name>
+					</SelectOption>
+					<SelectOption>
+						<Name>http://sewebar.vse.cz/cardio/xmlrpc/</Name>
+					</SelectOption>
+				</SelectOptions>
+				
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<Default>sewebar-dev.vse.cz</Default>
+				<Default>http://sewebar-dev.vse.cz/xmlrpc/</Default>
 			</Property>
 			
 			<Property>
@@ -21991,16 +21999,9 @@
 				<CategoryName>Article</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<Default>PokusnyClanek</Default>
+				
 			</Property>
-			<Property>
-				<Name>ArticleId</Name>
-				<TypeClassIceId>::Ferda::Modules::IntT</TypeClassIceId>
-				<CategoryName>Article</CategoryName>
-				<Visible>true</Visible>
-				<ReadOnly>true</ReadOnly>
-				<Default>-1</Default>
-			</Property>
+			
 			
 		</Properties>
 	</Box>

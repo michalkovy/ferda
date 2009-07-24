@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using CookComputing.XmlRpc;
+using Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder;
 
 namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
 {
@@ -46,6 +47,11 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         /// </summary>
         protected Ferda.Modules.Boxes.IBoxInfo boxInfo;
 
+        /// <summary>
+        /// The dictionary of ID's and articles of the logged user
+        /// </summary>
+        protected List<string> IdsArticles = null;
+
         #endregion
 
         #region Properties
@@ -59,18 +65,6 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
             get
             {
                 return boxModule.GetPropertyString(SockXMLRPCHost);
-            }
-        }
-
-        /// <summary>
-        /// The file where the article should be uploaded via the 
-        /// XML-RPC web service
-        /// </summary>
-        public string ServerFile
-        {
-            get
-            {
-                return boxModule.GetPropertyString(SockServerFile);
             }
         }
 
@@ -134,11 +128,6 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         public const string SockXMLRPCHost = "XMLRPCHost";
 
         /// <summary>
-        /// Name of the socket determining the file on the server
-        /// </summary>
-        public const string SockServerFile = "ServerFile";
-
-        /// <summary>
         /// Name of the socket determining the name of the user of the SEWEBAR
         /// application
         /// </summary>
@@ -155,12 +144,6 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         /// published. 
         /// </summary>
         public const string SockArticleTitle = "ArticleTitle";
-
-        /// <summary>
-        /// Name of the socket determining the ID of the article to be 
-        /// published. 
-        /// </summary>
-        public const string SockArticleId = "ArticleId";
 
         #endregion
 
@@ -183,14 +166,62 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         #region Public methods
 
         /// <summary>
+        /// Returns the array of articles and their ID's.
+        /// If the IdsArticles is null, the function returns only one entry
+        /// saying New article
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetIdsArticles()
+        {
+            if (IdsArticles == null)
+            {
+                return new string[] { "-1;NewArticle" };
+            }
+            else
+            {
+                return IdsArticles.ToArray();
+            }
+        }
+
+        /// <summary>
         /// The main method that publishes the PMML article to SEWEBAR Joomla! web
         /// service
         /// </summary>
         public void PublishToSEWEBAR()
         {
+            PMMLBuilderFunctionsPrx pmmlPrx =
+                SocketConnections.GetPrx<PMMLBuilderFunctionsPrx>(
+                boxModule, SockPMMLBuilder,
+                PMMLBuilderFunctionsPrxHelper.checkedCast,
+                true);
+            string pmml = pmmlPrx.getPMML();
+
             ISewebar proxy = XmlRpcProxyGen.Create<ISewebar>();
+            proxy.Url = XMLRPCHost;
             string response =
-                proxy.uploadXML("text", UserName, Password, ArticleTitle, (int)ArticleId);
+                proxy.uploadFile(pmml, UserName, Password, ArticleTitle, (int)ArticleId);
+        }
+
+        /// <summary>
+        /// Retrieves the files of the user from the SEWEBAR CMS repository. 
+        /// The files are stored into the IdsArticles, which should not be
+        /// null.
+        /// </summary>
+        public void ListFiles()
+        {
+            ISewebar proxy = XmlRpcProxyGen.Create<ISewebar>();
+            proxy.Url = XMLRPCHost;
+            string[] response = proxy.listFiles(UserName, Password, string.Empty,
+                string.Empty);
+
+            IdsArticles = new List<string>(response);
+            //foreach (string s in response)
+            //{
+            //    int index = s.IndexOf(';');
+            //    int id = System.Convert.ToInt32(s.Substring(0,index));
+            //    string name = s.Substring(index+1);
+            //    IdsArticles.Add(id, name);
+            //}
         }
 
         #endregion
@@ -199,11 +230,38 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
     /// <summary>
     /// The interface for the web service
     /// </summary>
-    [XmlRpcUrl("http://sewebar-dev.vse.cz/xmlrpc/")]
     public interface ISewebar : IXmlRpcProxy
     {
+        /// <summary>
+        /// The method uploads the XML file into designated section and directory.
+        /// It is intended for PMML reports to be exported from Ferda and
+        /// LISp-Miner DM tools directly into Joomla for the follow-up usage
+        /// with the gInclude plugin. 
+        /// </summary>
+        /// <param name="articleText">Text of the article (PMML)</param>
+        /// <param name="userName">User name for authentication</param>
+        /// <param name="password">User password for authentication</param>
+        /// <param name="articleTitle">Title of the article</param>
+        /// <param name="articleId">ID of the article</param>
+        /// <returns>
+        /// TODO
+        /// </returns>
         [XmlRpcMethod("uploadXML.uploadFile")]
-        string uploadXML(string articleText, string userName, 
+        string uploadFile(string articleText, string userName, 
             string password, string articleTitle, int articleId);
+
+        /// <summary>
+        /// Allows RPC client to retrieve all articles from specified 
+        /// section and category for specified user. The goal is to enable
+        /// user to overwrite and update previously updated PMML reports. 
+        /// </summary>
+        /// <param name="userName">User name for authentication</param>
+        /// <param name="password">User password for authentication</param>
+        /// <param name="section">Joomla section (optional)</param>
+        /// <param name="category">Joomla category (optional)</param>
+        /// <returns></returns>
+        [XmlRpcMethod("uploadXML.listFiles")]
+        string[] listFiles(string userName, string password,
+            string section, string category);
     }
 }

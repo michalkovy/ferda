@@ -98,7 +98,17 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         /// <returns>String options of the property</returns>
         public override SelectString[] GetPropertyOptions(string propertyName, BoxModuleI boxModule)
         {
-            return null;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
+
+            switch (propertyName)
+            {
+                case Functions.SockArticleTitle:
+                    return BoxInfoHelper.GetSelectStringArray(
+                        Func.GetIdsArticles()
+                        );
+                default:
+                    return null;
+            }
         }
 
         /// <summary>
@@ -107,31 +117,30 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         /// <param name="boxModule">box instance to be validated</param>
         public override void Validate(BoxModuleI boxModule)
         {
-    //        Functions Func = (Functions)boxModule.FunctionsIObj;
+            Functions Func = (Functions)boxModule.FunctionsIObj;
 
-    //        //the PMML file should not be emtpy string
-    //        if (Func.PMMLFile == string.Empty)
-    //        {
-    //            BoxRuntimeError error = new BoxRuntimeError(null,
-    //                "The PMML file location should not be an empty string");
-    //            throw error;
-    //        }
+            //the box must be connected to a valid PMMLBuilder box.
+            try
+            {
+                BoxModulePrx pmmlProxy =
+                    boxModule.GetConnections(Functions.SockPMMLBuilder)[0];
+                pmmlProxy.validate();
+            }
+            catch
+            {
+                BoxRuntimeError error = new BoxRuntimeError(null,
+                    "A valid PMMLBuilder box should be connected to the SEWEBARPublisher box.");
+                throw error;
+            }
 
-    //        //the box must be connected to a 4FT task and the task must have generated hypotheses
-    //        Result result = Func.GetResult();
-    //        if (result == null)
-    //        {
-    //            BoxRuntimeError error = new BoxRuntimeError(null,
-    //"A task needs to be run in order to create PMML.");
-    //            throw error;
-    //        }
-
-    //        if (result.TaskTypeEnum != TaskTypeEnum.FourFold)
-    //        {
-    //            BoxRuntimeError error = new BoxRuntimeError(null,
-    //"Currently, only the results of 4FT tasks are supported");
-    //            throw error;
-    //        }
+            //an article must be selected
+            string articleID = Func.ArticleTitle;
+            if (articleID == null)
+            {
+                BoxRuntimeError error = new BoxRuntimeError(null,
+                    "An article title should be selected.");
+                throw error;
+            }
         }
 
         /// <summary>
@@ -147,14 +156,16 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         /// </exception>
         public override void RunAction(string actionName, BoxModuleI boxModule)
         {
-            Validate(boxModule);
-
             Functions Func = (Functions)boxModule.FunctionsIObj;
 
             switch (actionName)
             {
                 case "PublishToSEWEBAR":
+                    Validate(boxModule);
                     Func.PublishToSEWEBAR();
+                    break;
+                case "ListUserFiles":
+                    Func.ListFiles();
                     break;
                 default:
                     throw Exceptions.NameNotExistError(null, actionName);
@@ -197,14 +208,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         /// </returns>
         public override PropertyValue GetReadOnlyPropertyValue(string propertyName, BoxModuleI boxModule)
         {
-            Functions Func = (Functions)boxModule.FunctionsIObj;
-            switch (propertyName)
-            {
-                case Functions.SockArticleId:
-                    return Func.ArticleId;
-                default:
-                    throw new NotImplementedException();
-            }
+            return null;
         }
 
         #endregion
