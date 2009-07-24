@@ -12120,6 +12120,12 @@
 				<Label>Publish PMML to Sewebar</Label>
 				<Hint>Publishes the PMML report to a web repository</Hint>
 			</Action>
+			<Action>
+				<Name>ListUserFiles</Name>
+				<Label>List files of the user</Label>
+				<Hint>Searches for the files (articles) belonging to the user
+					with the specified name and password.</Hint>
+			</Action>
 		</Actions>
 		<Sockets>
 			<Socket>
@@ -12131,6 +12137,20 @@
 				<Name>XMLRPCHost</Name>
 				<Label>XML-RPC host</Label>
 				<Hint>The host of the XML RPC web service</Hint>
+				<SelectOptions>
+					<SelectOption>
+						<Name>http://sewebar-dev.vse.cz/xmlrpc/</Name>
+						<Label>sewebar-dev.vse.cz</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>http://sewebar.vse.cz/tinnitus/xmlrpc/</Name>
+						<Label>sewebar.vse.cz/tinnitus/</Label>
+					</SelectOption>
+					<SelectOption>
+						<Name>http://sewebar.vse.cz/cardio/xmlrpc/</Name>
+						<Label>sewebar.vse.cz/cardio</Label>
+					</SelectOption>
+				</SelectOptions>
 			</Socket>
 			
 			<Socket>
@@ -12148,11 +12168,7 @@
 				<Label>Article title</Label>
 				<Hint>Title of the article to be published in SEWEBAR</Hint>
 			</Socket>
-			<Socket>
-				<Name>ArticleId</Name>
-				<Label>Article ID</Label>
-				<Hint>ID of the article to be published in SEWEBAR</Hint>
-			</Socket>
+			
 			
 		</Sockets>
 		<PropertyCategories>
