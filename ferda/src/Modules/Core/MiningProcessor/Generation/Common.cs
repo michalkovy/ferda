@@ -655,7 +655,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
             if (bitStringStack.Count >= _effectiveMinLength)
             {
                 result = bitStringStack.Peek();
-                Debug.Assert(result != null);
+                if (result == null)
+                {
+                    return false;
+                }
+                
                 SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
 
                 //if the base (sum) of the bit string does not correspond to the
