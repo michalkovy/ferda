@@ -104,14 +104,14 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         /// <summary>
         /// The ID of the article to be published
         /// </summary>
-        public IntTI ArticleId
-        {
-            get
-            {
-                //return boxModule.GetPropertyInt(SockArticleId);
-                return new IntTI(-1);
-            }
-        }
+        //public IntTI ArticleId
+        //{
+        //    get
+        //    {
+        //        //return boxModule.GetPropertyInt(SockArticleId);
+        //        return new IntTI(-1);
+        //    }
+        //}
 
         #endregion
 
@@ -198,8 +198,9 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
 
             ISewebar proxy = XmlRpcProxyGen.Create<ISewebar>();
             proxy.Url = XMLRPCHost;
+
             string response =
-                proxy.uploadFile(pmml, UserName, Password, ArticleTitle, (int)ArticleId);
+                proxy.uploadFile(pmml, UserName, Password, GetTitle(ArticleTitle), GetId(ArticleTitle));
         }
 
         /// <summary>
@@ -232,6 +233,47 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         }
 
         #endregion
+
+        /// <summary>
+        /// The method retrieves the numeric ID of the article out of the 
+        /// <paramref name="ArticleTitle"/> parameter, which is in form 
+        /// ArticleTitle(Id=x)
+        /// </summary>
+        /// <param name="ArticleTitle">The article title in form ArticleTitle(Id=x)</param>
+        /// <returns>ID of the article</returns>
+        private int GetId(string ArticleTitle)
+        {
+            if (ArticleTitle.Contains("(ID="))
+            {
+                string number = ArticleTitle.Substring(
+                    ArticleTitle.LastIndexOf('=')+1,
+                    ArticleTitle.LastIndexOf(')') - ArticleTitle.LastIndexOf('=')-1);
+                return Convert.ToInt32(number);
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// The method retrieves the title of the article out of the 
+        /// <paramref name="ArticleTitle"/> parameter, which is in form 
+        /// ArticleTitle(Id=x)
+        /// </summary>
+        /// <param name="ArticleTitle">The article title in form ArticleTitle(Id=x)</param>
+        /// <returns>Title of the article</returns>
+        private string GetTitle(string ArticleTitle)
+        {
+            if (ArticleTitle.Contains("(ID="))
+            {
+                return ArticleTitle.Substring(0, ArticleTitle.LastIndexOf('('));
+            }
+            else
+            {
+                return ArticleTitle;
+            }
+        }
     }
 
     /// <summary>
