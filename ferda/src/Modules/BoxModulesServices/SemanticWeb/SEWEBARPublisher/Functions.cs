@@ -175,7 +175,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         {
             if (IdsArticles == null)
             {
-                return new string[] { "-1;NewArticle" };
+                return new string[] { "NewArticle(ID=-1)" };
             }
             else
             {
@@ -211,17 +211,24 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         {
             ISewebar proxy = XmlRpcProxyGen.Create<ISewebar>();
             proxy.Url = XMLRPCHost;
-            string[] response = proxy.listFiles(UserName, Password, string.Empty,
+            XmlRpcStruct [] response = null;
+
+            response = proxy.listFiles(UserName, Password, string.Empty,
                 string.Empty);
 
-            IdsArticles = new List<string>(response);
-            //foreach (string s in response)
-            //{
-            //    int index = s.IndexOf(';');
-            //    int id = System.Convert.ToInt32(s.Substring(0,index));
-            //    string name = s.Substring(index+1);
-            //    IdsArticles.Add(id, name);
-            //}
+
+            if (response.Length == 0)
+            {
+                return;
+            }
+
+            IdsArticles = new List<string>(response.Length);
+            foreach (XmlRpcStruct s in response)
+            {
+                string str = s["title"].ToString();
+                str = str + "(ID=" + s["id"].ToString() + ')';
+                IdsArticles.Add(str);
+            }
         }
 
         #endregion
@@ -261,7 +268,7 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         /// <param name="category">Joomla category (optional)</param>
         /// <returns></returns>
         [XmlRpcMethod("uploadXML.listFiles")]
-        string[] listFiles(string userName, string password,
+        XmlRpcStruct [] listFiles(string userName, string password,
             string section, string category);
     }
 }
