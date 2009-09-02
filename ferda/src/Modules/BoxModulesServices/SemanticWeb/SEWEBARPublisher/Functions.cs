@@ -234,6 +234,8 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
 
         #endregion
 
+        #region Private methods
+
         /// <summary>
         /// The method retrieves the numeric ID of the article out of the 
         /// <paramref name="ArticleTitle"/> parameter, which is in form 
@@ -274,6 +276,8 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
                 return ArticleTitle;
             }
         }
+
+        #endregion 
     }
 
     /// <summary>

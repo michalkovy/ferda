@@ -12120,6 +12120,13 @@
 				<Hint>Fill author of the document here</Hint>
 			</Socket>
 		</Sockets>
+    <ModulesAskingForCreationSeq>
+      <ModulesAskingForCreation>
+        <Name>SEWEBARPublisher</Name>
+        <Label>SEWEBAR Publisher</Label>
+        <Hint>Publishes the PMML report to a web repository</Hint>
+      </ModulesAskingForCreation>
+    </ModulesAskingForCreationSeq>
 	</BoxLocalization>
 	<BoxLocalization>
 		<Identifier>SemanticWeb.SEWEBARPublisher</Identifier>
@@ -12183,7 +12190,7 @@
 			<Socket>
 				<Name>ArticleTitle</Name>
 				<Label>Article title</Label>
-				<Hint>Title of the article to be published in SEWEBAR</Hint>
+				<Hint>Title of the article to be published in SEWEBAR, the ID of the article is in parenteses.</Hint>
 			</Socket>
 			
 			
