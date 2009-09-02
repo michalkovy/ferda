@@ -12069,10 +12069,52 @@
 			</ModulesAskingForCreation>
 		</ModulesAskingForCreationSeq>
 	</BoxLocalization>
+  <BoxLocalization>
+    <Identifier>SemanticWeb.PMMLBuilder</Identifier>
+    <Label>PMML Builder</Label>
+    <Hint>Sestaví PMML z výsledků běhu úlohy</Hint>
+    <Categories>
+      <Category>
+        <Name>SemanticWeb</Name>
+        <Label>Sémantický web</Label>
+      </Category>
+    </Categories>
+    <Actions>
+      <Action>
+        <Name>SavePMMLToFile</Name>
+        <Label>Uložit PMML do souboru</Label>
+        <Hint>Uloží PMML do souboru specifikovaného vlastností PMML soubor</Hint>
+      </Action>
+    </Actions>
+    <Sockets>
+      <Socket>
+        <Name>PMMLFile</Name>
+        <Label>PMML soubor</Label>
+        <Hint>Umístnění souboru PMML</Hint>
+      </Socket>
+      <Socket>
+        <Name>4FTTask</Name>
+        <Label>4FT úloha</Label>
+        <Hint>4FT úloha ze které se vytvoří PMML</Hint>
+      </Socket>
+      <Socket>
+        <Name>Author</Name>
+        <Label>Autor</Label>
+        <Hint>Zde uveď autora dokumentu</Hint>
+      </Socket>
+    </Sockets>
+    <ModulesAskingForCreationSeq>
+      <ModulesAskingForCreation>
+        <Name>SEWEBARPublisher</Name>
+        <Label>SEWEBAR Publisher</Label>
+        <Hint>Publikuje PMML zprávu do webového úložiště</Hint>
+      </ModulesAskingForCreation>
+    </ModulesAskingForCreationSeq>
+  </BoxLocalization>
 	<BoxLocalization>
-		<Identifier>SemanticWeb.PMMLBuilder</Identifier>
-		<Label>Sestavení PMML</Label>
-		<Hint>Sestaví PMML na základě výsledku úlohy</Hint>
+		<Identifier>SemanticWeb.SEWEBARPublisher</Identifier>
+		<Label>SEWEBAR Publisher</Label>
+		<Hint>Publikuje PMML zprávu do webového úložiště</Hint>
 		<Categories>
 			<Category>
 				<Name>SemanticWeb</Name>
@@ -12081,62 +12123,26 @@
 		</Categories>
 		<Actions>
 			<Action>
-				<Name>SavePMMLToFile</Name>
-				<Label>Uložit PMML do souboru</Label>
-				<Hint>Uloží PMML do souboru uvedeného ve vlastnosti X</Hint>
-			</Action>
-		</Actions>
-		<Sockets>
-			<Socket>
-				<Name>PMMLFile</Name>
-				<Label>PMML soubor</Label>
-				<Hint>Umístění PMML souboru</Hint>
-			</Socket>
-			<Socket>
-				<Name>4FTTask</Name>
-				<Label>4FT úloha</Label>
-				<Hint>4FT úloha ze které se vytvoří PMML</Hint>
-			</Socket>
-			<Socket>
-				<Name>Author</Name>
-				<Label>Autor</Label>
-				<Hint>Zde zadejte autora PMML dokumentu</Hint>
-			</Socket>
-		</Sockets>
-	</BoxLocalization>
-	<BoxLocalization>
-		<Identifier>SemanticWeb.SEWEBARPublisher</Identifier>
-		<Label>SEWEBAR Publisher</Label>
-		<Hint>Publishes the PMML report to a web repository</Hint>
-		<Categories>
-			<Category>
-				<Name>SemanticWeb</Name>
-				<Label>Semantic Web</Label>
-			</Category>
-		</Categories>
-		<Actions>
-			<Action>
 				<Name>PublishToSEWEBAR</Name>
-				<Label>Publish PMML to Sewebar</Label>
-				<Hint>Publishes the PMML report to a web repository</Hint>
+				<Label>Publikovat PMML do Sewebaru</Label>
+				<Hint>Publikuje PMML zprávu do webového úložiště</Hint>
 			</Action>
 			<Action>
 				<Name>ListUserFiles</Name>
-				<Label>List files of the user</Label>
-				<Hint>Searches for the files (articles) belonging to the user
-					with the specified name and password.</Hint>
+				<Label>Vypsat soubory uživatele</Label>
+				<Hint>Najde soubory (články) patřící uživatelovi se specifikovaným jménem a heslem.</Hint>
 			</Action>
 		</Actions>
 		<Sockets>
 			<Socket>
 				<Name>PMMLBuilder</Name>
 				<Label>PMML Builder</Label>
-				<Hint>The box that builds PMML</Hint>
+				<Hint>Krabička, která sestaví PMML</Hint>
 			</Socket>
 			<Socket>
 				<Name>XMLRPCHost</Name>
 				<Label>XML-RPC host</Label>
-				<Hint>The host of the XML RPC web service</Hint>
+				<Hint>Host XML RPC webové služby</Hint>
 				<SelectOptions>
 					<SelectOption>
 						<Name>http://sewebar-dev.vse.cz/xmlrpc/</Name>
@@ -12155,18 +12161,18 @@
 			
 			<Socket>
 				<Name>UserName</Name>
-				<Label>User name</Label>
-				<Hint>User name</Hint>
+				<Label>Uživatelské jméno</Label>
+				<Hint>Uživatelské jméno</Hint>
 			</Socket>
 			<Socket>
 				<Name>Password</Name>
-				<Label>Password</Label>
+				<Label>Heslo</Label>
 				<Hint/>
 			</Socket>
 			<Socket>
 				<Name>ArticleTitle</Name>
-				<Label>Article title</Label>
-				<Hint>Title of the article to be published in SEWEBAR</Hint>
+				<Label>Název článku</Label>
+				<Hint>Název článku pro publikaci. V závorce je ID článku</Hint>
 			</Socket>
 			
 			

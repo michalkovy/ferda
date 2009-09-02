@@ -88,7 +88,50 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// </returns>
         public override Ferda.Modules.ModulesAskingForCreation[] GetModulesAskingForCreation(string[] localePrefs, Ferda.Modules.BoxModuleI boxModule)
         {
-            return new ModulesAskingForCreation[] { };
+            //getting the information what is in the config files
+            Dictionary<string, ModulesAskingForCreation> modulesAFC =
+                getModulesAskingForCreationNonDynamic(localePrefs);
+            //creating the structure that will be returned
+            List<ModulesAskingForCreation> result =
+                new List<ModulesAskingForCreation>();
+
+            ModulesConnection moduleConnection;
+            ModuleAskingForCreation singleModule;
+
+            foreach (string moduleAFCname in modulesAFC.Keys)
+            {
+                singleModule = new ModuleAskingForCreation();
+                moduleConnection = new ModulesConnection();
+                //no need to set any property
+                singleModule.propertySetting = new PropertySetting[] { };
+
+                switch (moduleAFCname)
+                {
+                    case "SEWEBARPublisher":
+                        //creating the info about the connections of the new module
+                        moduleConnection.socketName =
+                            SemanticWeb.SEWEBARPublisher.Functions.SockPMMLBuilder;
+
+                        moduleConnection.boxModuleParam = boxModule.MyProxy;
+
+                        //creating the new (single) module
+                        singleModule.modulesConnection =
+                            new ModulesConnection[] { moduleConnection };
+                        singleModule.newBoxModuleIdentifier =
+                            SemanticWeb.SEWEBARPublisher.BoxInfo.typeIdentifier;
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                //setting the newModules property of each modules for intearction
+                modulesAFC[moduleAFCname].newModules =
+                    new ModuleAskingForCreation[] { singleModule };
+                result.Add(modulesAFC[moduleAFCname]);
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
