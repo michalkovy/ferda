@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+	<articleinfo>
+		<authorgroup>
+			<author>
+				<personname>
+					<firstname>Martin</firstname>
+					<surname>Ralbovský</surname>
+				</personname>
+				<email>martin.ralbovsky@gmail.com</email>
+			</author>
+		</authorgroup>
+		
+		<title>PMML Builder Box User Help</title>
+		<titleabbrev>PMML Builder Help</titleabbrev>
+		
+		<!--
+		<revhistory>
+			<revision>
+				<revnumber>1.0</revnumber>
+				<date>2009-09-02</date>
+				<authorinitials>MR</authorinitials>
+				<revdescription>
+					<para>
+						Initial version of the document
+					</para>
+				</revdescription>
+			</revision>
+		</revhistory>
+		-->
+		<pubdate>2009-09-02</pubdate>
+	</articleinfo>
+
+<abstract>
+	<para>
+		This document provides user help for the <classname>PMML Builder</classname> box.
+	</para>
+</abstract>
+
+<section>
+	<title>About the PMML Builder box</title>
+	<para>
+		The <classname>PMML Builder</classname> box is a part of the SEWEBAR (SEmantic WEb Analytical Report) initiative, which aims to publish the results of
+		data mining in form of analytical reports to the web. An analytical report is a structured text report that describes the data
+		mining task setting and its result. More information can be found in <citation>Sewebar</citation>.
+	</para>
+	<para>
+		PMML is a cross industry XML standard for depiction of data mining models, tasks and results. More information can be found at
+		<ulink url="http://www.dmg.org/">Data Mining Group</ulink>, consorcium responsible for the PMML standard. There are many PMML models
+		that correspond to data mining models defined in PMML, currently the <classname>PMML Builder</classname> box supports export to the
+		<classname>AssociationModel</classname> model for association rules. This model is greatly enhanced in order to support all
+		the features of the GUHA association rules mining such as existence of coefficients or several different quantifiers.
+	</para>
+	<para>
+		User can create PMML reports from the tasks setting. In order to do this, the <classname>PMML Builder</classname> box needs to
+		be connected to a <classname>4ft-task</classname> box, which needs to be valid (properly set) and may or may not contain hypotheses.
+		Moreover, the box needs to connect to database (in form of properly set <classname>Database</classname> box. The 
+		<classname>PMML Builder</classname> box construct the PMML report, saves it a specified file on a disc and also sends the report to its
+		output. The <classname>SEWEBAR Publisher</classname> box can be connected behind and the PMML report can be published to a web repository. 
+	</para>
+</section>
+
+	<section>
+		<title>Sockets</title>
+		<itemizedlist mark="bullet">
+			<listitem>
+				<formalpara>
+					<title>4FT Task</title>
+					<para>
+						This socket takes all the information needed from the <classname>4ft-task</classname> box. 
+					</para>
+				</formalpara>
+			</listitem>
+		</itemizedlist>
+	</section>
+
+<section>
+	<title>Properties</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Author</title>
+				<para>
+					The property contains an author of the PMML report.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>PMML file</title>
+				<para>
+					User determines, where the PMML file should be located. Right now, the address needs to be filled in manually, in the
+					future, we plan to implement the standard "Open dialog".
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+<section>
+	<title>Actions</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Saves PMML to file</title>
+				<para>This action creates the PMML report and then sends saves it in form of XML document to the file
+				specified in the <classname>PMML file</classname>property. </para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+<section>
+	<title>Modules asking for creation</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>SEWEBAR Publisher</title>
+				<para>Creates a box capable of publishing the PMML report to a web repository.</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+	<bibliography>
+		<biblioentry>
+			<abbrev>Sewebar</abbrev>
+			<authorgroup>
+				<author>
+					<firstname>Tomáš</firstname>
+					<surname>Kliegr</surname>
+				</author>
+				<author>
+					<firstname>Martin</firstname>
+					<surname>Ralbovský</surname>
+				</author>
+				<author>
+					<firstname>Vojtěch</firstname>
+					<surname>Svátek</surname>
+				</author>
+				<author>
+					<firstname>Milan</firstname>
+					<surname>Šimůnek</surname>
+				</author>
+				<author>
+					<firstname>Vojtěch</firstname>
+					<surname>Jirkovský</surname>
+				</author>
+				<author>
+					<firstname>Jan</firstname>
+					<surname>Nemrava</surname>
+				</author>
+				<author>
+					<firstname>Jan</firstname>
+					<surname>Zemánek</surname>
+				</author>
+			</authorgroup>
+			<title>Semantic Analytical Reports: A Framework for Post-Processing Data Mining Results</title>
+			<publisher>
+				<publishername>
+					Springer - Verlag, ISMIS 2009 Conference proceedings
+				</publishername>
+			</publisher>
+		</biblioentry>
+	</bibliography>
+
+</article>
