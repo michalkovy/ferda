@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article lang="en">
+	<articleinfo>
+		<authorgroup>
+			<author>
+				<personname>
+					<firstname>Martin</firstname>
+					<surname>Ralbovský</surname>
+				</personname>
+				<email>martin.ralbovsky@gmail.com</email>
+			</author>
+		</authorgroup>
+		
+		<title>SEWEBAR Publisher Box User Help</title>
+		<titleabbrev>SEWEBAR Publisher Help</titleabbrev>
+		
+		<!--
+		<revhistory>
+			<revision>
+				<revnumber>1.0</revnumber>
+				<date>2009-09-03</date>
+				<authorinitials>MR</authorinitials>
+				<revdescription>
+					<para>
+						Initial version of the document
+					</para>
+				</revdescription>
+			</revision>
+		</revhistory>
+		-->
+		<pubdate>2009-09-03</pubdate>
+	</articleinfo>
+
+<abstract>
+	<para>
+		This document provides user help for the <classname>SEWEBAR Publisher</classname> box.
+	</para>
+</abstract>
+
+<section>
+	<title>About the SEWEBAR Publisher box</title>
+	<para>
+		The <classname>SEWEBAR Publisher</classname> box is a part of the SEWEBAR (SEmantic WEb Analytical Report) initiative, which aims to publish the results of
+		data mining in form of analytical reports to the web. An analytical report is a structured text report that describes the data
+		mining task setting and its result. More information can be found in <citation>Sewebar</citation>.
+	</para>
+	<para>
+		The interchange format of our choice for the SEWEBAR project is PMML.
+		It is a cross industry XML standard for depiction of data mining models, tasks and results. More information can be found at
+		<ulink url="http://www.dmg.org/">Data Mining Group</ulink>, consorcium responsible for the PMML standard. There are many PMML models
+		that correspond to data mining models defined in PMML, currently the <classname>PMML Builder</classname> box supports export to the
+		<classname>AssociationModel</classname> model for association rules. This model is greatly enhanced in order to support all
+		the features of the GUHA association rules mining such as existence of coefficients or several different quantifiers.
+	</para>
+	<para>
+		User can create PMML reports from the tasks setting. In order to do this, the <classname>PMML Builder</classname> box needs to
+		be connected to a <classname>4ft-task</classname> box, which needs to be valid (properly set) and may or may not contain hypotheses.
+		Moreover, the box needs to connect to database (in form of properly set <classname>Database</classname> box. The 
+		<classname>PMML Builder</classname> box constructs the PMML report, saves it a specified file on a disc and also sends the report to its
+		output. 
+	</para>
+	<para>
+		The <classname>SEWEBAR Publisher</classname> box can be connected behind and the PMML report can be published to a web repository. The
+		box implements a XML-RPC web service client, which connects to a server of user's choice and sends the PMML report to the web repository
+		located in the chosen server. User fills in the user name and user password and chooses an article (by selecting title and ID), where
+		the PMML report will be stored. Another functionality of the box is listing all the articles of a user from the web repository. 
+		This is done by the <classname>List files of the user</classname> action. 
+	</para>
+</section>
+
+	<section>
+		<title>Sockets</title>
+		<itemizedlist mark="bullet">
+			<listitem>
+				<formalpara>
+					<title>PMML Builder</title>
+					<para>
+						A valid <classname>PMML Builder</classname> box providing the PMML report should be connected to this socket. 
+					</para>
+				</formalpara>
+			</listitem>
+		</itemizedlist>
+	</section>
+
+<section>
+	<title>Properties</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>Article title</title>
+				<para>
+					The property contains list of all the articles of the user in the web repository. The articles can be listed
+					by the <classname>List files of the user</classname> action of the box. The article names are displayed in 
+					form ArticleTitle(ID=ArticleID), because of the fact, that several articles with the same title need to be
+					distinguished. User can also write value of a new article into the setting module (the textbox below "Write
+					another value". This action does not need to write the ID and needs to be confirmed by the 
+					<classname>Set the property to another value</classname> button in the setting module of the property. 
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>User name</title>
+				<para>
+					The user name for authentication in the web repository is filled in here.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Password</title>
+				<para>
+					The password for authentication in the web repository is filled in here.
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>XML-RPC host</title>
+				<para>
+					The user determines, which server - web repository should be connected
+					via the XML-RPC web service. There are currently three servers available,
+					development version, tinnitus and cardio SEWEBAR Joomla web repositories. 
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+<section>
+	<title>Actions</title>
+	<itemizedlist mark="bullet">
+		<listitem>
+			<formalpara>
+				<title>List files of the user</title>
+				<para>
+					This action retrieves files of the user from the web repository via a XML-RPC
+					web service. The list of files is shown in the <classname>Article title</classname>
+					property. 
+				</para>
+			</formalpara>
+		</listitem>
+		<listitem>
+			<formalpara>
+				<title>Publish PMML to SEWEBAR</title>
+				<para>
+					This action publishes the PMML report from the <classname>PMML Builder</classname>
+					box to the SEWEBAR server specified by <classname>XML-RPC host</classname> address
+					as an article specified by the <classname>Article title</classname>
+					property. The <classname>PMML Builder</classname> box needs to be valid, that is
+					able to generate a PMML report. 
+				</para>
+			</formalpara>
+		</listitem>
+	</itemizedlist>
+</section>
+
+	<bibliography>
+		<biblioentry>
+			<abbrev>Sewebar</abbrev>
+			<authorgroup>
+				<author>
+					<firstname>Tomáš</firstname>
+					<surname>Kliegr</surname>
+				</author>
+				<author>
+					<firstname>Martin</firstname>
+					<surname>Ralbovský</surname>
+				</author>
+				<author>
+					<firstname>Vojtěch</firstname>
+					<surname>Svátek</surname>
+				</author>
+				<author>
+					<firstname>Milan</firstname>
+					<surname>Šimůnek</surname>
+				</author>
+				<author>
+					<firstname>Vojtěch</firstname>
+					<surname>Jirkovský</surname>
+				</author>
+				<author>
+					<firstname>Jan</firstname>
+					<surname>Nemrava</surname>
+				</author>
+				<author>
+					<firstname>Jan</firstname>
+					<surname>Zemánek</surname>
+				</author>
+			</authorgroup>
+			<title>Semantic Analytical Reports: A Framework for Post-Processing Data Mining Results</title>
+			<publisher>
+				<publishername>
+					Springer - Verlag, ISMIS 2009 Conference proceedings
+				</publishername>
+			</publisher>
+		</biblioentry>
+	</bibliography>
+
+</article>
