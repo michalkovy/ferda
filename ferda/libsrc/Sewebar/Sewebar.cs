@@ -33,9 +33,14 @@ namespace Sewebar
             string username,
             string password,
             string atricleTitle,
-            string articleID)
+            int articleID)
         {
-            throw new NotImplementedException();
+            ISewebar proxy = XmlRpcProxyGen.Create<ISewebar>();
+            proxy.Url = XMLRPCHost;
+
+            string response =
+                proxy.uploadFile(pmml, username, password, atricleTitle, articleID);
+            return response;
         }
 
         /// <summary>
@@ -53,7 +58,27 @@ namespace Sewebar
             string username,
             string password)
         {
-            throw new NotImplementedException();
+            Dictionary<int, string> result = new Dictionary<int, string>();
+
+            ISewebar proxy = XmlRpcProxyGen.Create<ISewebar>();
+            proxy.Url = XMLRPCHost;
+            XmlRpcStruct[] response = null;
+
+            response = proxy.listFiles(username, password, string.Empty,
+                string.Empty);
+
+            if (response.Length == 0)
+            {
+                return result;
+            }
+
+            foreach (XmlRpcStruct s in response)
+            {
+                int id = System.Convert.ToInt32(s["id"]);
+                string title = s["title"].ToString();
+                result.Add(id, title);
+            }
+            return result;
         }
     }
 
