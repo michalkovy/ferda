@@ -21,7 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CookComputing.XmlRpc;
+using Sewebar;
 using Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder;
 
 namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
@@ -196,11 +196,14 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
                 true);
             string pmml = pmmlPrx.getPMML();
 
-            ISewebar proxy = XmlRpcProxyGen.Create<ISewebar>();
-            proxy.Url = XMLRPCHost;
-
             string response =
-                proxy.uploadFile(pmml, UserName, Password, GetTitle(ArticleTitle), GetId(ArticleTitle));
+                Sewebar.Sewebar.PublishToSewebar(
+                XMLRPCHost,
+                pmml,
+                UserName,
+                Password,
+                GetTitle(ArticleTitle),
+                GetId(ArticleTitle));
         }
 
         /// <summary>
@@ -210,24 +213,14 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         /// </summary>
         public void ListFiles()
         {
-            ISewebar proxy = XmlRpcProxyGen.Create<ISewebar>();
-            proxy.Url = XMLRPCHost;
-            XmlRpcStruct [] response = null;
+            IDictionary<int, string> files =
+                Sewebar.Sewebar.ListFiles(XMLRPCHost, UserName, Password);
 
-            response = proxy.listFiles(UserName, Password, string.Empty,
-                string.Empty);
-
-
-            if (response.Length == 0)
+            IdsArticles = new List<string>(files.Count);
+            foreach (int key in files.Keys)
             {
-                return;
-            }
-
-            IdsArticles = new List<string>(response.Length);
-            foreach (XmlRpcStruct s in response)
-            {
-                string str = s["title"].ToString();
-                str = str + "(ID=" + s["id"].ToString() + ')';
+                string str = files[key];
+                str = str + "(ID=" + key.ToString() + ')';
                 IdsArticles.Add(str);
             }
         }
@@ -278,43 +271,5 @@ namespace Ferda.Modules.Boxes.SemanticWeb.SEWEBARPublisher
         }
 
         #endregion 
-    }
-
-    /// <summary>
-    /// The interface for the web service
-    /// </summary>
-    public interface ISewebar : IXmlRpcProxy
-    {
-        /// <summary>
-        /// The method uploads the XML file into designated section and directory.
-        /// It is intended for PMML reports to be exported from Ferda and
-        /// LISp-Miner DM tools directly into Joomla for the follow-up usage
-        /// with the gInclude plugin. 
-        /// </summary>
-        /// <param name="articleText">Text of the article (PMML)</param>
-        /// <param name="userName">User name for authentication</param>
-        /// <param name="password">User password for authentication</param>
-        /// <param name="articleTitle">Title of the article</param>
-        /// <param name="articleId">ID of the article</param>
-        /// <returns>
-        /// TODO
-        /// </returns>
-        [XmlRpcMethod("uploadXML.uploadFile")]
-        string uploadFile(string articleText, string userName, 
-            string password, string articleTitle, int articleId);
-
-        /// <summary>
-        /// Allows RPC client to retrieve all articles from specified 
-        /// section and category for specified user. The goal is to enable
-        /// user to overwrite and update previously updated PMML reports. 
-        /// </summary>
-        /// <param name="userName">User name for authentication</param>
-        /// <param name="password">User password for authentication</param>
-        /// <param name="section">Joomla section (optional)</param>
-        /// <param name="category">Joomla category (optional)</param>
-        /// <returns></returns>
-        [XmlRpcMethod("uploadXML.listFiles")]
-        XmlRpcStruct [] listFiles(string userName, string password,
-            string section, string category);
     }
 }
