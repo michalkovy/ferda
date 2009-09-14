@@ -67,7 +67,7 @@ namespace Sewebar
             response = proxy.listFiles(username, password, string.Empty,
                 string.Empty);
 
-            if (response.Length == 0)
+            if (response.Length == 0)   
             {
                 return result;
             }

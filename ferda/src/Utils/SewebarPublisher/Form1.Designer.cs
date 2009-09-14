@@ -95,11 +95,14 @@
             // 
             // LVArticles
             // 
+            this.LVArticles.FullRowSelect = true;
             this.LVArticles.Location = new System.Drawing.Point(226, 25);
+            this.LVArticles.MultiSelect = false;
             this.LVArticles.Name = "LVArticles";
             this.LVArticles.Size = new System.Drawing.Size(242, 97);
             this.LVArticles.TabIndex = 6;
             this.LVArticles.UseCompatibleStateImageBehavior = false;
+            this.LVArticles.View = System.Windows.Forms.View.Details;
             // 
             // label4
             // 
@@ -135,6 +138,7 @@
             this.BPublish.TabIndex = 10;
             this.BPublish.Text = "Publish to SEWEBAR";
             this.BPublish.UseVisualStyleBackColor = true;
+            this.BPublish.Click += new System.EventHandler(this.BPublish_Click);
             // 
             // BCancel
             // 
@@ -145,6 +149,7 @@
             this.BCancel.TabIndex = 11;
             this.BCancel.Text = "Cancel";
             this.BCancel.UseVisualStyleBackColor = true;
+            this.BCancel.Click += new System.EventHandler(this.BCancel_Click);
             // 
             // BListFiles
             // 
@@ -154,6 +159,7 @@
             this.BListFiles.TabIndex = 12;
             this.BListFiles.Text = "List files of the user";
             this.BListFiles.UseVisualStyleBackColor = true;
+            this.BListFiles.Click += new System.EventHandler(this.BListFiles_Click);
             // 
             // SEWEBARForm
             // 
