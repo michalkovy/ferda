@@ -53,7 +53,7 @@ namespace Sewebar
         /// <param name="username">User name for authentication</param>
         /// <param name="password">User password for authentication</param>
         /// <returns></returns>
-        public IDictionary<int, string> ListFiles(
+        public static IDictionary<int, string> ListFiles(
             string XMLRPCHost,
             string username,
             string password)
