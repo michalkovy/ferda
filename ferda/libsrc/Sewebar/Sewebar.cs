@@ -64,10 +64,17 @@ namespace Sewebar
             proxy.Url = XMLRPCHost;
             XmlRpcStruct[] response = null;
 
-            response = proxy.listFiles(username, password, string.Empty,
-                string.Empty);
+            try
+            {
+                response = proxy.listFiles(username, password, string.Empty,
+                    string.Empty);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Nepodařila se autentizace nebo stažení článků ze serveru");
+            }
 
-            if (response.Length == 0)   
+            if (response.Length == 0)
             {
                 return result;
             }
@@ -117,6 +124,7 @@ namespace Sewebar
         /// <returns>A structure containing files and their ID's</returns>
         [XmlRpcMethod("uploadXML.listFiles")]
         XmlRpcStruct[] listFiles(string userName, string password,
+//        object listFiles(string userName, string password,
             string section, string category);
     }
 }
