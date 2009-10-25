@@ -21,9 +21,9 @@ namespace SewebarPublisher
         /// hosts including the URL of the XMLRPC server side service,
         /// full path to the service (including the directories)
         /// </summary>
-        static string[] hosts = new string[3] { "http://sewebar-dev.vse.cz/xmlrpc/", 
-            "http://sewebar.vse.cz/tinnitus/xmlrpc/", 
-            "http://sewebar.vse.cz/cardio/xmlrpc/" };
+        static string[] hosts = new string[3] { "http://sewebar.vse.cz/adamek/xmlrpc/",
+            "http://sewebar-dev.vse.cz/xmlrpc/", 
+            "http://sewebar.vse.cz/tinnitus/xmlrpc/"  };
 
         /// <summary>
         /// The constructor
@@ -40,8 +40,8 @@ namespace SewebarPublisher
             CBXMLRPCHost.SelectedIndex = 0;
 
             //adding the name and password of the trial student (can be removed)
-            TBUserName.Text = "admin";
-            TBPassword.Text = "studentFIS";
+            //TBUserName.Text = "admin";
+            //TBPassword.Text = "studentFIS";
 
             LVArticles.Columns.Add("Article ID", -2, HorizontalAlignment.Left);
             LVArticles.Columns.Add("Article title", -2, HorizontalAlignment.Left);
@@ -59,16 +59,25 @@ namespace SewebarPublisher
         private void BListFiles_Click(object sender, EventArgs e)
         {
             LVArticles.Items.Clear();
-            IDictionary<int, string> files =
-                Sewebar.Sewebar.ListFiles(
-                    CBXMLRPCHost.SelectedItem.ToString(),
-                    TBUserName.Text, TBPassword.Text);
 
-            foreach (int key in files.Keys)
+            try
             {
-                ListViewItem item = new ListViewItem(key.ToString());
-                item.SubItems.Add(files[key]);
-                LVArticles.Items.Add(item);
+                IDictionary<int, string> files =
+                    Sewebar.Sewebar.ListFiles(
+                        CBXMLRPCHost.SelectedItem.ToString(),
+                        TBUserName.Text, TBPassword.Text);
+
+                foreach (int key in files.Keys)
+                {
+                    ListViewItem item = new ListViewItem(key.ToString());
+                    item.SubItems.Add(files[key]);
+                    LVArticles.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
         }
 
@@ -123,13 +132,22 @@ namespace SewebarPublisher
                 articleTitle = LVArticles.SelectedItems[0].SubItems[1].Text;
             }
 
-            string response = Sewebar.Sewebar.PublishToSewebar(
-                CBXMLRPCHost.SelectedItem.ToString(),
-                pmml,
-                TBUserName.Text,
-                TBPassword.Text,
-                articleTitle,
-                articleID);
+            string response = null;
+            try
+            {
+                response = Sewebar.Sewebar.PublishToSewebar(
+                    CBXMLRPCHost.SelectedItem.ToString(),
+                    pmml,
+                    TBUserName.Text,
+                    TBPassword.Text,
+                    articleTitle,
+                    articleID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("File upload unsuccessfull\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
             MessageBox.Show(response, "Response");
             this.Close();
