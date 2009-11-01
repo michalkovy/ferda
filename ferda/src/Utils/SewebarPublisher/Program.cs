@@ -11,11 +11,19 @@ namespace SewebarPublisher
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SEWEBARForm());
+
+            if (args != null && args.Length > 0)
+            {
+                Application.Run(new SEWEBARForm(args[0]));
+            }
+            else
+            {
+                Application.Run(new SEWEBARForm());
+            }
         }
     }
 }

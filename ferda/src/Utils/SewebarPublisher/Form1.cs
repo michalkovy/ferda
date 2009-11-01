@@ -51,6 +51,17 @@ namespace SewebarPublisher
         }
 
         /// <summary>
+        /// The constructor that fills the task name for the user
+        /// </summary>
+        /// <param name="taskName">
+        /// Name of the task (comming from the command line argument)
+        /// </param>
+        public SEWEBARForm(string taskName) : this()
+        {
+            TBNewArticle.Text = taskName;
+        }
+
+        /// <summary>
         /// The event lists files of a particular user and fills them into 
         /// the list view.
         /// </summary>
