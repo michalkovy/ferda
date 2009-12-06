@@ -99,7 +99,7 @@
             this.LVArticles.Location = new System.Drawing.Point(226, 25);
             this.LVArticles.MultiSelect = false;
             this.LVArticles.Name = "LVArticles";
-            this.LVArticles.Size = new System.Drawing.Size(242, 97);
+            this.LVArticles.Size = new System.Drawing.Size(403, 97);
             this.LVArticles.TabIndex = 6;
             this.LVArticles.UseCompatibleStateImageBehavior = false;
             this.LVArticles.View = System.Windows.Forms.View.Details;
@@ -126,7 +126,7 @@
             // 
             this.TBNewArticle.Location = new System.Drawing.Point(226, 140);
             this.TBNewArticle.Name = "TBNewArticle";
-            this.TBNewArticle.Size = new System.Drawing.Size(242, 20);
+            this.TBNewArticle.Size = new System.Drawing.Size(403, 20);
             this.TBNewArticle.TabIndex = 9;
             // 
             // BPublish
@@ -134,7 +134,7 @@
             this.BPublish.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.BPublish.Location = new System.Drawing.Point(226, 166);
             this.BPublish.Name = "BPublish";
-            this.BPublish.Size = new System.Drawing.Size(161, 23);
+            this.BPublish.Size = new System.Drawing.Size(322, 23);
             this.BPublish.TabIndex = 10;
             this.BPublish.Text = "Publish to SEWEBAR";
             this.BPublish.UseVisualStyleBackColor = true;
@@ -143,7 +143,7 @@
             // BCancel
             // 
             this.BCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.BCancel.Location = new System.Drawing.Point(393, 166);
+            this.BCancel.Location = new System.Drawing.Point(554, 166);
             this.BCancel.Name = "BCancel";
             this.BCancel.Size = new System.Drawing.Size(75, 23);
             this.BCancel.TabIndex = 11;
@@ -167,7 +167,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BCancel;
-            this.ClientSize = new System.Drawing.Size(480, 201);
+            this.ClientSize = new System.Drawing.Size(641, 201);
             this.Controls.Add(this.BListFiles);
             this.Controls.Add(this.BCancel);
             this.Controls.Add(this.BPublish);
@@ -183,7 +183,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(413, 239);
+            this.MinimumSize = new System.Drawing.Size(657, 239);
             this.Name = "SEWEBARForm";
             this.Text = "SEWEBAR Publisher";
             this.ResumeLayout(false);
