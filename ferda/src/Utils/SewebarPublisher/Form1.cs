@@ -83,6 +83,7 @@ namespace SewebarPublisher
                     ListViewItem item = new ListViewItem(key.ToString());
                     item.SubItems.Add(files[key]);
                     LVArticles.Items.Add(item);
+                    LVArticles.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                 }
             }
             catch (Exception ex)
