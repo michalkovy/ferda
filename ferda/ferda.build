@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <project name="Ferda" default="all" basedir=".">
 	<description>projekt Ferda</description>
 	<property name="default.build" value="default.build"/>
@@ -20,9 +20,9 @@
 	<property name="utils.dir" value="${path::get-full-path('utils')}"/>
 	<property name="snapshot.dir" value="${path::combine(directory::get-current-directory(),'snapshot')}" unless="${property::exists('snapshot.dir')}"/>
 	<property name="docs.build.file" value="docs/docs.build"/>
-	<property name="ice.dir" value="c:\Ice-3.3.0\" unless="${property::exists('ice.dir')}"/>
+	<property name="ice.dir" value="c:\Ice-3.3.1\" unless="${property::exists('ice.dir')}"/>
 	<if test="${not(directory::exists(ice.dir))}">
-		<property name="ice.dir" value="c:\Ice-3.3.0-VC90\"/>
+		<property name="ice.dir" value="c:\Ice-3.3.1-VC90\"/>
 	</if>
 	<property name="plat64bit" value="false" unless="${property::exists('plat64bit')}"/>
 	<property name="installer.dir" value="${path::get-full-path('installer')}"/>
