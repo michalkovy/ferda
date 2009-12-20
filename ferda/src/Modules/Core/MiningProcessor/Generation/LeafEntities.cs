@@ -155,6 +155,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <returns>Entity enumerator</returns>
         public override IEnumerator<IBitString> GetBitStringEnumerator()
         {
+            bool returned = false; //flag indicating if some bit string was returned
+
             if (_effectiveMinLength <= _categoriesNames.Length)
                 for (int i = 0; true; i++)
                 {
@@ -166,15 +168,25 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     if (parentSkipSetting != null)
                     {
                         if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
+                        {
+                            returned = true;
                             yield return _currentBitString;
+                        }
                     }
                     else
                     {
+                        returned = true;
                         yield return _currentBitString;
                     }
 
-                    if (_actualLength + 1 > _effectiveMaxLength)
+                    if (_actualLength == _effectiveMaxLength)
+                    {
+                        if (!returned) //no bit string was returned, which could cause problems when connected later to conjunction or disjunction
+                        {
+                            yield return EmptyBitString.GetInstance();
+                        }
                         break;
+                    }
                 }
             resetCoefficient();
         }
@@ -237,6 +249,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <returns>Entity enumerator</returns>
         public override IEnumerator<IBitString> GetBitStringEnumerator()
         {
+            bool returned = false; //flag indicating if some bit string was returned
+
             if (_effectiveMinLength <= _categoriesNames.Length)
                 for (int i = _categoriesNames.Length - 1; true; i--)
                 {
@@ -248,15 +262,25 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     if (parentSkipSetting != null)
                     {
                         if (Common.Compare(parentSkipSetting.Relation, _currentBitString.Sum, parentSkipSetting.Treshold))
+                        {
+                            returned = true;
                             yield return _currentBitString;
+                        }
                     }
                     else
                     {
+                        returned = true;
                         yield return _currentBitString;
                     }
 
-                    if (_actualLength + 1 > _effectiveMaxLength)
+                    if (_actualLength == _effectiveMaxLength)
+                    {
+                        if (!returned) //no bit string was returned, which could cause problems when connected later to conjunction or disjunction
+                        {
+                            yield return EmptyBitString.GetInstance();
+                        }
                         break;
+                    }
                 }
             resetCoefficient();
         }
