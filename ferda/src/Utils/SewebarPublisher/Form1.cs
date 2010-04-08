@@ -21,7 +21,8 @@ namespace SewebarPublisher
         /// hosts including the URL of the XMLRPC server side service,
         /// full path to the service (including the directories)
         /// </summary>
-        static string[] hosts = new string[3] { "http://sewebar.vse.cz/adamek/xmlrpc/",
+        static string[] hosts = new string[4] { "http://sewebar.vse.cz/cardio/xmlrpc/",
+            "http://sewebar.vse.cz/adamek/xmlrpc/",
             "http://sewebar-dev.vse.cz/xmlrpc/", 
             "http://sewebar.vse.cz/tinnitus/xmlrpc/"  };
 
@@ -71,11 +72,21 @@ namespace SewebarPublisher
         {
             LVArticles.Items.Clear();
 
+            string url;
+            if (CBXMLRPCHost.SelectedIndex == -1)
+            {
+                url = CBXMLRPCHost.Text;
+            }
+            else
+            {
+                url = CBXMLRPCHost.SelectedItem.ToString();
+            }
+
             try
             {
                 IDictionary<int, string> files =
                     Sewebar.Sewebar.ListFiles(
-                        CBXMLRPCHost.SelectedItem.ToString(),
+                        url,
                         TBUserName.Text, TBPassword.Text);
 
                 foreach (int key in files.Keys)
