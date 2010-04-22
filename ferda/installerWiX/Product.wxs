@@ -6,7 +6,7 @@
   <?define ProgramFiles.dir = "ProgramFilesFolder" ?>  
 <?endif ?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="0ff6bcee-e9bb-4501-a7dd-4d05dea6f16c" Name="Ferda " Language="1033" Version="3.0.0.0" Manufacturer="Ferda Team" UpgradeCode="bbdaee35-e2dd-4411-8de4-5d4198313889">
+	<Product Id="0ff6bcee-e9bb-4501-a7dd-4d05dea6f16c" Name="Ferda " Language="1033" Version="3.1.0.0" Manufacturer="Ferda Team" UpgradeCode="bbdaee35-e2dd-4411-8de4-5d4198313889">
 		<Package InstallerVersion="200" Compressed="yes"/>
 		<Property Id="ALLUSERS" Value="1"/>
 		<Media Id="1" Cabinet="Ferda.cab" EmbedCab="yes"/>
@@ -152,6 +152,9 @@
 							<Component Id="EditCategories.dll" Guid="{ECC0581C-0CCC-4029-BAE0-504D4112ECF4}">
 								<File Id="EditCategories.dll" Name="EditCategories.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\AddIns\EditCategories.dll"/>
 							</Component>
+							<Component Id="EditFuzzyCategories.dll" Guid="{fcd35aa0-c811-4c96-b169-6d1aef9c8d59}">
+								<File Id="EditFuzzyCategories.dll" Name="EditFuzzyCategories.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\AddIns\EditFuzzyCategories.dll"/>
+							</Component>
 							<Component Id="ExplainTable.dll" Guid="{962AA272-3E1A-460B-B6F8-E52B5BFE06F2}">
 								<File Id="ExplainTable.dll" Name="ExplainTable.dll" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\AddIns\ExplainTable.dll"/>
 							</Component>
@@ -205,6 +208,9 @@
 								</Component>
 								<Component Id="EditCategories.pdf" Guid="{BFF6C4AA-71DF-498B-BDE2-9A59B2BCADD8}">
 									<File Id="EditCategories.pdf" Name="EditCategories.pdf" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\AddIns\Help\EditCategories.pdf"/>
+								</Component>
+								<Component Id="EditFuzzyCategories.pdf" Guid="{a794b123-96ee-431d-a8d7-9e7062b407fe}">
+									<File Id="EditFuzzyCategories.pdf" Name="EditFuzzyCategories.pdf" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\AddIns\Help\EditFuzzyCategories.pdf"/>
 								</Component>
 								<Component Id="ExplainTable.pdf" Guid="{C70A48E1-99FF-423F-B583-ADB2B33EB04F}">
 									<File Id="ExplainTable.pdf" Name="ExplainTable.pdf" KeyPath="yes" Source="$(var.bin.dir)\FrontEnd\AddIns\Help\ExplainTable.pdf"/>
@@ -354,6 +360,9 @@
 						<Component Id="bzip2.dll_2" Guid="{8BB623B8-2CC7-4622-8D5D-99AC004A78F0}">
 							<File Id="bzip2.dll_2" Name="bzip2.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\bzip2.dll"/>
 						</Component>
+						<Component Id="CookComputing.XmlRpcV2.dll" Guid="{ff94df89-8764-4909-96a1-980826c5fb97}">
+							<File Id="CookComputing.XmlRpcV2.dll" Name="CookComputing.XmlRpcV2.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\CookComputing.XmlRpcV2.dll"/>
+						</Component>
 						<Component Id="CvsReader.dll" Guid="{3B2CA594-6CC8-44F7-BDEA-F18A471AA287}">
 							<File Id="CvsReader.dll" Name="CvsReader.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\CvsReader.dll"/>
 						</Component>
@@ -401,6 +410,9 @@
 						</Component>
 						<Component Id="FerdaProjectBase.dll_2" Guid="{229DD6B2-188A-463F-9953-9EED42D5622D}">
 							<File Id="FerdaProjectBase.dll_2" Name="FerdaProjectBase.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\FerdaProjectBase.dll"/>
+						</Component>
+						<Component Id="FerdaSemanticWebBoxes.dll" Guid="{5562c6bd-0de1-4f5d-944c-863845dd621c}">
+							<File Id="FerdaSemanticWebBoxes.dll" Name="FerdaSemanticWebBoxes.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\FerdaSemanticWebBoxes.dll"/>
 						</Component>
 						<Component Id="FerdaSampleBoxes.dll" Guid="{4711CB1F-F092-4182-92D4-C0EBB4207B3C}">
 							<File Id="FerdaSampleBoxes.dll" Name="FerdaSampleBoxes.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\FerdaSampleBoxes.dll"/>
@@ -485,6 +497,9 @@
 								<Permission User="Everyone" GenericAll="yes"/>
 							</File>
 						</Component>
+						<Component Id="Sewebar.dll" Guid="{ccc0837c-b2a9-4f3e-88b5-2e86356b71f1}">
+							<File Id="Sewebar.dll" Name="Sewebar.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\Sewebar.dll"/>
+						</Component>
 						<Component Id="ssleay32.dll" Guid="{632B3959-B900-404D-8E5F-55E45B5ECF08}">
 							<File Id="ssleay32.dll" Name="ssleay32.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\ssleay32.dll"/>
 						</Component>
@@ -497,6 +512,23 @@
 						<Directory Id="BoxModulesServices" Name="BoxModulesServices">
 							<Directory Id="DataPreparation" Name="DataPreparation">
 								<Directory Id="Categorization" Name="Categorization">
+									<Directory Id="AutomaticAttributeWithFuzzyCategories" Name="AutomaticAttributeWithFuzzyCategories">
+										<Component Id="BoxConfig.xml_104" Guid="{cf2ea06c-f66d-4d44-9da4-5c2316efb630}">
+											<File Id="BoxConfig.xml_104" Name="BoxConfig.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\DataPreparation\Categorization\AutomaticAttributeWithFuzzyCategories\BoxConfig.xml"/>
+										</Component>
+										<Component Id="boxDesign.svg_104" Guid="{3c916c0f-dc2a-4531-970d-bee439150ae6}">
+											<File Id="boxDesign.svg_104" Name="boxDesign.svg" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\DataPreparation\Categorization\AutomaticAttributeWithFuzzyCategories\boxDesign.svg"/>
+										</Component>
+										<Component Id="boxIcon.ico_104" Guid="{ef34fb3e-22cd-4495-a77f-d8d8f3b6283c}">
+											<File Id="boxIcon.ico_104" Name="boxIcon.ico" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\DataPreparation\Categorization\AutomaticAttributeWithFuzzyCategories\boxIcon.ico"/>
+										</Component>
+										<Component Id="Localization.cs_CZ.xml_104" Guid="{cbb316fd-2de5-4ec5-a8b0-cfb343feae2c}">
+											<File Id="Localization.cs_CZ.xml_104" Name="Localization.cs-CZ.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\DataPreparation\Categorization\AutomaticAttributeWithFuzzyCategories\Localization.cs-CZ.xml"/>
+										</Component>
+										<Component Id="Localization.en_US.xml_104" Guid="{96fad70e-101d-44a0-9a9a-efe172f9be51}">
+											<File Id="Localization.en_US.xml_104" Name="Localization.en-US.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\DataPreparation\Categorization\AutomaticAttributeWithFuzzyCategories\Localization.en-US.xml"/>
+										</Component>
+									</Directory>
 									<Directory Id="EachValueOneCategory" Name="EachValueOneCategory">
 										<Component Id="BoxConfig.xml_1" Guid="{62BFEE15-2051-46E0-B014-FA9BFF84E0CE}">
 											<File Id="BoxConfig.xml_1" Name="BoxConfig.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\DataPreparation\Categorization\EachValueOneCategory\BoxConfig.xml"/>
@@ -932,7 +964,7 @@
 													<File Id="boxIcon.ico_27" Name="boxIcon.ico" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\Fisher\boxIcon.ico"/>
 												</Component>
 												<Component Id="Localization.cs_CZ.xml_101" Guid="{8D9FD708-2AA6-41d4-A459-EB32B47760AF}">
-													<File Id="Localization.cs_CZ.xml_101" Name="Localization.cs_CZ.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\Fisher\Localization.cs-CZ.xml" />
+													<File Id="Localization.cs_CZ.xml_101" Name="Localization.cs-CZ.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\Fisher\Localization.cs-CZ.xml" />
 												</Component>
 												<Component Id="Localization.en_US.xml_101" Guid="{3BB5BB3C-4A79-4d64-A551-3A383071B97A}">
 													<File Id="Localization.en_US.xml_101" Name="Localization.en-US.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\Fisher\Localization.en-US.xml"/>
@@ -1874,6 +1906,23 @@
 										<File Id="Localization.en_US.xml_103" Name="Localization.en-US.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\SemanticWeb\PMMLBuilder\Localization.en-US.xml"/>
 									</Component>
 								</Directory>
+								<Directory Id="SEWEBARPublisher" Name="SEWEBARPublisher">
+									<Component Id="BoxConfig.xml_105" Guid="{5c840bbe-03f4-46a1-9c44-4e155c3e60ee}">
+										<File Id="BoxConfig.xml_105" Name="BoxConfig.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\SemanticWeb\SEWEBARPublisher\BoxConfig.xml"/>
+									</Component>
+									<Component Id="boxDesign.svg_105" Guid="{f57a35bd-4c47-4056-82f8-7fa9a59787ae}">
+										<File Id="boxDesign.svg_105" Name="boxDesign.svg" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\SemanticWeb\SEWEBARPublisher\boxDesign.svg"/>
+									</Component>
+									<Component Id="boxIcon.ico_105" Guid="{360aec59-9e32-42b8-9581-43ffb8931b97}">
+										<File Id="boxIcon.ico_105" Name="boxIcon.ico" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\SemanticWeb\SEWEBARPublisher\boxIcon.ico"/>
+									</Component>
+									<Component Id="Localization.cs_CZ.xml_105" Guid="{a8fb3026-6c7a-4286-8454-536fc4b9e6af}">
+										<File Id="Localization.cs_CZ.xml_105" Name="Localization.cs-CZ.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\SemanticWeb\SEWEBARPublisher\Localization.cs-CZ.xml"/>
+									</Component>
+									<Component Id="Localization.en_US.xml_105" Guid="{a67cafe4-8168-434c-8f4e-d6d41823fbac}">
+										<File Id="Localization.en_US.xml_105" Name="Localization.en-US.xml" KeyPath="yes" Source="$(var.bin.dir)\Server\BoxModulesServices\SemanticWeb\SEWEBARPublisher\Localization.en-US.xml"/>
+									</Component>
+								</Directory>
 							</Directory>
 							<Directory Id="Wizards" Name="Wizards">
 								<Directory Id="Wizard" Name="Wizard">
@@ -2117,6 +2166,7 @@
 			<ComponentRef Id="TeeChart.Lite.Languages.dll"/>
 			<ComponentRef Id="DatabaseInfo.dll"/>
 			<ComponentRef Id="EditCategories.dll"/>
+			<ComponentRef Id="EditFuzzyCategories.dll"/>
 			<ComponentRef Id="ExplainTable.dll"/>
 			<ComponentRef Id="FormEditor.dll"/>
 			<ComponentRef Id="FormGenerator.dll"/>
@@ -2134,6 +2184,7 @@
 			<ComponentRef Id="DatabaseInfo.pdf"/>
 			<ComponentRef Id="DatabaseOntologyMappingUser.pdf"/>
 			<ComponentRef Id="EditCategories.pdf"/>
+			<ComponentRef Id="EditFuzzyCategories.pdf"/>
 			<ComponentRef Id="ExplainTable.pdf"/>
 			<ComponentRef Id="FormEditor.pdf"/>
 			<ComponentRef Id="FrequencyDisplayer.pdf"/>
@@ -2627,6 +2678,18 @@
 			<ComponentRef Id="Localization.en_US.xml_103"/>
 			<ComponentRef Id="boxDesign.svg_103" />
 			<ComponentRef Id="boxIcon.ico_103" />
+
+			<ComponentRef Id="BoxConfig.xml_104"/>
+			<ComponentRef Id="Localization.cs_CZ.xml_104"/>
+			<ComponentRef Id="Localization.en_US.xml_104"/>
+			<ComponentRef Id="boxDesign.svg_104" />
+			<ComponentRef Id="boxIcon.ico_104" />
+
+			<ComponentRef Id="BoxConfig.xml_105"/>
+			<ComponentRef Id="Localization.cs_CZ.xml_105"/>
+			<ComponentRef Id="Localization.en_US.xml_105"/>
+			<ComponentRef Id="boxDesign.svg_105" />
+			<ComponentRef Id="boxIcon.ico_105" />
 			
 			<ComponentRef Id="wizardGenerated.ico"/>
 			<ComponentRef Id="OWLParserI.class"/>
@@ -2644,6 +2707,10 @@
 			<ComponentRef Id="StrSeqMapHelper.class"/>
 			<ComponentRef Id="WrongOntologyURL.class"/>
 			<ComponentRef Id="ApplicationShortcut"/>
+
+			<ComponentRef Id="CookComputing.XmlRpcV2.dll"/>
+			<ComponentRef Id="FerdaSemanticWebBoxes.dll"/>
+			<ComponentRef Id="Sewebar.dll"/>
 		</Feature>
 	</Product>
 </Wix>
