@@ -362,7 +362,7 @@ namespace Ferda.Guha.Attribute
                 if (row[0] is DBNull)
                 {
                     if (_attribute.NullContainingCategory != null)
-                        result[_attribute.NullContainingCategory] += (int)row[1];
+                    	result[_attribute.NullContainingCategory] += (int)(long)row[1];
                 }
                 else
                 {
@@ -370,14 +370,14 @@ namespace Ferda.Guha.Attribute
                     if (_enumValues.TryGetValue(item, out categoryName))
                     {
                         Debug.Assert(result.ContainsKey(categoryName), "This should never happend");
-                        result[categoryName] += (int)row[1];
+                        result[categoryName] += (int)(long)row[1];
                     }
                     else if (
                         _intervals.TryGetValue(new Interval<T>(item, BoundaryEnum.Closed, item, BoundaryEnum.Closed, _attribute),
                                                out categoryName))
                     {
                         Debug.Assert(result.ContainsKey(categoryName), "This should never happend");
-                        result[categoryName] += (int)row[1];
+                        result[categoryName] += (int)(long)row[1];
                     }
                 }
                 //else not covered               
