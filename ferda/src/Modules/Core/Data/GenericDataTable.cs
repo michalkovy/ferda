@@ -341,8 +341,8 @@ namespace Ferda.Guha.Data
                         resultItem.name = row["ColumnName"].ToString();
                         resultItem.columnOrdinal = Convert.ToInt32(row["ColumnOrdinal"]);
                         resultItem.columnSize = Convert.ToInt32(row["ColumnSize"]);
-                        resultItem.numericPrecision = Convert.ToInt32(row["NumericPrecision"]);
-                        resultItem.numericScale = Convert.ToInt32(row["NumericScale"]);
+                        resultItem.numericPrecision = Convert.IsDBNull(row["NumericPrecision"]) ? 0 : Convert.ToInt32(row["NumericPrecision"]);
+                        resultItem.numericScale = Convert.IsDBNull(row["NumericScale"]) ? 0 : Convert.ToInt32(row["NumericScale"]);
                         resultItem.isUnique = Convert.ToBoolean(row["IsUnique"]);
                         resultItem.isKey = Convert.ToBoolean(row["IsKey"]);
                         //BaseServerName
