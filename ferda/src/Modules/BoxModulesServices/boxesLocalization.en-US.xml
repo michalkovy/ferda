@@ -3188,7 +3188,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -3491,7 +3491,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -3729,7 +3729,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -3967,7 +3967,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -4205,7 +4205,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -4443,7 +4443,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -4681,7 +4681,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -4919,7 +4919,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -5157,7 +5157,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -5391,7 +5391,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -5629,7 +5629,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -5867,7 +5867,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -6105,7 +6105,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -6343,7 +6343,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -6581,7 +6581,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -6819,7 +6819,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -7057,7 +7057,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -7295,7 +7295,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -7533,7 +7533,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -7771,7 +7771,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -8009,7 +8009,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -8247,7 +8247,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -8485,7 +8485,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -8719,7 +8719,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -8957,7 +8957,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -9195,7 +9195,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -9433,7 +9433,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -9671,7 +9671,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -9905,7 +9905,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -10144,7 +10144,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -10387,7 +10387,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -10640,7 +10640,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -10893,7 +10893,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
@@ -11131,7 +11131,7 @@
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToActCondition</Name>
-						<Label>Relative to sum of frequencies</Label>
+						<Label>Relative to actual condition (sum of frequencies)</Label>
 					</SelectOption>
 					<SelectOption>
 						<Name>RelativeToMaxFrequency</Name>
