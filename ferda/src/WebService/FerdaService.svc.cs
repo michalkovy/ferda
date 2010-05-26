@@ -7,12 +7,12 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.ServiceModel.Activation;
 
-namespace WebService
+namespace Ferda.WebService
 {
-    //[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Required)]
-    public class MainService : IMainService
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Required)]
+    public class FerdaService : IFerdaService
     {
-        public string GetData(int value)
+        /*public string GetData(int value)
         {
             return string.Format("You entered: {0}", value);
         }
@@ -28,6 +28,11 @@ namespace WebService
                 composite.StringValue += "Suffix";
             }
             return composite;
+        }*/
+
+        public DataMiningResult MineDataWithPmmlSetUp(DataMiningRequest request)
+        {
+            return new DataMiningResult(true, request.DataProvider, request.ConnectionString);
         }
     }
 }
