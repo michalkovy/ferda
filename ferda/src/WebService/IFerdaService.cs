@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -28,13 +28,14 @@ namespace Ferda.WebService
     [DataContract]
     public class DataMiningRequest
     {
-        public DataMiningRequest(string dataProvider, string connectionString, string dataTableName, string pmml)
+        public DataMiningRequest(string dataProvider, string connectionString, string dataTableName, string pmml, string[] primaryKey)
         {
             DataProvider = dataProvider;
             ConnectionString = connectionString;
             DataTableName = dataTableName;
             Pmml = pmml;
-        }
+			PrimaryKey = primaryKey;
+		}
 
         [DataMember]
         public string DataProvider
@@ -59,6 +60,13 @@ namespace Ferda.WebService
 
         [DataMember]
         public string Pmml
+        {
+            get;
+            set;
+        }
+		
+		[DataMember]
+        public string[] PrimaryKey
         {
             get;
             set;
