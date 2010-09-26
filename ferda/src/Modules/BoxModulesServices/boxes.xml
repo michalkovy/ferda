@@ -21966,7 +21966,10 @@
 				<TypeClassIceId>::Ferda::Modules::StringT</TypeClassIceId>
 				<CategoryName>Connection</CategoryName>
 				<SelectOptions>
-					<SelectOption>
+          <SelectOption>
+            <Name>http://sewebar.vse.cz/xmlrpc/</Name>
+          </SelectOption>
+          <SelectOption>
 						<Name>http://sewebar-dev.vse.cz/xmlrpc/</Name>
 					</SelectOption>
 					<SelectOption>
@@ -21979,7 +21982,7 @@
 				
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<Default>http://sewebar.vse.cz/adamek/xmlrpc/</Default>
+				<Default>http://sewebar.vse.cz/xmlrpc/</Default>
 			</Property>
 			
 			<Property>

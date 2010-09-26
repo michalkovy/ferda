@@ -12162,7 +12162,11 @@
 				<Label>XML-RPC host</Label>
 				<Hint>The host of the XML RPC web service</Hint>
 				<SelectOptions>
-					<SelectOption>
+          <SelectOption>
+            <Name>http://sewebar.vse.cz/xmlrpc/</Name>
+            <Label>sewebar.vse.cz</Label>
+          </SelectOption>
+          <SelectOption>
 						<Name>http://sewebar-dev.vse.cz/xmlrpc/</Name>
 						<Label>sewebar-dev.vse.cz</Label>
 					</SelectOption>
