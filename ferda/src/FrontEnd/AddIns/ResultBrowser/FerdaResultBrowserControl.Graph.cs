@@ -76,6 +76,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             ContingencyTableChart.ContextMenuStrip = this.ContextMenuGraphRightClick;
             
             ToolStripShowGraphEdit.Click += new EventHandler(ToolStripShowGraphEdit_Click);
+            ToolStripCopyChart.Click += new EventHandler(ToolStripCopyChart_Click);
 
             ResultBrowserSplit.Panel2.Controls.Add(ContingencyTableChart);
             ResultBrowserSplit.Panel2.ResumeLayout(false);
