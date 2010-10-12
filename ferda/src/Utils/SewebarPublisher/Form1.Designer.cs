@@ -92,6 +92,7 @@
             this.TBPassword.Name = "TBPassword";
             this.TBPassword.Size = new System.Drawing.Size(202, 20);
             this.TBPassword.TabIndex = 5;
+            this.TBPassword.UseSystemPasswordChar = true;
             // 
             // LVArticles
             // 
