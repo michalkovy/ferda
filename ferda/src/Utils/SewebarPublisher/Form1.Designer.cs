@@ -40,8 +40,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.TBNewArticle = new System.Windows.Forms.TextBox();
             this.BPublish = new System.Windows.Forms.Button();
-            this.BCancel = new System.Windows.Forms.Button();
+            this.BClose = new System.Windows.Forms.Button();
             this.BListFiles = new System.Windows.Forms.Button();
+            this.CHBDoNotClose = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.CBChoose = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -100,7 +103,7 @@
             this.LVArticles.Location = new System.Drawing.Point(226, 25);
             this.LVArticles.MultiSelect = false;
             this.LVArticles.Name = "LVArticles";
-            this.LVArticles.Size = new System.Drawing.Size(403, 97);
+            this.LVArticles.Size = new System.Drawing.Size(403, 123);
             this.LVArticles.TabIndex = 6;
             this.LVArticles.UseCompatibleStateImageBehavior = false;
             this.LVArticles.View = System.Windows.Forms.View.Details;
@@ -117,7 +120,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(223, 125);
+            this.label5.Location = new System.Drawing.Point(223, 151);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(202, 13);
             this.label5.TabIndex = 8;
@@ -125,7 +128,7 @@
             // 
             // TBNewArticle
             // 
-            this.TBNewArticle.Location = new System.Drawing.Point(226, 140);
+            this.TBNewArticle.Location = new System.Drawing.Point(226, 172);
             this.TBNewArticle.Name = "TBNewArticle";
             this.TBNewArticle.Size = new System.Drawing.Size(403, 20);
             this.TBNewArticle.TabIndex = 9;
@@ -133,7 +136,7 @@
             // BPublish
             // 
             this.BPublish.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.BPublish.Location = new System.Drawing.Point(226, 166);
+            this.BPublish.Location = new System.Drawing.Point(226, 198);
             this.BPublish.Name = "BPublish";
             this.BPublish.Size = new System.Drawing.Size(322, 23);
             this.BPublish.TabIndex = 10;
@@ -141,36 +144,67 @@
             this.BPublish.UseVisualStyleBackColor = true;
             this.BPublish.Click += new System.EventHandler(this.BPublish_Click);
             // 
-            // BCancel
+            // BClose
             // 
-            this.BCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.BCancel.Location = new System.Drawing.Point(554, 166);
-            this.BCancel.Name = "BCancel";
-            this.BCancel.Size = new System.Drawing.Size(75, 23);
-            this.BCancel.TabIndex = 11;
-            this.BCancel.Text = "Cancel";
-            this.BCancel.UseVisualStyleBackColor = true;
-            this.BCancel.Click += new System.EventHandler(this.BCancel_Click);
+            this.BClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.BClose.Location = new System.Drawing.Point(554, 198);
+            this.BClose.Name = "BClose";
+            this.BClose.Size = new System.Drawing.Size(75, 23);
+            this.BClose.TabIndex = 11;
+            this.BClose.Text = "Close";
+            this.BClose.UseVisualStyleBackColor = true;
+            this.BClose.Click += new System.EventHandler(this.BCancel_Click);
             // 
             // BListFiles
             // 
-            this.BListFiles.Location = new System.Drawing.Point(14, 130);
+            this.BListFiles.Location = new System.Drawing.Point(12, 198);
             this.BListFiles.Name = "BListFiles";
-            this.BListFiles.Size = new System.Drawing.Size(203, 60);
+            this.BListFiles.Size = new System.Drawing.Size(203, 23);
             this.BListFiles.TabIndex = 12;
             this.BListFiles.Text = "List files of the user";
             this.BListFiles.UseVisualStyleBackColor = true;
             this.BListFiles.Click += new System.EventHandler(this.BListFiles_Click);
+            // 
+            // CHBDoNotClose
+            // 
+            this.CHBDoNotClose.AutoSize = true;
+            this.CHBDoNotClose.Location = new System.Drawing.Point(16, 131);
+            this.CHBDoNotClose.Name = "CHBDoNotClose";
+            this.CHBDoNotClose.Size = new System.Drawing.Size(145, 17);
+            this.CHBDoNotClose.TabIndex = 13;
+            this.CHBDoNotClose.Text = "Do not close after upload";
+            this.CHBDoNotClose.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 151);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(152, 13);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Choose which article to upload";
+            // 
+            // CBChoose
+            // 
+            this.CBChoose.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBChoose.FormattingEnabled = true;
+            this.CBChoose.Location = new System.Drawing.Point(12, 171);
+            this.CBChoose.Name = "CBChoose";
+            this.CBChoose.Size = new System.Drawing.Size(201, 21);
+            this.CBChoose.TabIndex = 14;
             // 
             // SEWEBARForm
             // 
             this.AcceptButton = this.BPublish;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.BCancel;
-            this.ClientSize = new System.Drawing.Size(641, 201);
+            this.CancelButton = this.BClose;
+            this.ClientSize = new System.Drawing.Size(641, 233);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.CBChoose);
+            this.Controls.Add(this.CHBDoNotClose);
             this.Controls.Add(this.BListFiles);
-            this.Controls.Add(this.BCancel);
+            this.Controls.Add(this.BClose);
             this.Controls.Add(this.BPublish);
             this.Controls.Add(this.TBNewArticle);
             this.Controls.Add(this.label5);
@@ -205,8 +239,11 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox TBNewArticle;
         private System.Windows.Forms.Button BPublish;
-        private System.Windows.Forms.Button BCancel;
+        private System.Windows.Forms.Button BClose;
         private System.Windows.Forms.Button BListFiles;
+        private System.Windows.Forms.CheckBox CHBDoNotClose;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox CBChoose;
     }
 }
 
