@@ -192,6 +192,7 @@
             this.CBChoose.Name = "CBChoose";
             this.CBChoose.Size = new System.Drawing.Size(201, 21);
             this.CBChoose.TabIndex = 14;
+            this.CBChoose.SelectedIndexChanged += new System.EventHandler(this.CBChoose_SelectedIndexChanged);
             // 
             // SEWEBARForm
             // 
