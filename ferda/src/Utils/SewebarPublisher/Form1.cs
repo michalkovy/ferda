@@ -37,7 +37,7 @@ namespace SewebarPublisher
         static string[] uploadWays = new string[2]
         {
             "Create a new article",
-            "Select article from list"
+            "Update article (select from list)"
         };
 
         #endregion
@@ -193,6 +193,25 @@ namespace SewebarPublisher
             }
         }
 
+        /// <summary>
+        /// The event disables or enables the listbox and textbox to choose the text from
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void CBChoose_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CBChoose.SelectedIndex == 0)
+            {
+                LVArticles.Enabled = false;
+                TBNewArticle.Enabled = true;
+            }
+            else
+            {
+                LVArticles.Enabled = true;
+                TBNewArticle.Enabled = false;
+            }
+        }
+
         #endregion
 
         #region Protected methods
@@ -238,6 +257,5 @@ namespace SewebarPublisher
         }
 
         #endregion
-
     }
 }
