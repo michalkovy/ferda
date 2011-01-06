@@ -50,7 +50,7 @@ namespace Ferda.ModulesManager
 			options.IceGridWorkingDirectory = "../../bin/db";
 			options.IceGridApplicationXmlFilePath = "application.xml";
             options.LocalePrefs = new string[]{"cs-CZ","en-US"};
-            options.SentenceForWait = "Server: changed server `0' state to `Inactive' ]";
+            options.SentenceForWait = "Server: changed server `0' state to `Inactive'";
             projectManager = new Ferda.ProjectManager.ProjectManager(new string[0], options);
 			manager = projectManager.ModulesManager;
 		}
