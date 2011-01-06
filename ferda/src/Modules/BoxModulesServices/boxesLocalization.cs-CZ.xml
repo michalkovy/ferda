@@ -12160,6 +12160,10 @@
 						<Name>http://sewebar.vse.cz/adamek/xmlrpc/</Name>
 						<Label>sewebar.vse.cz/adamek</Label>
 					</SelectOption>
+					<SelectOption>
+						<Name>http://sewebar.vse.cz/cardio/xmlrpc/</Name>
+						<Label>sewebar.vse.cz/cardio</Label>
+					</SelectOption>
 				</SelectOptions>
 			</Socket>
 			
