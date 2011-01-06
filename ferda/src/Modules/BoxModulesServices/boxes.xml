@@ -21978,11 +21978,14 @@
 					<SelectOption>
 						<Name>http://sewebar.vse.cz/adamek/xmlrpc/</Name>
 					</SelectOption>
+					<SelectOption>
+						<Name>http://sewebar.vse.cz/cardio/xmlrpc/</Name>
+					</SelectOption>
 				</SelectOptions>
 				
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<Default>http://sewebar.vse.cz/xmlrpc/</Default>
+				<Default>http://sewebar.vse.cz/cardio/xmlrpc/</Default>
 			</Property>
 			
 			<Property>
