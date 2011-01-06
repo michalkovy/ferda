@@ -119,7 +119,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
         {
             get
             {
-                ConnectionInfo tmp = GetConnectionInfo(false);
+                Ferda.Guha.Data.ConnectionInfo tmp = GetConnectionInfo(false);
                 return (tmp != null) ? tmp.connectionTimeout : 0;
             }
         }
@@ -131,7 +131,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
         {
             get
             {
-                ConnectionInfo tmp = GetConnectionInfo(false);
+                Ferda.Guha.Data.ConnectionInfo tmp = GetConnectionInfo(false);
                 return (tmp != null) ? GetConnectionInfo(false).databaseName : null;
             }
         }
@@ -143,7 +143,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
         {
             get
             {
-                ConnectionInfo tmp = GetConnectionInfo(false);
+                Ferda.Guha.Data.ConnectionInfo tmp = GetConnectionInfo(false);
                 return (tmp != null) ? GetConnectionInfo(false).dataSource : null;
             }
         }
@@ -155,7 +155,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
         {
             get
             {
-                ConnectionInfo tmp = GetConnectionInfo(false);
+                Ferda.Guha.Data.ConnectionInfo tmp = GetConnectionInfo(false);
                 return (tmp != null) ? GetConnectionInfo(false).driver : null;
             }
         }
@@ -167,7 +167,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
         {
             get
             {
-                ConnectionInfo tmp = GetConnectionInfo(false);
+                Ferda.Guha.Data.ConnectionInfo tmp = GetConnectionInfo(false);
                 return (tmp != null) ? GetConnectionInfo(false).serverVersion : null;
             }
         }
@@ -217,9 +217,9 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
         /// </summary>
         /// <param name="fallOnError">If to fall on error</param>
         /// <returns>The connection info</returns>
-        public ConnectionInfo GetConnectionInfo(bool fallOnError)
+        public Ferda.Guha.Data.ConnectionInfo GetConnectionInfo(bool fallOnError)
         {
-            return ExceptionsHandler.GetResult<ConnectionInfo>(
+            return ExceptionsHandler.GetResult<Ferda.Guha.Data.ConnectionInfo>(
                 fallOnError,
                 delegate
                     {
@@ -316,7 +316,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
         /// </summary>
         /// <param name="current__">Ice stuff</param>
         /// <returns>Connection info</returns>
-        public override ConnectionInfo getConnectionInfo(Current current__)
+        public override Ferda.Guha.Data.ConnectionInfo getConnectionInfo(Current current__)
         {
             return GetConnectionInfo(true);
         }

@@ -170,7 +170,7 @@
 				<property name="IceBox.UseSharedCommunicator.FerdaGuhaMiningProcessor" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaNetworkArchive" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaOntologyRelatedBoxes" value="1"/> -->
-				<property name="IceBox.InheritProperties=1" value="1"/>
+				<property name="IceBox.InheritProperties" value="1"/>
 			</icebox>
 		</server-template>
 		<replica-group id="FerdaOntologyRelatedReplicaAdapter">

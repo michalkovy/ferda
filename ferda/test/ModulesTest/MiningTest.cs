@@ -39,15 +39,15 @@ namespace Ferda.Modules
 			Assert.AreEqual(0, sum2);
 			Assert.AreEqual(0, sum3);
 			Assert.AreEqual(0, sum4);
-			Assert.IsTrue(sum1 > 0);
+			Assert.IsTrue( (sum1 > 0) );
 			
 			BitString.CrossAndSum(bitStrings[0], bitStrings[1], bitStrings[2], bitStrings[3],
 				(int)bitStrings[0].Sum, (int)bitStrings[1].Sum, (int)bitStrings[2].Sum, (int)bitStrings[3].Sum,
 				out sum1, out sum2, out sum3, out sum4);
-			Assert.IsTrue(sum1 > 0);
-			Assert.IsTrue(sum2 > 0);
-			Assert.IsTrue(sum3 > 0);
-			Assert.IsTrue(sum4 > 0);
+			Assert.IsTrue( (sum1 > 0) );
+			Assert.IsTrue( (sum2 > 0) );
+			Assert.IsTrue( (sum3 > 0) );
+			Assert.IsTrue( (sum4 > 0) );
 		}
 	}
 }
