@@ -6,7 +6,7 @@
   <?define ProgramFiles.dir = "ProgramFilesFolder" ?>  
 <?endif ?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="0ff6bcee-e9bb-4501-a7dd-4d05dea6f16c" Name="Ferda " Language="1033" Version="3.1.0.0" Manufacturer="Ferda Team" UpgradeCode="bbdaee35-e2dd-4411-8de4-5d4198313889">
+	<Product Id="0ff6bcee-e9bb-4501-a7dd-4d05dea6f16c" Name="Ferda " Language="1033" Version="3.2.0.0" Manufacturer="Ferda Team" UpgradeCode="bbdaee35-e2dd-4411-8de4-5d4198313889">
 		<Package InstallerVersion="200" Compressed="yes"/>
 		<Property Id="ALLUSERS" Value="1"/>
 		<Media Id="1" Cabinet="Ferda.cab" EmbedCab="yes"/>
@@ -423,14 +423,14 @@
 						<Component Id="FerdaWizards.dll" Guid="{CAA868F1-97D6-4E2B-A262-FC4DDD9DB24B}">
 							<File Id="FerdaWizards.dll" Name="FerdaWizards.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\FerdaWizards.dll"/>
 						</Component>
-						<Component Id="freeze33.dll" Guid="{BD664B6C-D6B6-4DF1-AB59-32D76489779E}">
-							<File Id="freeze33.dll" Name="freeze33.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\freeze33.dll"/>
+						<Component Id="freeze34.dll" Guid="{BD664B6C-D6B6-4DF1-AB59-32D76489779E}">
+							<File Id="freeze34.dll" Name="freeze34.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\freeze34.dll"/>
 						</Component>
 						<Component Id="Glacier2.dll_2" Guid="{35DBA28A-52A8-47E0-97EE-3A2E9E776983}">
 							<File Id="Glacier2.dll_2" Name="Glacier2.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\Glacier2.dll"/>
 						</Component>
-						<Component Id="glacier233.dll" Guid="{B9984003-4DDF-4032-B6D7-0705821D8DB5}">
-							<File Id="glacier233.dll" Name="glacier233.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\glacier233.dll"/>
+						<Component Id="glacier234.dll" Guid="{B9984003-4DDF-4032-B6D7-0705821D8DB5}">
+							<File Id="glacier234.dll" Name="glacier234.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\glacier234.dll"/>
 						</Component>
 						<Component Id="Ice.dll_2" Guid="{AF54AA7C-09A9-4ED2-9648-E73C62F15595}">
 							<File Id="Ice.dll_2" Name="Ice.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\Ice.dll"/>
@@ -438,14 +438,14 @@
 						<Component Id="Ice.jar" Guid="{4DF5B2C5-DB8D-4fb4-A693-68DB542A569A}">
 							<File Id="Ice.jar" Name="Ice.jar" KeyPath="yes" Source="$(var.bin.dir)\Server\Ice.jar"/>
 						</Component>
-						<Component Id="ice33.dll" Guid="{6217056E-9DBF-40AA-91D3-FD97827DA79B}">
-							<File Id="ice33.dll" Name="ice33.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\ice33.dll"/>
+						<Component Id="ice34.dll" Guid="{6217056E-9DBF-40AA-91D3-FD97827DA79B}">
+							<File Id="ice34.dll" Name="ice34.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\ice34.dll"/>
 						</Component>
 						<Component Id="IceBox.dll_2" Guid="{21A9BCCA-7952-4395-9599-E8C573C2D9AD}">
 							<File Id="IceBox.dll_2" Name="IceBox.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\IceBox.dll"/>
 						</Component>
-						<Component Id="icebox33.dll" Guid="{A01AB078-16A9-4D6E-9CE3-1CA942AD65DC}">
-							<File Id="icebox33.dll" Name="icebox33.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icebox33.dll"/>
+						<Component Id="icebox34.dll" Guid="{A01AB078-16A9-4D6E-9CE3-1CA942AD65DC}">
+							<File Id="icebox34.dll" Name="icebox34.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icebox34.dll"/>
 						</Component>
 						<Component Id="iceboxnet.exe.config" Guid="{DA93D016-EDE2-4f9a-84CE-1E56ACA33113}">
 							<File Id="iceboxnet.exe.config" Name="iceboxnet.exe.config" KeyPath="yes" Source="$(var.bin.dir)\Server\iceboxnet.exe.config"/>
@@ -456,32 +456,32 @@
 						<Component Id="IceGrid.dll_2" Guid="{ECC2C80C-8D80-433B-B748-729B397DB460}">
 							<File Id="IceGrid.dll_2" Name="IceGrid.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\IceGrid.dll"/>
 						</Component>
-						<Component Id="icegrid33.dll" Guid="{1B9F69C8-F43A-47A2-B518-A06EBC92E280}">
-							<File Id="icegrid33.dll" Name="icegrid33.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icegrid33.dll"/>
+						<Component Id="icegrid34.dll" Guid="{1B9F69C8-F43A-47A2-B518-A06EBC92E280}">
+							<File Id="icegrid34.dll" Name="icegrid34.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icegrid34.dll"/>
 						</Component>
 						<Component Id="icegridnode.exe" Guid="{F46677BB-D807-49F4-93B6-D7107444F970}">
 							<File Id="icegridnode.exe" Name="icegridnode.exe" KeyPath="yes" Source="$(var.bin.dir)\Server\icegridnode.exe"/>
 						</Component>
-						<Component Id="icepatch233.dll" Guid="{95A049B2-BD92-43CA-93E5-2E053D5CCCEE}">
-							<File Id="icepatch233.dll" Name="icepatch233.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icepatch233.dll"/>
+						<Component Id="icepatch234.dll" Guid="{95A049B2-BD92-43CA-93E5-2E053D5CCCEE}">
+							<File Id="icepatch234.dll" Name="icepatch234.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icepatch234.dll"/>
 						</Component>
-						<Component Id="icessl33.dll" Guid="{15905033-BCD9-4AC8-A0D3-D7366F57B335}">
-							<File Id="icessl33.dll" Name="icessl33.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icessl33.dll"/>
+						<Component Id="icessl34.dll" Guid="{15905033-BCD9-4AC8-A0D3-D7366F57B335}">
+							<File Id="icessl34.dll" Name="icessl34.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icessl34.dll"/>
 						</Component>
-						<Component Id="icestorm33.dll" Guid="{D515C20D-4547-478A-B427-782056380751}">
-							<File Id="icestorm33.dll" Name="icestorm33.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icestorm33.dll"/>
+						<Component Id="icestorm34.dll" Guid="{D515C20D-4547-478A-B427-782056380751}">
+							<File Id="icestorm34.dll" Name="icestorm34.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icestorm34.dll"/>
 						</Component>
-						<Component Id="icestormservice33.dll" Guid="{2208124A-7079-475D-AB88-19CD41956C30}">
-							<File Id="icestormservice33.dll" Name="icestormservice33.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icestormservice33.dll"/>
+						<Component Id="icestormservice34.dll" Guid="{2208124A-7079-475D-AB88-19CD41956C30}">
+							<File Id="icestormservice34.dll" Name="icestormservice34.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icestormservice34.dll"/>
 						</Component>
-						<Component Id="iceutil33.dll" Guid="{D247264A-4F1B-40C0-88FD-6B2AA9FFE61C}">
-							<File Id="iceutil33.dll" Name="iceutil33.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\iceutil33.dll"/>
+						<Component Id="iceutil34.dll" Guid="{D247264A-4F1B-40C0-88FD-6B2AA9FFE61C}">
+							<File Id="iceutil34.dll" Name="iceutil34.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\iceutil34.dll"/>
 						</Component>
-						<Component Id="icexml33.dll" Guid="{654CBE43-DE44-473E-9EB8-D0C8947B3E4C}">
-							<File Id="icexml33.dll" Name="icexml33.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icexml33.dll"/>
+						<Component Id="icexml34.dll" Guid="{654CBE43-DE44-473E-9EB8-D0C8947B3E4C}">
+							<File Id="icexml34.dll" Name="icexml34.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\icexml34.dll"/>
 						</Component>
-						<Component Id="libdb46.dll" Guid="{7DD7B906-32A9-44D5-B8F4-AE901301B9CA}">
-							<File Id="libdb46.dll" Name="libdb46.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\libdb46.dll"/>
+						<Component Id="libdb48.dll" Guid="{7DD7B906-32A9-44D5-B8F4-AE901301B9CA}">
+							<File Id="libdb48.dll" Name="libdb46.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\libdb48.dll"/>
 						</Component>
 						<Component Id="libeay32.dll" Guid="{BE4C35D2-EF84-4C4B-93D9-E555B8F7C693}">
 							<File Id="libeay32.dll" Name="libeay32.dll" KeyPath="yes" Source="$(var.bin.dir)\Server\libeay32.dll"/>
@@ -2250,25 +2250,25 @@
 			<ComponentRef Id="FerdaSampleBoxes.dll"/>
 			<ComponentRef Id="FerdaServerBase.dll"/>
 			<ComponentRef Id="FerdaWizards.dll"/>
-			<ComponentRef Id="freeze33.dll"/>
+			<ComponentRef Id="freeze34.dll"/>
 			<ComponentRef Id="Glacier2.dll_2"/>
-			<ComponentRef Id="glacier233.dll"/>
+			<ComponentRef Id="glacier234.dll"/>
 			<ComponentRef Id="Ice.dll_2"/>
-			<ComponentRef Id="ice33.dll"/>
+			<ComponentRef Id="ice34.dll"/>
 			<ComponentRef Id="IceBox.dll_2"/>
-			<ComponentRef Id="icebox33.dll"/>
+			<ComponentRef Id="icebox34.dll"/>
 			<ComponentRef Id="iceboxnet.exe"/>
 			<ComponentRef Id="iceboxnet.exe.config"/>
 			<ComponentRef Id="IceGrid.dll_2"/>
-			<ComponentRef Id="icegrid33.dll"/>
+			<ComponentRef Id="icegrid34.dll"/>
 			<ComponentRef Id="icegridnode.exe"/>
-			<ComponentRef Id="icepatch233.dll"/>
-			<ComponentRef Id="icessl33.dll"/>
-			<ComponentRef Id="icestorm33.dll"/>
-			<ComponentRef Id="icestormservice33.dll"/>
-			<ComponentRef Id="iceutil33.dll"/>
-			<ComponentRef Id="icexml33.dll"/>
-			<ComponentRef Id="libdb46.dll"/>
+			<ComponentRef Id="icepatch234.dll"/>
+			<ComponentRef Id="icessl34.dll"/>
+			<ComponentRef Id="icestorm34.dll"/>
+			<ComponentRef Id="icestormservice34.dll"/>
+			<ComponentRef Id="iceutil34.dll"/>
+			<ComponentRef Id="icexml34.dll"/>
+			<ComponentRef Id="libdb48.dll"/>
 			<ComponentRef Id="libeay32.dll"/>
 			<ComponentRef Id="libexpat.dll"/>
 			<ComponentRef Id="NetworkArchive.xml"/>
