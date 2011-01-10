@@ -174,9 +174,12 @@
 				<include name="freeze34.dll"/>
 				<include name="glacier234.dll"/>
 				<include name="ice34.dll"/>
+				<include name="icedb34.dll"/>
 				<include name="icebox34.dll"/>
 				<include name="icegrid34.dll"/>
+				<include name="icegridfreezedb34.dll"/>
 				<include name="icegridnode.exe"/>
+				<include name="icegridsqldb34.dll"/>
 				<include name="icepatch234.dll"/>
 				<include name="icessl34.dll"/>
 				<include name="icestorm34.dll"/>
@@ -266,7 +269,9 @@
 			</fileset>
 		</copy>
 	</target>
-	<target name="test" depends="srcAndCopy,config">
+	<target name="test" depends="srcAndCopy,config,testOnly">
+	</target>
+	<target name="testOnly" depends="">
 		<nant buildfile="${path::combine(test.dir,'default.build')}">
 			<properties>
 				<property name="build.dir" value="${bin.dir}"/>
