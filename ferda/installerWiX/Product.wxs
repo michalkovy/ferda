@@ -6,7 +6,7 @@
   <?define ProgramFiles.dir = "ProgramFilesFolder" ?>  
 <?endif ?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="0ff6bcee-e9bb-4501-a7dd-4d05dea6f16c" Name="Ferda " Language="1033" Version="3.2.1.0" Manufacturer="Ferda Team" UpgradeCode="bbdaee35-e2dd-4411-8de4-5d4198313889">
+	<Product Id="0ff6bcee-e9bb-4501-a7dd-4d05dea6f16c" Name="Ferda " Language="1033" Version="3.2.2.0" Manufacturer="Ferda Team" UpgradeCode="bbdaee35-e2dd-4411-8de4-5d4198313889">
 		<Package InstallerVersion="200" Compressed="yes"/>
 		<Property Id="ALLUSERS" Value="1"/>
 		<Media Id="1" Cabinet="Ferda.cab" EmbedCab="yes"/>
