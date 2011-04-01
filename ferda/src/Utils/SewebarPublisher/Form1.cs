@@ -23,7 +23,8 @@ namespace SewebarPublisher
         /// hosts including the URL of the XMLRPC server side service,
         /// full path to the service (including the directories)
         /// </summary>
-        static string[] hosts = new string[5] { 
+        static string[] hosts = new string[6] { 
+            "http://zt.vse.cz/sewebar/xmlrpc/",
             "http://sewebar.vse.cz/xmlrpc/",
             "http://sewebar.vse.cz/cardio/xmlrpc/",
             "http://sewebar.vse.cz/adamek/xmlrpc/",
