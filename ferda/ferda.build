@@ -20,7 +20,7 @@
 	<property name="utils.dir" value="${path::get-full-path('utils')}"/>
 	<property name="snapshot.dir" value="${path::combine(directory::get-current-directory(),'snapshot')}" unless="${property::exists('snapshot.dir')}"/>
 	<property name="docs.build.file" value="docs/docs.build"/>
-	<property name="ice.dir" value="c:\Program Files\ZeroC\Ice-3.4.1\" unless="${property::exists('ice.dir')}"/>
+	<property name="ice.dir" value="c:\Program Files (x86)\ZeroC\Ice-3.4.2\" unless="${property::exists('ice.dir')}"/>
 	<!-- <if test="${not(directory::exists(ice.dir))}">
 		<property name="ice.dir" value="c:\Ice-3.3.1-VC90\"/>
 	</if> -->
