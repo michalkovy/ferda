@@ -4,7 +4,7 @@ Please go through these steps to successfully install ferda on your system:
 
 1) Install .NET 2 SDK or Visual Studio 2005 or newer
 2) Install NAnt, supported version is 0.85 and newer (nant.sourceforge.net)
-3) Install Ice (www.zeroc.com)
+3) Install Ice (www.zeroc.com) with default path (on Windows 7 the Program Files (x86) directory
 4) Install Java JDK (for modules written in Java)
 5) Set PATH environment variable to have Ice bin directory, NAnt bin directory, Java JDK bin and the .NET 2 SDK bin directory in it.
 6] Execute command line (cmd) which administrator rights
