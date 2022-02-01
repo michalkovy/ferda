@@ -1,5 +1,0 @@
-C:\Users\micha\Source\Repos\ferda\ferda\src\Base\obj\Debug\net6.0\Base.csproj.AssemblyReference.cache
-C:\Users\micha\Source\Repos\ferda\ferda\src\Base\obj\Debug\net6.0\Base.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\micha\Source\Repos\ferda\ferda\src\Base\obj\Debug\net6.0\Base.AssemblyInfoInputs.cache
-C:\Users\micha\Source\Repos\ferda\ferda\src\Base\obj\Debug\net6.0\Base.AssemblyInfo.cs
-C:\Users\micha\Source\Repos\ferda\ferda\src\Base\obj\Debug\net6.0\Base.csproj.CoreCompileInputs.cache
