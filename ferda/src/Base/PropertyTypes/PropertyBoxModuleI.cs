@@ -34,7 +34,7 @@ using Ice;namespace Ferda.Modules
 		/// <param name="propertyClassIceId">A  string</param>
 		/// <param name="propertyFunctionsIceIds">A  string[]</param>
 		/// <param name="identifier">A  string</param>
-		public PropertyBoxModuleI(BoxModuleFactoryPrx factory, string propertyClassIceId, string[] propertyFunctionsIceIds, string mainFunctionsIceId, Ice.ObjectAdapter adapter, Ice.Identity myIdentity, Modules.PropertyBoxModuleFactoryCreatorI.ValueFromPrx valueFromPrx, PropertyValue defaultValue)
+		public PropertyBoxModuleI(BoxModuleFactoryPrx factory, string propertyClassIceId, string[] propertyFunctionsIceIds, string mainFunctionsIceId, Ice.ObjectAdapter adapter, Ice.Identity myIdentity, Modules.PropertyBoxModuleFactoryCreatorI.ValueFromPrx valueFromPrx, PropertyValue defaultValue, Current __current)
 		{
 			this.factory = factory;
 			this.propertyClassIceId = propertyClassIceId;
@@ -44,7 +44,7 @@ using Ice;namespace Ferda.Modules
 			this.adapter = adapter;
 			this.valueFromPrx = valueFromPrx;
 			this.defaultValue = defaultValue;
-			this.setProperty("value",defaultValue);
+			this.setProperty("value",defaultValue, __current);
 		}
 
 		/// <summary>
@@ -161,7 +161,7 @@ using Ice;namespace Ferda.Modules
 				throw new Modules.ConnectionNotExistError();
 			}
             connectedBox = null;
-			this.setProperty("value",defaultValue);
+			this.setProperty("value",defaultValue, __current);
 		}
 
 		/// <summary>
@@ -176,7 +176,29 @@ using Ice;namespace Ferda.Modules
             {
                 throw new Ferda.Modules.NameNotExistError();
             }
-            if (value!=null && !value.ice_isA(this.propertyClassIceId))
+			if (value == null)
+			{
+				throw new Ferda.Modules.BadTypeError();
+			}
+			Ice.Object prx = null;
+			switch (value)
+			{
+				case StringTI stringValue:
+					prx = new StringTInterfaceTie_(stringValue);
+					break;
+				case BoolTI boolValue:
+					prx = new StringTInterfaceTie_(boolValue);
+					break;
+
+				  to do additional types
+				default:
+					throw new Ferda.Modules.BadTypeError();
+			}
+			if (!prx.ice_isA(this.propertyClassIceId))
+			{
+
+			}
+			if (value!=null && !prx.ice_isA(this.propertyClassIceId))
             {
                 throw new Ferda.Modules.BadTypeError();
             }
@@ -185,7 +207,7 @@ using Ice;namespace Ferda.Modules
 				adapter.remove(propertyValuePrx.ice_getIdentity());
 			this.propertySetByValue = true;
             propertyValue = value;
-			propertyValuePrx = this.adapter.addWithUUID(value);
+			propertyValuePrx = this.adapter.addWithUUID(prx);
 		}
 
 		/// <summary>
