@@ -1,5 +1,6 @@
 ﻿/.vs
 /ferda/bin
+/ferda/src/Base/generated
 /ferda/src/FrontEnd/*.resources
 /ferda/src/Modules/BoxModulesServices/DataPreparation/generated
 /ferda/src/Modules/BoxModulesServices/Language/generated
