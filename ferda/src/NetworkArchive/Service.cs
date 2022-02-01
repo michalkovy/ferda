@@ -37,27 +37,21 @@ namespace Ferda.NetworkArchive
         /// <param name="args">Arguments from command line</param>
         public void start(string name, Communicator communicator, string[] args)
         {
-            Debug.Listeners.Clear();
-            Debug.Listeners.Add(new TextWriterTraceListener(name + ".log"));
-            Debug.AutoFlush = true;
-            Debug.WriteLine("Starting service...");
+            Trace.Listeners.Clear();
+            Trace.Listeners.Add(new TextWriterTraceListener(name + ".log"));
+            Trace.AutoFlush = true;
+            Trace.WriteLine("Starting service...");
             _adapter = communicator.createObjectAdapter(name + "Adapter");
-            ObjectFactoryForBox factory =
-                new ObjectFactoryForBox();
-            ObjectFactoryForBox.addFactoryToCommunicator(
-                communicator, factory);
-			Ferda.Modules.ObjectFactoryForPropertyTypes factoryPropertyTypes =
-				new Ferda.Modules.ObjectFactoryForPropertyTypes();
-			Ferda.Modules.ObjectFactoryForPropertyTypes.addFactoryToCommunicator(
-				communicator, factoryPropertyTypes);
+            ObjectFactoryForBox.addFactoryToCommunicator(communicator);
+			Ferda.Modules.ObjectFactoryForPropertyTypes.addFactoryToCommunicator(communicator);
 			
 			ArchiveI archive = ArchiveI.Instance;
             _adapter.add(archive, Util.stringToIdentity("Ferda.NetworkArchive.Archive"));
-			
-            Debug.WriteLine("Activating adapter...");
+
+            Trace.WriteLine("Activating adapter...");
             _adapter.activate();
-			
-            Debug.WriteLine("NetworkArchive service has started");
+
+            Trace.WriteLine("NetworkArchive service has started");
         }
 
         /// <summary>
@@ -66,8 +60,8 @@ namespace Ferda.NetworkArchive
         public void stop()
         {
             _adapter.deactivate();
-            Debug.WriteLine("Adapter has deactivated");
-            Debug.WriteLine("Service has stoped...");
+            Trace.WriteLine("Adapter has deactivated");
+            Trace.WriteLine("Service has stoped...");
         }
 
         private ObjectAdapter _adapter;

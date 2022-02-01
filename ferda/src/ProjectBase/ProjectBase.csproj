@@ -6,6 +6,7 @@
     <Nullable></Nullable>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>FerdaProjectBase.snk</AssemblyOriginatorKeyFile>
+	<AssemblyName>Ferda$(MSBuildProjectName)</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

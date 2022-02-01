@@ -1,63 +1,20 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <ProjectGuid>{2823D49B-C6BF-49B5-8337-48016B4F7368}</ProjectGuid>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Ferda.NetworkArchive</RootNamespace>
-    <AssemblyName>FerdaNetworkArchive</AssemblyName>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <NoStdLib>False</NoStdLib>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable></Nullable>
+    <AssemblyName>Ferda$(MSBuildProjectName)</AssemblyName>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>FerdaNetworkArchive.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>..\..\bin\Server\</OutputPath>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>Full</DebugType>
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <Optimize>False</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>bin\Release\</OutputPath>
-    <DebugSymbols>False</DebugSymbols>
-    <DebugType>None</DebugType>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DefineConstants>TRACE</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
-  </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+
   <ItemGroup>
-    <Reference Include="FerdaBase">
-      <HintPath>..\..\bin\Server\FerdaBase.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="iceboxcs">
-      <HintPath>..\..\lib\IceBox.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="icecs">
-      <HintPath>..\..\lib\Ice.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+	<PackageReference Include="zeroc.ice.net" Version="3.7.7" />
+	<PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="generated\Archive.cs" />
-    <Compile Include="ArchiveI.cs" />
-    <Compile Include="ObjectFactoryForBox.cs" />
-    <Compile Include="Service.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="generated" />
+    <ProjectReference Include="..\NetworkArchiveBase\NetworkArchiveBase.csproj" />
   </ItemGroup>
 </Project>

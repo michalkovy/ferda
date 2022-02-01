@@ -25,14 +25,14 @@ namespace Ferda.NetworkArchive
 	/// <summary>
 	/// Object factory for network archive box
 	/// </summary>
-	public class ObjectFactoryForBox : Ice.ObjectFactory
+	public static class ObjectFactoryForBox
 	{
 		/// <summary>
 		/// Creates network archive box
 		/// </summary>
 		/// <returns>An Ice.Object representing network archive box</returns>
 		/// <param name="type">A  string with type</param>
-		public Ice.Object create(string type)
+		public static Ice.Value create(string type)
 		{
 			switch(type)
 			{
@@ -42,27 +42,19 @@ namespace Ferda.NetworkArchive
 			System.Diagnostics.Debug.Assert(false);
 			return null;
 		}
-		
-		/// <summary>
-		/// Destroys objct factory
-		/// </summary>
-		public void destroy()
-		{
-			// Nothing to do
-		}
 
 		/// <summary>
 		/// Adds factory to ice comunicator
 		/// </summary>
 		/// <param name="communicator">An Ice.Communicator</param>
 		/// <param name="factory">An ObjectFactoryForBox</param>
-		public static void addFactoryToCommunicator(Ice.Communicator communicator,
-				ObjectFactoryForBox factory)
+		public static void addFactoryToCommunicator(Ice.Communicator communicator)
 		{
             lock (communicator)
             {
-                if(communicator.findObjectFactory("::Ferda::NetworkArchive::Box")==null)
-                    communicator.addObjectFactory(factory, "::Ferda::NetworkArchive::Box");
+				var valueFactoryManager = communicator.getValueFactoryManager();
+                if(valueFactoryManager.find("::Ferda::NetworkArchive::Box")==null)
+					valueFactoryManager.add(create, "::Ferda::NetworkArchive::Box");
             }
 		}
 	}
