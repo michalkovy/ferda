@@ -19,3 +19,5 @@
 /ferda/src/ModulesManager/generated
 /ferda/utils
 /ferda/.vs
+/ferda/**/obj
+
