@@ -248,7 +248,7 @@ namespace Ferda.ProjectManager {
 	            processReg.WaitForExit();*/
             }
             Debug.WriteLine("IceGrid started");
-            if(this.modulesManager!=null) this.modulesManager.Refresh();
+            if(this.modulesManager!=null) this.modulesManager.Refresh(null);
         }
 
         /// <summary>

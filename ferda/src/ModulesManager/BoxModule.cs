@@ -449,15 +449,15 @@ namespace Ferda
                 return this.iceBoxModulePrx.getProperty(name);
             }
 
-            public override void GetProperty_async(AMI_BoxModule_getProperty callBack, string name)
+            public override Task GetPropertyAsync(string name, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken())
             {
-                this.iceBoxModulePrx.getProperty_async(callBack, name);
+                return this.iceBoxModulePrx.getPropertyAsync(name, context, progress, cancel);
             }
 
             public override string GetPropertyOtherAbout(string name)
             {
                 SettingModulePrx prx = this.managersLocatorI.findSettingModule(
-                    this.madeInCreator.GetProperty(name).settingModuleIdentifier);
+                    this.madeInCreator.GetProperty(name).settingModuleIdentifier, null);
                 if (prx != null)
                     return prx.getPropertyAbout(this.GetPropertyOther(name));
                 else
@@ -467,7 +467,7 @@ namespace Ferda
             public override string GetPropertyOtherAboutFromValue(string name, Ferda.Modules.PropertyValue value)
             {
                 SettingModulePrx prx = this.managersLocatorI.findSettingModule(
-                    this.madeInCreator.GetProperty(name).settingModuleIdentifier);
+                    this.madeInCreator.GetProperty(name).settingModuleIdentifier, null);
                 if (prx != null)
                     return prx.getPropertyAbout(value);
                 else
@@ -477,7 +477,7 @@ namespace Ferda
             public override bool IsPossibleToSetWithAbout(string name)
             {
                 SettingModulePrx prx = this.managersLocatorI.findSettingModule(
-                    this.madeInCreator.GetProperty(name).settingModuleIdentifier);
+                    this.madeInCreator.GetProperty(name).settingModuleIdentifier, null);
                 return prx != null &&
                     prx.ice_isA("::Ferda::Modules::SettingModuleWithStringAbility");
             }
@@ -485,7 +485,7 @@ namespace Ferda
             public override void SetPropertyOtherAbout(string name, string value)
             {
                 SettingModulePrx prx = this.managersLocatorI.findSettingModule(
-                    this.madeInCreator.GetProperty(name).settingModuleIdentifier);
+                    this.madeInCreator.GetProperty(name).settingModuleIdentifier, null);
                 SettingModuleWithStringAbilityPrx prxs = SettingModuleWithStringAbilityPrxHelper.checkedCast(prx);
                 SetPropertyOther(name, prxs.convertFromStringAbout(value, helper.LocalePrefs));
             }
@@ -598,7 +598,7 @@ namespace Ferda
             {
                 string settingModuleIdentifier = this.madeInCreator.GetProperty(name).settingModuleIdentifier;
                 SettingModulePrx prx = this.managersLocatorI.findSettingModule(
-                    settingModuleIdentifier
+                    settingModuleIdentifier, null
                     );
                 
                 if (prx == null)
@@ -735,9 +735,10 @@ namespace Ferda
                 iceBoxModulePrx.runAction(actionName);
             }
 
-            public override void RunAction_async(AMI_BoxModule_runAction callBack, string actionName)
+            public override Task RunActionAsync(string actionName, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken())
+
             {
-                iceBoxModulePrx.runAction_async(callBack, actionName);
+                return iceBoxModulePrx.runActionAsync(actionName, context, progress, cancel);
             }
 
             public override bool IsPossibleToRunAction(string actionName)
@@ -761,7 +762,7 @@ namespace Ferda
             {
                 ModuleForInteractionPrx[] prxs =
                 this.managersLocatorI.findAllModulesForInteraction(
-                    this.madeInCreator.CreatorPrx);
+                    this.madeInCreator.CreatorPrx, null);
                 foreach (ModuleForInteractionPrx prx in prxs)
                 {
                     if (Ice.Util.identityToString(prx.ice_getIdentity()) == moduleIceIdentity)
@@ -779,7 +780,7 @@ namespace Ferda
             {
                 ModuleForInteractionPrx[] prxs =
                 this.managersLocatorI.findAllModulesForInteraction(
-                    this.madeInCreator.CreatorPrx);
+                    this.madeInCreator.CreatorPrx, null);
                 foreach (ModuleForInteractionPrx prx in prxs)
                 {
                     if (Ice.Util.identityToString(prx.ice_getIdentity()) == moduleIceIdentity)
@@ -801,7 +802,7 @@ namespace Ferda
                     List<ModuleForInteractionInfo> modulesForInteraction =
                         new List<ModuleForInteractionInfo>();
                     foreach (ModuleForInteractionPrx prx in this.managersLocatorI.findAllModulesForInteraction(
-                        this.madeInCreator.CreatorPrx))
+                        this.madeInCreator.CreatorPrx, null))
                     {
                         modulesForInteraction.Add(new ModuleForInteractionInfo(prx, helper));
                     }

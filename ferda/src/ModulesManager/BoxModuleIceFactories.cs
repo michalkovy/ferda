@@ -59,7 +59,7 @@ namespace Ferda {
 									Console.Error.WriteLine("refreshing BoxModuleFactory was unsuccesfull: " + ex);
 								}
 							}
-							helper.ObjectAdapter.getCommunicator().flushBatchRequests();
+							helper.ObjectAdapter.getCommunicator().flushBatchRequests(Ice.CompressBatch.BasedOnProxy);
 						}
 					}
 				}

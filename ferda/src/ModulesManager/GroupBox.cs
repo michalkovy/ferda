@@ -524,10 +524,10 @@ namespace Ferda.ModulesManager
 			throw new Ferda.Modules.NameNotExistError();
 		}
 
-        public override void GetProperty_async(AMI_BoxModule_getProperty callBack, string name)
-        {
-            callBack.ice_exception(new Ferda.Modules.NameNotExistError());
-        }
+        public override Task GetPropertyAsync(string name, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken())
+		{
+			throw new Ferda.Modules.NameNotExistError();
+		}
 		
 		/// <summary>
 		/// Method GetPropertyOtherAbout
@@ -640,9 +640,10 @@ namespace Ferda.ModulesManager
 			throw new Ferda.Modules.NameNotExistError();
 		}
 		
-		public override void RunAction_async(AMI_BoxModule_runAction callBack, string actionName)
+		public override Task RunActionAsync(string actionName, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken())
+
 		{
-			callBack.ice_exception(new Ferda.Modules.NameNotExistError());
+			throw new Ferda.Modules.NameNotExistError();
 		}
 		
 		public override bool IsPossibleToRunAction(string actionName)

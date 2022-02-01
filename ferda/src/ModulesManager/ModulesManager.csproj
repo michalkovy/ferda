@@ -1,85 +1,17 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{57A6E5AB-189A-47D9-9E11-E45E93503FF4}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Ferda.ModulesManager</RootNamespace>
-    <AssemblyName>ModulesManager</AssemblyName>
-    <WarningLevel>4</WarningLevel>
-    <StartupObject />
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable></Nullable>
+    <AssemblyName>Ferda$(MSBuildProjectName)</AssemblyName>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>ModulesManager.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>False</Optimize>
-    <OutputPath>..\..\bin\FrontEnd</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <OutputType>Library</OutputType>
-    <AssemblyName>ModulesManager</AssemblyName>
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>False</DebugSymbols>
-    <Optimize>True</Optimize>
-    <OutputPath>..\..\bin</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <OutputType>Library</OutputType>
-    <AssemblyName>ModulesManager</AssemblyName>
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=cbe18eed93b6dbb1">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\FrontEnd\FerdaBase.dll</HintPath>
-    </Reference>
-    <Reference Include="icecs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Ice.dll</HintPath>
-    </Reference>
-    <Reference Include="icegridcs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\IceGrid.dll</HintPath>
-    </Reference>
-    <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <Reference Include="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <Reference Include="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <Reference Include="FerdaNetworkArchiveBase, Version=0.0.0.0, Culture=neutral">
-      <HintPath>..\..\bin\Server\FerdaNetworkArchiveBase.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
+    <ProjectReference Include="..\Base\Base.csproj" />
+    <ProjectReference Include="..\NetworkArchiveBase\NetworkArchiveBase.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
-  <ItemGroup>
-    <Compile Include="BoxModule.cs" />
-    <Compile Include="BoxModuleFactoryCreator.cs" />
-    <Compile Include="BoxModuleForManager.cs" />
-    <Compile Include="BoxModuleIceFactories.cs" />
-    <Compile Include="BoxModuleLockerI.cs" />
-    <Compile Include="BoxModuleProjectInformationI.cs" />
-    <Compile Include="BoxModuleValidatorI.cs" />
-    <Compile Include="GroupBox.cs" />
-    <Compile Include="GroupBoxFactoryCreator.cs" />
-    <Compile Include="Helper.cs" />
-    <Compile Include="HelpFiles.cs" />
-    <Compile Include="IAppPrefs.cs" />
-    <Compile Include="IBoxModule.cs" />
-    <Compile Include="IBoxModuleFactoryCreator.cs" />
-    <Compile Include="IIceHelper.cs" />
-    <Compile Include="IIcePrefs.cs" />
-    <Compile Include="ManagersEngineI.cs" />
-    <Compile Include="ManagersLocatorI.cs" />
-    <Compile Include="ModuleForInteractionInfo.cs" />
-    <Compile Include="ModulesManager.cs" />
-    <Compile Include="NetworkArchive.cs" />
-    <Compile Include="OutputI.cs" />
-    <Compile Include="BoxModuleManagerI.cs" />
-    <Compile Include="IProjectHelper.cs" />
-  </ItemGroup>
+
 </Project>

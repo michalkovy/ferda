@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using Ferda.Modules;
 using System.Collections.Specialized;
 using System;
+using Ice;
 
 namespace Ferda.ModulesManager
 {
@@ -276,7 +277,7 @@ namespace Ferda.ModulesManager
 
 		public abstract Ferda.Modules.PropertyValue GetPropertyOther(string name);
 
-        public abstract void GetProperty_async(Ferda.Modules.AMI_BoxModule_getProperty callBack, string name);
+		public abstract Task GetPropertyAsync(string name, OptionalContext context = default, IProgress<bool> progress = null, CancellationToken cancel = default);
 
 		public abstract string GetPropertyOtherAbout(string name);
 
@@ -324,8 +325,8 @@ namespace Ferda.ModulesManager
 		#region Action and interaction
 		public abstract void RunAction(string actionName);
 		
-		public abstract void RunAction_async(AMI_BoxModule_runAction callBack, string actionName);
-		
+		public abstract Task RunActionAsync(string actionName, OptionalContext context = default, IProgress<bool> progress = null, CancellationToken cancel = default);
+
 		public abstract bool IsPossibleToRunAction(string actionName);
 		
 		public abstract bool IsPossibleToRunModuleForInteraction(String moduleIceIdentity);

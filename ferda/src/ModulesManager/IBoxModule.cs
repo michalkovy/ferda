@@ -338,10 +338,9 @@ namespace Ferda.ModulesManager
         /// <summary>
         /// Gets <see cref="T:Ferda.Modules.PropertyValue"/> representation of value of property with name <paramref name="name"/> asynchronously
         /// </summary>
-        /// <param name="callBack">A <see cref="T:Ferda.Modules.AMI_BoxModule_runAction"/> call back interface will be used for catching exceptions</param>
         /// <param name="name">A string representing name of property</param>
         /// <seealso cref="M:Ferda.ModulesManager.IBoxModule.GetPropertyOther(System.String)"/>
-        void GetProperty_async(Ferda.Modules.AMI_BoxModule_getProperty callBack, string name);
+		Task GetPropertyAsync(string name, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken());
 
 		/// <summary>
 		/// Gets string representation of value of property with name <paramref name="name"/>
@@ -517,16 +516,15 @@ namespace Ferda.ModulesManager
 		/// <seealso cref="M:Ferda.ModulesManager.IBoxModule.RunAction_async(Ferda.Modules.AMI_BoxModule_runAction,System.String)"/>
 		/// <seealso cref="M:Ferda.ModulesManager.IBoxModule.IsPossibleToRunAction(System.String)"/>
 		void RunAction(string actionName);
-		
+
 		/// <summary>
 		/// Executes action <paramref name="actionName"/> asynchronously
 		/// </summary>
-        /// <param name="callBack">A <see cref="T:Ferda.Modules.AMI_BoxModule_runAction"/> call back interface will be used for catching exceptions</param>
-        /// <param name="actionName">A string representing name of action for execution</param>
+		/// <param name="actionName">A string representing name of action for execution</param>
 		/// <seealso cref="M:Ferda.ModulesManager.IBoxModule.RunAction(System.String)"/>
 		/// <seealso cref="M:Ferda.ModulesManager.IBoxModule.IsPossibleToRunAction(System.String)"/>
-		void RunAction_async(Ferda.Modules.AMI_BoxModule_runAction callBack, string actionName);
-		
+		Task RunActionAsync(string actionName, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken());
+
 		/// <summary>
 		/// Returns a Boolean value indicating whether it is possible to run action
 		/// with name <paramref name="actionName"/>

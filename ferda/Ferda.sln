@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkArchiveBase", "src\N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkArchive", "src\NetworkArchive\NetworkArchive.csproj", "{6B178BA1-89F8-4990-A396-C79F1EC1F46B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectManager", "src\ProjectManager\ProjectManager.csproj", "{F1D93004-A43E-437D-B202-7E8D77C3A5EE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModulesManager", "src\ModulesManager\ModulesManager.csproj", "{71EFC9A4-55A1-4438-8AA2-055ABEAE27BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{6B178BA1-89F8-4990-A396-C79F1EC1F46B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B178BA1-89F8-4990-A396-C79F1EC1F46B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B178BA1-89F8-4990-A396-C79F1EC1F46B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1D93004-A43E-437D-B202-7E8D77C3A5EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1D93004-A43E-437D-B202-7E8D77C3A5EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1D93004-A43E-437D-B202-7E8D77C3A5EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1D93004-A43E-437D-B202-7E8D77C3A5EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71EFC9A4-55A1-4438-8AA2-055ABEAE27BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71EFC9A4-55A1-4438-8AA2-055ABEAE27BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71EFC9A4-55A1-4438-8AA2-055ABEAE27BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71EFC9A4-55A1-4438-8AA2-055ABEAE27BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

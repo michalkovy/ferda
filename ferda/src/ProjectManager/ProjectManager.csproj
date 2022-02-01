@@ -1,82 +1,26 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>False</Optimize>
-    <OutputPath>..\..\bin\FrontEnd</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <OutputType>Library</OutputType>
-    <AssemblyName>ProjectManager</AssemblyName>
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>False</DebugSymbols>
-    <Optimize>True</Optimize>
-    <OutputPath>..\..\bin</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <OutputType>Library</OutputType>
-    <AssemblyName>ProjectManager</AssemblyName>
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{67BB1505-868E-4CFF-845E-D953A1BE0AC5}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Ferda.ProjectManager</RootNamespace>
-    <AssemblyName>ProjectManager</AssemblyName>
-    <WarningLevel>4</WarningLevel>
-    <StartupObject />
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable></Nullable>
+    <AssemblyName>Ferda$(MSBuildProjectName)</AssemblyName>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>FerdaProjectManager.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="FerdaBase, Version=0.0.0.0, Culture=neutral, PublicKeyToken=cbe18eed93b6dbb1">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\FrontEnd\FerdaBase.dll</HintPath>
-    </Reference>
-    <Reference Include="FerdaModulesManager, Version=0.0.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\FrontEnd\FerdaModulesManager.dll</HintPath>
-    </Reference>
-    <Reference Include="FerdaNetworkArchiveBase, Version=0.0.0.0, Culture=neutral">
-      <HintPath>..\..\bin\FrontEnd\FerdaNetworkArchiveBase.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="FerdaProjectBase, Version=0.0.0.0, Culture=neutral">
-      <HintPath>..\..\bin\Server\FerdaProjectBase.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="glacier2cs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
-      <HintPath>..\..\lib\Glacier2.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="icecs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Ice.dll</HintPath>
-    </Reference>
-    <Reference Include="icegridcs, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1f998c50fec78381">
-      <HintPath>..\..\lib\IceGrid.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <Reference Include="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <Reference Include="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <PackageReference Include="zeroc.ice.net" Version="3.7.7" />
+    <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+
   <ItemGroup>
-    <Compile Include="Archive.cs" />
-    <Compile Include="Connection.cs" />
-    <Compile Include="IProjectLoader.cs" />
-    <Compile Include="NetworkArchive.cs" />
-    <Compile Include="ProjectManager.cs" />
-    <Compile Include="ProjectManagerOptions.cs" />
-    <Compile Include="View.cs" />
-    <Compile Include="Project.cs" />
+    <ProjectReference Include="..\Base\Base.csproj" />
+    <ProjectReference Include="..\ModulesManager\ModulesManager.csproj" />
+    <ProjectReference Include="..\NetworkArchiveBase\NetworkArchiveBase.csproj" />
+    <ProjectReference Include="..\NetworkArchive\NetworkArchive.csproj" />
+    <ProjectReference Include="..\ProjectBase\ProjectBase.csproj" />
   </ItemGroup>
+
 </Project>
+

@@ -33,31 +33,31 @@ namespace Ferda {
 			///<summary>
 			/// Constructor
 			/// </summary>
-			public ManagersEngineI(Ice.ObjectAdapter adapter, Helper helper, ModulesManager manager)
+			public ManagersEngineI(Ice.ObjectAdapter adapter, Helper helper, ModulesManager manager, Current __current)
 			{
-				Debug.WriteLine("Creating Output...");
+				Trace.WriteLine("Creating Output...");
 				lnkOutputI = new OutputI();
 				outputPrx = OutputPrxHelper.uncheckedCast(
 					adapter.addWithUUID(this.lnkOutputI));
-				Debug.WriteLine("Creating BoxModuleLocker...");
+				Trace.WriteLine("Creating BoxModuleLocker...");
 				lnkBoxModuleLockerI = new BoxModuleLockerI(manager);
 				boxModuleLockerPrx = BoxModuleLockerPrxHelper.uncheckedCast(
 					adapter.addWithUUID(this.lnkBoxModuleLockerI));
-                Debug.WriteLine("Creating BoxModuleValidator...");
+				Trace.WriteLine("Creating BoxModuleValidator...");
                 lnkBoxModuleValidatorI = new BoxModuleValidatorI(manager);
                 boxModuleValidatorPrx = BoxModuleValidatorPrxHelper.uncheckedCast(
                     adapter.addWithUUID(this.lnkBoxModuleValidatorI));
-                Debug.WriteLine("Creating BoxModuleManager...");
+				Trace.WriteLine("Creating BoxModuleManager...");
                 lnkBoxModuleManagerI = new BoxModuleManagerI(manager);
                 boxModuleManagerPrx = BoxModuleManagerPrxHelper.uncheckedCast(
                     adapter.addWithUUID(this.lnkBoxModuleManagerI));
-				Debug.WriteLine("Creating BoxModuleProjectInformation...");
+				Trace.WriteLine("Creating BoxModuleProjectInformation...");
 				lnkBoxModuleProjectInformationI = new BoxModuleProjectInformationI(manager);
 				boxModuleProjectInformationPrx =
 					BoxModuleProjectInformationPrxHelper.uncheckedCast(
 					adapter.addWithUUID(this.lnkBoxModuleProjectInformationI));
-				Debug.WriteLine("Creating ManagersLocator...");
-				lnkManagersLocatorI = new ManagersLocatorI(adapter, helper);
+				Trace.WriteLine("Creating ManagersLocator...");
+				lnkManagersLocatorI = new ManagersLocatorI(adapter, helper, __current);
 				managersLocatorPrx = ManagersLocatorPrxHelper.uncheckedCast(
 					adapter.addWithUUID(this.lnkManagersLocatorI));
 			}
