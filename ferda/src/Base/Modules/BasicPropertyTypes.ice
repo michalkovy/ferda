@@ -29,7 +29,7 @@ module Ferda {
 		};
 		
 		//::Ferda::Modules::StringT
-		class StringT extends PropertyValue {
+		class StringT extends PropertyValue implements StringTInterface {
 			string stringValue;
 		};
 		
@@ -37,7 +37,7 @@ module Ferda {
 			idempotent double getDoubleValue();
 		};
 
-		class DoubleT extends PropertyValue {
+		class DoubleT extends PropertyValue implements DoubleTInterface {
 			double doubleValue;
 		};
 		
@@ -45,7 +45,7 @@ module Ferda {
 			idempotent float getFloatValue();
 		};
 
-		class FloatT extends PropertyValue {
+		class FloatT extends PropertyValue implements FloatTInterface {
 			float floatValue;
 		};
 		
@@ -53,7 +53,7 @@ module Ferda {
 			idempotent long getLongValue();
 		};
 
-		class LongT extends PropertyValue {
+		class LongT extends PropertyValue implements LongTInterface {
 			long longValue;
 		};
 		
@@ -61,7 +61,7 @@ module Ferda {
 			idempotent int getIntValue();
 		};
 
-		class IntT extends PropertyValue {
+		class IntT extends PropertyValue implements IntTInterface {
 			int intValue;
 		};
 		
@@ -69,7 +69,7 @@ module Ferda {
 			idempotent short getShortValue();
 		};
 
-		class ShortT extends PropertyValue {
+		class ShortT extends PropertyValue implements ShortTInterface {
 			short shortValue;
 		};
 		
@@ -77,7 +77,7 @@ module Ferda {
 			idempotent bool getBoolValue();
 		};
 
-		class BoolT extends PropertyValue {
+		class BoolT extends PropertyValue implements BoolTInterface {
 			bool boolValue;
 		};
 		
@@ -85,7 +85,7 @@ module Ferda {
 			idempotent void getDateTimeValue(out int year, out short month, out short day,
 				out short hour, out short minute, out short second);
 		};
-		class DateTimeT extends PropertyValue {
+		class DateTimeT extends PropertyValue implements DateTimeTInterface {
 			short day;
 			short month;
 			int year;
@@ -97,7 +97,7 @@ module Ferda {
 		interface DateTInterface extends DateTimeTInterface {
 			idempotent void getDateValue(out int year, out short month, out short day);
 		};
-		class DateT extends PropertyValue {
+		class DateT extends PropertyValue implements DateTInterface {
 			short day;
 			short month;
 			int year;
@@ -106,7 +106,7 @@ module Ferda {
 		interface TimeTInterface extends StringTInterface {
 			idempotent void getTimeValue(out short hour, out short minute, out short second);
 		};
-		class TimeT extends PropertyValue {
+		class TimeT extends PropertyValue implements TimeTInterface {
 			short hour;
 			short minute;
 			short second;
