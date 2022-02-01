@@ -32,7 +32,7 @@
 				<include name="Modules/*.ice"/>
 			</sourcefiles>
 			<targetfiles>
-				<include name="${build.dir}/Modules/Core/Base/generated/*.cs"/>
+				<include name="${build.dir}/Base/Modules/Core/Base/generated/*.cs"/>
 			</targetfiles>
 		</uptodate>
 		<uptodate property="actual2">
@@ -64,16 +64,16 @@
 				<include name="ModulesManager/*.ice"/>
 			</sourcefiles>
 			<targetfiles>
-				<include name="${build.dir}/ModulesManager/generated/*.cs"/>
+				<include name="${build.dir}/Base/ModulesManager/generated/*.cs"/>
 			</targetfiles>
 		</uptodate>
 		<if test="${not(actual1) or not(actual2) or not(actual3) or not(actual4) or not(actual5)}">
 			<echo message="Generuji .cs z .ice souboru v adresari Modules..."/>
-			<mkdir dir="${build.dir}/Modules/Core/Base/generated"/>
+			<mkdir dir="${build.dir}/Base/Modules/Core/Base/generated"/>
 			<exec program="slice2cs">
 				<arg value="-I."/>
 				<arg value="--output-dir"/>
-				<arg value="${build.dir}/Modules/Core/Base/generated"/>
+				<arg value="${build.dir}/Base/Modules/Core/Base/generated"/>
 				<arg file="Modules/Modules.ice"/>
 				<arg file="Modules/Exceptions.ice"/>
 				<arg file="Modules/BoxType.ice"/>
@@ -89,11 +89,11 @@
 				<arg file="Modules/OntologyData.ice"/>
 			</exec>
 			<echo message="Generuji .cs z .ice souboru v adresari ModulesManager..."/>
-			<mkdir dir="${build.dir}/ModulesManager/generated"/>
+			<mkdir dir="${build.dir}/Base/ModulesManager/generated"/>
 			<exec program="slice2cs">
 				<arg value="-I."/>
 				<arg value="--output-dir"/>
-				<arg value="${build.dir}/ModulesManager/generated"/>
+				<arg value="${build.dir}/Base/ModulesManager/generated"/>
 				<arg file="ModulesManager/ManagersEngine.ice"/>
 			</exec>
 			
