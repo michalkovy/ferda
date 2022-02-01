@@ -63,8 +63,8 @@ namespace Ferda.Modules
 			{
 				throw new Ice.ObjectNotExistException();
 			}
-			Ice.Identity boxModuleIdentity = Ice.Util.stringToIdentity(Ice.Util.generateUUID());
-			PropertyBoxModuleI boxModule = new PropertyBoxModuleI(myProxy, this.propertyClassIceId, this.propertyFunctionsIceIds, this.mainFunctionsIceId, __current.adapter, boxModuleIdentity, valueFromPrx, defaultValue);
+			Ice.Identity boxModuleIdentity = Ice.Util.stringToIdentity(System.Guid.NewGuid().ToString());
+			PropertyBoxModuleI boxModule = new PropertyBoxModuleI(myProxy, this.propertyClassIceId, this.propertyFunctionsIceIds, this.mainFunctionsIceId, __current.adapter, boxModuleIdentity, valueFromPrx, defaultValue, __current);
 			BoxModulePrx boxModulePrx = boxModule.MyProxy;
 			string boxIdentity = Ice.Util.identityToString(boxModulePrx.ice_getIdentity());
 			this.boxModules[boxIdentity] = boxModule;

@@ -47,10 +47,7 @@ namespace Ferda.Modules
             Trace.AutoFlush = true;
             Trace.WriteLine("Starting service...");
             _adapter = communicator.createObjectAdapter(name + "Adapter");
-            ObjectFactoryForPropertyTypes factory =
-                new ObjectFactoryForPropertyTypes();
-            ObjectFactoryForPropertyTypes.addFactoryToCommunicator(
-                communicator, factory);
+            ObjectFactoryForPropertyTypes.addFactoryToCommunicator(communicator);
 
             Trace.WriteLine("Activating adapter...");
             _adapter.activate();
@@ -106,18 +103,18 @@ namespace Ferda.Modules
         /// <param name="defaultValue">Default value of box</param>
         /// <param name="valFromPrx">Method which converts property value proxy to property value object</param>
         /// <param name="settingModuleIdentifier">Identifier of setting module the only property of the property box</param>
-        public void registerPropertyBox(string type, PropertyValue defaultValue,
+        public void registerPropertyBox(string type, PropertyValue defaultValue, Ice.Object iceObject,
                                         PropertyBoxModuleFactoryCreatorI.ValueFromPrx valFromPrx,
                                         string settingModuleIdentifier)
         {
         	List<string> iceIds = new List<string>();
         	string mainIceId = "::Ferda::Modules::" + type + "Interface";
         	iceIds.Add(mainIceId);
-        	foreach(string iceId in defaultValue.ice_ids())
+        	foreach(string iceId in iceObject.ice_ids())
         	{
         		if ( (iceId.EndsWith("Interface") || iceId == "::Ice::Object") &&
         			mainIceId != iceId)
-        		iceIds.Add(iceId);
+        		    iceIds.Add(iceId);
         	}
         	
             new PropertyBoxModuleFactoryCreatorI(defaultValue.ice_id(),

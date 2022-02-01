@@ -4,7 +4,7 @@ using Ice;
 
 namespace Ferda.Modules
 {
-	public class ObjectFactoryForPropertyTypes : Ice.ObjectFactory
+	public static class ObjectFactoryForPropertyTypes
 	{
 		
 		/// <summary>
@@ -12,7 +12,7 @@ namespace Ferda.Modules
 		/// </summary>
 		/// <returns>An Ice.Object</returns>
 		/// <param name="type">A  string</param>
-		public Ice.Value create(string type)
+		public static Ice.Value create(string type)
 		{
 			switch(type)
 			{
@@ -48,42 +48,34 @@ namespace Ferda.Modules
 			System.Diagnostics.Debug.Assert(false);
 			return null;
 		}
-		
-		/// <summary>
-		/// Method destroy
-		/// </summary>
-		public void destroy()
-		{
-			// Nothing to do
-		}
 
-		public static void addFactoryToCommunicator(Ice.Communicator communicator,
-				ObjectFactoryForPropertyTypes factory)
+		public static void addFactoryToCommunicator(Ice.Communicator communicator)
 		{
             lock (communicator)
             {
-                if(communicator.findObjectFactory("::Ferda::Modules::BoolT")==null)
-                    communicator.addObjectFactory(factory, "::Ferda::Modules::BoolT");
-                if (communicator.findObjectFactory("::Ferda::Modules::ShortT") == null)
-                    communicator.addObjectFactory(factory, "::Ferda::Modules::ShortT");
-                if (communicator.findObjectFactory("::Ferda::Modules::IntT") == null)
-                    communicator.addObjectFactory(factory, "::Ferda::Modules::IntT");
-                if (communicator.findObjectFactory("::Ferda::Modules::LongT") == null)
-                    communicator.addObjectFactory(factory, "::Ferda::Modules::LongT");
-                if (communicator.findObjectFactory("::Ferda::Modules::FloatT") == null)
-                    communicator.addObjectFactory(factory, "::Ferda::Modules::FloatT");
-                if (communicator.findObjectFactory("::Ferda::Modules::DoubleT") == null)
-                    communicator.addObjectFactory(factory, "::Ferda::Modules::DoubleT");
-                if (communicator.findObjectFactory("::Ferda::Modules::StringT") == null)
-                    communicator.addObjectFactory(factory, "::Ferda::Modules::StringT");
-                if (communicator.findObjectFactory("::Ferda::Modules::StringSeqT") == null)
-                    communicator.addObjectFactory(factory, "::Ferda::Modules::StringSeqT");
-                if (communicator.findObjectFactory("::Ferda::Modules::TimeT") == null)
-                    communicator.addObjectFactory(factory, "::Ferda::Modules::TimeT");
-                if (communicator.findObjectFactory("::Ferda::Modules::DateT") == null)
-                    communicator.addObjectFactory(factory, "::Ferda::Modules::DateT");
-                if (communicator.findObjectFactory("::Ferda::Modules::DateTimeT") == null)
-                    communicator.addObjectFactory(factory, "::Ferda::Modules::DateTimeT");
+				var valueFactoryManager = communicator.getValueFactoryManager();
+				if (valueFactoryManager.find("::Ferda::Modules::BoolT")==null)
+					valueFactoryManager.add(create, "::Ferda::Modules::BoolT");
+                if (valueFactoryManager.find("::Ferda::Modules::ShortT") == null)
+					valueFactoryManager.add(create, "::Ferda::Modules::ShortT");
+                if (valueFactoryManager.find("::Ferda::Modules::IntT") == null)
+					valueFactoryManager.add(create, "::Ferda::Modules::IntT");
+                if (valueFactoryManager.find("::Ferda::Modules::LongT") == null)
+					valueFactoryManager.add(create, "::Ferda::Modules::LongT");
+                if (valueFactoryManager.find("::Ferda::Modules::FloatT") == null)
+					valueFactoryManager.add(create, "::Ferda::Modules::FloatT");
+                if (valueFactoryManager.find("::Ferda::Modules::DoubleT") == null)
+					valueFactoryManager.add(create, "::Ferda::Modules::DoubleT");
+                if (valueFactoryManager.find("::Ferda::Modules::StringT") == null)
+					valueFactoryManager.add(create, "::Ferda::Modules::StringT");
+                if (valueFactoryManager.find("::Ferda::Modules::StringSeqT") == null)
+					valueFactoryManager.add(create, "::Ferda::Modules::StringSeqT");
+                if (valueFactoryManager.find("::Ferda::Modules::TimeT") == null)
+					valueFactoryManager.add(create, "::Ferda::Modules::TimeT");
+                if (valueFactoryManager.find("::Ferda::Modules::DateT") == null)
+					valueFactoryManager.add(create, "::Ferda::Modules::DateT");
+                if (valueFactoryManager.find("::Ferda::Modules::DateTimeT") == null)
+					valueFactoryManager.add(create, "::Ferda::Modules::DateTimeT");
                 
                 //if (communicator.findObjectFactory("::Ferda::Modules::CategoriesT") == null)
                 //    communicator.addObjectFactory(factory, "::Ferda::Modules::CategoriesT");

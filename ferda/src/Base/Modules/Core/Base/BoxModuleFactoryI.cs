@@ -151,10 +151,10 @@ namespace Ferda.Modules
             {
                 throw new ObjectNotExistException();
             }
-            Identity boxModuleIdentity = Util.stringToIdentity(Util.generateUUID());
+            Identity boxModuleIdentity = Util.stringToIdentity(System.Guid.NewGuid().ToString());
             BoxModuleFactoryPrx myProxy = BoxModuleFactoryPrxHelper.uncheckedCast(__current.adapter.addWithUUID(this));
             BoxModuleI boxModule =
-                new BoxModuleI(boxInfo, boxModuleIdentity, myProxy, manager, __current.adapter, localePrefs);
+                new BoxModuleI(boxInfo, boxModuleIdentity, myProxy, manager, __current.adapter, localePrefs, __current);
             BoxModulePrx boxModulePrx = boxModule.MyProxy;
             string boxIdentity = Util.identityToString(boxModulePrx.ice_getIdentity());
             boxModules[boxIdentity] = boxModule;

@@ -210,7 +210,7 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((ShortT) value).getShortValue();
+                    return ((ShortT) value).shortValue;
             }
 
             ObjectPrx[] functions = GetFunctions(propertyName);
@@ -240,7 +240,7 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((BoolT) value).getBoolValue();
+                    return ((BoolT) value).boolValue;
             }
 
             ObjectPrx[] functions = GetFunctions(propertyName);
@@ -270,7 +270,7 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((IntT) value).getIntValue();
+                    return ((IntT) value).intValue;
             }
 
             ObjectPrx[] functions = GetFunctions(propertyName);
@@ -300,7 +300,7 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((LongT) value).getLongValue();
+                    return ((LongT) value).longValue;
             }
 
             ObjectPrx[] functions = GetFunctions(propertyName);
@@ -330,7 +330,7 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((FloatT) value).getFloatValue();
+                    return ((FloatT) value).floatValue;
             }
 
             ObjectPrx[] functions = GetFunctions(propertyName);
@@ -360,7 +360,7 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((DoubleT) value).getDoubleValue();
+                    return ((DoubleT) value).doubleValue;
             }
 
             ObjectPrx[] functions = GetFunctions(propertyName);
@@ -390,7 +390,7 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((StringT) value).getStringValue();
+                    return ((StringT) value).stringValue;
             }
 
             ObjectPrx[] functions = GetFunctions(propertyName);
@@ -420,7 +420,7 @@ namespace Ferda.Modules
             {
                 PropertyValue value;
                 if (properties.TryGetValue(propertyName, out value))
-                    return ((StringSeqT) value).getStringSeq();
+                    return ((StringSeqT) value).stringSeqValue;
             }
 
             ObjectPrx[] functions = GetFunctions(propertyName);
@@ -816,7 +816,8 @@ namespace Ferda.Modules
                           BoxModuleFactoryPrx myFactoryProxy,
                           ManagersEnginePrx manager,
                           ObjectAdapter adapter,
-                          string[] localePrefs)
+                          string[] localePrefs,
+                          Current __current)
         {
             Debug.WriteLine("BoxModuleI Constructor (entering): " + boxInfo.Identifier);
 
@@ -848,7 +849,7 @@ namespace Ferda.Modules
             {
                 if (!boxInfo.IsPropertyReadOnly(propertyName))
                 {
-                    setProperty(propertyName, boxInfo.GetPropertyDefaultValue(propertyName));
+                    setProperty(propertyName, boxInfo.GetPropertyDefaultValue(propertyName), __current);
                 }
             }
 
@@ -953,7 +954,7 @@ namespace Ferda.Modules
                 throw Exceptions.NameNotExistError(null, propertyName);
             }
             // tests property value if it is set
-            return boxInfo.IsPropertySet(propertyName, getProperty(propertyName));
+            return boxInfo.IsPropertySet(propertyName, getProperty(propertyName, __current));
         }
 
         /// <summary>
@@ -1205,7 +1206,8 @@ namespace Ferda.Modules
                 Debug.Assert(false);
                 throw Exceptions.NameNotExistError(null, propertyName);
             }
-            if (propertyValue != null && !propertyValue.ice_isA(boxInfo.GetPropertyDataType(propertyName)))
+            Ice.Object prx = PropertyValueToTie.GetTieForPropertyValue(propertyValue);
+            if (prx != null && !prx.ice_isA(boxInfo.GetPropertyDataType(propertyName)))
             {
                 // bad type of the specified propertyValue
                 Debug.WriteLine("BMI26");
@@ -1230,51 +1232,49 @@ namespace Ferda.Modules
                         PropertyValueRestrictionsHelper.TryIsIntegralPropertyCorrect(
                             boxInfo,
                             propertyName,
-                            ((ShortT) propertyValue).getShortValue());
+                            ((ShortT) propertyValue).shortValue);
                         break;
                     case "::Ferda::Modules::IntT":
                         PropertyValueRestrictionsHelper.TryIsIntegralPropertyCorrect(
                             boxInfo,
                             propertyName,
-                            ((IntT) propertyValue).getIntValue());
+                            ((IntT) propertyValue).intValue);
                         break;
                     case "::Ferda::Modules::LongT":
                         PropertyValueRestrictionsHelper.TryIsIntegralPropertyCorrect(
                             boxInfo,
                             propertyName,
-                            ((LongT) propertyValue).getLongValue());
+                            ((LongT) propertyValue).longValue);
                         break;
                     case "::Ferda::Modules::FloatT":
                         PropertyValueRestrictionsHelper.TryIsFloatingPropertyCorrect(
                             boxInfo,
                             propertyName,
-                            ((FloatT) propertyValue).getFloatValue());
+                            ((FloatT) propertyValue).floatValue);
                         break;
                     case "::Ferda::Modules::DoubleT":
                         PropertyValueRestrictionsHelper.TryIsFloatingPropertyCorrect(
                             boxInfo,
                             propertyName,
-                            ((DoubleT) propertyValue).getDoubleValue());
+                            ((DoubleT) propertyValue).doubleValue);
                         break;
                     case "::Ferda::Modules::StringT":
                         PropertyValueRestrictionsHelper.TryIsStringPropertyCorrect(
                             boxInfo,
                             propertyName,
-                            ((StringT) propertyValue).getStringValue());
+                            ((StringT) propertyValue).stringValue);
                         break;
                     case "::Ferda::Modules::DateTimeT":
                         PropertyValueRestrictionsHelper.TryIsDateTimePropertyCorrect(
                             boxInfo, propertyName, (DateTimeT) propertyValue);
                         break;
                     case "::Ferda::Modules::DateT":
-                        DateT date = new DateTI();
-                        ((DateT) propertyValue).getDateValue(out date.year, out date.month, out date.day);
+                        DateT date = new DateTI(((DateT)propertyValue).year, ((DateT)propertyValue).month, ((DateT)propertyValue).day);
                         PropertyValueRestrictionsHelper.TryIsDatePropertyCorrect(
                             boxInfo, propertyName, date);
                         break;
                     case "::Ferda::Modules::TimeT":
-                        TimeT time = new TimeTI();
-                        ((TimeT) propertyValue).getTimeValue(out time.hour, out time.minute, out time.second);
+                        TimeT time = new TimeTI(((TimeT)propertyValue).hour, ((TimeT)propertyValue).minute, ((TimeT)propertyValue).second);
                         PropertyValueRestrictionsHelper.TryIsTimePropertyCorrect(
                             boxInfo, propertyName, time);
                         break;
@@ -1294,11 +1294,11 @@ namespace Ferda.Modules
         /// The <see cref="T:Ferda.Modules.PropertySetting"/> i.e.
         /// value and name of the specified property.
         /// </returns>
-        public PropertySetting GetPropertySetting(string propertyName)
+        public PropertySetting GetPropertySetting(string propertyName, Current __current)
         {
             PropertySetting result = new PropertySetting();
             result.propertyName = propertyName;
-            result.value = getProperty(propertyName);
+            result.value = getProperty(propertyName, __current);
             return result;
         }
 
