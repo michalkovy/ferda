@@ -10,11 +10,11 @@
 module Ferda {
 	module Modules {
 
-		interface StringSeqTInterface {
+		["cs:tie"] interface StringSeqTInterface {
 			idempotent StringSeq getStringSeq();
 		};
 
-		class StringSeqT extends PropertyValue implements StringSeqTInterface {
+		class StringSeqT extends PropertyValue {
 			StringSeq stringSeqValue;
 		};
 	};

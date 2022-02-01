@@ -142,7 +142,7 @@ namespace Ferda.Modules
                 }
                 if (boxInfo.TestPropertyNameExistence(socketName))
                 {
-                    setProperty(socketName, boxInfo.GetPropertyDefaultValue(socketName));
+                    setProperty(socketName, boxInfo.GetPropertyDefaultValue(socketName), __current);
                 }
             }
         }

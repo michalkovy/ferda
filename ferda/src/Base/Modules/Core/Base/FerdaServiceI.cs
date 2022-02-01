@@ -42,24 +42,24 @@ namespace Ferda.Modules
         /// <param name="args">Arguments from command line</param>
         public void start(string name, Communicator communicator, string[] args)
         {
-            Debug.Listeners.Clear();
-            Debug.Listeners.Add(new TextWriterTraceListener(name + ".log"));
-            Debug.AutoFlush = true;
-            Debug.WriteLine("Starting service...");
+            Trace.Listeners.Clear();
+            Trace.Listeners.Add(new TextWriterTraceListener(name + ".log"));
+            Trace.AutoFlush = true;
+            Trace.WriteLine("Starting service...");
             _adapter = communicator.createObjectAdapter(name + "Adapter");
             ObjectFactoryForPropertyTypes factory =
                 new ObjectFactoryForPropertyTypes();
             ObjectFactoryForPropertyTypes.addFactoryToCommunicator(
                 communicator, factory);
-            
-            Debug.WriteLine("Activating adapter...");
+
+            Trace.WriteLine("Activating adapter...");
             _adapter.activate();
 
             reaper = new ReapThread();
             reaperThread = new Thread(new ThreadStart(reaper.Run));
             reaperThread.Start();
-            
-            Debug.WriteLine("Registering boxes...");
+
+            Trace.WriteLine("Registering boxes...");
             registerBoxes();
             
             if (havePropertyBoxes)
@@ -67,8 +67,8 @@ namespace Ferda.Modules
                 propertyReaper = new PropertyReapThread();
                 propertyReaperThread = new Thread(new ThreadStart(propertyReaper.Run));
                 propertyReaperThread.Start();
-                
-                Debug.WriteLine("Registering property boxes...");
+
+                Trace.WriteLine("Registering property boxes...");
                 registerPropertyBoxes();
             }
         }
@@ -88,7 +88,7 @@ namespace Ferda.Modules
         public void stop()
         {
             _adapter.deactivate();
-            Debug.WriteLine("Adapter has deactivated");
+            Trace.WriteLine("Adapter has deactivated");
             reaper.Terminate();
             reaperThread.Join();
             if (havePropertyBoxes)
@@ -96,7 +96,7 @@ namespace Ferda.Modules
                 propertyReaper.Terminate();
                 propertyReaperThread.Join();
             }
-            Debug.WriteLine("Service has stoped...");
+            Trace.WriteLine("Service has stoped...");
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Ferda.Modules
         /// <param name="boxInfo">An <see cref="T:Ferda.Modules.Boxes.IBoxInfo"/> implementation for this box</param>
         public void registerBox(string identity, IBoxInfo boxInfo)
         {
-            Debug.WriteLine("Registering " + identity + "...");
+            Trace.WriteLine("Registering " + identity + "...");
             BoxModuleFactoryCreatorI boxModuleFactoryCreator = new BoxModuleFactoryCreatorI(boxInfo, reaper);
             _adapter.add(boxModuleFactoryCreator, Util.stringToIdentity(identity));
         }
