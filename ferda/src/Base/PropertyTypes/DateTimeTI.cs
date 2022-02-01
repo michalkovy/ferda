@@ -2,7 +2,7 @@ using Ice;
 using System;
 namespace Ferda.Modules
 {
-	public class DateTimeTI : DateTimeT, IValue, IComparable
+	public class DateTimeTI : DateTimeT, DateTimeTInterfaceOperations_, IValue, IComparable
 	{
 		public ValueT getValueT()
 		{
@@ -86,7 +86,7 @@ namespace Ferda.Modules
 		/// <param name="month">A  short</param>
 		/// <param name="day">A  short</param>
 		/// <param name="__current">An Ice.Current</param>
-		public override void getDateTimeValue(out int year, out short month, out short day, out short hour, out short minute, out short second, Current __current)
+		public void getDateTimeValue(out int year, out short month, out short day, out short hour, out short minute, out short second, Current __current)
 		{
 			year = this.year;
 			month = this.month;
@@ -138,7 +138,7 @@ namespace Ferda.Modules
 
 		#endregion
 
-        public override String getStringValue(Current __current)
+        public String getStringValue(Current __current)
         {
             DateTime dateTime = new DateTime();
             this.TryGetDateTime(out dateTime);

@@ -2,7 +2,7 @@
 using System;
 using Ice;namespace Ferda.Modules
 {
-	public class StringSeqTI : StringSeqT, IValue
+	public class StringSeqTI : StringSeqT, StringSeqTInterfaceOperations_, IValue
 	{
 		public ValueT getValueT()
 		{
@@ -34,7 +34,7 @@ using Ice;namespace Ferda.Modules
 		/// </summary>
 		/// <returns>A string[]</returns>
 		/// <param name="__current">An Ice.Current</param>
-		public override String[] getStringSeq(Current __current)
+		public String[] getStringSeq(Current __current)
 		{
 			return this.stringSeqValue;
 		}

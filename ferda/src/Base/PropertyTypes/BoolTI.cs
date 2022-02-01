@@ -3,7 +3,7 @@ using System;
 
 namespace Ferda.Modules
 {
-    public class BoolTI : BoolT, IValue
+    public class BoolTI : BoolT, BoolTInterfaceOperations_, IValue
     {
         public ValueT getValueT()
         {
@@ -41,37 +41,37 @@ namespace Ferda.Modules
         /// </summary>
         /// <returns>A bool</returns>
         /// <param name="__current">An Ice.Current</param>
-        public override bool getBoolValue(Current __current)
+        public bool getBoolValue(Current __current)
         {
             return this.boolValue;
         }
 
-        public override short getShortValue(Current __current)
+        public short getShortValue(Current __current)
         {
             return this.boolValue ? (short)1 : (short)0;
         }
 
-        public override int getIntValue(Current __current)
+        public int getIntValue(Current __current)
         {
             return this.boolValue ? 1 : 0;
         }
 
-        public override long getLongValue(Current __current)
+        public long getLongValue(Current __current)
         {
             return this.boolValue ? 1 : 0;
         }
 
-        public override float getFloatValue(Current __current)
+        public float getFloatValue(Current __current)
         {
             return this.boolValue ? 1 : 0;
         }
 
-        public override double getDoubleValue(Current __current)
+        public double getDoubleValue(Current __current)
         {
             return this.boolValue ? 1 : 0;
         }
 
-        public override String getStringValue(Current __current)
+        public String getStringValue(Current __current)
         {
             return this.boolValue.ToString();
         }

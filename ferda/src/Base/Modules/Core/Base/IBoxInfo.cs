@@ -173,7 +173,7 @@ namespace Ferda.Modules.Boxes
         /// this interface</see> is shared by all instances of the box modules
         /// of the same type <see cref="P:Ferda.Modules.Boxes.IBoxInfo.Identifier"/>
         /// </remarks>
-        void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions);
+        void CreateFunctions(BoxModuleI boxModule, out Ice.Object iceObject, out IFunctions functions);
 
         /// <summary>
         /// Gets the <see href="http://www.w3.org/tr/2000/cr-svg-20001102/index.html">

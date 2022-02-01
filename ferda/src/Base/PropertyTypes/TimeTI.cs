@@ -3,7 +3,7 @@ using System;
 
 namespace Ferda.Modules
 {
-	public class TimeTI : TimeT, IValue
+	public class TimeTI : TimeT, TimeTInterfaceOperations_, IValue
 	{
 		public ValueT getValueT()
 		{
@@ -77,14 +77,14 @@ namespace Ferda.Modules
 		/// <param name="month">A  short</param>
 		/// <param name="day">A  short</param>
 		/// <param name="__current">An Ice.Current</param>
-		public override void getTimeValue(out short hour, out short minute, out short second, Current __current)
+		public void getTimeValue(out short hour, out short minute, out short second, Current __current)
 		{
 			hour = this.hour;
 			minute = this.minute;
 			second = this.second;
 		}
 
-        public override String getStringValue(Current __current)
+        public String getStringValue(Current __current)
         {
             TimeSpan timeSpan = new TimeSpan();
             this.TryGetTimeSpan(out timeSpan);

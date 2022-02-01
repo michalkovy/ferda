@@ -12,7 +12,7 @@ namespace Ferda.Modules
 		/// </summary>
 		/// <returns>An Ice.Object</returns>
 		/// <param name="type">A  string</param>
-		public Ice.Object create(string type)
+		public Ice.Value create(string type)
 		{
 			switch(type)
 			{

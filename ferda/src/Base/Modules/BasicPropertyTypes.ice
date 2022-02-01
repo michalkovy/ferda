@@ -24,68 +24,68 @@ module Ferda {
 		/*  B A S I C  T Y P E S  */
 		
 		//::Ferda::Modules::StringTInterface*
-		interface StringTInterface {
+		["cs:tie"] interface StringTInterface {
 			idempotent string getStringValue();
 		};
 		
 		//::Ferda::Modules::StringT
-		class StringT extends PropertyValue implements StringTInterface {
+		class StringT extends PropertyValue {
 			string stringValue;
 		};
 		
-		interface DoubleTInterface extends StringTInterface {
+		["cs:tie"] interface DoubleTInterface extends StringTInterface {
 			idempotent double getDoubleValue();
 		};
 
-		class DoubleT extends PropertyValue implements DoubleTInterface {
+		class DoubleT extends PropertyValue {
 			double doubleValue;
 		};
 		
-		interface FloatTInterface extends DoubleTInterface {
+		["cs:tie"] interface FloatTInterface extends DoubleTInterface {
 			idempotent float getFloatValue();
 		};
 
-		class FloatT extends PropertyValue implements FloatTInterface {
+		class FloatT extends PropertyValue {
 			float floatValue;
 		};
 		
-		interface LongTInterface extends FloatTInterface {
+		["cs:tie"] interface LongTInterface extends FloatTInterface {
 			idempotent long getLongValue();
 		};
 
-		class LongT extends PropertyValue implements LongTInterface {
+		class LongT extends PropertyValue {
 			long longValue;
 		};
 		
-		interface IntTInterface extends LongTInterface {
+		["cs:tie"] interface IntTInterface extends LongTInterface {
 			idempotent int getIntValue();
 		};
 
-		class IntT extends PropertyValue implements IntTInterface {
+		class IntT extends PropertyValue {
 			int intValue;
 		};
 		
-		interface ShortTInterface extends IntTInterface {
+		["cs:tie"] interface ShortTInterface extends IntTInterface {
 			idempotent short getShortValue();
 		};
 
-		class ShortT extends PropertyValue implements ShortTInterface {
+		class ShortT extends PropertyValue {
 			short shortValue;
 		};
 		
-		interface BoolTInterface extends ShortTInterface {
+		["cs:tie"] interface BoolTInterface extends ShortTInterface {
 			idempotent bool getBoolValue();
 		};
 
-		class BoolT extends PropertyValue implements BoolTInterface {
+		class BoolT extends PropertyValue {
 			bool boolValue;
 		};
 		
-		interface DateTimeTInterface extends StringTInterface {
+		["cs:tie"] interface DateTimeTInterface extends StringTInterface {
 			idempotent void getDateTimeValue(out int year, out short month, out short day,
 				out short hour, out short minute, out short second);
 		};
-		class DateTimeT extends PropertyValue implements DateTimeTInterface {
+		class DateTimeT extends PropertyValue {
 			short day;
 			short month;
 			int year;
@@ -94,19 +94,19 @@ module Ferda {
 			short second;
 		};
 
-		interface DateTInterface extends DateTimeTInterface {
+		["cs:tie"] interface DateTInterface extends DateTimeTInterface {
 			idempotent void getDateValue(out int year, out short month, out short day);
 		};
-		class DateT extends PropertyValue implements DateTInterface {
+		class DateT extends PropertyValue {
 			short day;
 			short month;
 			int year;
 		};
 		
-		interface TimeTInterface extends StringTInterface {
+		["cs:tie"] interface TimeTInterface extends StringTInterface {
 			idempotent void getTimeValue(out short hour, out short minute, out short second);
 		};
-		class TimeT extends PropertyValue implements TimeTInterface {
+		class TimeT extends PropertyValue {
 			short hour;
 			short minute;
 			short second;

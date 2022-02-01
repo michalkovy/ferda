@@ -3,7 +3,7 @@ using Ice;
 
 namespace Ferda.Modules
 {
-	public class DoubleTI : DoubleT, IValue
+	public class DoubleTI : DoubleT, DoubleTInterfaceOperations_, IValue
 	{
 		public ValueT getValueT()
 		{
@@ -41,12 +41,12 @@ namespace Ferda.Modules
 		/// </summary>
 		/// <returns>A double</returns>
 		/// <param name="__current">An Ice.Current</param>
-		public override double getDoubleValue(Current __current)
+		public double getDoubleValue(Current __current)
 		{
 			return this.doubleValue;
 		}
 
-        public override String getStringValue(Current __current)
+        public String getStringValue(Current __current)
         {
             return this.doubleValue.ToString();
         }

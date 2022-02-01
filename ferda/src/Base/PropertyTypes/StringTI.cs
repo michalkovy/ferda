@@ -4,7 +4,7 @@ using Ice;
 
 namespace Ferda.Modules
 {
-	public class StringTI : StringT, IValue
+	public class StringTI : StringT, StringTInterfaceOperations_, IValue
 	{
 		public ValueT getValueT()
 		{
@@ -36,5 +36,15 @@ namespace Ferda.Modules
         {
             return new StringTI(v);
         }
+
+		/// <summary>
+		/// Method getStringValue
+		/// </summary>
+		/// <returns>A string</returns>
+		/// <param name="__current">An Ice.Current</param>
+		public String getStringValue(Current __current)
+		{
+			return this.stringValue;
+		}
 	}
 }

@@ -6166,6 +6166,59 @@ namespace Ferda
 
         [global::System.Runtime.InteropServices.ComVisible(false)]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
+        public class StringTInterfaceTie_ : StringTInterfaceDisp_, global::Ice.TieBase
+        {
+            public StringTInterfaceTie_()
+            {
+            }
+
+            public StringTInterfaceTie_(StringTInterfaceOperations_ del)
+            {
+                _ice_delegate = del;
+            }
+
+            public object ice_delegate()
+            {
+                return _ice_delegate;
+            }
+
+            public void ice_delegate(object del)
+            {
+                _ice_delegate = (StringTInterfaceOperations_)del;
+            }
+
+            public override int GetHashCode()
+            {
+                return _ice_delegate == null ? 0 : _ice_delegate.GetHashCode();
+            }
+
+            public override bool Equals(object rhs)
+            {
+                if(object.ReferenceEquals(this, rhs))
+                {
+                    return true;
+                }
+                if(!(rhs is StringTInterfaceTie_))
+                {
+                    return false;
+                }
+                if(_ice_delegate == null)
+                {
+                    return ((StringTInterfaceTie_)rhs)._ice_delegate == null;
+                }
+                return _ice_delegate.Equals(((StringTInterfaceTie_)rhs)._ice_delegate);
+            }
+
+            public override string getStringValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getStringValue(current);
+            }
+
+            private StringTInterfaceOperations_ _ice_delegate;
+        }
+
+        [global::System.Runtime.InteropServices.ComVisible(false)]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
         public abstract class DoubleTInterfaceDisp_ : global::Ice.ObjectImpl, DoubleTInterface
         {
             #region Slice operations
@@ -6278,6 +6331,64 @@ namespace Ferda
             }
 
             #endregion
+        }
+
+        [global::System.Runtime.InteropServices.ComVisible(false)]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
+        public class DoubleTInterfaceTie_ : DoubleTInterfaceDisp_, global::Ice.TieBase
+        {
+            public DoubleTInterfaceTie_()
+            {
+            }
+
+            public DoubleTInterfaceTie_(DoubleTInterfaceOperations_ del)
+            {
+                _ice_delegate = del;
+            }
+
+            public object ice_delegate()
+            {
+                return _ice_delegate;
+            }
+
+            public void ice_delegate(object del)
+            {
+                _ice_delegate = (DoubleTInterfaceOperations_)del;
+            }
+
+            public override int GetHashCode()
+            {
+                return _ice_delegate == null ? 0 : _ice_delegate.GetHashCode();
+            }
+
+            public override bool Equals(object rhs)
+            {
+                if(object.ReferenceEquals(this, rhs))
+                {
+                    return true;
+                }
+                if(!(rhs is DoubleTInterfaceTie_))
+                {
+                    return false;
+                }
+                if(_ice_delegate == null)
+                {
+                    return ((DoubleTInterfaceTie_)rhs)._ice_delegate == null;
+                }
+                return _ice_delegate.Equals(((DoubleTInterfaceTie_)rhs)._ice_delegate);
+            }
+
+            public override double getDoubleValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getDoubleValue(current);
+            }
+
+            public override string getStringValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getStringValue(current);
+            }
+
+            private DoubleTInterfaceOperations_ _ice_delegate;
         }
 
         [global::System.Runtime.InteropServices.ComVisible(false)]
@@ -6402,6 +6513,69 @@ namespace Ferda
             }
 
             #endregion
+        }
+
+        [global::System.Runtime.InteropServices.ComVisible(false)]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
+        public class FloatTInterfaceTie_ : FloatTInterfaceDisp_, global::Ice.TieBase
+        {
+            public FloatTInterfaceTie_()
+            {
+            }
+
+            public FloatTInterfaceTie_(FloatTInterfaceOperations_ del)
+            {
+                _ice_delegate = del;
+            }
+
+            public object ice_delegate()
+            {
+                return _ice_delegate;
+            }
+
+            public void ice_delegate(object del)
+            {
+                _ice_delegate = (FloatTInterfaceOperations_)del;
+            }
+
+            public override int GetHashCode()
+            {
+                return _ice_delegate == null ? 0 : _ice_delegate.GetHashCode();
+            }
+
+            public override bool Equals(object rhs)
+            {
+                if(object.ReferenceEquals(this, rhs))
+                {
+                    return true;
+                }
+                if(!(rhs is FloatTInterfaceTie_))
+                {
+                    return false;
+                }
+                if(_ice_delegate == null)
+                {
+                    return ((FloatTInterfaceTie_)rhs)._ice_delegate == null;
+                }
+                return _ice_delegate.Equals(((FloatTInterfaceTie_)rhs)._ice_delegate);
+            }
+
+            public override float getFloatValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getFloatValue(current);
+            }
+
+            public override double getDoubleValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getDoubleValue(current);
+            }
+
+            public override string getStringValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getStringValue(current);
+            }
+
+            private FloatTInterfaceOperations_ _ice_delegate;
         }
 
         [global::System.Runtime.InteropServices.ComVisible(false)]
@@ -6534,6 +6708,74 @@ namespace Ferda
             }
 
             #endregion
+        }
+
+        [global::System.Runtime.InteropServices.ComVisible(false)]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
+        public class LongTInterfaceTie_ : LongTInterfaceDisp_, global::Ice.TieBase
+        {
+            public LongTInterfaceTie_()
+            {
+            }
+
+            public LongTInterfaceTie_(LongTInterfaceOperations_ del)
+            {
+                _ice_delegate = del;
+            }
+
+            public object ice_delegate()
+            {
+                return _ice_delegate;
+            }
+
+            public void ice_delegate(object del)
+            {
+                _ice_delegate = (LongTInterfaceOperations_)del;
+            }
+
+            public override int GetHashCode()
+            {
+                return _ice_delegate == null ? 0 : _ice_delegate.GetHashCode();
+            }
+
+            public override bool Equals(object rhs)
+            {
+                if(object.ReferenceEquals(this, rhs))
+                {
+                    return true;
+                }
+                if(!(rhs is LongTInterfaceTie_))
+                {
+                    return false;
+                }
+                if(_ice_delegate == null)
+                {
+                    return ((LongTInterfaceTie_)rhs)._ice_delegate == null;
+                }
+                return _ice_delegate.Equals(((LongTInterfaceTie_)rhs)._ice_delegate);
+            }
+
+            public override long getLongValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getLongValue(current);
+            }
+
+            public override float getFloatValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getFloatValue(current);
+            }
+
+            public override double getDoubleValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getDoubleValue(current);
+            }
+
+            public override string getStringValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getStringValue(current);
+            }
+
+            private LongTInterfaceOperations_ _ice_delegate;
         }
 
         [global::System.Runtime.InteropServices.ComVisible(false)]
@@ -6674,6 +6916,79 @@ namespace Ferda
             }
 
             #endregion
+        }
+
+        [global::System.Runtime.InteropServices.ComVisible(false)]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
+        public class IntTInterfaceTie_ : IntTInterfaceDisp_, global::Ice.TieBase
+        {
+            public IntTInterfaceTie_()
+            {
+            }
+
+            public IntTInterfaceTie_(IntTInterfaceOperations_ del)
+            {
+                _ice_delegate = del;
+            }
+
+            public object ice_delegate()
+            {
+                return _ice_delegate;
+            }
+
+            public void ice_delegate(object del)
+            {
+                _ice_delegate = (IntTInterfaceOperations_)del;
+            }
+
+            public override int GetHashCode()
+            {
+                return _ice_delegate == null ? 0 : _ice_delegate.GetHashCode();
+            }
+
+            public override bool Equals(object rhs)
+            {
+                if(object.ReferenceEquals(this, rhs))
+                {
+                    return true;
+                }
+                if(!(rhs is IntTInterfaceTie_))
+                {
+                    return false;
+                }
+                if(_ice_delegate == null)
+                {
+                    return ((IntTInterfaceTie_)rhs)._ice_delegate == null;
+                }
+                return _ice_delegate.Equals(((IntTInterfaceTie_)rhs)._ice_delegate);
+            }
+
+            public override int getIntValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getIntValue(current);
+            }
+
+            public override long getLongValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getLongValue(current);
+            }
+
+            public override float getFloatValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getFloatValue(current);
+            }
+
+            public override double getDoubleValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getDoubleValue(current);
+            }
+
+            public override string getStringValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getStringValue(current);
+            }
+
+            private IntTInterfaceOperations_ _ice_delegate;
         }
 
         [global::System.Runtime.InteropServices.ComVisible(false)]
@@ -6822,6 +7137,84 @@ namespace Ferda
             }
 
             #endregion
+        }
+
+        [global::System.Runtime.InteropServices.ComVisible(false)]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
+        public class ShortTInterfaceTie_ : ShortTInterfaceDisp_, global::Ice.TieBase
+        {
+            public ShortTInterfaceTie_()
+            {
+            }
+
+            public ShortTInterfaceTie_(ShortTInterfaceOperations_ del)
+            {
+                _ice_delegate = del;
+            }
+
+            public object ice_delegate()
+            {
+                return _ice_delegate;
+            }
+
+            public void ice_delegate(object del)
+            {
+                _ice_delegate = (ShortTInterfaceOperations_)del;
+            }
+
+            public override int GetHashCode()
+            {
+                return _ice_delegate == null ? 0 : _ice_delegate.GetHashCode();
+            }
+
+            public override bool Equals(object rhs)
+            {
+                if(object.ReferenceEquals(this, rhs))
+                {
+                    return true;
+                }
+                if(!(rhs is ShortTInterfaceTie_))
+                {
+                    return false;
+                }
+                if(_ice_delegate == null)
+                {
+                    return ((ShortTInterfaceTie_)rhs)._ice_delegate == null;
+                }
+                return _ice_delegate.Equals(((ShortTInterfaceTie_)rhs)._ice_delegate);
+            }
+
+            public override short getShortValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getShortValue(current);
+            }
+
+            public override int getIntValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getIntValue(current);
+            }
+
+            public override long getLongValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getLongValue(current);
+            }
+
+            public override float getFloatValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getFloatValue(current);
+            }
+
+            public override double getDoubleValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getDoubleValue(current);
+            }
+
+            public override string getStringValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getStringValue(current);
+            }
+
+            private ShortTInterfaceOperations_ _ice_delegate;
         }
 
         [global::System.Runtime.InteropServices.ComVisible(false)]
@@ -6982,6 +7375,89 @@ namespace Ferda
 
         [global::System.Runtime.InteropServices.ComVisible(false)]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
+        public class BoolTInterfaceTie_ : BoolTInterfaceDisp_, global::Ice.TieBase
+        {
+            public BoolTInterfaceTie_()
+            {
+            }
+
+            public BoolTInterfaceTie_(BoolTInterfaceOperations_ del)
+            {
+                _ice_delegate = del;
+            }
+
+            public object ice_delegate()
+            {
+                return _ice_delegate;
+            }
+
+            public void ice_delegate(object del)
+            {
+                _ice_delegate = (BoolTInterfaceOperations_)del;
+            }
+
+            public override int GetHashCode()
+            {
+                return _ice_delegate == null ? 0 : _ice_delegate.GetHashCode();
+            }
+
+            public override bool Equals(object rhs)
+            {
+                if(object.ReferenceEquals(this, rhs))
+                {
+                    return true;
+                }
+                if(!(rhs is BoolTInterfaceTie_))
+                {
+                    return false;
+                }
+                if(_ice_delegate == null)
+                {
+                    return ((BoolTInterfaceTie_)rhs)._ice_delegate == null;
+                }
+                return _ice_delegate.Equals(((BoolTInterfaceTie_)rhs)._ice_delegate);
+            }
+
+            public override bool getBoolValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getBoolValue(current);
+            }
+
+            public override short getShortValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getShortValue(current);
+            }
+
+            public override int getIntValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getIntValue(current);
+            }
+
+            public override long getLongValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getLongValue(current);
+            }
+
+            public override float getFloatValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getFloatValue(current);
+            }
+
+            public override double getDoubleValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getDoubleValue(current);
+            }
+
+            public override string getStringValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getStringValue(current);
+            }
+
+            private BoolTInterfaceOperations_ _ice_delegate;
+        }
+
+        [global::System.Runtime.InteropServices.ComVisible(false)]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
         public abstract class DateTimeTInterfaceDisp_ : global::Ice.ObjectImpl, DateTimeTInterface
         {
             #region Slice operations
@@ -7105,6 +7581,64 @@ namespace Ferda
             }
 
             #endregion
+        }
+
+        [global::System.Runtime.InteropServices.ComVisible(false)]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
+        public class DateTimeTInterfaceTie_ : DateTimeTInterfaceDisp_, global::Ice.TieBase
+        {
+            public DateTimeTInterfaceTie_()
+            {
+            }
+
+            public DateTimeTInterfaceTie_(DateTimeTInterfaceOperations_ del)
+            {
+                _ice_delegate = del;
+            }
+
+            public object ice_delegate()
+            {
+                return _ice_delegate;
+            }
+
+            public void ice_delegate(object del)
+            {
+                _ice_delegate = (DateTimeTInterfaceOperations_)del;
+            }
+
+            public override int GetHashCode()
+            {
+                return _ice_delegate == null ? 0 : _ice_delegate.GetHashCode();
+            }
+
+            public override bool Equals(object rhs)
+            {
+                if(object.ReferenceEquals(this, rhs))
+                {
+                    return true;
+                }
+                if(!(rhs is DateTimeTInterfaceTie_))
+                {
+                    return false;
+                }
+                if(_ice_delegate == null)
+                {
+                    return ((DateTimeTInterfaceTie_)rhs)._ice_delegate == null;
+                }
+                return _ice_delegate.Equals(((DateTimeTInterfaceTie_)rhs)._ice_delegate);
+            }
+
+            public override void getDateTimeValue(out int year, out short month, out short day, out short hour, out short minute, out short second, global::Ice.Current current = null)
+            {
+                _ice_delegate.getDateTimeValue(out year, out month, out day, out hour, out minute, out second, current);
+            }
+
+            public override string getStringValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getStringValue(current);
+            }
+
+            private DateTimeTInterfaceOperations_ _ice_delegate;
         }
 
         [global::System.Runtime.InteropServices.ComVisible(false)]
@@ -7238,6 +7772,69 @@ namespace Ferda
 
         [global::System.Runtime.InteropServices.ComVisible(false)]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
+        public class DateTInterfaceTie_ : DateTInterfaceDisp_, global::Ice.TieBase
+        {
+            public DateTInterfaceTie_()
+            {
+            }
+
+            public DateTInterfaceTie_(DateTInterfaceOperations_ del)
+            {
+                _ice_delegate = del;
+            }
+
+            public object ice_delegate()
+            {
+                return _ice_delegate;
+            }
+
+            public void ice_delegate(object del)
+            {
+                _ice_delegate = (DateTInterfaceOperations_)del;
+            }
+
+            public override int GetHashCode()
+            {
+                return _ice_delegate == null ? 0 : _ice_delegate.GetHashCode();
+            }
+
+            public override bool Equals(object rhs)
+            {
+                if(object.ReferenceEquals(this, rhs))
+                {
+                    return true;
+                }
+                if(!(rhs is DateTInterfaceTie_))
+                {
+                    return false;
+                }
+                if(_ice_delegate == null)
+                {
+                    return ((DateTInterfaceTie_)rhs)._ice_delegate == null;
+                }
+                return _ice_delegate.Equals(((DateTInterfaceTie_)rhs)._ice_delegate);
+            }
+
+            public override void getDateValue(out int year, out short month, out short day, global::Ice.Current current = null)
+            {
+                _ice_delegate.getDateValue(out year, out month, out day, current);
+            }
+
+            public override void getDateTimeValue(out int year, out short month, out short day, out short hour, out short minute, out short second, global::Ice.Current current = null)
+            {
+                _ice_delegate.getDateTimeValue(out year, out month, out day, out hour, out minute, out second, current);
+            }
+
+            public override string getStringValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getStringValue(current);
+            }
+
+            private DateTInterfaceOperations_ _ice_delegate;
+        }
+
+        [global::System.Runtime.InteropServices.ComVisible(false)]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
         public abstract class TimeTInterfaceDisp_ : global::Ice.ObjectImpl, TimeTInterface
         {
             #region Slice operations
@@ -7355,6 +7952,64 @@ namespace Ferda
             }
 
             #endregion
+        }
+
+        [global::System.Runtime.InteropServices.ComVisible(false)]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("slice2cs", "3.7.7")]
+        public class TimeTInterfaceTie_ : TimeTInterfaceDisp_, global::Ice.TieBase
+        {
+            public TimeTInterfaceTie_()
+            {
+            }
+
+            public TimeTInterfaceTie_(TimeTInterfaceOperations_ del)
+            {
+                _ice_delegate = del;
+            }
+
+            public object ice_delegate()
+            {
+                return _ice_delegate;
+            }
+
+            public void ice_delegate(object del)
+            {
+                _ice_delegate = (TimeTInterfaceOperations_)del;
+            }
+
+            public override int GetHashCode()
+            {
+                return _ice_delegate == null ? 0 : _ice_delegate.GetHashCode();
+            }
+
+            public override bool Equals(object rhs)
+            {
+                if(object.ReferenceEquals(this, rhs))
+                {
+                    return true;
+                }
+                if(!(rhs is TimeTInterfaceTie_))
+                {
+                    return false;
+                }
+                if(_ice_delegate == null)
+                {
+                    return ((TimeTInterfaceTie_)rhs)._ice_delegate == null;
+                }
+                return _ice_delegate.Equals(((TimeTInterfaceTie_)rhs)._ice_delegate);
+            }
+
+            public override void getTimeValue(out short hour, out short minute, out short second, global::Ice.Current current = null)
+            {
+                _ice_delegate.getTimeValue(out hour, out minute, out second, current);
+            }
+
+            public override string getStringValue(global::Ice.Current current = null)
+            {
+                return _ice_delegate.getStringValue(current);
+            }
+
+            private TimeTInterfaceOperations_ _ice_delegate;
         }
     }
 }

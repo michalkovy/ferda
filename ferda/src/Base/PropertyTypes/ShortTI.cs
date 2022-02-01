@@ -3,7 +3,7 @@ using System;
 
 namespace Ferda.Modules
 {
-	public class ShortTI : ShortT, IValue
+	public class ShortTI : ShortT, ShortTInterfaceOperations_, IValue
 	{
 		public ValueT getValueT()
 		{
@@ -41,32 +41,32 @@ namespace Ferda.Modules
 		/// </summary>
 		/// <returns>A short</returns>
 		/// <param name="__current">An Ice.Current</param>
-		public override short getShortValue(Current __current)
+		public short getShortValue(Current __current)
 		{
 			return this.shortValue;
 		}
 
-        public override int getIntValue(Current __current)
+        public int getIntValue(Current __current)
         {
             return this.shortValue;
         }
 
-        public override long getLongValue(Current __current)
+        public long getLongValue(Current __current)
         {
             return this.shortValue;
         }
 
-        public override float getFloatValue(Current __current)
+        public float getFloatValue(Current __current)
         {
             return this.shortValue;
         }
 
-        public override double getDoubleValue(Current __current)
+        public double getDoubleValue(Current __current)
         {
             return this.shortValue;
         }
 
-        public override String getStringValue(Current __current)
+        public String getStringValue(Current __current)
         {
             return this.shortValue.ToString();
         }
