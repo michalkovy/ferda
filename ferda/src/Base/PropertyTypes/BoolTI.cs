@@ -41,37 +41,37 @@ namespace Ferda.Modules
         /// </summary>
         /// <returns>A bool</returns>
         /// <param name="__current">An Ice.Current</param>
-        public bool getBoolValue(Current __current)
+        public virtual bool getBoolValue(Current __current)
         {
             return this.boolValue;
         }
 
-        public short getShortValue(Current __current)
+        public virtual short getShortValue(Current __current)
         {
             return this.boolValue ? (short)1 : (short)0;
         }
 
-        public int getIntValue(Current __current)
+        public virtual int getIntValue(Current __current)
         {
             return this.boolValue ? 1 : 0;
         }
 
-        public long getLongValue(Current __current)
+        public virtual long getLongValue(Current __current)
         {
             return this.boolValue ? 1 : 0;
         }
 
-        public float getFloatValue(Current __current)
+        public virtual float getFloatValue(Current __current)
         {
             return this.boolValue ? 1 : 0;
         }
 
-        public double getDoubleValue(Current __current)
+        public virtual double getDoubleValue(Current __current)
         {
             return this.boolValue ? 1 : 0;
         }
 
-        public String getStringValue(Current __current)
+        public virtual String getStringValue(Current __current)
         {
             return this.boolValue.ToString();
         }

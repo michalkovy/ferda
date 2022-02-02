@@ -6,13 +6,12 @@
     <Nullable></Nullable>
     <AssemblyName>Ferda$(MSBuildProjectName)</AssemblyName>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>FerdaMath.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>FerdaHelpers.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Base\Base.csproj" />
-    <ProjectReference Include="..\..\BoxInterfaces\BoxInterfaces.csproj" />
-    <ProjectReference Include="..\..\Helpers\Helpers.csproj" />
+    <ProjectReference Include="..\..\..\libsrc\CsvReader\LumenWorks.Framework.IO\LumenWorks.Framework.IO.csproj" />
+    <ProjectReference Include="..\..\Base\Base.csproj" />
   </ItemGroup>
 
 </Project>

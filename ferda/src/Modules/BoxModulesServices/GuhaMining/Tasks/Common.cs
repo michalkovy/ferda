@@ -875,7 +875,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         /// <returns>Bit string generator provider</returns>
         public static BitStringGeneratorProviderPrx GetBitStringGeneratorProviderPrx(BoxModuleI boxModule)
         {
-            return BitStringGeneratorProviderPrxHelper.checkedCast(boxModule.getFunctions());
+            return BitStringGeneratorProviderPrxHelper.checkedCast(boxModule.getFunctions(null));
         }
 
         /// <summary>

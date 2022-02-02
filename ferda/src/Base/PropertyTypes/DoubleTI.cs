@@ -41,12 +41,12 @@ namespace Ferda.Modules
 		/// </summary>
 		/// <returns>A double</returns>
 		/// <param name="__current">An Ice.Current</param>
-		public double getDoubleValue(Current __current)
+		public virtual double getDoubleValue(Current __current)
 		{
 			return this.doubleValue;
 		}
 
-        public String getStringValue(Current __current)
+        public virtual String getStringValue(Current __current)
         {
             return this.doubleValue.ToString();
         }

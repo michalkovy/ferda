@@ -42,7 +42,7 @@ namespace Ferda.Modules
 		/// </summary>
 		/// <returns>A string</returns>
 		/// <param name="__current">An Ice.Current</param>
-		public String getStringValue(Current __current)
+		public virtual String getStringValue(Current __current)
 		{
 			return this.stringValue;
 		}

@@ -139,7 +139,7 @@ namespace Ferda.Guha.MiningProcessor
     /// The mining processor object factory. This factory is used for
     /// creation of mining processor objects.
     /// </summary>
-    public class ObjectFactory : Ice.ObjectFactory
+    public class MiningValueFactory
     {
         #region ObjectFactoryOperationsNC_ Members
 
@@ -149,7 +149,7 @@ namespace Ferda.Guha.MiningProcessor
         /// </summary>
         /// <param name="type">Type of the object</param>
         /// <returns>Object of a given type</returns>
-        public Object create(string type)
+        public static Value create(string type)
         {
             switch (type)
             {
@@ -193,8 +193,7 @@ namespace Ferda.Guha.MiningProcessor
         /// </summary>
         /// <param name="communicator">Communicator</param>
         /// <param name="factory">Factory to be added to a communicator</param>
-        public static void addFactoryToCommunicator(Communicator communicator,
-                                                    ObjectFactory factory)
+        public static void addFactoryToCommunicator(Communicator communicator)
         {
             lock (communicator)
             {
@@ -214,8 +213,9 @@ namespace Ferda.Guha.MiningProcessor
                     };
                 foreach (string s in types)
                 {
-                    if (communicator.findObjectFactory(s) == null)
-                        communicator.addObjectFactory(factory, s);
+                    var valueFactoryManager = communicator.getValueFactoryManager();
+                    if (valueFactoryManager.find(s) == null)
+                        valueFactoryManager.add(create, s);
                 }
             }
         }

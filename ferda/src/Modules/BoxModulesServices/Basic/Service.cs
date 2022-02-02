@@ -35,71 +35,91 @@ namespace Ferda.Modules.Boxes.Basic
         protected override void registerPropertyBoxes()
         {
             //Basic property types
+            var boolT = new BoolTI(true);
             registerPropertyBox("BoolT",
-                                new BoolTI(true),
-                                delegate(ObjectPrx prx)
+                                boolT,
+                                new BoolTInterfaceTie_(boolT),
+                                delegate (ObjectPrx prx)
                                     {
                                         return new BoolTI(BoolTInterfacePrxHelper.checkedCast(prx));
                                     },
                                 "");
+            var shortT = new ShortTI(0);
             registerPropertyBox("ShortT",
-                                new ShortTI(0),
+                                shortT,
+                                new ShortTInterfaceTie_(shortT),
                                 delegate(ObjectPrx prx)
                                     {
                                         return new ShortTI(ShortTInterfacePrxHelper.checkedCast(prx));
                                     },
                                 "");
+            var intT = new IntTI(0);
             registerPropertyBox("IntT",
-                                new IntTI(0),
+                                intT,
+                                new IntTInterfaceTie_(intT),
                                 delegate(ObjectPrx prx)
                                     {
                                         return new IntTI(IntTInterfacePrxHelper.checkedCast(prx));
                                     },
                                 "");
+            var longT = new LongTI(0);
             registerPropertyBox("LongT",
-                                new LongTI(0),
+                                longT,
+                                new LongTInterfaceTie_(longT),
                                 delegate(ObjectPrx prx)
                                     {
                                         return new LongTI(LongTInterfacePrxHelper.checkedCast(prx));
                                     },
                                 "");
+            var floatT = new FloatTI(0);
             registerPropertyBox("FloatT",
-                                new FloatTI(0),
+                                floatT,
+                                new FloatTInterfaceTie_(floatT),
                                 delegate(ObjectPrx prx)
                                     {
                                         return new FloatTI(FloatTInterfacePrxHelper.checkedCast(prx));
                                     },
                                 "");
+            var doubleT = new DoubleTI(0);
             registerPropertyBox("DoubleT",
-                                new DoubleTI(0),
+                                doubleT,
+                                new DoubleTInterfaceTie_(doubleT),
                                 delegate(ObjectPrx prx)
                                     {
                                         return new DoubleTI(DoubleTInterfacePrxHelper.checkedCast(prx));
                                     },
                                 "");
+            var stringT = new StringTI("");
             registerPropertyBox("StringT",
-                                new StringTI(""),
+                                stringT,
+                                new StringTInterfaceTie_(stringT),
                                 delegate(ObjectPrx prx)
                                     {
                                         return new StringTI(StringTInterfacePrxHelper.checkedCast(prx));
                                     },
                                 "");
+            var timeT = new TimeTI(0,0,0);
             registerPropertyBox("TimeT",
-                                new TimeTI(0, 0, 0),
+                                timeT,
+                                new TimeTInterfaceTie_(timeT),
                                 delegate(ObjectPrx prx)
                                     {
                                         return new TimeTI(TimeTInterfacePrxHelper.checkedCast(prx));
                                     },
                                 "");
+            var dateT = new DateTI(0, 0, 0);
             registerPropertyBox("DateT",
-                                new DateTI(0, 0, 0),
+                                dateT,
+                                new DateTInterfaceTie_(dateT),
                                 delegate(ObjectPrx prx)
                                     {
                                         return new DateTI(DateTInterfacePrxHelper.checkedCast(prx));
                                     },
                                 "");
+            var dateTimeT = new DateTimeTI(0, 0, 0, 0, 0, 0);
             registerPropertyBox("DateTimeT",
-                                new DateTimeTI(0, 0, 0, 0, 0, 0),
+                                dateTimeT,
+                                new DateTimeTInterfaceTie_(dateTimeT),
                                 delegate(ObjectPrx prx)
                                     {
                                         return new DateTimeTI(DateTimeTInterfacePrxHelper.checkedCast(prx));

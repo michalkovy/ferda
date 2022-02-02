@@ -20,9 +20,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 using Ferda.Guha.MiningProcessor.Formulas;
-using Mono.Simd;
 
 namespace Ferda.Guha.MiningProcessor.BitStrings
 {
@@ -31,7 +31,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <summary>
         /// Internal array where fuzzy bit strings are stored
         /// </summary>
-        private Vector4f[] _array;
+        private Vector4[] _array;
 
         /// <summary>
         /// The size of the bit string
@@ -109,11 +109,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 throw new InvalidOperationException("Cannot copy-construct a BitString from an uninitialized one.");
 
             _size = source._size;
-            _array = new Vector4f[source._array.Length];
+            _array = new Vector4[source._array.Length];
 
             for (int i = 0; i < _array.Length; i++)
             {
-                _array[i] = new Vector4f(source._array[i].X, source._array[i].Y, source._array[i].Z, source._array[i].W);
+                _array[i] = new Vector4(source._array[i].X, source._array[i].Y, source._array[i].Z, source._array[i].W);
             }
         }
 
@@ -155,14 +155,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
             // if size mod 4 = 0, the the vectorF size = size/4 else size/4 + 1
             int flength = (_size % _blocksize == 0) ? _size / _blocksize : (_size / _blocksize) + 1;
-            _array = new Vector4f[flength];
+            _array = new Vector4[flength];
 
             for (int i = 0; i < flength; i++)
             {
                 //so it is sure, that there are 4 floats still to be filled
                 if (_blocksize * (i + 1) <= floats.Length)
                 {
-                    _array[i] = new Vector4f(floats[_blocksize * i],
+                    _array[i] = new Vector4(floats[_blocksize * i],
                         floats[_blocksize * i + 1], floats[_blocksize * i + 2], 
                         floats[_blocksize * i + 3]);
                 }
@@ -176,7 +176,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     //there is at least one float to be filled
                     else
                     {
-                        _array[i] = new Vector4f();
+                        _array[i] = new Vector4();
                         _array[i].X = floats[_blocksize * i];
                         //there is only one
                         if (floats.Length % _blocksize == 1)
@@ -256,7 +256,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             //all but the last one
             for (int i = 0; i < _array.Length - 1; i++)
             {
-                Vector4f tmp = new Vector4f(
+                Vector4 tmp = new Vector4(
                     source.GetBit(_blocksize * i),
                     source.GetBit(_blocksize * i + 1),
                     source.GetBit(_blocksize * i + 2),
@@ -265,7 +265,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
 
             //there has to be at least one item in the last vector
-            Vector4f last = new Vector4f();
+            Vector4 last = new Vector4();
             last.X = source.GetBit(_blocksize * (_array.Length - 1));
             if (_size % _blocksize == 2)
             {
@@ -311,9 +311,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (_size != source._size)
                 throw Exceptions.BitStringsLengtsAreNotEqualError();
 
-            fixed (Vector4f* thisPin = _array, sourcePin = source._array)
+            fixed (Vector4* thisPin = _array, sourcePin = source._array)
             {
-                Vector4f* currentPtr = thisPin, sourcePtr = sourcePin,
+                Vector4* currentPtr = thisPin, sourcePtr = sourcePin,
                     stopPtr = thisPin + _array.Length;
                 while (currentPtr < stopPtr)
                 {
@@ -376,9 +376,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (_size != source._size)
                 throw Exceptions.BitStringsLengtsAreNotEqualError();
 
-            fixed (Vector4f* thisPin = _array, sourcePin = source._array)
+            fixed (Vector4* thisPin = _array, sourcePin = source._array)
             {
-                Vector4f* currentPtr = thisPin, sourcePtr = sourcePin,
+                Vector4* currentPtr = thisPin, sourcePtr = sourcePin,
                     stopPtr = thisPin + _array.Length;
                 while (currentPtr < stopPtr)
                 {
@@ -405,7 +405,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             //all but the last one
             for (int i = 0; i < _array.Length - 1; i++)
             {
-                Vector4f tmp = new Vector4f(
+                Vector4 tmp = new Vector4(
                     source.GetBit(_blocksize * i),
                     source.GetBit(_blocksize * i + 1),
                     source.GetBit(_blocksize * i + 2),
@@ -414,7 +414,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
 
             //there has to be at least one item in the last vector
-            Vector4f last = new Vector4f();
+            Vector4 last = new Vector4();
             last.X = source.GetBit(_blocksize * (_array.Length - 1));
             if (_size % _blocksize == 2)
             {
@@ -462,11 +462,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         private unsafe void not()
         {
-            Vector4f tmp = new Vector4f(1f, 1f, 1f, 1f);
+            Vector4 tmp = new Vector4(1f, 1f, 1f, 1f);
 
-            fixed (Vector4f* arrayPtr = _array)
+            fixed (Vector4* arrayPtr = _array)
             {
-                Vector4f* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
+                Vector4* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
                 while (currentPtr < stopPtr)
                 {
                     *currentPtr = tmp - *currentPtr;
@@ -483,7 +483,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         private void notSafe()
         {
-            Vector4f tmp = new Vector4f(1f, 1f, 1f, 1f);
+            Vector4 tmp = new Vector4(1f, 1f, 1f, 1f);
             for (int i = 0; i < _array.Length; i++)
             {
                 _array[i] = tmp - _array[i];
@@ -589,11 +589,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         private unsafe void sumUnsafe()
         {
-            Vector4f res = new Vector4f(0, 0, 0, 0);
+            Vector4 res = new Vector4(0f, 0f, 0f, 0f);
 
-            fixed (Vector4f* arrayPtr = _array)
+            fixed (Vector4* arrayPtr = _array)
             {
-                Vector4f* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length - 1;
+                Vector4* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length - 1;
                 while (currentPtr < stopPtr)
                 {
                     res += *currentPtr++;
@@ -627,7 +627,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         private void sumSafe()
         {
-            Vector4f res = new Vector4f(0f, 0f, 0f, 0f);
+            Vector4 res = new Vector4(0f, 0f, 0f, 0f);
             //counting all but last vector
             for (int i = 0; i < _array.Length - 1; i++)
             {

@@ -61,7 +61,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.AtomSetting
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
