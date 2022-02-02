@@ -53,7 +53,7 @@ namespace Netron.GraphLib
 		/// <summary>
 		/// Starts the layout process
 		/// </summary>
-		public override void StartLayout()
+		public override async Task StartLayout(CancellationToken cancellation)
 		{
 
 			DateTime start = DateTime.Now;
@@ -61,6 +61,7 @@ namespace Netron.GraphLib
 			
 			
 			Random rnd = new Random();
+			cancellation.ThrowIfCancellationRequested();
 			while (true) 
 			{
 				//try some relaxation
@@ -87,9 +88,9 @@ namespace Netron.GraphLib
 				}
 				try 
 				{
-					Thread.Sleep(100);//wait a while
+					await Task.Delay(100, cancellation);//wait a while
 				} 
-				catch (System.Threading.ThreadInterruptedException exc) 
+				catch (TaskCanceledException exc) 
 				{
 					Trace.WriteLine(exc.Message);
 					break;

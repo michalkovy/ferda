@@ -8,7 +8,7 @@ namespace Netron.GraphLib.Interfaces
 		/// <summary>
 		/// This is the layout method running on a separate thread.
 		/// </summary>
-		void StartLayout();
+		Task StartLayout(CancellationToken cancellation);
 		/// <summary>
 		/// Stops the layout process
 		/// </summary>

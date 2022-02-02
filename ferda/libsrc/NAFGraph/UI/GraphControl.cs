@@ -38,7 +38,7 @@ namespace Netron.GraphLib.UI
 	[Description("This UI controls allows to display shapes and diagrams.")]
 	[Designer(typeof(Netron.GraphLib.UI.GraphControlDesigner))]
 	[ToolboxItem(true)]
-	public class GraphControl : ScrollableControl, IGraphSite, IGraphLayout
+	public class GraphControl : ScrollableControl, IGraphSite
 	{
 
 		#region Constants
@@ -212,13 +212,13 @@ namespace Netron.GraphLib.UI
 		/// </summary>
 		protected bool mEnableLayout = false;
 		/// <summary>
-		/// The thread pointer which will run on the layout thread.
+		/// The task that does layout.
 		/// </summary>
-		protected ThreadStart ts=null;
+		protected Task ts=null;
 		/// <summary>
-		/// The thread for laying out the graph.
+		/// The cancellation token source for laying out the graph.
 		/// </summary>
-		protected Thread thLayout = null;
+		protected CancellationTokenSource tsCancellationTokenSource = new CancellationTokenSource();
 		/// <summary>
 		/// The timer interval in milliseconds that updates the state of the automata in the plex.
 		/// </summary>
@@ -1966,15 +1966,17 @@ namespace Netron.GraphLib.UI
 		/// </summary>
 		public void StartLayout()
 		{
-			
-			if(thLayout !=null) thLayout.Abort();
+			if (tsCancellationTokenSource != null)
+			{
+				tsCancellationTokenSource.Cancel();
+				tsCancellationTokenSource.Dispose();
+			}
+			tsCancellationTokenSource = new CancellationTokenSource();
 			ts=null;
 			try
 			{
 				
-				ts=new ThreadStart(layoutFactory.GetRunable());
-				thLayout = new Thread(ts);
-				thLayout.Start();
+				ts = Task.Run(layoutFactory.GetRunable(tsCancellationTokenSource.Token), tsCancellationTokenSource.Token);
 			}
 			catch
 			{
@@ -1987,8 +1989,12 @@ namespace Netron.GraphLib.UI
 		/// </summary>
 		public void StopLayout()
 		{
-			if (thLayout !=null)
-				if (thLayout.IsAlive) this.thLayout.Abort();
+			if (tsCancellationTokenSource != null)
+            {
+				tsCancellationTokenSource.Cancel();
+				tsCancellationTokenSource.Dispose();
+				tsCancellationTokenSource = null;
+			}
 		}
 		
 		#endregion
