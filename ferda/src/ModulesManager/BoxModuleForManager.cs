@@ -277,7 +277,7 @@ namespace Ferda.ModulesManager
 
 		public abstract Ferda.Modules.PropertyValue GetPropertyOther(string name);
 
-		public abstract Task GetPropertyAsync(string name, OptionalContext context = default, IProgress<bool> progress = null, CancellationToken cancel = default);
+		public abstract Task<PropertyValue> GetPropertyAsync(string name, OptionalContext context = default, IProgress<bool> progress = null, CancellationToken cancel = default);
 
 		public abstract string GetPropertyOtherAbout(string name);
 

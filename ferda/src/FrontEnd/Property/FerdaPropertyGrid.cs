@@ -508,11 +508,11 @@ namespace Ferda.FrontEnd.Properties
         /// <param name="value">New value of the property</param>
         /// <param name="moreBoxes">If the refresh of the property grid is
         /// from one or more boxes</param>
-        public void ChangedPropertyValue(AsyncPropertyCatcher catcher, object value, bool moreBoxes)
+        public Task ChangedPropertyValue(string propertyType, string propertyName, object value, bool moreBoxes)
         {
             //changing one of the temporary values
             //writing to the temporaryValues dictionary
-            switch (catcher.PropertyType)
+            switch (propertyType)
             {
                 case "System.Int32":
                     Int32 int32Value = ((IntT)value).intValue;
@@ -520,21 +520,21 @@ namespace Ferda.FrontEnd.Properties
                     {
                         if (moreBoxes)
                         {
-                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            switch (moreBoxesValuesState[propertyName])
                             {
                                 //no box has written to the property
                                 case EMoreBoxesTemporaryValueState.First:
-                                    temporaryValues[catcher.PropertyName] = int32Value;
-                                    moreBoxesValuesState[catcher.PropertyName] =
+                                    temporaryValues[propertyName] = int32Value;
+                                    moreBoxesValuesState[propertyName] =
                                         EMoreBoxesTemporaryValueState.Right;
                                     break;
 
                                 //all the previos boxes wrote the same value
                                 case EMoreBoxesTemporaryValueState.Right:
-                                    if (int32Value != (Int32)temporaryValues[catcher.PropertyName])
+                                    if (int32Value != (Int32)temporaryValues[propertyName])
                                     {
-                                        temporaryValues[catcher.PropertyName] = (Int32)0;
-                                        moreBoxesValuesState[catcher.PropertyName] =
+                                        temporaryValues[propertyName] = (Int32)0;
+                                        moreBoxesValuesState[propertyName] =
                                             EMoreBoxesTemporaryValueState.Wrong;
                                     }
                                     break;
@@ -545,21 +545,21 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            temporaryValues[catcher.PropertyName] = int32Value;
+                            temporaryValues[propertyName] = int32Value;
                         }
                     }
                     break;
 
                 case "Ferda.FrontEnd.Properties.OtherProperty":
                     //here is no moreBoxes here
-                    string resultValue = SelectedBox.GetPropertyOtherAboutFromValue(catcher.PropertyName,
+                    string resultValue = SelectedBox.GetPropertyOtherAboutFromValue(propertyName,
                         (PropertyValue)value);
-                    OtherProperty prop = new OtherProperty(SelectedBox, catcher.PropertyName,
+                    OtherProperty prop = new OtherProperty(SelectedBox, propertyName,
                         archiveDisplayer, viewDisplayers, this, ResManager);
                     prop.Result = resultValue;
                     lock (tempLocker)
                     {
-                        temporaryValues[catcher.PropertyName] = prop;
+                        temporaryValues[propertyName] = prop;
                     }
                     break;
 
@@ -567,13 +567,13 @@ namespace Ferda.FrontEnd.Properties
                 case "Ferda.FrontEnd.Properties.StringSequence":
                     string selectedValue = ((StringT)value).stringValue;
                     //creating a new stringSequence
-                    StringSequence seq = new StringSequence(catcher.PropertyName,
+                    StringSequence seq = new StringSequence(propertyName,
                         new IBoxModule[] { SelectedBox },
                         ResManager, ArchiveDisplayer, ViewDisplayers,
                         this, selectedValue);
                     lock (tempLocker)
                     {
-                        temporaryValues[catcher.PropertyName] = seq;
+                        temporaryValues[propertyName] = seq;
                     }
                     break;
 
@@ -583,21 +583,21 @@ namespace Ferda.FrontEnd.Properties
                     {
                         if (moreBoxes)
                         {
-                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            switch (moreBoxesValuesState[propertyName])
                             {
                                 //no box has written to the property
                                 case EMoreBoxesTemporaryValueState.First:
-                                    temporaryValues[catcher.PropertyName] = valueString;
-                                    moreBoxesValuesState[catcher.PropertyName] =
+                                    temporaryValues[propertyName] = valueString;
+                                    moreBoxesValuesState[propertyName] =
                                         EMoreBoxesTemporaryValueState.Right;
                                     break;
 
                                 //all the previos boxes wrote the same value
                                 case EMoreBoxesTemporaryValueState.Right:
-                                    if (valueString != (string)temporaryValues[catcher.PropertyName])
+                                    if (valueString != (string)temporaryValues[propertyName])
                                     {
-                                        temporaryValues[catcher.PropertyName] = string.Empty;
-                                        moreBoxesValuesState[catcher.PropertyName] =
+                                        temporaryValues[propertyName] = string.Empty;
+                                        moreBoxesValuesState[propertyName] =
                                             EMoreBoxesTemporaryValueState.Wrong;
                                     }
                                     break;
@@ -608,7 +608,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            temporaryValues[catcher.PropertyName] = valueString;
+                            temporaryValues[propertyName] = valueString;
                         }
                     }
                     break;
@@ -619,21 +619,21 @@ namespace Ferda.FrontEnd.Properties
                     {
                         if (moreBoxes)
                         {
-                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            switch (moreBoxesValuesState[propertyName])
                             {
                                 //no box has written to the property
                                 case EMoreBoxesTemporaryValueState.First:
-                                    temporaryValues[catcher.PropertyName] = boolValue;
-                                    moreBoxesValuesState[catcher.PropertyName] =
+                                    temporaryValues[propertyName] = boolValue;
+                                    moreBoxesValuesState[propertyName] =
                                         EMoreBoxesTemporaryValueState.Right;
                                     break;
 
                                 //all the previos boxes wrote the same value
                                 case EMoreBoxesTemporaryValueState.Right:
-                                    if (boolValue != (bool)temporaryValues[catcher.PropertyName])
+                                    if (boolValue != (bool)temporaryValues[propertyName])
                                     {
-                                        temporaryValues[catcher.PropertyName] = false;
-                                        moreBoxesValuesState[catcher.PropertyName] =
+                                        temporaryValues[propertyName] = false;
+                                        moreBoxesValuesState[propertyName] =
                                             EMoreBoxesTemporaryValueState.Wrong;
                                     }
                                     break;
@@ -644,7 +644,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            temporaryValues[catcher.PropertyName] = boolValue;
+                            temporaryValues[propertyName] = boolValue;
                         }
                     }
                     break;
@@ -655,21 +655,21 @@ namespace Ferda.FrontEnd.Properties
                     {
                         if (moreBoxes)
                         {
-                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            switch (moreBoxesValuesState[propertyName])
                             {
                                 //no box has written to the property
                                 case EMoreBoxesTemporaryValueState.First:
-                                    temporaryValues[catcher.PropertyName] = shortValue;
-                                    moreBoxesValuesState[catcher.PropertyName] =
+                                    temporaryValues[propertyName] = shortValue;
+                                    moreBoxesValuesState[propertyName] =
                                         EMoreBoxesTemporaryValueState.Right;
                                     break;
 
                                 //all the previos boxes wrote the same value
                                 case EMoreBoxesTemporaryValueState.Right:
-                                    if (shortValue != (Int16)temporaryValues[catcher.PropertyName])
+                                    if (shortValue != (Int16)temporaryValues[propertyName])
                                     {
-                                        temporaryValues[catcher.PropertyName] = (Int16)0;
-                                        moreBoxesValuesState[catcher.PropertyName] =
+                                        temporaryValues[propertyName] = (Int16)0;
+                                        moreBoxesValuesState[propertyName] =
                                             EMoreBoxesTemporaryValueState.Wrong;
                                     }
                                     break;
@@ -680,7 +680,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            temporaryValues[catcher.PropertyName] = shortValue;
+                            temporaryValues[propertyName] = shortValue;
                         }
                     }
                     break;
@@ -691,21 +691,21 @@ namespace Ferda.FrontEnd.Properties
                     {
                         if (moreBoxes)
                         {
-                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            switch (moreBoxesValuesState[propertyName])
                             {
                                 //no box has written to the property
                                 case EMoreBoxesTemporaryValueState.First:
-                                    temporaryValues[catcher.PropertyName] = longValue;
-                                    moreBoxesValuesState[catcher.PropertyName] =
+                                    temporaryValues[propertyName] = longValue;
+                                    moreBoxesValuesState[propertyName] =
                                         EMoreBoxesTemporaryValueState.Right;
                                     break;
 
                                 //all the previos boxes wrote the same value
                                 case EMoreBoxesTemporaryValueState.Right:
-                                    if (longValue != (Int64)temporaryValues[catcher.PropertyName])
+                                    if (longValue != (Int64)temporaryValues[propertyName])
                                     {
-                                        temporaryValues[catcher.PropertyName] = (Int64)0;
-                                        moreBoxesValuesState[catcher.PropertyName] =
+                                        temporaryValues[propertyName] = (Int64)0;
+                                        moreBoxesValuesState[propertyName] =
                                             EMoreBoxesTemporaryValueState.Wrong;
                                     }
                                     break;
@@ -716,7 +716,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            temporaryValues[catcher.PropertyName] = longValue;
+                            temporaryValues[propertyName] = longValue;
                         }
                     }
                     break;
@@ -727,21 +727,21 @@ namespace Ferda.FrontEnd.Properties
                     {
                         if (moreBoxes)
                         {
-                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            switch (moreBoxesValuesState[propertyName])
                             {
                                 //no box has written to the property
                                 case EMoreBoxesTemporaryValueState.First:
-                                    temporaryValues[catcher.PropertyName] = doubleValue;
-                                    moreBoxesValuesState[catcher.PropertyName] =
+                                    temporaryValues[propertyName] = doubleValue;
+                                    moreBoxesValuesState[propertyName] =
                                         EMoreBoxesTemporaryValueState.Right;
                                     break;
 
                                 //all the previos boxes wrote the same value
                                 case EMoreBoxesTemporaryValueState.Right:
-                                    if (doubleValue != (Double)temporaryValues[catcher.PropertyName])
+                                    if (doubleValue != (Double)temporaryValues[propertyName])
                                     {
-                                        temporaryValues[catcher.PropertyName] = (Double)0;
-                                        moreBoxesValuesState[catcher.PropertyName] =
+                                        temporaryValues[propertyName] = (Double)0;
+                                        moreBoxesValuesState[propertyName] =
                                             EMoreBoxesTemporaryValueState.Wrong;
                                     }
                                     break;
@@ -752,7 +752,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            temporaryValues[catcher.PropertyName] = doubleValue;
+                            temporaryValues[propertyName] = doubleValue;
                         }
                     }
                     break;
@@ -763,21 +763,21 @@ namespace Ferda.FrontEnd.Properties
                     {
                         if (moreBoxes)
                         {
-                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            switch (moreBoxesValuesState[propertyName])
                             {
                                 //no box has written to the property
                                 case EMoreBoxesTemporaryValueState.First:
-                                    temporaryValues[catcher.PropertyName] = singleValue;
-                                    moreBoxesValuesState[catcher.PropertyName] =
+                                    temporaryValues[propertyName] = singleValue;
+                                    moreBoxesValuesState[propertyName] =
                                         EMoreBoxesTemporaryValueState.Right;
                                     break;
 
                                 //all the previos boxes wrote the same value
                                 case EMoreBoxesTemporaryValueState.Right:
-                                    if (singleValue != (Single)temporaryValues[catcher.PropertyName])
+                                    if (singleValue != (Single)temporaryValues[propertyName])
                                     {
-                                        temporaryValues[catcher.PropertyName] = (Single)0;
-                                        moreBoxesValuesState[catcher.PropertyName] =
+                                        temporaryValues[propertyName] = (Single)0;
+                                        moreBoxesValuesState[propertyName] =
                                             EMoreBoxesTemporaryValueState.Wrong;
                                     }
                                     break;
@@ -788,7 +788,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            temporaryValues[catcher.PropertyName] = singleValue;
+                            temporaryValues[propertyName] = singleValue;
                         }
                     }
                     break;
@@ -811,21 +811,21 @@ namespace Ferda.FrontEnd.Properties
                         {
                             if (moreBoxes)
                             {
-                                switch (moreBoxesValuesState[catcher.PropertyName])
+                                switch (moreBoxesValuesState[propertyName])
                                 {
                                     //no box has written to the property
                                     case EMoreBoxesTemporaryValueState.First:
-                                        temporaryValues[catcher.PropertyName] = dateTimeValue;
-                                        moreBoxesValuesState[catcher.PropertyName] =
+                                        temporaryValues[propertyName] = dateTimeValue;
+                                        moreBoxesValuesState[propertyName] =
                                             EMoreBoxesTemporaryValueState.Right;
                                         break;
 
                                     //all the previos boxes wrote the same value
                                     case EMoreBoxesTemporaryValueState.Right:
-                                        if (dateTimeValue != (DateTime)temporaryValues[catcher.PropertyName])
+                                        if (dateTimeValue != (DateTime)temporaryValues[propertyName])
                                         {
-                                            temporaryValues[catcher.PropertyName] = new DateTime();
-                                            moreBoxesValuesState[catcher.PropertyName] =
+                                            temporaryValues[propertyName] = new DateTime();
+                                            moreBoxesValuesState[propertyName] =
                                                 EMoreBoxesTemporaryValueState.Wrong;
                                         }
                                         break;
@@ -836,7 +836,7 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                temporaryValues[catcher.PropertyName] = dateTimeValue;
+                                temporaryValues[propertyName] = dateTimeValue;
                             }
                         }
                     }
@@ -860,21 +860,21 @@ namespace Ferda.FrontEnd.Properties
                         {
                             if (moreBoxes)
                             {
-                                switch (moreBoxesValuesState[catcher.PropertyName])
+                                switch (moreBoxesValuesState[propertyName])
                                 {
                                     //no box has written to the property
                                     case EMoreBoxesTemporaryValueState.First:
-                                        temporaryValues[catcher.PropertyName] = dtValue;
-                                        moreBoxesValuesState[catcher.PropertyName] =
+                                        temporaryValues[propertyName] = dtValue;
+                                        moreBoxesValuesState[propertyName] =
                                             EMoreBoxesTemporaryValueState.Right;
                                         break;
 
                                     //all the previos boxes wrote the same value
                                     case EMoreBoxesTemporaryValueState.Right:
-                                        if (dtValue != (DateTime)temporaryValues[catcher.PropertyName])
+                                        if (dtValue != (DateTime)temporaryValues[propertyName])
                                         {
-                                            temporaryValues[catcher.PropertyName] = new DateTime();
-                                            moreBoxesValuesState[catcher.PropertyName] =
+                                            temporaryValues[propertyName] = new DateTime();
+                                            moreBoxesValuesState[propertyName] =
                                                 EMoreBoxesTemporaryValueState.Wrong;
                                         }
                                         break;
@@ -885,7 +885,7 @@ namespace Ferda.FrontEnd.Properties
                             }
                             else
                             {
-                                temporaryValues[catcher.PropertyName] = dtValue;
+                                temporaryValues[propertyName] = dtValue;
                             }
                         }
                     }
@@ -898,21 +898,21 @@ namespace Ferda.FrontEnd.Properties
                     {
                         if (moreBoxes)
                         {
-                            switch (moreBoxesValuesState[catcher.PropertyName])
+                            switch (moreBoxesValuesState[propertyName])
                             {
                                 //no box has written to the property
                                 case EMoreBoxesTemporaryValueState.First:
-                                    temporaryValues[catcher.PropertyName] = timeSpanValue;
-                                    moreBoxesValuesState[catcher.PropertyName] =
+                                    temporaryValues[propertyName] = timeSpanValue;
+                                    moreBoxesValuesState[propertyName] =
                                         EMoreBoxesTemporaryValueState.Right;
                                     break;
 
                                 //all the previos boxes wrote the same value
                                 case EMoreBoxesTemporaryValueState.Right:
-                                    if (timeSpanValue != (TimeSpan)temporaryValues[catcher.PropertyName])
+                                    if (timeSpanValue != (TimeSpan)temporaryValues[propertyName])
                                     {
-                                        temporaryValues[catcher.PropertyName] = new TimeSpan();
-                                        moreBoxesValuesState[catcher.PropertyName] =
+                                        temporaryValues[propertyName] = new TimeSpan();
+                                        moreBoxesValuesState[propertyName] =
                                             EMoreBoxesTemporaryValueState.Wrong;
                                     }
                                     break;
@@ -923,7 +923,7 @@ namespace Ferda.FrontEnd.Properties
                         }
                         else
                         {
-                            temporaryValues[catcher.PropertyName] = timeSpanValue;
+                            temporaryValues[propertyName] = timeSpanValue;
                         }
                     }
                     break;
@@ -934,6 +934,7 @@ namespace Ferda.FrontEnd.Properties
 
             //refilling the propertiesDisplayer
             SetPropertyGrid(propertyBag);
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -945,9 +946,7 @@ namespace Ferda.FrontEnd.Properties
             {
                 foreach (string propertyName in temporaryValues.Keys)
                 {
-                    AsyncPropertyCatcher catcher = new AsyncPropertyCatcher(this,
-                        propertyName, temporaryPropertyTypes[propertyName]);
-                    SelectedBox.GetProperty_async(catcher, propertyName);
+                    SelectedBox.GetPropertyAsync(propertyName).ContinueWith((val) => this.ChangedPropertyValue(temporaryPropertyTypes[propertyName], propertyName, val, false));
                 }
             }
         }
@@ -965,9 +964,7 @@ namespace Ferda.FrontEnd.Properties
                     foreach (IBoxModule box in SelectedBoxes)
                     {
                         //tady byl problem s tim, ze to nemohlo najit jmeno
-                        AsyncPropertyCatcher catcher = new AsyncPropertyCatcher(this,
-                            propertyName, temporaryPropertyTypes[propertyName], true);
-                        box.GetProperty_async(catcher, propertyName);
+                        box.GetPropertyAsync(propertyName).ContinueWith((val) => this.ChangedPropertyValue(temporaryPropertyTypes[propertyName], propertyName, val, true));
                     }
                 }
             }

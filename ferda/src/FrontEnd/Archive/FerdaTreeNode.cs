@@ -250,7 +250,7 @@ namespace Ferda.FrontEnd.Archive
         /// </summary>
         public void SetContextMenu()
         {
-            this.ContextMenu = null;
+            this.ContextMenuStrip = null;
 
             ContextMenuStrip cMenu = new ContextMenuStrip();
 

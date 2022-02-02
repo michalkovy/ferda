@@ -340,7 +340,7 @@ namespace Ferda.ModulesManager
         /// </summary>
         /// <param name="name">A string representing name of property</param>
         /// <seealso cref="M:Ferda.ModulesManager.IBoxModule.GetPropertyOther(System.String)"/>
-		Task GetPropertyAsync(string name, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken());
+		Task<Modules.PropertyValue> GetPropertyAsync(string name, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken());
 
 		/// <summary>
 		/// Gets string representation of value of property with name <paramref name="name"/>

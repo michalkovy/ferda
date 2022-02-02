@@ -1993,7 +1993,7 @@ namespace Ferda.FrontEnd.Desktop
         protected void FerdaDesktop_ContextMenu(object sender, MouseEventArgs e)
         {
             //must null the old context menu in order to display the menustrip.
-            ContextMenu = null;
+            ContextMenuStrip = null;
 
             //a new context menu
             ContextMenuStrip cMenu;

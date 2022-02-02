@@ -524,7 +524,7 @@ namespace Ferda.ModulesManager
 			throw new Ferda.Modules.NameNotExistError();
 		}
 
-        public override Task GetPropertyAsync(string name, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken())
+        public override Task<PropertyValue> GetPropertyAsync(string name, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken())
 		{
 			throw new Ferda.Modules.NameNotExistError();
 		}

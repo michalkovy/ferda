@@ -38,7 +38,7 @@ namespace Ferda.FrontEnd.Properties
         /// <param name="value">New value of the property</param>
         /// <param name="moreBoxes">If the refresh of the property grid is 
         /// from one or more boxes</param>
-        void ChangedPropertyValue(AsyncPropertyCatcher catcher, object value, 
+        Task ChangedPropertyValue(string propertyType, string propertyName, object value, 
             bool moreBoxes);
     }
 }

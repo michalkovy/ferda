@@ -449,7 +449,7 @@ namespace Ferda
                 return this.iceBoxModulePrx.getProperty(name);
             }
 
-            public override Task GetPropertyAsync(string name, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken())
+            public override Task<PropertyValue> GetPropertyAsync(string name, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken())
             {
                 return this.iceBoxModulePrx.getPropertyAsync(name, context, progress, cancel);
             }

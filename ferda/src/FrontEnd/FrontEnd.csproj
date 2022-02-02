@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable></Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>Ferda$(MSBuildProjectName)</AssemblyName>
@@ -17,8 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\libsrc\DockDotNET\DockDotNET.csproj" />
     <ProjectReference Include="..\..\libsrc\NAFGraph\NAFGraph.csproj" />
     <ProjectReference Include="..\Base\Base.csproj" />
+    <ProjectReference Include="..\FrontEndAddInHelper\FrontEndAddInHelper.csproj" />
     <ProjectReference Include="..\ModulesManager\ModulesManager.csproj" />
     <ProjectReference Include="..\NetworkArchive\NetworkArchive.csproj" />
     <ProjectReference Include="..\ProjectManager\ProjectManager.csproj" />

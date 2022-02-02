@@ -10,6 +10,9 @@
     <Compile Update="ContextHelp\FerdaContextHelp.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Desktop\FerdaDesktop.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Desktop\RenameDialog.cs">
       <SubType>Form</SubType>
     </Compile>
