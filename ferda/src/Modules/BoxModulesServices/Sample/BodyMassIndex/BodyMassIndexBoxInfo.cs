@@ -60,7 +60,8 @@ namespace Ferda.Modules.Boxes.Sample.BodyMassIndex
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return BodyMassIndexFunctionsI.ids__;
+            var f = new BodyMassIndexFunctionsI();
+            return f.ice_ids();
         }
 
         /// <summary>

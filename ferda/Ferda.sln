@@ -26,9 +26,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{5BC1F228-2CC1-4D51-97A7-C377758CEA29}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BoxModuleServices", "BoxModuleServices", "{19DFADB3-BA94-41DA-9616-EA48E57C707A}"
-	ProjectSection(SolutionItems) = preProject
-		src\Modules\BoxModulesServices\Sample\Sample.csproj = src\Modules\BoxModulesServices\Sample\Sample.csproj
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoxInterfaces", "src\Modules\BoxInterfaces\BoxInterfaces.csproj", "{1FE2A8C1-8259-4F23-A46D-DB96F176C272}"
 EndProject
@@ -61,6 +58,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemanticWeb", "src\Modules\BoxModulesServices\SemanticWeb\SemanticWeb.csproj", "{1945B16C-17FF-40EB-AC1E-36610D82877B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wizards", "src\Modules\BoxModulesServices\Wizards\Wizards.csproj", "{FC277080-8125-47F0-9C04-7BFA8E6AE260}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "src\Modules\BoxModulesServices\Sample\Sample.csproj", "{8D17A312-A420-4B62-9238-51D2F80FF494}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -168,6 +167,10 @@ Global
 		{FC277080-8125-47F0-9C04-7BFA8E6AE260}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC277080-8125-47F0-9C04-7BFA8E6AE260}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC277080-8125-47F0-9C04-7BFA8E6AE260}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D17A312-A420-4B62-9238-51D2F80FF494}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D17A312-A420-4B62-9238-51D2F80FF494}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D17A312-A420-4B62-9238-51D2F80FF494}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D17A312-A420-4B62-9238-51D2F80FF494}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -189,6 +192,7 @@ Global
 		{5561C709-DF86-490A-95EB-352835E4C52E} = {19DFADB3-BA94-41DA-9616-EA48E57C707A}
 		{1945B16C-17FF-40EB-AC1E-36610D82877B} = {19DFADB3-BA94-41DA-9616-EA48E57C707A}
 		{FC277080-8125-47F0-9C04-7BFA8E6AE260} = {19DFADB3-BA94-41DA-9616-EA48E57C707A}
+		{8D17A312-A420-4B62-9238-51D2F80FF494} = {19DFADB3-BA94-41DA-9616-EA48E57C707A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF18776C-3F18-4341-A9D7-C3F43AEA8041}

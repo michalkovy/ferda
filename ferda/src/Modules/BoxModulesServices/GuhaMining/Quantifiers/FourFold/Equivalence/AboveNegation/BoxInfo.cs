@@ -55,7 +55,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Equivalence.AboveN
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>

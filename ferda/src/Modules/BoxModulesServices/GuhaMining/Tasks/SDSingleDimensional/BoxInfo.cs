@@ -56,7 +56,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDSingleDimensional
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>

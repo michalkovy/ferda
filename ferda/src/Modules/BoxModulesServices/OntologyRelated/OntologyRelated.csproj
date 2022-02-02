@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BoxInterfaces\BoxInterfaces.csproj" />
+    <ProjectReference Include="..\..\Helpers\Helpers.csproj" />
     <ProjectReference Include="..\..\ServerBase\ServerBase.csproj" />
+    <ProjectReference Include="..\DataPreparation\DataPreparation.csproj" />
   </ItemGroup>
 </Project>
