@@ -36,7 +36,7 @@ HOW TO GENERATE *.cs FROM *.ice
 #include <Modules/Modules.ice> //Modules
 #include <Modules/Guha.Data.ice>
 #include <Modules/Guha.MiningProcessor.ice>
-#include <Modules/Boxes/DataPreparation/DataPreparation.ice>
+#include <Modules/BoxInterfaces/DataPreparation/DataPreparation.ice>
 
 module Ferda {
 	module Modules {
