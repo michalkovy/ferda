@@ -2380,7 +2380,7 @@ namespace Ferda.FrontEnd.Desktop
                 {
                     ActionExceptionCatcher catcher =
                         new ActionExceptionCatcher(projectManager, ResManager, this, PropertiesDisplayer);
-					box.RunAction_async(catcher, info.name);
+                    box.RunActionOnBackground(info.name, catcher);
                     break;
                 }
             }

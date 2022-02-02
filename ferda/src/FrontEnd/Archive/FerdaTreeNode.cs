@@ -525,7 +525,7 @@ namespace Ferda.FrontEnd.Archive
                     ActionExceptionCatcher catcher =
                         new ActionExceptionCatcher(projectManager, ParentTreeView.ResManager, 
                         parentTreeView, parentTreeView.PropertiesDisplayer);
-					box.RunAction_async(catcher, info.name);
+					box.RunActionOnBackground(info.name, catcher);
                     break;
                 }
             }

@@ -645,8 +645,13 @@ namespace Ferda.ModulesManager
 		{
 			throw new Ferda.Modules.NameNotExistError();
 		}
-		
-		public override bool IsPossibleToRunAction(string actionName)
+
+        public override void RunActionOnBackground(string actionName, IBackgroundActionCallback callback)
+        {
+            throw new Ferda.Modules.NameNotExistError();
+		}
+
+        public override bool IsPossibleToRunAction(string actionName)
 		{
 			throw new Ferda.Modules.NameNotExistError();
 		}

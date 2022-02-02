@@ -327,6 +327,8 @@ namespace Ferda.ModulesManager
 		
 		public abstract Task RunActionAsync(string actionName, OptionalContext context = default, IProgress<bool> progress = null, CancellationToken cancel = default);
 
+		public abstract void RunActionOnBackground(string actionName, IBackgroundActionCallback callback);
+
 		public abstract bool IsPossibleToRunAction(string actionName);
 		
 		public abstract bool IsPossibleToRunModuleForInteraction(String moduleIceIdentity);

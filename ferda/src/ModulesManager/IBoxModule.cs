@@ -526,6 +526,13 @@ namespace Ferda.ModulesManager
 		Task RunActionAsync(string actionName, Ice.OptionalContext context = new Ice.OptionalContext(), System.IProgress<bool> progress = null, CancellationToken cancel = new CancellationToken());
 
 		/// <summary>
+		/// Executes action <paramref name="actionName"/> asynchronously and when finished calls callback
+		/// </summary>
+		/// <param name="actionName">action name</param>
+		/// <param name="callback">class containing callback methods</param>
+		void RunActionOnBackground(string actionName, IBackgroundActionCallback callback);
+
+		/// <summary>
 		/// Returns a Boolean value indicating whether it is possible to run action
 		/// with name <paramref name="actionName"/>
 		/// </summary>

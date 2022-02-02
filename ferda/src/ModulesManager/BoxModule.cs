@@ -741,6 +741,23 @@ namespace Ferda
                 return iceBoxModulePrx.runActionAsync(actionName, context, progress, cancel);
             }
 
+            public override void RunActionOnBackground(string actionName, IBackgroundActionCallback callback)
+            {
+                var task = Task.Run(async () => await RunActionAsync(actionName));
+                task.ContinueWith(
+                    t =>
+                    {
+                        if (t.Status == TaskStatus.RanToCompletion)
+                        {
+                            callback.OnResponse();
+                        }
+                        else if (t.Status == TaskStatus.Faulted)
+                        {
+                            callback.OnException(t.Exception.GetBaseException());
+                        }
+                    });
+            }
+
             public override bool IsPossibleToRunAction(string actionName)
             {
                 foreach (ActionInfo actionInfo in this.madeInCreator.Actions)
