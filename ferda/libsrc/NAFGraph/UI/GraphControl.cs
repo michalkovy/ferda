@@ -18,7 +18,6 @@ using Netron.GraphLib;
 using Netron.GraphLib.Configuration;
 using Netron.GraphLib.Attributes;
 using System.Runtime.Remoting;
-using System.Runtime.Remoting.Contexts;
 using System.Windows.Forms.Design;
 using Netron.GraphLib.Interfaces;
 using System.Runtime.InteropServices;
@@ -155,7 +154,7 @@ namespace Netron.GraphLib.UI
 		/// <summary>
 		/// the mContextMenu of the canvas
 		/// </summary>
-		protected ContextMenu mContextMenu = new ContextMenu();
+		protected ContextMenuStrip mContextMenu = new ContextMenuStrip();
 
 		/// <summary>
 		/// shortcut
@@ -391,9 +390,9 @@ namespace Netron.GraphLib.UI
 			set{
 				mEnableContextMenu = value;
 				if(value)
-					ContextMenu=mContextMenu;
+					ContextMenuStrip=mContextMenu;
 				else
-					ContextMenu = null;
+					ContextMenuStrip = null;
 			}
 		}
 		/// <summary>
@@ -1122,7 +1121,7 @@ namespace Netron.GraphLib.UI
 			{
 				this.Zoom -=0.1F;
 				CtrlShift = false;
-				this.ContextMenu = null;
+				this.ContextMenuStrip = null;
 				return;
 			}
 			#endregion
@@ -1838,19 +1837,19 @@ namespace Netron.GraphLib.UI
 		/// <param name="summary"></param>
 		protected void AddToContextMenu(ShapeSummary summary)
 		{
-			MenuItem currentItem =null;
-			foreach(MenuItem item in this.mContextMenu.MenuItems)
+			ToolStripMenuItem currentItem =null;
+			foreach(ToolStripMenuItem item in this.mContextMenu.Items)
 			{
 				if(item.Text == summary.ShapeCategory){ currentItem = item; break;}
 			}
 			if(currentItem == null)
 			{
-				this.mContextMenu.MenuItems.Add("-");
-				currentItem =new MenuItem(summary.ShapeCategory);
-				this.mContextMenu.MenuItems.Add(currentItem);
+				this.mContextMenu.Items.Add("-");
+				currentItem = new ToolStripMenuItem(summary.ShapeCategory);
+				this.mContextMenu.Items.Add(currentItem);
 			}
 			GraphMenuItem i =new GraphMenuItem(summary,new EventHandler(OnContextMenuItem));			
-			currentItem.MenuItems.Add(i);
+			currentItem.DropDownItems.Add(i);
 
 
 		}		
@@ -1875,21 +1874,21 @@ namespace Netron.GraphLib.UI
 		protected void AddBaseMenu()
 		{
 			//mContextMenu.MenuItems.Add("-");//add a separation
-			MenuItem graphItem= new MenuItem("Graph");
-			mContextMenu.MenuItems.Add(graphItem);
-			graphItem.MenuItems.Add("New",new EventHandler(OnNewGraph));
-			graphItem.MenuItems.Add("SelectAll",new EventHandler(OnSelectAll));
+			ToolStripMenuItem graphItem = new ToolStripMenuItem("Graph");
+			mContextMenu.Items.Add(graphItem);
+			graphItem.DropDownItems.Add("New",null,new EventHandler(OnNewGraph));
+			graphItem.DropDownItems.Add("SelectAll",null,new EventHandler(OnSelectAll));
 				
-			mContextMenu.MenuItems.Add("-");//add a separation
+			mContextMenu.Items.Add("-");//add a separation
 			//Cut, copy, paste doesn't work cause of a bug in Net, hopefully fixed in Net v2
 			/*
 			mContextMenu.MenuItems.Add(new MenuItem("C&ut", new EventHandler(OnCut)));
 			mContextMenu.MenuItems.Add(new MenuItem("&Copy", new EventHandler(OnCopy)));
 			mContextMenu.MenuItems.Add(new MenuItem("&Paste", new EventHandler(OnPaste)));
 			*/
-			mContextMenu.MenuItems.Add(new MenuItem("&Delete", new EventHandler(OnDelete)));
-			mContextMenu.MenuItems.Add("-");//add a separation
-			mContextMenu.MenuItems.Add(new MenuItem("P&roperties", new EventHandler(OnProperties)));
+			mContextMenu.Items.Add(new ToolStripMenuItem("&Delete", null, new EventHandler(OnDelete)));
+			mContextMenu.Items.Add("-");//add a separation
+			mContextMenu.Items.Add(new ToolStripMenuItem("P&roperties", null, new EventHandler(OnProperties)));
 		}
 
 		/// <summary>
@@ -1898,9 +1897,9 @@ namespace Netron.GraphLib.UI
 		/// </summary>
 		protected void ResetToBaseMenu()
 		{
-			int howmany = mContextMenu.MenuItems.Count;
-			for(int k=0; k<howmany; k++)
-				this.ContextMenu.MenuItems.Add(mContextMenu.MenuItems[k].CloneMenu());
+			int howmany = mContextMenu.Items.Count;
+			for (int k = 0; k < howmany; k++)
+				this.ContextMenuStrip.Items.Add(mContextMenu.Items[k]);
 		}
 		#endregion
 		

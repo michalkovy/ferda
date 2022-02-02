@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="UI\GraphControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="UI\GraphMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="UI\GraphShapesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UI\ShapesTab.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="UI\Stamper.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UI\TextEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
