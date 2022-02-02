@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ferda.Modules
 {
-    internal static class PropertyValueToTie
+    public static class PropertyValueToTie
     {
 		public static Ice.Object GetTieForPropertyValue(PropertyValue value)
 		{

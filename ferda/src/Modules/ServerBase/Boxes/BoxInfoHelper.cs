@@ -161,7 +161,7 @@ namespace Ferda.Modules.Boxes
                 {
                     Debug.WriteLine("FileHelper01: TryGetBinaryFile(" + filePath + "):" + ex.Message);
                     if (fallOnError)
-                        throw ex;
+                        throw;
                 }
             }
             return new byte[0];
@@ -199,7 +199,7 @@ namespace Ferda.Modules.Boxes
                 {
                     Debug.WriteLine("FileHelper02: TryGetStringFile(" + filePath + "):" + ex.Message);
                     if (fallOnError)
-                        throw ex;
+                        throw;
                 }
             }
             return String.Empty;
@@ -224,7 +224,8 @@ namespace Ferda.Modules.Boxes
                 guid = value.ToString();
                 boxModule.setProperty(
                     propertyName, 
-                    new StringTI(guid)
+                    new StringTI(guid),
+                    null
                     );
             }
 

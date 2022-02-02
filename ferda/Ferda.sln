@@ -31,6 +31,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BoxModuleServices", "BoxMod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoxInterfaces", "src\Modules\BoxInterfaces\BoxInterfaces.csproj", "{1FE2A8C1-8259-4F23-A46D-DB96F176C272}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerBase", "src\Modules\ServerBase\ServerBase.csproj", "{1C4B675B-44A6-4203-A30B-5E882FB15B38}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LumenWorks.Framework.IO", "libsrc\CsvReader\LumenWorks.Framework.IO\LumenWorks.Framework.IO.csproj", "{A2FA393F-1F44-4018-944B-605A0074085D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +85,14 @@ Global
 		{1FE2A8C1-8259-4F23-A46D-DB96F176C272}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FE2A8C1-8259-4F23-A46D-DB96F176C272}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FE2A8C1-8259-4F23-A46D-DB96F176C272}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C4B675B-44A6-4203-A30B-5E882FB15B38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C4B675B-44A6-4203-A30B-5E882FB15B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C4B675B-44A6-4203-A30B-5E882FB15B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C4B675B-44A6-4203-A30B-5E882FB15B38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2FA393F-1F44-4018-944B-605A0074085D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2FA393F-1F44-4018-944B-605A0074085D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2FA393F-1F44-4018-944B-605A0074085D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2FA393F-1F44-4018-944B-605A0074085D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +101,7 @@ Global
 		{D978D132-361E-49D6-842E-B838DE9AB85A} = {5BC1F228-2CC1-4D51-97A7-C377758CEA29}
 		{19DFADB3-BA94-41DA-9616-EA48E57C707A} = {5BC1F228-2CC1-4D51-97A7-C377758CEA29}
 		{1FE2A8C1-8259-4F23-A46D-DB96F176C272} = {5BC1F228-2CC1-4D51-97A7-C377758CEA29}
+		{1C4B675B-44A6-4203-A30B-5E882FB15B38} = {5BC1F228-2CC1-4D51-97A7-C377758CEA29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF18776C-3F18-4341-A9D7-C3F43AEA8041}
