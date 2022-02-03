@@ -917,10 +917,8 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
         /// <returns>Created random string</returns>
         public static String CreateKey(int numBytes)
         {
-            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
-            byte[] buff = new byte[numBytes];
+            byte[] buff = RandomNumberGenerator.GetBytes(numBytes);
 
-            rng.GetBytes(buff);
             return BytesToHexString(buff);
         }
 

@@ -225,7 +225,7 @@ namespace Ferda.FrontEnd.AddIns.ShowMapping
                 dataPropertyValues.Add("DomainDividingValues", "");
                 dataPropertyValues.Add("DistinctValues", "");
 
-                StrSeqMap dataProperties = ontologyMappingPrx.getOntologyEntityProperties(DataTable_Column_OntEnt[0], DataTable_Column_OntEnt[1]);
+                var dataProperties = ontologyMappingPrx.getOntologyEntityProperties(DataTable_Column_OntEnt[0], DataTable_Column_OntEnt[1]);
 
                 if (dataProperties != null)
                 {

@@ -135,7 +135,7 @@ namespace Ferda.FrontEnd.AddIns.FormEditor.MyIce
             
 
             FormEditor.WizardFormEditor control =
-                new FormEditor.WizardFormEditor(XMLString.getStringValue(), localePrefs[0]);
+                new FormEditor.WizardFormEditor(XMLString.stringValue, localePrefs[0]);
 
             control.Disposed += new EventHandler(control_Disposed);
             System.Windows.Forms.DialogResult result = this.ownerOfAddIn.ShowDialog(control);

@@ -165,12 +165,12 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings.MyIce
             {
                 selectedStrings.stringSeqValue = this.returnStrings;
                 PropertyValue resultValue = selectedStrings;
-                about = this.getPropertyAbout(resultValue);
+                about = this.getPropertyAbout(resultValue, current__);
                 propertyValue = resultValue;
             }
             else
             {
-                about = this.getPropertyAbout(valueBefore);
+                about = this.getPropertyAbout(valueBefore, current__);
                 return valueBefore;
             }
             return propertyValue;

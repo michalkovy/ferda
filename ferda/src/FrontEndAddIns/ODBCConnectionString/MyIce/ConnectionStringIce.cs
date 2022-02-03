@@ -97,7 +97,7 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString.MyIce
 
         public override string getPropertyAbout(PropertyValue value, global::Ice.Current current__)
         {
-            return ((StringT)value).getStringValue();
+            return ((StringT)value).stringValue;
         }
 
         public override string getIdentifier(global::Ice.Current current__)
@@ -148,7 +148,7 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString.MyIce
             PropertyValue propertyValue = valueBefore;
             ODBCConnectionString.ODBCConnectionStringControl listView =
                 new ODBCConnectionString.ODBCConnectionStringControl(localePrefs,
-                connectionString.getStringValue(),
+                connectionString.stringValue,
                 ownerOfAddIn,
                 prx.getDatabaseConnectionSetting().providerInvariantName);
             listView.ShowInTaskbar = false;
@@ -158,12 +158,12 @@ namespace Ferda.FrontEnd.AddIns.ODBCConnectionString.MyIce
             {
                 connectionString.stringValue = this.returnString;
                 PropertyValue resultValue = connectionString;
-                about = this.getPropertyAbout(resultValue);
+                about = this.getPropertyAbout(resultValue, current__);
                 propertyValue = resultValue;
             }
             else
             {
-                about = this.getPropertyAbout(valueBefore);
+                about = this.getPropertyAbout(valueBefore, current__);
                 return valueBefore;
             }
 

@@ -135,7 +135,7 @@ namespace Ferda.FrontEnd.AddIns.EditFuzzyCategories.MyIce
             Current current__)
         {
             //TOHLE SE URCITE BUDE MENIT
-            about = this.getPropertyAbout(valueBefore);
+            about = this.getPropertyAbout(valueBefore, current__);
 
             //getting the localization
             string locale;

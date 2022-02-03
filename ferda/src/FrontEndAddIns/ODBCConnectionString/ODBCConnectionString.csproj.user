@@ -2,8 +2,11 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="ExplainTableControl.cs">
-      <SubType>UserControl</SubType>
+    <Compile Update="3rdParty\dsn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ODBCConnectionStringControl.cs">
+      <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
 </Project>

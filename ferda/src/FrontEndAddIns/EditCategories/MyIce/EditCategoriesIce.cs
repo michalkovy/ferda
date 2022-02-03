@@ -228,10 +228,10 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                         cardinality = info.cardinality;
                     //    pv.stringValue = String.Empty;
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         //static attribute is not connected to anything
-                        throw e;
+                        throw;
                     }
                 }
 
@@ -244,12 +244,12 @@ namespace Ferda.FrontEnd.AddIns.EditCategories
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
                     PropertyValue resultValue = new StringTI(this.categories);
-                    about = this.getPropertyAbout(resultValue);
+                    about = this.getPropertyAbout(resultValue, current__);
                     propertyValue = resultValue;
                 }
                 else
                 {
-                    about = this.getPropertyAbout(valueBefore);
+                    about = this.getPropertyAbout(valueBefore, current__);
                 }
             }
             catch (Ferda.Modules.BadParamsError ex)

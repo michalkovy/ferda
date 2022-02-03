@@ -110,7 +110,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping.MyIce
         /// <returns>String representation of the property value</returns>
         public override string getPropertyAbout(PropertyValue value, global::Ice.Current current__)
         {
-            return ((StringT)value).getStringValue();
+            return ((StringT)value).stringValue;
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping.MyIce
                 /*TODO hodit vyjimku, ze nejsou zapojeny oba required sockety*/
                 //throw Ferda.Modules.Exceptions.BoxRuntimeError(null, boxModuleParam.gets.getFunctionsIceId,
                   //    "Ontology box and DataTable box must be connected!");
-                about = this.getPropertyAbout(valueBefore);
+                about = this.getPropertyAbout(valueBefore, current__);
                 return valueBefore;
             }
 
@@ -218,12 +218,12 @@ namespace Ferda.FrontEnd.AddIns.SetOntologyMapping.MyIce
                 mapping.stringValue = this.returnString;
                 PropertyValue resultValue = mapping;
 
-                about = this.getPropertyAbout(resultValue);
+                about = this.getPropertyAbout(resultValue, current__);
                 propertyValue = resultValue;
             }
             else
             {
-                about = this.getPropertyAbout(valueBefore);
+                about = this.getPropertyAbout(valueBefore, current__);
                 return valueBefore;
             }
 
