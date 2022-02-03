@@ -64,7 +64,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
@@ -198,7 +199,6 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.ManualAttributeWith
                 default:
                     throw new NotImplementedException();
             }
-            return null;
         }
 
         /// <summary>

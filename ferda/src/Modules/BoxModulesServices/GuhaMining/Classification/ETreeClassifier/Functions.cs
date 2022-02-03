@@ -495,7 +495,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// <returns>Classification attribute</returns>
         private Attribute<IComparable> GetClassificationAttribute(out string selectExpression)
         {
-            BoxModulePrx eTree = boxModule.getConnections(SockETree)[0];
+            BoxModulePrx eTree = boxModule.getConnections(SockETree,null)[0];
             BoxModulePrx clasAtrPrx = 
                 eTree.getConnections(Tasks.ETree.Functions.SockTargetClassificationAttribute)[0];
             BoxModulePrx colPrx = 
@@ -562,7 +562,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// <returns>Box module proxies of the attributes</returns>
         private List<BoxModulePrx> GetAttributeBoxModulePrxs()
         {
-            BoxModulePrx eTree = boxModule.getConnections(SockETree)[0];
+            BoxModulePrx eTree = boxModule.getConnections(SockETree,null)[0];
 
             //getting the attributes
             List<BoxModulePrx> attributes = new List<BoxModulePrx>();

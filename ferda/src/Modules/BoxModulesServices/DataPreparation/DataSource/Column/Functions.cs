@@ -241,7 +241,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
             DataTableInfo tmp =
                 ExceptionsHandler.GetResult<DataTableInfo>(
                     fallOnError,
-                    prx.getDataTableInfo,
+                    () => prx.getDataTableInfo(null),
                     delegate
                         {
                             return null;

@@ -232,7 +232,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
             ColumnInfo tmp =
                 ExceptionsHandler.GetResult<ColumnInfo>(
                     fallOnError,
-                    prx.getColumnInfo,
+                    () => prx.getColumnInfo(null),
                     delegate
                     {
                         return null;

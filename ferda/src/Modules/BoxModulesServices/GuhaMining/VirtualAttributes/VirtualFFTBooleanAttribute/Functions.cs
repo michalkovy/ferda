@@ -379,7 +379,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         {
             if (attributeId.value == Guid.value)
             {
-                return BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions());
+                return BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions(current__));
             }
             return null;
         }
@@ -393,7 +393,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         public override BitStringGeneratorPrx[] GetBitStringGenerators(Current current__)
         {
             BitStringGeneratorPrx[] result = new BitStringGeneratorPrx[1];
-            result[0] = BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions());
+            result[0] = BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions(current__));
             return result;
         }
 
@@ -412,7 +412,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
                         new CoefficientSettingI();
                     result.id = Guid;
                     result.importance = Importance;
-                    result.generator = BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions());
+                    result.generator = BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions(null));
                     result.maxLength = 1;
                     result.minLength = 1;
                     result.coefficientType = CoefficientTypeEnum.SubsetsOneOne;
@@ -534,7 +534,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualFFTBooleanAttr
         /// </summary>
         /// <param name="current__"></param>
         /// <returns></returns>
-        public override string GetSourceDataTableId(Current current__)
+        public override string GetSourceDataTableId(Current current__ = null)
         {
             return Common.GetSourceDataTableIdMR(_boxModule, this);
         }

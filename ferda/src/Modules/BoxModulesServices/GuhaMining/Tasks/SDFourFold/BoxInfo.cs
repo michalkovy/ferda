@@ -163,7 +163,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDFourFold
             // all used attributes are from the same data table
 
             Functions Func = (Functions) boxModule.FunctionsIObj;
-            Func.GetSourceDataTableId();
+            Func.GetSourceDataTableId(null);
         }
 
         #region Type Identifier

@@ -49,7 +49,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         /// <returns></returns>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
@@ -212,8 +213,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             // try to invoke methods
             object dummy = Public.GetColumnFunctionsPrx(true,boxModule);
 
-            dummy = Func.GetAttributeId();
-            dummy = Func.GetAttributeNames();
+            dummy = Func.GetAttributeId(null);
+            dummy = Func.GetAttributeNames(null);
 
             string [] names = Func.GetCategoriesNames(true);
             if (names.Length == 0)

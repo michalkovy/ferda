@@ -138,7 +138,7 @@ namespace Ferda.Modules.Boxes.GuhaMining
         public override void AddCustomFactoriesToComunicator(Communicator communicator)
         {
             ObjectFactory factory = new ObjectFactory();
-            ObjectFactory.addFactoryToCommunicator(communicator, factory);
+            ObjectFactory.addFactoryToCommunicator(communicator);
         }
 
 

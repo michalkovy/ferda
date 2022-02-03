@@ -174,7 +174,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         /// </summary>
         /// <param name="fallOnError"></param>
         /// <returns></returns>
-        public StrSeqMap getOntologyEntityProperties(bool fallOnError)
+        public Dictionary<string, string[]> getOntologyEntityProperties(bool fallOnError)
         {
             OntologyEnablingColumnFunctionsPrx prx = GetOntologyEnablingColumnFunctionsPrx(fallOnError);
             if (prx != null)
@@ -200,7 +200,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
 
             /// gets the data properties of ontology entity 
             /// which this box's column is mapped on
-            StrSeqMap tmpMap = getOntologyEntityProperties(true);
+            var tmpMap = getOntologyEntityProperties(true);
 
             /// the entity is a class and have some data properties
             /// the null value means that either the column is not mapped...
@@ -395,7 +395,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
             ColumnInfo tmp =
                 ExceptionsHandler.GetResult<ColumnInfo>(
                     fallOnError,
-                    prx.getColumnInfo,
+                    () => prx.getColumnInfo(null),
                     delegate
                     {
                         return null;

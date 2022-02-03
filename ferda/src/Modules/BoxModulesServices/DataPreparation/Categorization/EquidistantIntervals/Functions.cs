@@ -339,7 +339,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             ColumnInfo columnInfo =
                 ExceptionsHandler.GetResult<ColumnInfo>(
                     fallOnError,
-                    columnPrx.getColumnInfo,
+                    () => columnPrx.getColumnInfo(null),
                     delegate
                     {
                         return null;

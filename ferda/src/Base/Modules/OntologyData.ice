@@ -10,7 +10,7 @@ module Ferda {
         };
   
         sequence<string> StrSeq;    //type list of strings
-        ["clr:collection"] dictionary<string, StrSeq> StrSeqMap;
+        dictionary<string, StrSeq> StrSeqMap;
         
         struct OntologyClass {
           string name;           //name of the class
@@ -21,7 +21,7 @@ module Ferda {
           StrSeqMap DataPropertiesMap;    //"dictionary" - name of a property and list of values it takes for this class
         };
         
-        ["clr:collection"] dictionary<string, OntologyClass> dictionaryStringOntologyClass; //"a map" - name of class -> class of ontology
+        dictionary<string, OntologyClass> dictionaryStringOntologyClass; //"a map" - name of class -> class of ontology
   
         struct ObjectProperty {
           string name;       //name of relation

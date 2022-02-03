@@ -1198,7 +1198,7 @@ namespace Ferda.Modules
         /// <exception cref="T:Ferda.Modules.ReadOnlyError">
         /// Thrown iff specified property is read only.
         /// </exception>
-        public override void setProperty(string propertyName, PropertyValue propertyValue, Current __current)
+        public override void setProperty(string propertyName, PropertyValue propertyValue, Current __current = null)
         {
             if (!boxInfo.TestPropertyNameExistence(propertyName))
             {

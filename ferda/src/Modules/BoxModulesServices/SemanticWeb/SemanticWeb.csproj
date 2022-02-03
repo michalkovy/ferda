@@ -3,13 +3,16 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable></Nullable>
     <AssemblyOriginatorKeyFile>Ferda$(MSBuildProjectName)Boxes.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>Ferda$(MSBuildProjectName)Boxes</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\libsrc\Sewebar\Sewebar.csproj" />
     <ProjectReference Include="..\..\BoxInterfaces\BoxInterfaces.csproj" />
+    <ProjectReference Include="..\..\Core\Attribute\Attribute.csproj" />
+    <ProjectReference Include="..\..\Core\MiningProcessor\MiningProcessor.csproj" />
     <ProjectReference Include="..\..\ServerBase\ServerBase.csproj" />
   </ItemGroup>
 </Project>

@@ -46,7 +46,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
         /// <returns></returns>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>

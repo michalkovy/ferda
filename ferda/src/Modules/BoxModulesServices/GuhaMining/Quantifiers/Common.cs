@@ -91,8 +91,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers
         /// <see cref="Ferda.Guha.Math.Quantifiers.QuantifierEvaluateSetting"/>.
         /// </summary>
         /// <param name="param">Setting for quantifier evaluation</param>
+        /// <param name="current">Ice current</param>
         /// <returns>Iff the quantifier is valid over the setting</returns>
-        public delegate bool ComputeDelegate(QuantifierEvaluateSetting param);
+        public delegate bool ComputeDelegate(QuantifierEvaluateSetting param, Ice.Current current);
         
         /// <summary>
         /// Executes a batch computation of quantifiers.
@@ -106,7 +107,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers
             List<bool> result = new List<bool>(param.Length);
             for (int i = 0; i < param.Length; i++)
             {
-                result.Insert(i, compute(param[i]));
+                result.Insert(i, compute(param[i],null));
             }
             return result.ToArray();
         }

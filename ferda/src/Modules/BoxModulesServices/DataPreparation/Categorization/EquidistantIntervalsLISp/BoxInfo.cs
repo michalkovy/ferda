@@ -48,7 +48,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
         /// <returns></returns>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
@@ -247,8 +248,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquidistantInterval
             }
             // try to invoke methods
             object dummy = Public.GetColumnFunctionsPrx(true,boxModule);
-            dummy = Func.GetAttributeId();
-            dummy = Func.GetAttributeNames();
+            dummy = Func.GetAttributeId(null);
+            dummy = Func.GetAttributeNames(null);
             dummy = Func.GetAttribute(true);
             dummy = Func.GetCategoriesNames(true);
             dummy = Func.GetCategoriesAndFrequencies(true);

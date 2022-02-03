@@ -299,7 +299,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// <param name="entityName">The name of the ontology entity</param>
         /// <param name="current__">Ice stuff</param>
         /// <returns>Data properties of the ontology entity</returns>
-        public override StrSeqMap getOntologyEntityProperties(string entityName, Current current__)
+        public override Dictionary<string, string[]> getOntologyEntityProperties(string entityName, Current current__)
         {
             OntologyStructure ontology = getOntology(true);
             try
@@ -308,7 +308,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             }
             catch
             {
-                return new StrSeqMap();
+                return new Dictionary<string, string[]>();
             }
         }
 

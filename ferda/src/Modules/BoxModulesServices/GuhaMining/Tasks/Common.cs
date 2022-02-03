@@ -1049,44 +1049,24 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                 );
 
             string statistics;
-            string result;
-            if (_current == null)
-            {
-                result =
-        miningProcessor.Run(
-            boxModule.MyProxy,
-            GetBooleanAttributes(boxModule, taskFunctions),
-            GetCategorialAttributes(boxModule, taskFunctions),
-            GetQuantifierBaseFunctions(boxModule, true).ToArray(),
-            taskRunParams,
-            bsProvider,
-            boxModule.Output,
-            attributeGuid,
-            countVector,
-            out statistics
-            );
-            }
-            else
-            {
-                result =
-        miningProcessor.Run(
-            boxModule.MyProxy,
-            GetBooleanAttributes(boxModule, taskFunctions),
-            GetCategorialAttributes(boxModule, taskFunctions),
-            GetQuantifierBaseFunctions(boxModule, true).ToArray(),
-            taskRunParams,
-            bsProvider,
-            boxModule.Output,
-            attributeGuid,
-            countVector,
-            out statistics,
-            _current
-            );
-            }
+            string result =
+                miningProcessor.Run(
+                    boxModule.MyProxy,
+                    GetBooleanAttributes(boxModule, taskFunctions),
+                    GetCategorialAttributes(boxModule, taskFunctions),
+                    GetQuantifierBaseFunctions(boxModule, true).ToArray(),
+                    taskRunParams,
+                    bsProvider,
+                    boxModule.Output,
+                    attributeGuid,
+                    countVector,
+                    out statistics,
+                    _current
+                    );
 
             while (true)
             {
-                BitStringIceWithCategoryId tmpString = miningProcessor.GetNextBitString();
+                BitStringIceWithCategoryId tmpString = miningProcessor.GetNextBitString(_current);
                 if (tmpString != null)
                 {
                     yield return tmpString;

@@ -333,7 +333,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EquifrequencyInterv
             ColumnInfo tmp =
                 ExceptionsHandler.GetResult<ColumnInfo>(
                     fallOnError,
-                    prx.getColumnInfo,
+                    () => prx.getColumnInfo(null),
                     delegate
                     {
                         return null;

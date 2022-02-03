@@ -195,8 +195,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
 
             // try to invoke methods
             IEntitySetting myES = Func.GetEntitySetting(true);
-            object dummy = Func.GetAttributeNames();
-            dummy = Func.GetSourceDataTableId();
+            object dummy = Func.GetAttributeNames(null);
+            dummy = Func.GetSourceDataTableId(null);
 
             List<BooleanAttributeSettingFunctionsPrx> booleanAttributes = Func.GetBooleanAttributeSettingFunctionsPrxs(true);
             if (booleanAttributes != null)

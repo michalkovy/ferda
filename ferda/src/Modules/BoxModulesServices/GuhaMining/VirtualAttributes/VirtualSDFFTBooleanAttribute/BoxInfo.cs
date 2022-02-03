@@ -192,7 +192,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         public override void Validate(BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
-            object dummy = Func.GetSourceDataTableId();
+            object dummy = Func.GetSourceDataTableId(null);
 
             dummy =
                 Ferda.Modules.Boxes.GuhaMining.Tasks.Common.GetBooleanAttributes(boxModule, Func);

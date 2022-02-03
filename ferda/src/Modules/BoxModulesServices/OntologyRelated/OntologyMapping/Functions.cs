@@ -179,9 +179,9 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// <param name="columnName">Name of the column which properties (based on mapping) I want to get</param>
         /// <param name="fallOnError">Iff the method should fall on error</param>
         /// <returns>Data properties of ontology entity</returns>
-        public StrSeqMap getOntologyEntityProperties(string dataTableName, string columnName, bool fallOnError)
+        public Dictionary<string,string[]> getOntologyEntityProperties(string dataTableName, string columnName, bool fallOnError)
         {
-            return ExceptionsHandler.GetResult<StrSeqMap>(
+            return ExceptionsHandler.GetResult<Dictionary<string, string[]>>(
                 fallOnError,
                 delegate
                     {
@@ -599,7 +599,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// <param name="columnName">Name of the column which properties (based on mapping) I want to get</param>
         /// <param name="current__">Ice stuff</param>
         /// <returns>Data properties of ontology entity</returns>
-        public override StrSeqMap getOntologyEntityProperties(string dataTableName, string columnName, Ice.Current current__)
+        public override Dictionary<string, string[]> getOntologyEntityProperties(string dataTableName, string columnName, Ice.Current current__)
         {
             return getOntologyEntityProperties(dataTableName, columnName, true);
         }

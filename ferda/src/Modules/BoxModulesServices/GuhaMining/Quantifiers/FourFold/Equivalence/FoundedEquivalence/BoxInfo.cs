@@ -14,7 +14,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Equivalence.Founde
 
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            rvar f = new Functions();
+            var f = new Functions();
             return f.ice_ids();
         }
 

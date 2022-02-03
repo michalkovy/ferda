@@ -263,7 +263,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
         /// <returns>If the settings satisfies the quantifier</returns>
         public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Current current__)
         {
-            value = ComputeValue(param);
+            value = ComputeValue(param, current__);
             return Guha.Math.Common.Compare(Relation, value, Treshold);
         }
 
@@ -331,7 +331,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.Others.AboveAverag
         /// <returns>If the settings satisfies the quantifier</returns>
         public override bool Compute(QuantifierEvaluateSetting param, Current current__)
         {
-            double value = ComputeValue(param);
+            double value = ComputeValue(param, current__);
             return Guha.Math.Common.Compare(Relation, value, Treshold);
         }
 

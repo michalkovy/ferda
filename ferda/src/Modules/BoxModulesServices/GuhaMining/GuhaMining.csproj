@@ -13,6 +13,7 @@
     <ProjectReference Include="..\..\Core\Attribute\Attribute.csproj" />
     <ProjectReference Include="..\..\Core\MiningProcessor\MiningProcessor.csproj" />
     <ProjectReference Include="..\..\ServerBase\ServerBase.csproj" />
+    <ProjectReference Include="..\SemanticWeb\SemanticWeb.csproj" />
   </ItemGroup>
 
 </Project>

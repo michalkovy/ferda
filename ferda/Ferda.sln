@@ -61,6 +61,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wizards", "src\Modules\BoxM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "src\Modules\BoxModulesServices\Sample\Sample.csproj", "{8D17A312-A420-4B62-9238-51D2F80FF494}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{48F744FB-EA3E-4298-9654-59C9CE07177A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sewebar", "libsrc\Sewebar\Sewebar.csproj", "{5B69B95C-DEEB-40D8-B731-F5ED4671CFD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -171,6 +175,10 @@ Global
 		{8D17A312-A420-4B62-9238-51D2F80FF494}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D17A312-A420-4B62-9238-51D2F80FF494}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D17A312-A420-4B62-9238-51D2F80FF494}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B69B95C-DEEB-40D8-B731-F5ED4671CFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B69B95C-DEEB-40D8-B731-F5ED4671CFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B69B95C-DEEB-40D8-B731-F5ED4671CFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B69B95C-DEEB-40D8-B731-F5ED4671CFD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -193,6 +201,7 @@ Global
 		{1945B16C-17FF-40EB-AC1E-36610D82877B} = {19DFADB3-BA94-41DA-9616-EA48E57C707A}
 		{FC277080-8125-47F0-9C04-7BFA8E6AE260} = {19DFADB3-BA94-41DA-9616-EA48E57C707A}
 		{8D17A312-A420-4B62-9238-51D2F80FF494} = {19DFADB3-BA94-41DA-9616-EA48E57C707A}
+		{5B69B95C-DEEB-40D8-B731-F5ED4671CFD6} = {48F744FB-EA3E-4298-9654-59C9CE07177A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF18776C-3F18-4341-A9D7-C3F43AEA8041}

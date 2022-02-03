@@ -50,7 +50,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         /// <returns></returns>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
@@ -278,16 +279,16 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
 
             // try to invoke methods
             object dummy = Func.GetOntologyEnablingColumnFunctionsPrx(true);
-            dummy = Func.GetAttributeId();
-            dummy = Func.GetAttributeNames();
+            dummy = Func.GetAttributeId(null);
+            dummy = Func.GetAttributeNames(null);
 
             try
             {
                 dummy = Func.GetAttribute(true);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
                 /*throw Exceptions.BadParamsError(
                     null,
                     boxModule.StringIceIdentity,

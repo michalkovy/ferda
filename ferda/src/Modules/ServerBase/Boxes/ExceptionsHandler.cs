@@ -30,13 +30,6 @@ namespace Ferda.Modules.Boxes
     public static class ExceptionsHandler
     {
         /// <summary>
-        /// The method delegate.
-        /// </summary>
-        /// <typeparam name="ResultType"></typeparam>
-        /// <returns></returns>
-        public delegate ResultType MethodDelegate<ResultType>();
-
-        /// <summary>
         /// Invokes the method delegate. On error no exception is thrown, 
         /// but default init delegate is invoked to return result.
         /// </summary>
@@ -44,8 +37,8 @@ namespace Ferda.Modules.Boxes
         /// <param name="defaultInit">The default init.</param>
         /// <returns></returns>
         public static ResultType TryCatchMethodNoThrow<ResultType>(
-            MethodDelegate<ResultType> methodDelegate,
-            MethodDelegate<ResultType> defaultInit)
+            Func<ResultType> methodDelegate,
+            Func<ResultType> defaultInit)
         {
             try
             {
@@ -74,7 +67,7 @@ namespace Ferda.Modules.Boxes
         /// <param name="boxIdentity">The box identity.</param>
         /// <returns></returns>
         public static ResultType TryCatchMethodThrow<ResultType>(
-            MethodDelegate<ResultType> methodDelegate,
+            Func<ResultType> methodDelegate,
             string boxIdentity)
         {
             ResultType result;
@@ -119,8 +112,8 @@ namespace Ferda.Modules.Boxes
         /// <returns></returns>
         public static ResultType GetResult<ResultType>(
             bool fallOnError,
-            MethodDelegate<ResultType> methodDelegate,
-            MethodDelegate<ResultType> defaultInit,
+            Func<ResultType> methodDelegate,
+            Func<ResultType> defaultInit,
             string boxIdentity)
         {
             if (fallOnError)

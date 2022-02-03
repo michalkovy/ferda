@@ -189,7 +189,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
             Functions Func = (Functions) boxModule.FunctionsIObj;
 
               IntT TNumberRuns = (IntT)boxModule.GetPropertyOther("NumberRuns");
-              int IntNumberRuns = TNumberRuns.getIntValue();
+              int IntNumberRuns = TNumberRuns.intValue;
               IntNumberRuns++;
               TNumberRuns.intValue = IntNumberRuns;
               PropertyValue NRValue = TNumberRuns;
@@ -215,7 +215,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.FourFold
             // all used attributes are from the same data table
 
             Functions Func = (Functions) boxModule.FunctionsIObj;
-            Func.GetSourceDataTableId();
+            Func.GetSourceDataTableId(null);
         }
 
         #region Type Identifier

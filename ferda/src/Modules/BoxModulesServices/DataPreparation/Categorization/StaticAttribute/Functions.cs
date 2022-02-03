@@ -703,7 +703,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             ColumnInfo tmp =
                 ExceptionsHandler.GetResult<ColumnInfo>(
                     fallOnError,
-                    prx.getColumnInfo,
+                    () => prx.getColumnInfo(null),
                     delegate
                     {
                         return null;
@@ -720,7 +720,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             DatabaseConnectionSettingHelper connSetting =
                 new DatabaseConnectionSettingHelper(tmp.dataTable.databaseConnectionSetting);
             //getting the serialized attribute set in the previous boxes
-            string categories = getAttribute();
+            string categories = getAttribute(null);
 
             //creating a new cache entry
             Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
