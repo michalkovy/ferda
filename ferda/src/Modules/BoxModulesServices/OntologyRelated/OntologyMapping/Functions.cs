@@ -285,7 +285,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
             DatabaseConnectionSetting connSettingTmp =
                 ExceptionsHandler.GetResult<DatabaseConnectionSetting>(
                     fallOnError,
-                    prx.getDatabaseConnectionSetting,
+                    () => prx.getDatabaseConnectionSetting(null),
                     delegate
                     {
                         return null;

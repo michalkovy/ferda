@@ -185,7 +185,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             switch (actionName)
             {
                 case "LoadOntology":
-                    Func.LoadOntology();
+                    Func.LoadOntology(null);
                     Func.LastReloadRequest = DateTime.Now;
                     break;
                 default:

@@ -12,14 +12,14 @@ namespace Ferda.Modules.Boxes.Language.Math.Compare
 		public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
 		{
 	 	   Functions result = new Functions();
-	 	   iceObject = result;
+	 	   iceObject = new BoolTInterfaceTie_(result);
 	 	   functions = result;
 	    }
 
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            var f = new Functions();
-            return f.ice_ids();
+            var t = new BoolTInterfaceTie_(new Functions());
+            return t.ice_ids();
         }
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
@@ -82,7 +82,8 @@ namespace Ferda.Modules.Boxes.Language.Math.Compare
 
         public override string[] GetFunctionsIceIds(BoxModuleI boxModule)
         {
-            return Ferda.Modules.BoolT.ids__;
+            var t = new BoolTInterfaceTie_(new Functions());
+            return t.ice_ids();
         }
     }
 }
