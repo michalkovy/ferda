@@ -1207,7 +1207,7 @@ namespace Ferda.Modules
                 throw Exceptions.NameNotExistError(null, propertyName);
             }
             Ice.Object prx = PropertyValueToTie.GetTieForPropertyValue(propertyValue);
-            if (prx != null && !prx.ice_isA(boxInfo.GetPropertyDataType(propertyName)))
+            if (prx != null && !prx.ice_isA(boxInfo.GetPropertyDataType(propertyName) + "Interface"))
             {
                 // bad type of the specified propertyValue
                 Debug.WriteLine("BMI26");

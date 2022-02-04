@@ -1013,11 +1013,11 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
                         List<string> result = tmp.GetNotMissingsCategorieIds(XCategory);
                         return result.ToArray();
                     }
-                    return null;
+                    return new string[] { };
                 },
                 delegate
                 {
-                    return null;
+                    return new string[] { };
                 },
                 _boxModule.StringIceIdentity
                 );

@@ -946,7 +946,7 @@ namespace Ferda.FrontEnd.Properties
             {
                 foreach (string propertyName in temporaryValues.Keys)
                 {
-                    SelectedBox.GetPropertyAsync(propertyName).ContinueWith((val) => this.ChangedPropertyValue(temporaryPropertyTypes[propertyName], propertyName, val, false));
+                    SelectedBox.GetPropertyAsync(propertyName).ContinueWith(async (val) => this.ChangedPropertyValue(temporaryPropertyTypes[propertyName], propertyName, await val, false));
                 }
             }
         }
@@ -964,7 +964,7 @@ namespace Ferda.FrontEnd.Properties
                     foreach (IBoxModule box in SelectedBoxes)
                     {
                         //tady byl problem s tim, ze to nemohlo najit jmeno
-                        box.GetPropertyAsync(propertyName).ContinueWith((val) => this.ChangedPropertyValue(temporaryPropertyTypes[propertyName], propertyName, val, true));
+                        box.GetPropertyAsync(propertyName).ContinueWith(async (val) => this.ChangedPropertyValue(temporaryPropertyTypes[propertyName], propertyName, await val, true));
                     }
                 }
             }

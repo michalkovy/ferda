@@ -181,7 +181,7 @@ using Ice;namespace Ferda.Modules
 				throw new Ferda.Modules.BadTypeError();
 			}
 			Ice.Object prx = PropertyValueToTie.GetTieForPropertyValue(value);
-			if (!prx.ice_isA(this.propertyClassIceId))
+			if (!prx.ice_isA(this.propertyClassIceId + "Interface"))
 			{
 				throw new Ferda.Modules.BadTypeError();
 			}

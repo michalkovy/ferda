@@ -748,7 +748,7 @@ using Ferda.ModulesManager;
 			System.Collections.Specialized.StringCollection proxies
 				= new System.Collections.Specialized.StringCollection();
 
-			foreach(string file in System.IO.Directory.GetFiles("AddIns"))
+			foreach(string file in System.IO.Directory.GetFiles("."))
 			{
 				if(System.IO.Path.GetExtension(file) == ".dll")
 				{
@@ -762,20 +762,24 @@ using Ferda.ModulesManager;
 
                     IAddInMain addInMain = (IAddInMain)asembly.CreateInstance(path);
 
-                    //adding the properties displayer if it is a addin capable of
-                    //displaying properties
-                    if (addInMain is Properties.IPropertyProvider)
+                    if (addInMain != null)
                     {
-                        Properties.IPropertyProvider prov = addInMain as
-                            Properties.IPropertyProvider;
 
-                        prov.Displayer = displayer;
+                        //adding the properties displayer if it is a addin capable of
+                        //displaying properties
+                        if (addInMain is Properties.IPropertyProvider)
+                        {
+                            Properties.IPropertyProvider prov = addInMain as
+                                Properties.IPropertyProvider;
+
+                            prov.Displayer = displayer;
+                        }
+
+                        addInMain.OwnerOfAddIn = ownerOfAddIn;
+                        addInMain.ObjectAdapter = objectAdapter;
+                        proxies.AddRange(addInMain.ObjectProxiesToAdd);
+                        addIns.Add(addInMain);
                     }
-
-					addInMain.OwnerOfAddIn = ownerOfAddIn;
-					addInMain.ObjectAdapter = objectAdapter;
-					proxies.AddRange(addInMain.ObjectProxiesToAdd);
-					addIns.Add(addInMain);
 				}
 			}
 			int count = proxies.Count;

@@ -5,6 +5,7 @@
     <Nullable></Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Ferda.FrontEnd.AddIns.EditCategories</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
