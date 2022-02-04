@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrontEndConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectManagerOptions>
+    <StartIceGridLocaly>false</StartIceGridLocaly>
+    <StopIceGridLocaly>true</StopIceGridLocaly>
+    <IceGridAsService>false</IceGridAsService>
+    <IceGridWorkingDirectory>..\..\..\..\Server\bin\Debug\net6.0</IceGridWorkingDirectory>
+    <IceGridApplicationXmlFilePath>application.xml</IceGridApplicationXmlFilePath>
+    <SentenceForWait>Server: changed server `0' state to `Inactive'</SentenceForWait>
+    <ServersToStop />
+    <IceBinPath>C:\Program Files\ZeroC\Ice-3.7.7\bin</IceBinPath>
+    <LocalePrefs>
+      <string>en-US</string>
+      <string>cs-CZ</string>
+    </LocalePrefs>
+  </ProjectManagerOptions>
+  <FrontEndIceObjects />
+  <ShowVisibleSockets>true</ShowVisibleSockets>
+</FrontEndConfig>

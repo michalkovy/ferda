@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -16,6 +16,15 @@
     <ProjectReference Include="..\..\Helpers\Helpers.csproj" />
     <ProjectReference Include="..\..\ServerBase\ServerBase.csproj" />
     <ProjectReference Include="..\GuhaMining\GuhaMining.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DataSource\VirtualColumn\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DataSource\VirtualColumn\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

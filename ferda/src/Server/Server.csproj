@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="zeroc.ice.net" Version="3.7.7" />
+    <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
+    <IceBoxNet Include="$(IceHome)/tools/net6.0/*" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\BoxModulesServices\Basic\Basic.csproj" />
+    <ProjectReference Include="..\Modules\BoxModulesServices\DataPreparation\DataPreparation.csproj" />
+    <ProjectReference Include="..\Modules\BoxModulesServices\GuhaMining\GuhaMining.csproj" />
+    <ProjectReference Include="..\Modules\BoxModulesServices\Language\Language.csproj" />
+    <ProjectReference Include="..\Modules\BoxModulesServices\OntologyRelated\OntologyRelated.csproj" />
+    <ProjectReference Include="..\Modules\BoxModulesServices\Sample\Sample.csproj" />
+    <ProjectReference Include="..\Modules\BoxModulesServices\SemanticWeb\SemanticWeb.csproj" />
+    <ProjectReference Include="..\Modules\BoxModulesServices\Wizards\Wizards.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="application.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="NetworkArchive.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="node\readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="registry\readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Target AfterTargets="Build" Name="CopyIceBoxNet">
+    <Copy DestinationFolder="$(OutputPath)" SourceFiles="@(IceBoxNet)" />
+  </Target>
+  <Target AfterTargets="Clean" Name="CleanIceBoxNet">
+    <Delete Files="@(IceBoxNet->'$(OutputPath)%(Identity)')" />
+  </Target>
+</Project>

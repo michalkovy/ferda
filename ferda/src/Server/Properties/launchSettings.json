@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Server": {
+      "commandName": "Project"
+    },
+    "IceGrid": {
+      "commandName": "Executable",
+      "executablePath": "icegridnode.exe",
+      "commandLineArgs": "--Ice.Config=config --IceGrid.Registry.LMDB.Path=registry --IceGrid.Node.Data=node --deploy .\\application.xml"
+    }
+  }
+}

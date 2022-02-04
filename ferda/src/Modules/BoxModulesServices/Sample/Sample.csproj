@@ -13,5 +13,26 @@
     <ProjectReference Include="..\..\Core\Data\Data.csproj" />
     <ProjectReference Include="..\..\ServerBase\ServerBase.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="BodyMassIndex\BoxConfig.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BodyMassIndex\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BodyMassIndex\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BodyMassIndex\info.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BodyMassIndex\Localization.cs-CZ.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BodyMassIndex\Localization.en-US.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   
 </Project>

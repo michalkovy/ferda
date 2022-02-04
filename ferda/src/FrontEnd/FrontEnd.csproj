@@ -9,6 +9,7 @@
     <AssemblyName>Ferda$(MSBuildProjectName)</AssemblyName>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>FerdaFrontEnd.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>Ferda.FrontEnd</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +25,18 @@
     <ProjectReference Include="..\ModulesManager\ModulesManager.csproj" />
     <ProjectReference Include="..\NetworkArchive\NetworkArchive.csproj" />
     <ProjectReference Include="..\ProjectManager\ProjectManager.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="FrontEndConfig.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="recent.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
