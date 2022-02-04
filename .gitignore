@@ -7,3 +7,4 @@
 /ferda/**/bin
 /ferda/**/generated
 /ferda/.ionide
+/**/*.csproj.user

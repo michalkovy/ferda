@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>IceGrid</ActiveDebugProfile>
+    <ActiveDebugProfile>IceBox</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

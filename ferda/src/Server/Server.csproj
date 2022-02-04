@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Modules\BoxModulesServices\Sample\Sample.csproj" />
     <ProjectReference Include="..\Modules\BoxModulesServices\SemanticWeb\SemanticWeb.csproj" />
     <ProjectReference Include="..\Modules\BoxModulesServices\Wizards\Wizards.csproj" />
+    <ProjectReference Include="..\NetworkArchive\NetworkArchive.csproj" />
     <ProjectReference Include="..\Utils\ConfigGenerator\ConfigGenerator.csproj" />
   </ItemGroup>
   <ItemGroup>

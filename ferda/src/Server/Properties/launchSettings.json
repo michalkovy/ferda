@@ -6,7 +6,13 @@
     "IceGrid": {
       "commandName": "Executable",
       "executablePath": "icegridnode.exe",
-      "commandLineArgs": "--Ice.Config=config --IceGrid.Registry.LMDB.Path=registry --IceGrid.Node.Data=node --deploy .\\application.xml"
+      "commandLineArgs": "--Ice.Config=config --IceGrid.Registry.LMDB.Path=registry --IceGrid.Node.Data=node --deploy .\\application.xml",
+      "nativeDebugging": true
+    },
+    "IceBox": {
+      "commandName": "Executable",
+      "executablePath": "dotnet.exe",
+      "commandLineArgs": "iceboxnet.dll --Ice.Config=C:\\Users\\micha\\Source\\Repos\\ferda\\ferda\\src\\Server\\bin\\Debug\\net6.0/node/servers/0/config/config"
     }
   }
 }

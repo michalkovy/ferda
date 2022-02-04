@@ -4,8 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable></Nullable>
-    <AssemblyOriginatorKeyFile>Ferda$(MSBuildProjectName)Boxes.snk</AssemblyOriginatorKeyFile>
-    <AssemblyName>Ferda$(MSBuildProjectName)Boxes</AssemblyName>
+    <AssemblyName>FerdaWizards</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
