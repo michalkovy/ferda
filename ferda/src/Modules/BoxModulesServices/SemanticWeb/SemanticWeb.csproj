@@ -15,4 +15,13 @@
     <ProjectReference Include="..\..\Core\MiningProcessor\MiningProcessor.csproj" />
     <ProjectReference Include="..\..\ServerBase\ServerBase.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="PMMLBuilder\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SEWEBARPublisher\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

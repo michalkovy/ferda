@@ -88,7 +88,7 @@ namespace Ferda.Modules.Boxes.Serializer
 #if MONO
             // validation does not work correctly
 #else
-            XmlValidator.ValidateXmlFile(fileName, "box.xsd");
+            XmlValidator.ValidateXmlFile(fileName, "Boxes\\box.xsd");
 #endif    
 #endif
             XmlRootAttribute xmlRootAttribute = new XmlRootAttribute();
@@ -112,7 +112,7 @@ namespace Ferda.Modules.Boxes.Serializer
 #if MONO
             // validation does not work correctly
 #else
-            XmlValidator.ValidateXmlFile(fileName, "boxLocalization.xsd");
+            XmlValidator.ValidateXmlFile(fileName, "Boxes\\boxesLocalization.xsd");
 #endif
 #endif
             XmlRootAttribute xmlRootAttribute = new XmlRootAttribute();

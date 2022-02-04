@@ -25,6 +25,525 @@
     <None Update="application.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="BoxModulesServices\boxes.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\boxesLocalization.cs-CZ.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\boxesLocalization.en-US.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\AutomaticAttributeWithFuzzyCategories\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\AutomaticAttributeWithFuzzyCategories\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\EachValueOneCategory\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\EachValueOneCategory\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\EquidistantIntervalsLISp\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\EquidistantIntervalsLISp\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\EquidistantIntervals\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\EquidistantIntervals\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\EquifrequencyIntervals\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\EquifrequencyIntervals\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\ManualAttributeWithFuzzyCategories\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\ManualAttributeWithFuzzyCategories\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\OntologyDerivedAttribute\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\StaticAttribute\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\Categorization\StaticAttribute\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\DataSource\Column\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\DataSource\Column\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\DataSource\Database\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\DataSource\Database\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\DataSource\DataTable\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\DataSource\DataTable\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\DataSource\OntologyEnablingColumn\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\DataSource\OntologyEnablingColumn\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\DataSource\VirtualColumn\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\DataPreparation\DataSource\VirtualColumn\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\AtomSetting\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\AtomSetting\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Classification\ETreeClassifier\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\ConjunctionSetting\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\ConjunctionSetting\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\DisjunctionSetting\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\DisjunctionSetting\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\FixedAtom\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\FixedAtom\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\AntiFProperty\Kulczynski\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\AntiFProperty\Kulczynski\BoxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\DoubleImplicational\DoubleFoundedImplication\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\DoubleImplicational\DoubleLowerCriticalImplication\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\DoubleImplicational\DoubleLowerCriticalImplication\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\DoubleImplicational\DoubleUpperCriticalImplication\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\DoubleImplicational\DoubleUpperCriticalImplication\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\DoubleImplicational\FMeasure\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\DoubleImplicational\FMeasure\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Equivalence\AboveNegation\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Equivalence\AboveNegation\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Equivalence\FoundedEquivalence\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Equivalence\FoundedEquivalence\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Equivalence\LowerCriticalEquivalence\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Equivalence\LowerCriticalEquivalence\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Equivalence\UpperCriticalEquivalence\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Equivalence\UpperCriticalEquivalence\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\ChiSquare\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\ChiSquare\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\Fisher\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\Fisher\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\SimpleDeviation\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\FProperty\SimpleDeviation\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Implicational\FoundedImplication\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Implicational\FoundedImplication\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Implicational\LowerCriticalImplication\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Implicational\LowerCriticalImplication\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Implicational\UpperCriticalImplication\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Implicational\UpperCriticalImplication\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\AboveAverageDependence\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\AboveAverageDependence\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\Base\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\Base\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\BelowAverageDependence\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\BelowAverageDependence\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\ComparedImplication\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\ComparedImplication\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\E\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\E\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\Pairing\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\Pairing\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\RowsColumns\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\FourFold\Others\RowsColumns\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\AritmeticAverage\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\AritmeticAverage\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\Asymetry\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\Asymetry\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\GeometricAverage\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\GeometricAverage\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\Skewness\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\Skewness\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\StandardDeviation\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\StandardDeviation\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\Variance\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\CardinalVariableDistributionCharacteristics\Variance\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\NominalVariableDistributionCharacteristics\NominalVariationNormalized\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\NominalVariableDistributionCharacteristics\NominalVariationNormalized\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\NominalVariableDistributionCharacteristics\VariationRatio\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\NominalVariableDistributionCharacteristics\VariationRatio\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\OrdinalVariableDistributionCharacteristics\DiscreteOrdinaryVariationNormalized\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneDimensional\OrdinalVariableDistributionCharacteristics\DiscreteOrdinaryVariationNormalized\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneOrTwoDimensional\Aggregation\AnyValue\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneOrTwoDimensional\Aggregation\AnyValue\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneOrTwoDimensional\Aggregation\Average\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneOrTwoDimensional\Aggregation\Average\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneOrTwoDimensional\Aggregation\Maximum\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneOrTwoDimensional\Aggregation\Maximum\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneOrTwoDimensional\Aggregation\Minimum\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneOrTwoDimensional\Aggregation\Minimum\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneOrTwoDimensional\Aggregation\Sum\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\OneOrTwoDimensional\Aggregation\Sum\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\Distribution\ChiSquare\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\Distribution\ChiSquare\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\FunctionalDependence\FunctionOfRowEachRow\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\FunctionalDependence\FunctionOfRowEachRow\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\FunctionalDependence\FunctionOfRow\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\FunctionalDependence\FunctionOfRow\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\InformationTheory\ConditionalEntropy\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\InformationTheory\ConditionalEntropy\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\InformationTheory\InformationDependence\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\InformationTheory\InformationDependence\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\InformationTheory\MutualInformationNormalized\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\InformationTheory\MutualInformationNormalized\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\OrdinalDependence\Kendall\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Quantifiers\TwoDimensional\OrdinalDependence\Kendall\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Sign\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Sign\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\ETree\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\FourFold\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\FourFold\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\SDFourFold\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\SDFourFold\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\SDSingleDimensional\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\SDSingleDimensional\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\SDTwoDimensional\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\SDTwoDimensional\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\SingleDimensional\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\SingleDimensional\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\TwoDimensional\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\Tasks\TwoDimensional\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\VirtualAttributes\VirtualFFTBooleanAttribute\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\VirtualAttributes\VirtualFFTBooleanAttribute\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\VirtualAttributes\VirtualSDFFTBooleanAttribute\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\GuhaMining\VirtualAttributes\VirtualSDFFTBooleanAttribute\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\CommandOutput\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\CommandOutput\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\Command\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\Command\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\ExecuteAction\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\ExecuteAction\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\GetParameter\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\GetParameter\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\Lambda\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\Lambda\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\Math\BinaryOperation\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\Math\BinaryOperation\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\Math\Compare\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\Math\Compare\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\Math\IfThenElse\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\Math\IfThenElse\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\Variable\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Language\Variable\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\OntologyRelated\OntologyMapping\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\OntologyRelated\Ontology\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\OntologyRelated\Ontology\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Sample\BodyMassIndex\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Sample\BodyMassIndex\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\SemanticWeb\PMMLBuilder\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\SemanticWeb\PMMLBuilder\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\SemanticWeb\SEWEBARPublisher\boxDesign.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\SemanticWeb\SEWEBARPublisher\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Wizards\WizardAction\wizardAction.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Wizards\WizardForm\wizardForm.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Wizards\WizardGenerated\wizardGenerated.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoxModulesServices\Wizards\Wizard\wizard.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -40,7 +559,9 @@
   </ItemGroup>
   <Target AfterTargets="Build" Name="CopyIceBoxNet">
     <Copy DestinationFolder="$(OutputPath)" SourceFiles="@(IceBoxNet)" />
-    <Exec Command="dotnet ConfigGenerator.dll -inputFileName ../../../../Modules/BoxModulesServices/boxes.xml -outputFileName BoxConfig.xml -taskType BoxConfig -outputBaseDirectory ." WorkingDirectory="$(OutputPath)" />
+    <Exec Command="dotnet ConfigGenerator.dll -inputFileName BoxModulesServices/boxes.xml -outputFileName BoxConfig.xml -taskType BoxConfig -outputBaseDirectory BoxModulesServices" WorkingDirectory="$(OutputPath)" />
+    <Exec Command="dotnet ConfigGenerator.dll -inputFileName BoxModulesServices/boxesLocalization.en-US.xml -outputFileName Localization.en-US.xml -taskType Localization -outputBaseDirectory BoxModulesServices" WorkingDirectory="$(OutputPath)" />
+    <Exec Command="dotnet ConfigGenerator.dll -inputFileName BoxModulesServices/boxesLocalization.cs-CZ.xml -outputFileName Localization.cs-CZ.xml -taskType Localization -outputBaseDirectory BoxModulesServices" WorkingDirectory="$(OutputPath)" />
   </Target>
   <Target AfterTargets="Clean" Name="CleanIceBoxNet">
     <Delete Files="@(IceBoxNet->'$(OutputPath)%(Identity)')" />

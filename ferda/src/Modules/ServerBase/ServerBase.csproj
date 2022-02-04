@@ -18,4 +18,16 @@
     <ProjectReference Include="..\..\..\libsrc\CsvReader\LumenWorks.Framework.IO\LumenWorks.Framework.IO.csproj" />
     <ProjectReference Include="..\..\Base\Base.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Boxes\box.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Boxes\boxes.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Boxes\boxesLocalization.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
