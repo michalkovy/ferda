@@ -1,0 +1,68 @@
+* mam implementovane
+# mam Functions
+^ mam BoxInfo
+$ mam XML konfigurak
+
+Four Fold Quantifiers (9)
+-------------------------
+Base treshold
+	Base (a-freq) *#
+Implicational
+	FoundedImplication *#
+	LowerCriticalImplication
+	UpperCriticalImplication
+Double Implicational
+	DoubleFoundedImplication *#
+	DoubleLowerCriticalImplication
+	DoubleUpperCriticalImplication
+Equivalence
+	FoundedEquivalence *#
+	LowerCriticalEquivalence
+	UpperCriticalEquivalence
+Distribution Significance
+	ChiSquare
+	SimpleDeviation
+	Fisher
+Above Below Outside Average
+	AboveBelowAverageImplication *
+Next
+	E *
+
+// See document 093 CF a SDCF Kvantifikátory.doc
+Single-Dimension (jen relativni) *#
+-----------------------------------
+NominalVariableDistributionCharacteristics
+	NominalVariationNormalized *#
+	VariationRatio *#
+OrdinalVariableDistributionCharacteristics
+	DiscreteOrdinaryVariationNormalized *#
+CardinalVariableDistributionCharacteristics (Needs numeric values)
+	AritmeticAverage *#
+	GeometricAverage *#
+	Variance *#
+	StandardDeviation *#
+	Asymetry *# ... koeficient asymetrie kolem støedu rozložení
+	Skewness *# ... šikmost
+
+One-Or-Two-Dimensional Quantifiers *#
+-------------------------------------
+Aggregation
+	AnyValue *#
+	Minimum *#
+	Maximum *#
+	Average *#
+	Sum *#
+
+Strict Two-Dimensional Quantifiers *# (1)
+-----------------------------------------
+Functional Dependence
+	FunctionOfRow(FunctionSumOfRows) *#
+	FunctionOfRowEachRow(FunctionEachRow) *#
+Ordinal Dependence
+	Kendall *#
+Information Theory
+	InformationDependence *#
+	ConditionalEntropy *#
+	MutualInformationNormalized *#
+Distribution
+	ChiSquare

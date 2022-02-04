@@ -1,6 +1,0 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <StartWorkingDirectory>../../../../ferda/bin/Server/</StartWorkingDirectory>
-    <StartArguments>-inputFileName ../../src/Modules/BoxModulesServices/boxes.xml -outputFileName BoxConfig.xml -taskType BoxConfig -outputBaseDirectory BoxModulesServices</StartArguments>
-  </PropertyGroup>
-</Project>

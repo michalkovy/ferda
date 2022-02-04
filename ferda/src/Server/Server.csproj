@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Modules\BoxModulesServices\Sample\Sample.csproj" />
     <ProjectReference Include="..\Modules\BoxModulesServices\SemanticWeb\SemanticWeb.csproj" />
     <ProjectReference Include="..\Modules\BoxModulesServices\Wizards\Wizards.csproj" />
+    <ProjectReference Include="..\Utils\ConfigGenerator\ConfigGenerator.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="application.xml">
@@ -39,6 +40,7 @@
   </ItemGroup>
   <Target AfterTargets="Build" Name="CopyIceBoxNet">
     <Copy DestinationFolder="$(OutputPath)" SourceFiles="@(IceBoxNet)" />
+    <Exec Command="dotnet ConfigGenerator.dll -inputFileName ../../../../Modules/BoxModulesServices/boxes.xml -outputFileName BoxConfig.xml -taskType BoxConfig -outputBaseDirectory ." WorkingDirectory="$(OutputPath)" />
   </Target>
   <Target AfterTargets="Clean" Name="CleanIceBoxNet">
     <Delete Files="@(IceBoxNet->'$(OutputPath)%(Identity)')" />
