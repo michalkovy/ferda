@@ -140,8 +140,7 @@
 			<parameter name="index"/>
 			<parameter name="endpoints" default="tcp:udp"/>
 			<parameter name="pwd" default="${application.distrib}"/>
-			<icebox id="${index}" exe="dotnet" activation="on-demand" pwd="${pwd}">
-        <option>iceboxnet.dll</option>
+			<icebox id="${index}" exe="iceboxnet.exe" activation="on-demand" pwd="${pwd}">
 				<description>Ferda .NET IceBox server</description>
 				<properties>
 					<property name="Ice.Admin.Endpoints" value="${endpoints}"/>

@@ -11,7 +11,7 @@
     <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
     <PackageReference Include="System.Data.Odbc" Version="6.0.0" />
     <PackageReference Include="System.Data.OleDb" Version="6.0.0" />
-    <IceBoxNet Include="$(IceHome)/tools/net6.0/*" />
+    <IceBoxNet Include="..\..\lib\ice\*" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modules\BoxModulesServices\Basic\Basic.csproj" />

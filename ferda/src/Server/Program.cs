@@ -9,7 +9,7 @@ if (dbConnection != null)
 {
     //System.Data.IDataReader dr = System.Data.OleDb.OleDbEnumerator.GetRootEnumerator();
     //System.Data.OleDb.OleDbConnectionStringBuilder
-    dbConnection.ConnectionString = "Provider=Microsoft.ACE.OLEDB.16.0;Data Source=C:\\Users\\mk185147\\source\\repos\\Business\\PrepareData\\bin\\Release;Extended Properties=\"Text;HDR=Yes\"";
+    dbConnection.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.16.0;Data Source=C:\Users\mk185147\source\repos\Business\PrepareData\bin\Release;Extended Properties=""Text;HDR=Yes""";
     dbConnection.Open();
     Console.WriteLine("Good");
 }

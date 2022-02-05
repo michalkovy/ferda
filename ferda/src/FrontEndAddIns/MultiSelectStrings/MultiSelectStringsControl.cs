@@ -158,7 +158,7 @@ namespace Ferda.FrontEnd.AddIns.MultiSelectStrings
             // get the directory where FerdaFrontEnd.exe resides
             string assemblyDir = Assembly.GetExecutingAssembly().Location;
 	    	System.IO.FileInfo fileInfo = new System.IO.FileInfo(assemblyDir);
-	    	assemblyDir = fileInfo.Directory.Parent.FullName.ToString();
+	    	assemblyDir = fileInfo.Directory.ToString();
 	    	
 	    	string iconPath = System.IO.Path.Combine(assemblyDir, "FerdaFrontEnd.ico");
 
