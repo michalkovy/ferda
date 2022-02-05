@@ -115,21 +115,14 @@ namespace Ferda.FrontEnd
         /// </exception> 
 		public static void Save(FrontEndConfig config)
 		{
-            //getting the name of the executing assembly (should be FerdaFrontEnd.exe)
-            string assembly = Assembly.GetExecutingAssembly().FullName;
-            //getting the name of the exe program (without the suffix)
-            assembly = assembly.Substring(0, assembly.IndexOf(','));
-            //adding the suffix
-            assembly += ".exe";
-            //getting the full location fo the .exe file
-            StringBuilder str = new StringBuilder(Assembly.GetExecutingAssembly().Location);
-            //replacing the .exe by the name of the config file
-            str.Replace(assembly, FileName);
+            string folder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            var path = Path.Combine(folder, FileName);
 
             System.IO.FileStream fs = null;
             try
             {
-                fs = new System.IO.FileStream(str.ToString(),System.IO.FileMode.Create);
+                fs = new System.IO.FileStream(path, System.IO.FileMode.Create);
                 XmlSerializer s = new XmlSerializer(typeof(FrontEndConfig));
                 TextWriter w = new StreamWriter(fs);
                 s.Serialize(w, config);

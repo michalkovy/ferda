@@ -4,7 +4,7 @@
     <StartIceGridLocaly>true</StartIceGridLocaly>
     <StopIceGridLocaly>true</StopIceGridLocaly>
     <IceGridAsService>false</IceGridAsService>
-    <IceGridWorkingDirectory>..\..\..\..\Server\bin\Debug\net6.0</IceGridWorkingDirectory>
+    <IceGridWorkingDirectory>..\..\..\..\Server\bin\Debug\net6.0-windows</IceGridWorkingDirectory>
     <IceGridApplicationXmlFilePath>application.xml</IceGridApplicationXmlFilePath>
     <SentenceForWait>Server: changed server `0' state to `Inactive'</SentenceForWait>
     <ServersToStop />

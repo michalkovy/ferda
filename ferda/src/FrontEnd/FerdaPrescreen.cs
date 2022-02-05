@@ -76,23 +76,26 @@ namespace Ferda.FrontEnd
             // 
             this.LMessages.AutoSize = true;
             this.LMessages.BackColor = System.Drawing.Color.Transparent;
-            this.LMessages.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.LMessages.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.LMessages.ForeColor = System.Drawing.SystemColors.Window;
-            this.LMessages.Location = new System.Drawing.Point(12, 157);
+            this.LMessages.Location = new System.Drawing.Point(16, 242);
+            this.LMessages.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LMessages.Name = "LMessages";
-            this.LMessages.Size = new System.Drawing.Size(0, 13);
+            this.LMessages.Size = new System.Drawing.Size(0, 17);
             this.LMessages.TabIndex = 1;
             // 
             // FerdaPrescreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SkyBlue;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(400, 200);
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(533, 308);
             this.Controls.Add(this.LMessages);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FerdaPrescreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FerdaPrescreen";

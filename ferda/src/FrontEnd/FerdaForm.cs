@@ -809,8 +809,13 @@ using Ferda.ModulesManager;
             Trace.AutoFlush = true;
             Trace.WriteLine("THE FILE CONTAINS LOG INFORMATION ABOUT FERDA RUN");
 
-        	prescreen = new FerdaPrescreen();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
 
+
+        	prescreen = new FerdaPrescreen();
+            
             prescreen.Show();
             prescreen.Refresh();
 

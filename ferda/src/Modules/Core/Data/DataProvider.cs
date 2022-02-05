@@ -40,6 +40,14 @@ namespace Ferda.Guha.Data
     {
         private static List<string> _factoryClassesInvariantNames = null;
 
+        static DataProviderHelper()
+        {
+            if (System.Data.OleDb.OleDbFactory.Instance != null)
+                DbProviderFactories.RegisterFactory(OleDbInvariantName, System.Data.OleDb.OleDbFactory.Instance);
+            if (System.Data.Odbc.OdbcFactory.Instance != null)
+                DbProviderFactories.RegisterFactory(OdbcInvariantName, System.Data.Odbc.OdbcFactory.Instance);
+        }
+
         /// <summary>
         /// Gets the factory classes invariant names.
         /// </summary>

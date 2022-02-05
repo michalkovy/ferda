@@ -12,7 +12,7 @@
     "IceBox": {
       "commandName": "Executable",
       "executablePath": "dotnet.exe",
-      "commandLineArgs": "iceboxnet.dll --Ice.Config=C:\\Users\\micha\\Source\\Repos\\ferda\\ferda\\src\\Server\\bin\\Debug\\net6.0/node/servers/0/config/config"
+      "commandLineArgs": "iceboxnet.dll --Ice.Config=./node/servers/0/config/config"
     }
   }
 }

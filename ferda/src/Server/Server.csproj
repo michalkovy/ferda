@@ -1,13 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="zeroc.ice.net" Version="3.7.7" />
     <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
+    <PackageReference Include="System.Data.Odbc" Version="6.0.0" />
+    <PackageReference Include="System.Data.OleDb" Version="6.0.0" />
     <IceBoxNet Include="$(IceHome)/tools/net6.0/*" />
   </ItemGroup>
   <ItemGroup>
@@ -558,6 +561,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  
   <Target AfterTargets="Build" Name="CopyIceBoxNet">
     <Copy DestinationFolder="$(OutputPath)" SourceFiles="@(IceBoxNet)" />
     <Exec Command="dotnet ConfigGenerator.dll -inputFileName BoxModulesServices/boxes.xml -outputFileName BoxConfig.xml -taskType BoxConfig -outputBaseDirectory BoxModulesServices" WorkingDirectory="$(OutputPath)" />
