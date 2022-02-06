@@ -69,11 +69,14 @@ namespace Ferda.Guha.Data
         {
             switch (providerInvariantName)
             {
+                case SqlClientInvariantName:
+                    prefix = "[";
+                    suffix = "]";
+                    return;
                 case OdbcInvariantName:
                 case OleDbInvariantName:
                 case OracleClientInvariantName:
-                case SqlClientInvariantName:
-		case MonoSqliteInvariantName:
+		        case MonoSqliteInvariantName:
                     prefix = "`";
                     suffix = "`";
                     return;

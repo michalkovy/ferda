@@ -267,8 +267,7 @@ namespace Ferda.Guha.Data
 
                     // second (used) way
                     DbCommand command = GenericDatabase.CreateDbCommand();
-                    command.CommandText = "SELECT * FROM " + GenericDatabase.QuoteQueryIdentifier(_explain.name) +
-                                          " WHERE 0";
+                    command.CommandText = "SELECT * FROM " + GenericDatabase.QuoteQueryIdentifier(_explain.name); // + " WHERE 0";
                     try
                     {
                         schema = command.ExecuteReader(CommandBehavior.SchemaOnly).GetSchemaTable();
@@ -344,7 +343,7 @@ namespace Ferda.Guha.Data
                         resultItem.numericPrecision = Convert.IsDBNull(row["NumericPrecision"]) ? 0 : Convert.ToInt32(row["NumericPrecision"]);
                         resultItem.numericScale = Convert.IsDBNull(row["NumericScale"]) ? 0 : Convert.ToInt32(row["NumericScale"]);
                         resultItem.isUnique = Convert.ToBoolean(row["IsUnique"]);
-                        resultItem.isKey = Convert.ToBoolean(row["IsKey"]);
+                        resultItem.isKey = Convert.IsDBNull(row["IsKey"]) ? false : Convert.ToBoolean(row["IsKey"]);
                         //BaseServerName
                         //BaseCatalogName
                         //BaseColumnName
