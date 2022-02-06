@@ -846,11 +846,11 @@ namespace Netron.GraphLib.UI
 			try
 			{
 				Assembly ass= Assembly.GetExecutingAssembly();
-				MouseCursors.Add = new Cursor(  ass.GetManifestResourceStream("Netron.GraphLib.Resources.Add.cur"));
-				MouseCursors.Cross = new Cursor(    ass.GetManifestResourceStream("Netron.GraphLib.Resources.Cross.cur"));
-				MouseCursors.Grip =  new Cursor(   ass.GetManifestResourceStream("Netron.GraphLib.Resources.Grip.cur"));
-				MouseCursors.Move =  new Cursor(  ass.GetManifestResourceStream("Netron.GraphLib.Resources.Move.cur"));
-				MouseCursors.Select =  new Cursor(  ass.GetManifestResourceStream("Netron.GraphLib.Resources.Select.cur"));
+				MouseCursors.Add = new Cursor(  ass.GetManifestResourceStream("NAFGraph.Resources.Add.cur"));
+				MouseCursors.Cross = new Cursor(    ass.GetManifestResourceStream("NAFGraph.Resources.Cross.cur"));
+				MouseCursors.Grip =  new Cursor(   ass.GetManifestResourceStream("NAFGraph.Resources.Grip.cur"));
+				MouseCursors.Move =  new Cursor(  ass.GetManifestResourceStream("NAFGraph.Resources.Move.cur"));
+				MouseCursors.Select =  new Cursor(  ass.GetManifestResourceStream("NAFGraph.Resources.Select.cur"));
 			}
 			catch(Exception exc)
 			{

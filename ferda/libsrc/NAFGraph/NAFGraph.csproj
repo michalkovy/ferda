@@ -9,4 +9,24 @@
     <AssemblyOriginatorKeyFile>NAFGraph.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\Add.cur" />
+    <None Remove="Resources\Cross.cur" />
+    <None Remove="Resources\Grip.cur" />
+    <None Remove="Resources\Move.cur" />
+    <None Remove="Resources\Select.cur" />
+    <None Remove="Resources\SimpleNode.gif" />
+    <None Remove="Resources\UnknownShape.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Add.cur" />
+    <EmbeddedResource Include="Resources\Cross.cur" />
+    <EmbeddedResource Include="Resources\Grip.cur" />
+    <EmbeddedResource Include="Resources\Move.cur" />
+    <EmbeddedResource Include="Resources\Select.cur" />
+    <EmbeddedResource Include="Resources\SimpleNode.gif" />
+    <EmbeddedResource Include="Resources\UnknownShape.gif" />
+  </ItemGroup>
+
 </Project>
