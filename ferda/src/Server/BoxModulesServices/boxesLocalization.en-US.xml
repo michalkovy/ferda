@@ -54,6 +54,10 @@
 						<Name>TABLE</Name>
 						<Label>TABLE</Label>
 					</SelectOption>
+          <SelectOption>
+            <Name>BASE TABLE</Name>
+            <Label>BASE TABLE</Label>
+          </SelectOption>
 					<SelectOption>
 						<Name>SYNONYM</Name>
 						<Label>SYNONYM</Label>

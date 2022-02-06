@@ -47,6 +47,7 @@ namespace Ferda.Guha.Data
                 {
                     "ALIAS",
                     "TABLE",
+                    "BASE TABLE",
                     "SYNONYM",
                     "SYSTEM TABLE",
                     "VIEW",

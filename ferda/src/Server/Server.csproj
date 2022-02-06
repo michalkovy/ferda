@@ -11,7 +11,7 @@
     <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
     <PackageReference Include="System.Data.Odbc" Version="6.0.0" />
     <PackageReference Include="System.Data.OleDb" Version="6.0.0" />
-    <IceBoxNet Include="..\..\lib\ice\*" />
+    <IceBoxNet Include="..\..\lib\ice\**\*" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modules\BoxModulesServices\Basic\Basic.csproj" />
@@ -563,7 +563,7 @@
   </ItemGroup>
   
   <Target AfterTargets="Build" Name="CopyIceBoxNet">
-    <Copy DestinationFolder="$(OutputPath)" SourceFiles="@(IceBoxNet)" />
+    <Copy DestinationFolder="$(OutputPath)\%(RecursiveDir)" SourceFiles="@(IceBoxNet)" />
     <Exec Command="dotnet ConfigGenerator.dll -inputFileName BoxModulesServices/boxes.xml -outputFileName BoxConfig.xml -taskType BoxConfig -outputBaseDirectory BoxModulesServices" WorkingDirectory="$(OutputPath)" />
     <Exec Command="dotnet ConfigGenerator.dll -inputFileName BoxModulesServices/boxesLocalization.en-US.xml -outputFileName Localization.en-US.xml -taskType Localization -outputBaseDirectory BoxModulesServices" WorkingDirectory="$(OutputPath)" />
     <Exec Command="dotnet ConfigGenerator.dll -inputFileName BoxModulesServices/boxesLocalization.cs-CZ.xml -outputFileName Localization.cs-CZ.xml -taskType Localization -outputBaseDirectory BoxModulesServices" WorkingDirectory="$(OutputPath)" />

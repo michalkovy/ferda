@@ -132,7 +132,10 @@
 					<SelectOption>
 						<Name>TABLE</Name>
 					</SelectOption>
-					<SelectOption>
+          <SelectOption>
+            <Name>BASE TABLE</Name>
+          </SelectOption>
+          <SelectOption>
 						<Name>SYNONYM</Name>
 					</SelectOption>
 					<SelectOption>
@@ -156,7 +159,7 @@
 				</SelectOptions>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<Default>TABLE,VIEW</Default>
+				<Default>TABLE,BASE TABLE,VIEW</Default>
 				<SettingModuleIdentifier>MultiSelectStrings</SettingModuleIdentifier>
 			</Property>
 			<Property>
