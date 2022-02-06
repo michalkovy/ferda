@@ -181,7 +181,7 @@ namespace Ferda.Guha.Data
                             {
                                 command.CommandText =
                                     "SELECT DISTINCT " + columnQuotedIdentifier + " FROM " 
-                                    + dataTableQuotedIdentifier + " WHERE " + whereQuotedIdentifier;
+                                    + dataTableQuotedIdentifier + (whereQuotedIdentifier == "1" ? "" : " WHERE " + whereQuotedIdentifier);
 
                                 DbDataAdapter dataAdapter = GenericDataTable.GenericDatabase.CreateDbDataAdapter();
                                 dataAdapter.SelectCommand = command;
