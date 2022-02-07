@@ -276,3 +276,101 @@ Run #2
   FuzzyFloat           00:01:38.0992960
   FuzzyVector4        00:01:42.6914720
   FuzzyVector4Safe    00:01:43.6616110
+
+=============================================================================================
+Benchmark version: 1
+Machine name: WCZMK185147-CTD
+Operating System: Microsoft Windows NT 10.0.18363.0
+Runtime version: 6.0.1
+Mono: False
+64bit native mode: True
+Is Vector Hardware accelerated: True
+Vector<ulong>.Count: 4
+Vector<uint>.Count: 8
+Popcnt.X64.IsSupported: True
+Popcnt.IsSupported: True
+Date and time: 2/7/2022 3:25:25 AM
+Benchmarking type And
+Run #1
+  SafeAndCrisp         00:00:00.5128753
+  UnsafeAndCrisp       00:00:00.5676762
+  CrispVector          00:00:00.2775508
+  SafeAndFuzzyVector4  00:00:37.0828118
+  UnsafeAndFuzzyVector4 00:00:35.3923744
+  SafeAndFuzzyFloat    00:00:46.9340530
+  UnsafeAndFuzzyFloat  00:01:17.1046039
+  SafeAndCrispFuzzyFloat 00:02:16.8716466
+  SafeAndCrispFuzzyFloat2 00:01:11.9461875
+  SafeAndCrispFuzzyVector4Naive 00:02:05.4338888
+Run #2
+  SafeAndCrisp         00:00:00.5727611
+  UnsafeAndCrisp       00:00:00.5915232
+  CrispVector          00:00:00.3079256
+  SafeAndFuzzyVector4  00:00:38.2942501
+  UnsafeAndFuzzyVector4 00:00:37.9666012
+  SafeAndFuzzyFloat    00:00:52.4029484
+  UnsafeAndFuzzyFloat  00:01:07.0803322
+  SafeAndCrispFuzzyFloat 00:02:19.3263885
+  SafeAndCrispFuzzyFloat2 00:01:11.1644225
+  SafeAndCrispFuzzyVector4Naive 00:02:03.7757711
+Benchmarking type Not
+Run #1
+  SafeNotCrisp         00:00:00.6412541
+  UnsafeNotCrisp       00:00:00.7105693
+  SafeNotCrispVector   00:00:00.3574174
+  SafeNotFuzzyVector4  00:00:51.6010769
+  SafeNotFuzzyFloat    00:00:49.1002677
+  UnsafeNotFuzzyVector41Operation 00:00:30.6515107
+  UnsafeNotFuzzyVector42Operation 00:00:32.6231785
+  UnsafeNotFuzzyFloat  00:00:41.9328710
+Run #2
+  SafeNotCrisp         00:00:00.4722096
+  UnsafeNotCrisp       00:00:00.4242730
+  SafeNotCrispVector   00:00:00.2239909
+  SafeNotFuzzyVector4  00:00:27.3445007
+  SafeNotFuzzyFloat    00:00:42.2940903
+  UnsafeNotFuzzyVector41Operation 00:00:26.9392435
+  UnsafeNotFuzzyVector42Operation 00:00:23.6286512
+  UnsafeNotFuzzyFloat  00:00:40.8638387
+Benchmarking type Or
+Run #1
+  SafeOrCrisp          00:00:00.5716373
+  UnsafeOrCrisp        00:00:00.6181891
+  SafeOrCrispVector    00:00:00.3266000
+  SafeOrFuzzyVector4   00:00:40.7686963
+  UnsafeOrFuzzyVector4 00:00:41.6134076
+  SafeOrFuzzyFloat     00:00:52.6950378
+  UnsafeOrFuzzyFloat   00:00:51.6560683
+  SafeOrCrispFuzzyFloat 00:06:46.1207259
+  SafeOrCrispFuzzyFloat2 00:01:29.3011549
+  SafeOrCrispFuzzyVector4Naive 00:05:57.6798877
+Run #2
+  SafeOrCrisp          00:00:00.5782466
+  UnsafeOrCrisp        00:00:00.6366918
+  SafeOrCrispVector    00:00:00.3578465
+  SafeOrFuzzyVector4   00:00:43.0706697
+  UnsafeOrFuzzyVector4 00:00:43.2776582
+  SafeOrFuzzyFloat     00:00:52.4470212
+  UnsafeOrFuzzyFloat   00:00:52.5700529
+  SafeOrCrispFuzzyFloat 00:06:47.7808868
+  SafeOrCrispFuzzyFloat2 00:01:27.6710426
+  SafeOrCrispFuzzyVector4Naive 00:05:42.3086291
+Benchmarking type Sum
+Run #1
+  BoolPrecomputed      00:00:01.7540520
+  BoolQuick            00:00:01.8095413
+  BoolQuickWithoutMult 00:00:01.9603064
+  BoolVectorPopCnt     00:00:00.7741426
+  BoolQuickVectorUl    00:00:00.6646618
+  FuzzyFloat           00:01:03.8842767
+  FuzzyVector4         00:00:18.8561593
+  FuzzyVector4Safe     00:00:19.6203256
+Run #2
+  BoolPrecomputed      00:00:01.6050240
+  BoolQuick            00:00:01.7042899
+  BoolQuickWithoutMult 00:00:01.9731489
+  BoolVectorPopCnt     00:00:00.7638129
+  BoolQuickVectorUl    00:00:00.6548314
+  FuzzyFloat           00:01:03.8564569
+  FuzzyVector4         00:00:18.5751901
+  FuzzyVector4Safe     00:00:19.6410881
