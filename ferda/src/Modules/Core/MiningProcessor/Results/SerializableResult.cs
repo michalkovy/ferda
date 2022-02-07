@@ -55,6 +55,8 @@ namespace Ferda.Guha.MiningProcessor.Results
         /// </summary>
         public TaskTypeEnum TaskTypeEnum;
 
+        private static XmlSerializer _serializer = new XmlSerializer(typeof(SerializableResult), typeof(SerializableResult).GetNestedTypes());
+
         /// <summary>
         /// Initializes a new instance of the <see cref="T:SerializableResult"/> class.
         /// </summary>
@@ -118,13 +120,13 @@ namespace Ferda.Guha.MiningProcessor.Results
             if (input == null)
                 return null;
             SerializableResult serializable = SerializableResult.build(input);
-            XmlSerializer serializer = new XmlSerializer(typeof(SerializableResult));
             StringBuilder sb = new StringBuilder();
             using (
             StringWriter writer = new StringWriter(sb)
             )
             {
-                serializer.Serialize(writer, serializable);
+                
+                _serializer.Serialize(writer, serializable);
                 return sb.ToString();
             }
         }
