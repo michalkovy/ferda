@@ -9,3 +9,4 @@
 /ferda/.ionide
 /**/*.csproj.user
 /ferda/lib/ice
+/ferda/src/.vs/FrontEnd/v17/.futdcache.v1
