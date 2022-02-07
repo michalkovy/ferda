@@ -248,6 +248,8 @@ public class Benchmark
         Console.WriteLine ("Is Vector Hardware accelerated: {0}", System.Numerics.Vector.IsHardwareAccelerated);
         Console.WriteLine("Vector<ulong>.Count: {0}", System.Numerics.Vector<ulong>.Count);
         Console.WriteLine("Vector<uint>.Count: {0}", System.Numerics.Vector<uint>.Count);
+        Console.WriteLine("Popcnt.X64.IsSupported: {0}", System.Runtime.Intrinsics.X86.Popcnt.X64.IsSupported);
+        Console.WriteLine("Popcnt.IsSupported: {0}", System.Runtime.Intrinsics.X86.Popcnt.IsSupported);
         Console.WriteLine ("Date and time: {0}", System.DateTime.Now);
     }
     
