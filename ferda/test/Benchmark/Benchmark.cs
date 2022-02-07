@@ -245,7 +245,7 @@ public class Benchmark
         Console.WriteLine ("Runtime version: {0}", Environment.Version);
         Console.WriteLine ("Mono: {0}", (Type.GetType("System.MonoType", false) != null));
         Console.WriteLine ("64bit native mode: {0}", Is64Bit);
-        Console.WriteLine ("Supported accelerations: {0}", Mono.Simd.SimdRuntime.AccelMode.ToString());
+        Console.WriteLine ("Is Vector Hardware accelerated: {0}", System.Numerics.Vector.IsHardwareAccelerated);
         Console.WriteLine ("Date and time: {0}", System.DateTime.Now);
     }
     

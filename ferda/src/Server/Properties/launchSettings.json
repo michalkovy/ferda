@@ -11,8 +11,9 @@
     },
     "IceBox": {
       "commandName": "Executable",
-      "executablePath": "dotnet.exe",
-      "commandLineArgs": "iceboxnet.dll --Ice.Config=./node/servers/0/config/config"
+      "executablePath": "C:\\Users\\mk185147\\source\\repos\\ferda\\ferda\\src\\Server\\bin\\Debug\\net6.0-windows\\iceboxnet.exe",
+      "commandLineArgs": "--Ice.Config=./node/servers/0/config/config",
+      "workingDirectory": "C:\\Users\\mk185147\\source\\repos\\ferda\\ferda\\src\\Server\\bin\\Debug\\net6.0-windows\\"
     }
   }
 }

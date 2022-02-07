@@ -17,7 +17,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 using System;
-using Mono.Simd;
+using System.Numerics;
 
 namespace Ferda.Benchmark
 {
@@ -29,7 +29,7 @@ namespace Ferda.Benchmark
         protected const int lengthUlongString = 100000;
 
         protected static ulong[] stringUlong = new ulong[lengthUlongString];
-        protected static Vector4f[] stringVector4f = new Vector4f[LengthVector4fString];
+        protected static Vector4[] stringVector4 = new Vector4[LengthVector4String];
         protected static float[] stringFloat = new float[LengthFloatString];
 
         /// <summary>
@@ -38,9 +38,9 @@ namespace Ferda.Benchmark
         protected static ulong[] stringUlong2 = new ulong[lengthUlongString];
 
         /// <summary>
-        /// The second Vector4f array - for conjunction and disjunction
+        /// The second Vector4 array - for conjunction and disjunction
         /// </summary>
-        protected static Vector4f[] stringVector4f2 = new Vector4f[LengthVector4fString];
+        protected static Vector4[] stringVector42 = new Vector4[LengthVector4String];
 
         /// <summary>
         /// The second float array - for conjunction and disjunction
@@ -48,9 +48,9 @@ namespace Ferda.Benchmark
         protected static float[] stringFloat2 = new float[LengthFloatString];
 
         /// <summary>
-        /// The length of the Vector4f string
+        /// The length of the Vector4 string
         /// </summary>
-        protected static int LengthVector4fString
+        protected static int LengthVector4String
         {
             get { return lengthUlongString * 64 / 4; }
         }
@@ -76,24 +76,24 @@ namespace Ferda.Benchmark
         /// </summary>
         protected const ulong _one = 1ul;
 
-        //uint precomputed vectors
-        protected static Vector4ui sui1 = new Vector4ui(0x00000001, 0x00000002, 0x00000004, 0x00000008);
-        protected static Vector4ui sui2 = new Vector4ui(0x00000010, 0x00000020, 0x00000040, 0x00000080);
-        protected static Vector4ui sui3 = new Vector4ui(0x00000100, 0x00000200, 0x00000400, 0x00000800);
-        protected static Vector4ui sui4 = new Vector4ui(0x00001000, 0x00002000, 0x00004000, 0x00008000);
-        protected static Vector4ui sui5 = new Vector4ui(0x00010000, 0x00020000, 0x00040000, 0x00080000);
-        protected static Vector4ui sui6 = new Vector4ui(0x00100000, 0x00200000, 0x00400000, 0x00800000);
-        protected static Vector4ui sui7 = new Vector4ui(0x01000000, 0x02000000, 0x04000000, 0x08000000);
-        protected static Vector4ui sui8 = new Vector4ui(0x10000000, 0x20000000, 0x40000000, 0x80000000);
-        //float precomputed vectors
-        protected static Vector4f sf1 = new Vector4f(0x00000001, 0x00000002, 0x00000004, 0x00000008);
-        protected static Vector4f sf2 = new Vector4f(0x00000010, 0x00000020, 0x00000040, 0x00000080);
-        protected static Vector4f sf3 = new Vector4f(0x00000100, 0x00000200, 0x00000400, 0x00000800);
-        protected static Vector4f sf4 = new Vector4f(0x00001000, 0x00002000, 0x00004000, 0x00008000);
-        protected static Vector4f sf5 = new Vector4f(0x00010000, 0x00020000, 0x00040000, 0x00080000);
-        protected static Vector4f sf6 = new Vector4f(0x00100000, 0x00200000, 0x00400000, 0x00800000);
-        protected static Vector4f sf7 = new Vector4f(0x01000000, 0x02000000, 0x04000000, 0x08000000);
-        protected static Vector4f sf8 = new Vector4f(0x10000000, 0x20000000, 0x40000000, 0x80000000);
+        ////uint precomputed vectors
+        //protected static Vector<uint> sui1 = new Vector<uint>(new uint[] { 0x00000001, 0x00000002, 0x00000004, 0x00000008 });
+        //protected static Vector<uint> sui2 = new Vector<uint>(new uint[] { 0x00000010, 0x00000020, 0x00000040, 0x00000080 });
+        //protected static Vector<uint> sui3 = new Vector<uint>(new uint[] { 0x00000100, 0x00000200, 0x00000400, 0x00000800 });
+        //protected static Vector<uint> sui4 = new Vector<uint>(new uint[] { 0x00001000, 0x00002000, 0x00004000, 0x00008000 });
+        //protected static Vector<uint> sui5 = new Vector<uint>(new uint[] { 0x00010000, 0x00020000, 0x00040000, 0x00080000 });
+        //protected static Vector<uint> sui6 = new Vector<uint>(new uint[] { 0x00100000, 0x00200000, 0x00400000, 0x00800000 });
+        //protected static Vector<uint> sui7 = new Vector<uint>(new uint[] { 0x01000000, 0x02000000, 0x04000000, 0x08000000 });
+        //protected static Vector<uint> sui8 = new Vector<uint>(new uint[] { 0x10000000, 0x20000000, 0x40000000, 0x80000000 });
+        ////float precomputed vectors
+        //protected static Vector4 sf1 = new Vector4(0x00000001, 0x00000002, 0x00000004, 0x00000008);
+        //protected static Vector4 sf2 = new Vector4(0x00000010, 0x00000020, 0x00000040, 0x00000080);
+        //protected static Vector4 sf3 = new Vector4(0x00000100, 0x00000200, 0x00000400, 0x00000800);
+        //protected static Vector4 sf4 = new Vector4(0x00001000, 0x00002000, 0x00004000, 0x00008000);
+        //protected static Vector4 sf5 = new Vector4(0x00010000, 0x00020000, 0x00040000, 0x00080000);
+        //protected static Vector4 sf6 = new Vector4(0x00100000, 0x00200000, 0x00400000, 0x00800000);
+        //protected static Vector4 sf7 = new Vector4(0x01000000, 0x02000000, 0x04000000, 0x08000000);
+        //protected static Vector4 sf8 = new Vector4(0x10000000, 0x20000000, 0x40000000, 0x80000000);
 
         #endregion
 
@@ -122,13 +122,13 @@ namespace Ferda.Benchmark
                 stringFloat[i] = (float)r.NextDouble();
             }
 
-            for (int i = 0; i < LengthVector4fString; i++)
+            for (int i = 0; i < LengthVector4String; i++)
             {
-                Vector4f tmp = new Vector4f((float)r.NextDouble(),
+                Vector4 tmp = new Vector4((float)r.NextDouble(),
                     (float)r.NextDouble(),
                     (float)r.NextDouble(),
                     (float)r.NextDouble());
-                stringVector4f[i] = tmp;
+                stringVector4[i] = tmp;
             }
         }
 
@@ -152,13 +152,13 @@ namespace Ferda.Benchmark
                 stringFloat2[i] = (float)r.NextDouble();
             }
 
-            for (int i = 0; i < LengthVector4fString; i++)
+            for (int i = 0; i < LengthVector4String; i++)
             {
-                Vector4f tmp = new Vector4f((float)r.NextDouble(),
+                Vector4 tmp = new Vector4((float)r.NextDouble(),
                     (float)r.NextDouble(),
                     (float)r.NextDouble(),
                     (float)r.NextDouble());
-                stringVector4f2[i] = tmp;
+                stringVector42[i] = tmp;
             }
         }
 

@@ -1154,8 +1154,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 }
             }
 
-            /* ukazka pouziti Mono.Simd
-	     * nicmene myslim si, ze bychom meli retizky predelat z ulong[] na Vector2ul[] a pak by to nize bylo komplikovanejsi
+            /* ukazka pouziti System.Numerics
+	     * nicmene myslim si, ze bychom meli retizky predelat z ulong[] na Vector<ulong>[] a pak by to nize bylo komplikovanejsi
             Vector4i sum = new Vector4i(0, 0, 0, 0);
             fixed (ulong* aP = ap, bP = bp, cP = cp, dP = dp)
             {
@@ -1165,10 +1165,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     ulong temp1, temp2, temp3;
                     while (aPt < stopPt)
                     {
-		        Vector2ul ab = new Vector2ul(*aPt++, *bPt++);
-			Vector2ul cd = new Vector2ul(*cPt++, *dPt++);
+		        Vector<ulong> ab = new Vector<ulong>(*aPt++, *bPt++);
+			Vector<ulong> cd = new Vector<ulong>(*cPt++, *dPt++);
 			Vector8us aAcbAd = (Vector8us)(ab & cd);
-			Vector8us aAdbAc = (Vector8us)(ab & (Vector2ul)Vector4i.Suffle((Vector4i)cd,ShuffleSel.XFromZ | ShuffleSel.YFromW | ShuffleSel.ZFromX | ShuffleSel.WFromY));
+			Vector8us aAdbAc = (Vector8us)(ab & (Vector<ulong>)Vector4i.Suffle((Vector4i)cd,ShuffleSel.XFromZ | ShuffleSel.YFromW | ShuffleSel.ZFromX | ShuffleSel.WFromY));
 			sum += new Vector4i(*(lookup + (int)aAcbAd.V0), *(lookup + (int)aAdbAc.V4), *(lookup + (int)aAdbAc.V0), *(lookup + (int)aAcbAd.V4));
 			sum += new Vector4i(*(lookup + (int)aAcbAd.V1), *(lookup + (int)aAdbAc.V5), *(lookup + (int)aAdbAc.V1), *(lookup + (int)aAcbAd.V5));
 			sum += new Vector4i(*(lookup + (int)aAcbAd.V2), *(lookup + (int)aAdbAc.V6), *(lookup + (int)aAdbAc.V2), *(lookup + (int)aAcbAd.V6));

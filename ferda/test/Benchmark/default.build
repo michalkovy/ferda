@@ -18,7 +18,7 @@
 				<references>
 					<include name="System.dll"/>
 					<include name="System.Data.dll"/>
-					<include name="Mono.Simd.dll"/>
+					<include name="System.Numerics.dll"/>
 				</references>
 				<sources failonempty="true">
 					<include name="**.cs"/>
@@ -30,7 +30,7 @@
 				<references>
 					<include name="System.dll"/>
 					<include name="System.Data.dll"/>
-					<include name="../../lib/Mono.Simd.dll"/>
+					<include name="../../lib/System.Numerics.dll"/>
 					<include name="../../bin/Server/FerdaMiningProcessor.dll" />
 				</references>
 				<sources failonempty="true">
@@ -39,7 +39,7 @@
 			</csc>
 			<copy todir="bin/Release">
 				<fileset basedir="../../lib">
-					<include name="Mono.Simd.dll" />
+					<include name="System.Numerics.dll" />
 				</fileset>			
 			</copy>
 		</if>

@@ -122,7 +122,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="identifier">Identifier of the bit string</param>
         /// <param name="floats">Array of floats, which are transformed into
-        /// the <see cref="Mono.Simd.Vector4f"/>structures.</param>
+        /// the <see cref="System.Numerics.Vector4"/>structures.</param>
         /// <param name="checking">
         /// Determines, if the individual fuzzy values, that is floats in the 
         /// <paramref name="float"/> parameter should be checked if they are 
@@ -675,7 +675,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 throw new InvalidOperationException("BitString was not initialized (use create method first).");
             }
 
-            //Adding all the Vector4f's that are sure to be full
+            //Adding all the Vector4's that are sure to be full
             for (int i = 0; i < _array.Length - 1; i++)
             {
                 _array[i].X = value;
@@ -684,7 +684,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 _array[i].W = value;
             }
 
-            //Adding the last Vector4f - there has to be at least one item
+            //Adding the last Vector4 - there has to be at least one item
             _array[_array.Length - 1].X = value;
 
             if (_size % _blocksize == 2)
@@ -780,13 +780,13 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (_size > 0)
             {
                 StringBuilder retValue = new StringBuilder();
-                //Adding all the Vector4f's that are sure to be full
+                //Adding all the Vector4's that are sure to be full
                 for (int i = 0; i < _array.Length - 1; i++)
                 {
                     retValue.AppendFormat("|{0:F3}|{1:F3}|{2:F3}|{3:F3}|",
                         _array[i].X, _array[i].Y, _array[i].Z, _array[i].W);
                 }
-                //Adding the last Vector4f - there has to be at least one item
+                //Adding the last Vector4 - there has to be at least one item
                 retValue.AppendFormat("{0:F3}|", _array[_array.Length - 1].X);
 
                 if (_size % _blocksize == 2)
