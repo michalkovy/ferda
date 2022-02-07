@@ -77,7 +77,14 @@ namespace Ferda.Benchmark
         [Benchmark]
         public static void SafeNotCrispVector()
         {
-            NotSafeCrispVector(stringVectorUlong1);
+            //don't use static variables in iterations
+            var tmp = stringVectorUlong1;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                NotSafeCrispVector(tmp);
+            }
+            
         }
 
         /// <summary>

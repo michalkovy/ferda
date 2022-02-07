@@ -83,7 +83,14 @@ namespace Ferda.Benchmark
         [Benchmark]
         public static void CrispVector()
         {
-            AndCrispVector(stringVectorUlong1, stringVectorUlong2);
+            var tmp = stringVectorUlong1;
+            var tmp2 = stringVectorUlong2;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                AndCrispVector(tmp, tmp2);
+            }
+            
         }
 
         /// <summary>

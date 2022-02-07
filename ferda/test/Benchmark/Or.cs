@@ -84,7 +84,13 @@ namespace Ferda.Benchmark
         [Benchmark]
         public static void SafeOrCrispVector()
         {
-            OrCrispVector(stringVectorUlong1, stringVectorUlong2);
+            var tmp = stringVectorUlong1;
+            var tmp2 = stringVectorUlong2;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                OrCrispVector(tmp, tmp2);
+            }
         }
 
         /// <summary>
