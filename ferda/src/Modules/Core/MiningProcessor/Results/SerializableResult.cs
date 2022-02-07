@@ -144,8 +144,7 @@ namespace Ferda.Guha.MiningProcessor.Results
             StringReader reader = new StringReader(input)
             )
             {
-                XmlSerializer deserealizer = new XmlSerializer(typeof(SerializableResult));
-                object deserealized = deserealizer.Deserialize(reader);
+                object deserealized = _serializer.Deserialize(reader);
                 SerializableResult serializable = (SerializableResult)deserealized;
                 return SerializableResult.build(serializable);
             }
