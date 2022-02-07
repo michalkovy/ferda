@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using Ferda.Guha.MiningProcessor.Formulas;
@@ -568,11 +569,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
                     // compute the sum using the best available method
                     // (looping, folding, 8-bit lookup, 16-bit lookup or sparse sum)
-#if UNSAFE
-                    sumLookup16Unsafe();
-#else
-                    sumLookup16Safe();
-#endif
+                    sumPopCnt();
                 }
 
                 Debug.Assert(_sum >= 0, "The sum must be non-negative.");
@@ -925,6 +922,22 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         }
 #endif
 
+        private unsafe void sumPopCnt()
+        {
+            _sum = 0;
+            unchecked
+            {
+                fixed (ulong* arrayPtr = _array)
+                {
+                    ulong* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
+                    while (currentPtr < stopPtr)
+                    {
+                        ulong current = *currentPtr++;
+                        _sum += BitOperations.PopCount(current);
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// sum = (a AND b).Sum
