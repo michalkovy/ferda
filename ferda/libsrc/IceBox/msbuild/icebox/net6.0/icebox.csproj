@@ -7,6 +7,7 @@
     <Version>$(IceVersion)</Version>
     <OutputPath>../../../../../bin</OutputPath>
     <TargetFramework>net6.0-windows</TargetFramework>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
   </PropertyGroup>
   <PropertyGroup>
     <UseAppHost>true</UseAppHost>
