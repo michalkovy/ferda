@@ -30,7 +30,7 @@ namespace Ferda.Benchmark
 
         protected static ulong[] stringUlong = new ulong[lengthUlongString];
         protected static Vector4[] stringVector4 = new Vector4[LengthVector4String];
-        protected static Vector<ulong> stringVectorUlong1 = new Vector<ulong>(lengthUlongString);
+        protected static Vector<ulong>[] stringVectorUlong1 = new Vector<ulong>[lengthUlongString / Vector<ulong>.Count];
         protected static float[] stringFloat = new float[LengthFloatString];
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Ferda.Benchmark
         /// </summary>
         protected static Vector4[] stringVector42 = new Vector4[LengthVector4String];
 
-        protected static Vector<ulong> stringVectorUlong2 = new Vector<ulong>(lengthUlongString);
+        protected static Vector<ulong>[] stringVectorUlong2 = new Vector<ulong>[lengthUlongString / Vector<ulong>.Count];
 
         /// <summary>
         /// The second float array - for conjunction and disjunction
@@ -119,7 +119,10 @@ namespace Ferda.Benchmark
                     (((ulong)(uint)r.Next(Int32.MinValue,
                     Int32.MaxValue)) << 32);
             }
-            stringVectorUlong1 = new Vector<ulong>(stringUlong);
+            for (int i = 0; i < lengthUlongString / Vector<ulong>.Count; i++)
+            {
+                stringVectorUlong1[i] = new Vector<ulong>(stringUlong, i * Vector<ulong>.Count);
+            }
 
             for (int i = 0; i < LengthFloatString; i++)
             {
@@ -134,7 +137,10 @@ namespace Ferda.Benchmark
                     (float)r.NextDouble());
                 stringVector4[i] = tmp;
             }
-            stringVectorUlong2 = new Vector<ulong>(stringUlong2);
+            for (int i = 0; i < lengthUlongString / Vector<ulong>.Count; i++)
+            {
+                stringVectorUlong2[i] = new Vector<ulong>(stringUlong2, i * Vector<ulong>.Count);
+            }
         }
 
         /// <summary>

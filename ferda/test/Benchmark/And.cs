@@ -435,9 +435,13 @@ namespace Ferda.Benchmark
             return operand1;
         }
 
-        static Vector<ulong> AndCrispVector(Vector<ulong> first, Vector<ulong> second)
+        static Vector<ulong>[] AndCrispVector(Vector<ulong>[] operand1, Vector<ulong>[] operand2)
         {
-            return first & second;
+            for (int i = 0; i < operand1.Length; i++)
+            {
+                operand1[i] &= operand2[i];
+            }
+            return operand1;
         }
 
         /// <summary>

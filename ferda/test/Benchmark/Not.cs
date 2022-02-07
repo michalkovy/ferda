@@ -201,9 +201,13 @@ namespace Ferda.Benchmark
             return source;
         }
 
-        static Vector<ulong> NotSafeCrispVector(Vector<ulong> source)
+        static Vector<ulong>[] NotSafeCrispVector(Vector<ulong>[] source)
         {
-            return ~source;
+            for (int i = 0; i < source.Length; i++)
+            {
+                source[i] = ~source[i];
+            }
+            return source;
         }
 
         /// <summary>

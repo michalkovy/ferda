@@ -33,13 +33,9 @@ namespace Ferda.Benchmark
         //static BigInteger[] stringBigInteger = new BigInteger[lengthUlongString];
         static Vector<ulong>[] stringVectorUl = new Vector<ulong>[LengthVectorUlString];
 
-        static Vector<ulong> stringVectorUlong = new Vector<ulong>(lengthUlongString);
-
-        static ulong[] stringVectorTmp = new ulong[lengthUlongString];
-
         private static int LengthVectorUlString
         {
-            get { return lengthUlongString / 2; }
+            get { return lengthUlongString / Vector<ulong>.Count; }
         }
 
         #endregion
@@ -60,14 +56,13 @@ namespace Ferda.Benchmark
                     Int32.MaxValue)) << 32);
                 //stringBigInteger[i] = new BigInteger(stringUlong[i]);
             }
-            stringVectorUlong = new Vector<ulong>(stringUlong);
             for (int i = 0; i < LengthFloatString; i++)
             {
                 stringFloat[i] = (float)r.NextDouble();
             }
             for (int i = 0; i < LengthVectorUlString; i++)
             {
-                stringVectorUl[i] = new Vector<ulong>(new ulong[] { stringUlong[i * 2], stringUlong[i * 2 + 1] });
+                stringVectorUl[i] = new Vector<ulong>(stringUlong, i * Vector<ulong>.Count);
             }
             for (int i = 0; i < LengthVector4String; i++)
             {
@@ -148,14 +143,14 @@ namespace Ferda.Benchmark
         public static void BoolVectorPopCnt()
         {
             //don't use static variables in iterations
-            Vector<ulong> vec = stringVectorUlong;
+            Vector<ulong>[] vec = stringVectorUl;
             int count = iterations;
             ulong result = 0;
             for (int i = 0; i < count; i++)
             {
                 result = VectorSum(vec);
             }
-            sumBitResult = (ulong)result;
+            sumBitResult = result;
         }
 
         [Benchmark]
@@ -241,10 +236,10 @@ namespace Ferda.Benchmark
         const ulong hff = 0xffffffffffffffff; //binary: all ones
         const ulong h01 = 0x0101010101010101; //the sum of 256 to the power of 0,1,2,3...
 
-        private static Vector<ulong> M1 = new Vector<ulong>(new ulong[] { 0x5555555555555555, 0x5555555555555555 });
-        private static Vector<ulong> M2 = new Vector<ulong>(new ulong[] { 0x3333333333333333, 0x3333333333333333 });
-        private static Vector<ulong> M4 = new Vector<ulong>(new ulong[] { 0x0f0f0f0f0f0f0f0f, 0x0f0f0f0f0f0f0f0f });
-        private static Vector<uint> H01 = new Vector<uint>(new uint[] { 0x01010101, 0x01010101, 0x01010101, 0x01010101 });
+        //private static Vector<ulong> M1 = new Vector<ulong>(new ulong[] { 0x5555555555555555, 0x5555555555555555 });
+        //private static Vector<ulong> M2 = new Vector<ulong>(new ulong[] { 0x3333333333333333, 0x3333333333333333 });
+        //private static Vector<ulong> M4 = new Vector<ulong>(new ulong[] { 0x0f0f0f0f0f0f0f0f, 0x0f0f0f0f0f0f0f0f });
+        //private static Vector<uint> H01 = new Vector<uint>(new uint[] { 0x01010101, 0x01010101, 0x01010101, 0x01010101 });
 
         static unsafe float FloatSum(float[] r)
         {
@@ -345,21 +340,22 @@ namespace Ferda.Benchmark
             return result;
         }
 
-        static unsafe uint QuickUnsafeVector2uSum(Vector<ulong>[] r)
+        static unsafe ulong QuickUnsafeVector2uSum(Vector<ulong>[] r)
         {
-            int result = 0;
+            ulong result = 0;
+            ulong[] stringVectorTmp = new ulong[Vector<ulong>.Count];
             fixed (Vector<ulong>* ur = r)
             {
                 Vector<ulong>* a = ur, kon = ur + r.Length;
                 while (a < kon)
                 {
                     Vector<ulong> x = *a++;
-                    ulong[] p = new ulong[2];
-                    x.CopyTo(p);
-                    result += BitOperations.PopCount(p[0]) + BitOperations.PopCount(p[1]);
+                    x.CopyTo(stringVectorTmp);
+                    foreach (ulong q in stringVectorTmp)
+                        result += (ulong)BitOperations.PopCount(q);
                 }
             }
-            return (uint)result;
+            return result;
             //Vector<ulong> M1 = Sum.M1;
             //Vector<ulong> M2 = Sum.M2;
             //Vector<ulong> M4 = Sum.M4;
@@ -380,12 +376,18 @@ namespace Ferda.Benchmark
             //return result.X + result.Y + result.W + result.Z;
         }
 
-        static ulong VectorSum(Vector<ulong> v)
+        static ulong VectorSum(Vector<ulong>[] vectorArray)
         {
             ulong result = 0;
-            v.CopyTo(stringVectorTmp);
-            foreach (ulong x in stringVectorTmp)
-                result += (ulong)BitOperations.PopCount(x);
+            ulong[] stringVectorTmp = new ulong[Vector<ulong>.Count];
+            foreach (Vector<ulong> v in vectorArray)
+            {
+                v.CopyTo(stringVectorTmp);
+                foreach (ulong x in stringVectorTmp)
+                {
+                    result += (ulong)BitOperations.PopCount(x);
+                }
+            }
             return result;
         }
 

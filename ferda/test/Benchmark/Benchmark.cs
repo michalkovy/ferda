@@ -246,6 +246,8 @@ public class Benchmark
         Console.WriteLine ("Mono: {0}", (Type.GetType("System.MonoType", false) != null));
         Console.WriteLine ("64bit native mode: {0}", Is64Bit);
         Console.WriteLine ("Is Vector Hardware accelerated: {0}", System.Numerics.Vector.IsHardwareAccelerated);
+        Console.WriteLine("Vector<ulong>.Count: {0}", System.Numerics.Vector<ulong>.Count);
+        Console.WriteLine("Vector<uint>.Count: {0}", System.Numerics.Vector<uint>.Count);
         Console.WriteLine ("Date and time: {0}", System.DateTime.Now);
     }
     
