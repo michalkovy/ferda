@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text;
 using Ferda.Guha.MiningProcessor.Formulas;
 
@@ -144,7 +145,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <param name="length">Length of the bit string</param>
         /// <param name="bits">Array of longs, where each bit is means one bit
         /// of the bit string (64 bits in one long)</param>
-        public unsafe BitString(BitStringIdentifier identifier, int length, long[] bits)
+        public unsafe BitString(BitStringIdentifier identifier, int length, ReadOnlySpan<long> bits)
             : this(new AtomFormula(identifier))
         {
             if (length <= 0)
@@ -159,13 +160,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 throw new ArgumentOutOfRangeException("bits", "The array of bits has bad size (Length).");
 
             _array = new ulong[arraySize];
-            for (int i = 0; i < bits.Length; i++)
-            {
-                unchecked
-                {
-                    _array[i] = (ulong)bits[i];
-                }
-            }
+            ReadOnlySpan<ulong> ubits = MemoryMarshal.Cast<long, ulong>(bits);
+            ubits.CopyTo(_array);
 #else
             throw new NotImplementedException();
 #endif
@@ -190,11 +186,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             _array = new uint[source._array.Length];
 #endif
 
-#if UNSAFE
-            copyUnsafe(source);
-#else
-            copySafe(source);
-#endif
+            copy(source);
         }
 
 #if Testing
@@ -253,38 +245,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 #endif
         }
 
-#if UNSAFE
-        private unsafe void copyUnsafe(BitString source)
+        private void copy(BitString source)
         {
-#if USE64BIT
-            fixed (ulong* destPin = _array, sourcePin = source._array)
-            {
-                ulong* destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
-                while (destPtr < stopPtr)
-                {
-                    *destPtr++ = *sourcePtr++;
-                }
-            }
-#else
-            fixed (uint *destPin = _array, sourcePin = source._array)
-            {
-                uint *destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
-                while (destPtr < stopPtr)
-                {
-                    *destPtr++ = *sourcePtr++;
-                }
-            }
-#endif
+            source._array.CopyTo((Span<ulong>) _array);
         }
-#else
-        private void copySafe(BitString source)
-        {
-            for (int i = 0; i < _array.Length; i++)
-            {
-                _array[i] = source._array[i];
-            }
-        }
-#endif
 
         #endregion
 
