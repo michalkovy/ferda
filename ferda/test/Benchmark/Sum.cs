@@ -343,7 +343,7 @@ namespace Ferda.Benchmark
         static unsafe ulong QuickUnsafeVector2uSum(Vector<ulong>[] r)
         {
             ulong result = 0;
-            ulong[] stringVectorTmp = new ulong[Vector<ulong>.Count];
+            Span<ulong> stringVectorTmp = stackalloc ulong[Vector<ulong>.Count];
             fixed (Vector<ulong>* ur = r)
             {
                 Vector<ulong>* a = ur, kon = ur + r.Length;
@@ -379,7 +379,7 @@ namespace Ferda.Benchmark
         static ulong VectorSum(Vector<ulong>[] vectorArray)
         {
             ulong result = 0;
-            ulong[] stringVectorTmp = new ulong[Vector<ulong>.Count];
+            Span<ulong> stringVectorTmp = stackalloc ulong[Vector<ulong>.Count];
             foreach (Vector<ulong> v in vectorArray)
             {
                 v.CopyTo(stringVectorTmp);
