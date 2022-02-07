@@ -74,6 +74,12 @@ namespace Ferda.Benchmark
             }
         }
 
+        [Benchmark]
+        public static void SafeNotCrispVector()
+        {
+            NotSafeCrispVector(stringVectorUlong1);
+        }
+
         /// <summary>
         /// Not benchmark with fuzzy bit strings, Vector4 + safe (managed)
         /// </summary>
@@ -186,6 +192,11 @@ namespace Ferda.Benchmark
                 }
             }
             return source;
+        }
+
+        static Vector<ulong> NotSafeCrispVector(Vector<ulong> source)
+        {
+            return ~source;
         }
 
         /// <summary>

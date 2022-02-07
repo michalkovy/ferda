@@ -80,6 +80,12 @@ namespace Ferda.Benchmark
             }
         }
 
+        [Benchmark]
+        public static void CrispVector()
+        {
+            AndCrispVector(stringVectorUlong1, stringVectorUlong2);
+        }
+
         /// <summary>
         /// The Vector4 and benchmark - safe
         /// </summary>
@@ -420,6 +426,11 @@ namespace Ferda.Benchmark
             }
 
             return operand1;
+        }
+
+        static Vector<ulong> AndCrispVector(Vector<ulong> first, Vector<ulong> second)
+        {
+            return first & second;
         }
 
         /// <summary>

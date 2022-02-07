@@ -81,6 +81,12 @@ namespace Ferda.Benchmark
             }
         }
 
+        [Benchmark]
+        public static void SafeOrCrispVector()
+        {
+            OrCrispVector(stringVectorUlong1, stringVectorUlong2);
+        }
+
         /// <summary>
         /// The Vector4 OR benchmark - safe
         /// </summary>
@@ -421,6 +427,11 @@ namespace Ferda.Benchmark
             }
 
             return operand1;
+        }
+
+        static Vector<ulong> OrCrispVector(Vector<ulong> first, Vector<ulong> second)
+        {
+            return first | second;
         }
 
         /// <summary>
