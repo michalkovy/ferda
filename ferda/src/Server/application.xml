@@ -161,7 +161,7 @@
 				<property name="Ice.ThreadPool.Server.Size" value="10"/>
 				<property name="Ice.ThreadPool.Server.SizeMax" value="1000"/>
 				<property name="Ice.ThreadPool.Server.SizeWarn" value="950"/>
-				<!-- <property name="IceBox.UseSharedCommunicator.FerdaDataPreparationBoxes" value="1"/>
+        <property name="IceBox.UseSharedCommunicator.FerdaDataPreparationBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaBasicBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaLanguageBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaSampleBoxes" value="1"/>
@@ -169,8 +169,9 @@
 				<property name="IceBox.UseSharedCommunicator.FerdaGuhaMiningBoxes" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaGuhaMiningProcessor" value="1"/>
 				<property name="IceBox.UseSharedCommunicator.FerdaNetworkArchive" value="1"/>
-				<property name="IceBox.UseSharedCommunicator.FerdaOntologyRelatedBoxes" value="1"/> -->
-				<property name="IceBox.InheritProperties" value="1"/>
+				<property name="IceBox.UseSharedCommunicator.FerdaOntologyRelatedBoxes" value="1"/>
+        <property name="IceBox.UseSharedCommunicator.FerdaSemanticWebBoxes" value="1"/>
+        <property name="IceBox.InheritProperties" value="1"/>
 			</icebox>
 		</server-template>
 		<replica-group id="FerdaOntologyRelatedReplicaAdapter">
@@ -193,7 +194,7 @@
 			</icebox>
 		</server-template>
 		<node name="localhost">
-			<server-instance template="FerdaServerTemplate" index="0" pwd="." endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
+			<server-instance template="FerdaServerTemplate" index="0" pwd="." endpoints="tcp -h 127.0.0.1"/>
 			<server-instance template="FerdaServerTemplateJava" index="1" pwd="./OWLParser" classpath=".;../Ice.jar;../OWL_API/owlapi-api.jar;../OWL_API/owlapi-apibinding.jar;../OWL_API/owlapi-oboparser.jar;../OWL_API/owlapi-krssparser.jar;../OWL_API/owlapi-functionalparser.jar;../OWL_API/owlapi-owlxmlparser.jar;../OWL_API/owlapi-rdfxmlparser.jar;../OWL_API/owlapi-impl.jar;../OWL_API/owlapi-rdfxmlrenderer.jar;../OWL_API/owlapi-owlxmlrenderer.jar;../OWL_API/owlapi-functionalrenderer.jar;../OWL_API/owlapi-rdfapi.jar;%CLASSPATH%" endpoints="tcp -h 127.0.0.1 :udp -h 127.0.0.1"/>
 		</node>
 	</application>
