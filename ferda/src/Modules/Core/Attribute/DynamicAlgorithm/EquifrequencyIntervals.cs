@@ -18,8 +18,8 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-#define PERFCOUNTERS
-#define SCOREGRAPH
+//#define PERFCOUNTERS
+//#define SCOREGRAPH
 
 // evolved from Tomas Karban`s equifrequency algorithm
 
@@ -130,8 +130,9 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
                 data,
                 new interval(0, data.Length), // at the beginning of recursion there is one interval 
                 requestedNumberOfIntervals,
-                (float) data.Length/(float) requestedNumberOfIntervals,
-                cache
+                (float) data.Sum(d => d.Frequency) / (float) requestedNumberOfIntervals,
+                cache,
+                new resultOption()
                 );
 
 #if PERFCOUNTERS
@@ -161,7 +162,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
         }
 
         private static resultOption findSplit<T>(ValueFrequencyPair<T>[] data, interval bounds,
-                                                 int requestedNumberOfIntervals, float optimum, resultCache cache)
+                                                 int requestedNumberOfIntervals, float optimum, resultCache cache, resultOption previousResult)
         {
 #if PERFCOUNTERS
             recursionCount++;
@@ -180,10 +181,48 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
                 resultOption result = new resultOption();
                 result.Intervals.Add(bounds);
                 int count = 0;
-                for (int i = bounds.Left; i < bounds.Right; i++)
-                    count += data[i].Frequency;
-                result.Cost = resultPenalty(count, optimum);
-                return result;
+                if (previousResult.Frequency == null)
+                {
+                    for (int i = bounds.Left; i < bounds.Right; i++)
+                        count += data[i].Frequency;
+                    result.Cost = resultPenalty(count, optimum);
+                    result.Frequency = count;
+                    return result;
+                }
+                else
+                {
+                    if (previousResult.Intervals[0].Left == bounds.Left)
+                    {
+                        if (bounds.Right == previousResult.Intervals[0].Right - 1)
+                        {
+                            count = previousResult.Frequency.Value - data[bounds.Right].Frequency;
+                        }
+                        else
+                        {
+                            if (bounds.Right != previousResult.Intervals[0].Right + 1)
+                                throw new Exception("Wrong code");
+                            count = previousResult.Frequency.Value + data[bounds.Right - 1].Frequency;
+                        }
+                    }
+                    else if (bounds.Left == previousResult.Intervals[0].Left + 1)
+                    {
+
+                        if (previousResult.Intervals[0].Right != bounds.Right)
+                            throw new Exception("Wrong code");
+                        count = previousResult.Frequency.Value - data[bounds.Left - 1].Frequency;
+                    }
+                    else
+                    {
+                        if (previousResult.Intervals[0].Right != bounds.Right)
+                            throw new Exception("Wrong code");
+                        if (bounds.Left != previousResult.Intervals[0].Left - 1)
+                            throw new Exception("Wrong code");
+                        count = previousResult.Frequency.Value + data[bounds.Left].Frequency;
+                    }
+                    result.Cost = resultPenalty(count, optimum);
+                    result.Frequency = count;
+                    return result;
+                }
             }
 
             // test the end of recursion (exact splitting, no choice)
@@ -232,7 +271,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
                 // go right only if there is another possible split point
 
             // spread to both sides and search for better solutions
-            resultOption bestResult = new resultOption(), leftTmpResult, rightTmpResult;
+            resultOption bestResult = new resultOption(), leftTmpResult = new resultOption(), rightTmpResult = new resultOption(), leftTmpResultR = new resultOption(), rightTmpResultR = new resultOption();
             bestResult.Cost = initPenalty;
             float leftLastScore = initPenalty, rightLastScore = initPenalty;
             int leftGrowCount = 0, rightGrowCount = 0;
@@ -242,10 +281,10 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
                 {
                     // find solution for left and right part
                     leftTmpResult =
-                        findSplit<T>(data, new interval(bounds.Left, leftSplit), leftIntervals, optimum, cache);
+                        findSplit<T>(data, new interval(bounds.Left, leftSplit), leftIntervals, optimum, cache, leftTmpResult);
                     rightTmpResult =
                         findSplit<T>(data, new interval(leftSplit, bounds.Right),
-                                     requestedNumberOfIntervals - leftIntervals, optimum, cache);
+                                     requestedNumberOfIntervals - leftIntervals, optimum, cache, rightTmpResult);
 
                     // sum the costs of partial results
                     float sum = leftTmpResult.Cost + rightTmpResult.Cost;
@@ -322,14 +361,14 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
                 if (!rightStop)
                 {
                     // find solution for left and right part
-                    leftTmpResult =
-                        findSplit<T>(data, new interval(bounds.Left, rightSplit), leftIntervals, optimum, cache);
-                    rightTmpResult =
+                    leftTmpResultR =
+                        findSplit<T>(data, new interval(bounds.Left, rightSplit), leftIntervals, optimum, cache, leftTmpResultR);
+                    rightTmpResultR =
                         findSplit<T>(data, new interval(rightSplit, bounds.Right),
-                                     requestedNumberOfIntervals - leftIntervals, optimum, cache);
+                                     requestedNumberOfIntervals - leftIntervals, optimum, cache, rightTmpResultR);
 
                     // sum the costs of partial results
-                    float sum = leftTmpResult.Cost + rightTmpResult.Cost;
+                    float sum = leftTmpResultR.Cost + rightTmpResultR.Cost;
 
 #if SCOREGRAPH
                     if (topLevel)
@@ -343,7 +382,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
                     if (sum < bestResult.Cost)
                     {
                         // merge two partial solution to one
-                        bestResult.Merge(leftTmpResult, rightTmpResult);
+                        bestResult.Merge(leftTmpResultR, rightTmpResultR);
                     }
 
 #if SCOREGRAPH
@@ -410,9 +449,9 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
         {
             float penalty;
             if (count > optimum)
-                penalty = count/optimum - 1.0f;
+                penalty = (count - optimum) / optimum;
             else
-                penalty = optimum/count - 1.0f;
+                penalty = (optimum - count) / optimum;
             return penalty*penalty;
         }
 
@@ -529,6 +568,17 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
                     _cost = value;
                 }
             }
+
+            private int? _frequency;
+            public int? Frequency
+            {
+                get { return _frequency; }
+                set
+                {
+                    _frequency = value;
+                }
+            }
+
 
             public void Merge(resultOption one, resultOption two)
             {
