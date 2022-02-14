@@ -220,16 +220,26 @@ namespace Ferda {
 			public IBoxModule[] CreateBoxesAskingForCreation(ModulesAskingForCreation info)
 			{
 				List<IBoxModule> result = new List<IBoxModule>();
+				var namedModules = new Dictionary<string, BoxModule>();
 				foreach (ModuleAskingForCreation newModule in info.newModules)
 				{
 					Ferda.ModulesManager.BoxModuleFactoryCreator creator = (BoxModuleFactoryCreator)this.GetBoxModuleFactoryCreator(
 						newModule.newBoxModuleIdentifier);
 					BoxModule box = creator.CreateBoxModule() as BoxModule;
+					if (newModule.newBoxModuleId != null && newModule.newBoxModuleId.Length > 0)
+                    {
+						namedModules[newModule.newBoxModuleId[0]] = box;
+
+					}
 					if (box != null)
 					{
 						foreach (ModulesConnection connection in newModule.modulesConnection)
 						{
 							box.SetConnection(connection.socketName, this.getBoxModuleByProxy(connection.boxModuleParam));
+						}
+						foreach (var connection in newModule.modulesCreatedConnection)
+						{
+							box.SetConnection(connection.socketName, namedModules[connection.boxModuleCreatedId]);
 						}
 						foreach (PropertySetting propertySetting in newModule.propertySetting)
 						{

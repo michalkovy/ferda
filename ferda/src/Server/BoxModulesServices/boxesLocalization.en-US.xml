@@ -198,6 +198,11 @@
 			</PropertyCategory>
 		</PropertyCategories>
 		<ModulesAskingForCreationSeq>
+      <ModulesAskingForCreation>
+        <Name>AllColumnsConjunctionHeuristic</Name>
+        <Label>Conjunction from all columns in data matrix</Label>
+        <Hint>Creates boxes for conjunction setting for all columns inthis datamatrix.</Hint>
+      </ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>DerivedColumn</Name>
 				<Label>Derived column</Label>

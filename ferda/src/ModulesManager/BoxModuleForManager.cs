@@ -50,7 +50,19 @@ namespace Ferda.ModulesManager
             CompareString = this.UserName;
         }
 
-        protected internal string CompareString;
+		private string compareString;
+        protected internal string CompareString
+        {
+			set
+			{
+				compareString = value;
+			}
+
+			get
+			{
+				return compareString == null ? "" : compareString;
+			}
+		}
 		
 		public int ProjectIdentifier
 		{
