@@ -34,40 +34,126 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             ModulesAskingForCreation moduleAFC;
             ModulesConnection moduleConnection;
             ModuleAskingForCreation singleModuleAFC;
-            List<ModuleAskingForCreation> allColumnModulesAFC = new List<ModuleAskingForCreation>();
+            var allColumnModulesAFC = new Dictionary<string, ModuleAskingForCreation>();
 
-            // I presuppose that item with key "Column" is before item with key "AllColumns"
+            // I presuppose that item with key "AllColumnsConjunctionHeuristic" is before item with key "AllColumns" and "Column"
 
             foreach (string moduleAFCName in modulesAFC.Keys)
             {
                 moduleAFC = modulesAFC[moduleAFCName];
                 switch (moduleAFCName)
                 {
-                    case "Column":
-                        string[] columnsNames = Func.GetColumnsNames(false);
-                        if (columnsNames.Length > 0)
+                    case "AllColumnsConjunctionHeuristic":
+                        var allModulesAFC = new List<ModuleAskingForCreation>();
+                        var explainInfos = Func.GetColumnExplainSeq(false);
+                        if (explainInfos.Length > 0)
                         {
                             moduleConnection = new ModulesConnection();
                             moduleConnection.socketName = Column.Functions.SockDataTable;
                             moduleConnection.boxModuleParam = boxModule.MyProxy;
-                            foreach (string columnName in columnsNames)
+
+                            var conjunctionConnections = new List<ModulesCreatedConnection>();
+
+                            foreach (var explainInfo in explainInfos)
                             {
-                                ModulesAskingForCreation newMAFC = new ModulesAskingForCreation();
-                                newMAFC.label = moduleAFC.label.Replace("@Name", columnName);
-                                newMAFC.hint = moduleAFC.hint.Replace("@Name", columnName);
-                                newMAFC.help = moduleAFC.help;
                                 singleModuleAFC = new ModuleAskingForCreation();
                                 singleModuleAFC.modulesConnection = new ModulesConnection[] {moduleConnection};
-                                ;
                                 singleModuleAFC.newBoxModuleIdentifier = Column.BoxInfo.typeIdentifier;
                                 PropertySetting propertySetting = new PropertySetting();
                                 propertySetting.propertyName = Column.Functions.PropSelectExpression;
-                                propertySetting.value = new StringTI(columnName);
-                                singleModuleAFC.propertySetting = new PropertySetting[] {propertySetting};
-                                allColumnModulesAFC.Add(singleModuleAFC);
-                                newMAFC.newModules = new ModuleAskingForCreation[] {singleModuleAFC};
-                                result.Add(newMAFC);
+                                propertySetting.value = new StringTI(explainInfo.name);
+                                PropertySetting propertySetting2 = new PropertySetting();
+                                propertySetting2.propertyName = Column.Functions.PropCardinality;
+                                propertySetting2.value = new StringTI(Guha.Data.CardinalityEnum.Ordinal.ToString());
+                                singleModuleAFC.propertySetting = new PropertySetting[] {propertySetting, propertySetting2};
+                                singleModuleAFC.newBoxModuleId = new string[]{ explainInfo.name };
+                                allColumnModulesAFC[explainInfo.name] = singleModuleAFC;
+                                allModulesAFC.Add(singleModuleAFC);
+
+                                var columnConnection = new ModulesCreatedConnection();
+                                columnConnection.socketName = Categorization.Public.SockColumn;
+                                columnConnection.boxModuleCreatedId = explainInfo.name;
+
+                                var categorizationAFC = new ModuleAskingForCreation();
+                                categorizationAFC.modulesCreatedConnection = new ModulesCreatedConnection[] { columnConnection };
+                                categorizationAFC.newBoxModuleId = new string[] { $"{explainInfo.name}category" };
+                                var propSetting = new PropertySetting();
+                                propSetting.propertyName = Categorization.Public.SockNameInBooleanAttributes;
+                                propSetting.value = new StringTI(explainInfo.name);
+                                if (explainInfo.dataType == Guha.Data.DbDataTypeEnum.BooleanType || explainInfo.dataType == Guha.Data.DbDataTypeEnum.ShortIntegerType)
+                                {
+                                    categorizationAFC.newBoxModuleIdentifier = Categorization.EachValueOneCategory.BoxInfo.typeIdentifier;
+                                    categorizationAFC.propertySetting = new PropertySetting[] { propSetting };
+                                }
+                                else
+                                {
+                                    categorizationAFC.newBoxModuleIdentifier = Categorization.EquifrequencyIntervals.BoxInfo.typeIdentifier;
+                                    var propSetting2 = new PropertySetting();
+                                    propSetting2.propertyName = Categorization.Public.SockCountOfCategories;
+                                    propSetting2.value = new LongTI(8);
+                                    categorizationAFC.propertySetting = new PropertySetting[] { propSetting, propSetting2 };
+
+                                }
+                                allModulesAFC.Add(categorizationAFC);
+
+                                var categoryConnection = new ModulesCreatedConnection();
+                                categoryConnection.socketName = GuhaMining.AtomSetting.Functions.SockBitStringGenerator;
+                                categoryConnection.boxModuleCreatedId = $"{explainInfo.name}category";
+
+                                var atomSettingAFC = new ModuleAskingForCreation();
+                                atomSettingAFC.modulesCreatedConnection = new ModulesCreatedConnection[] { categoryConnection };
+                                atomSettingAFC.newBoxModuleIdentifier = GuhaMining.AtomSetting.BoxInfo.typeIdentifier;
+                                atomSettingAFC.newBoxModuleId = new string[] { $"{explainInfo.name}atom" };
+                                var propSettingAt = new PropertySetting();
+                                propSettingAt.propertyName = GuhaMining.AtomSetting.Functions.PropCoefficientType;
+                                if (explainInfo.dataType == Guha.Data.DbDataTypeEnum.BooleanType)
+                                {
+                                    propSettingAt.value = new StringTI(Guha.MiningProcessor.CoefficientTypeEnum.Subsets.ToString());
+                                    atomSettingAFC.propertySetting = new PropertySetting[] { propSettingAt };
+                                }
+                                else
+                                {
+                                    propSettingAt.value = new StringTI(Guha.MiningProcessor.CoefficientTypeEnum.Intervals.ToString());
+                                    var propSettingAt2 = new PropertySetting();
+                                    propSettingAt2.propertyName = GuhaMining.AtomSetting.Functions.PropMaximalLength;
+                                    propSettingAt2.value = new IntTI(3);
+                                    atomSettingAFC.propertySetting = new PropertySetting[] { propSettingAt, propSettingAt2 };
+                                }
+                                    
+                                allModulesAFC.Add(atomSettingAFC);
+
+                                var atomConnection = new ModulesCreatedConnection();
+                                atomConnection.socketName = GuhaMining.ConjunctionSetting.Functions.SockBooleanAttributeSetting;
+                                atomConnection.boxModuleCreatedId = $"{explainInfo.name}atom";
+                                conjunctionConnections.Add(atomConnection);
+                                //TODO: Conjunction
+
                             }
+                            if (allModulesAFC.Count <= 1)
+                                continue;
+
+                            var conjunctionAFC = new ModuleAskingForCreation();
+                            conjunctionAFC.modulesCreatedConnection = conjunctionConnections.ToArray();
+                            conjunctionAFC.newBoxModuleIdentifier = GuhaMining.ConjunctionSetting.BoxInfo.typeIdentifier;
+                            var propSettingCon = new PropertySetting();
+                            propSettingCon.propertyName = GuhaMining.ConjunctionSetting.Functions.PropMaximalLength;
+                            propSettingCon.value = new IntTI(3);
+                            conjunctionAFC.propertySetting = new PropertySetting[] { propSettingCon };
+                            allModulesAFC.Add(conjunctionAFC);
+
+                            moduleAFC.newModules = allModulesAFC.ToArray();
+                            result.Add(moduleAFC);
+                        }
+                        break;
+                    case "Column":
+                        foreach(var pairSingleModuleAFC in allColumnModulesAFC)
+                        {
+                            ModulesAskingForCreation newMAFC = new ModulesAskingForCreation();
+                            newMAFC.label = moduleAFC.label.Replace("@Name", pairSingleModuleAFC.Key);
+                            newMAFC.hint = moduleAFC.hint.Replace("@Name", pairSingleModuleAFC.Key);
+                            newMAFC.help = moduleAFC.help;
+                            newMAFC.newModules = new ModuleAskingForCreation[] { pairSingleModuleAFC.Value };
+                            result.Add(newMAFC);
                         }
                         break;
                     case "DerivedColumn":
@@ -83,12 +169,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
                     case "AllColumns":
                         if (allColumnModulesAFC.Count <= 1)
                             continue;
-                        moduleConnection = new ModulesConnection();
-                        moduleConnection.socketName = Column.Functions.SockDataTable;
-                        moduleConnection.boxModuleParam = boxModule.MyProxy;
-                        moduleAFC.newModules = allColumnModulesAFC.ToArray();
+                        moduleAFC.newModules = allColumnModulesAFC.Values.ToArray();
                         result.Add(moduleAFC);
                         break;
+                    
                     default:
                         throw new NotImplementedException();
                 }

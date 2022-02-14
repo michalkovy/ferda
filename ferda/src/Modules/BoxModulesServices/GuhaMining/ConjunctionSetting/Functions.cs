@@ -30,7 +30,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
     /// Class is providing ICE functionality of the ConjunctionSetting
     /// box module
     /// </summary>
-    internal class Functions : BooleanAttributeSettingFunctionsDisp_, IFunctions
+    public class Functions : BooleanAttributeSettingFunctionsDisp_, IFunctions
     {
         /// <summary>
         /// The box module.

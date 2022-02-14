@@ -31,7 +31,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
     /// <summary>
     /// Class that provides info about boxes of the ConjunctionSetting box
     /// </summary>
-    internal class BoxInfo : Boxes.BoxInfo
+    public class BoxInfo : Boxes.BoxInfo
     {
         /// <summary>
         /// Functions creates an object of <see cref="T:Ferda.Modules.IFunctions">IFuntions</see>

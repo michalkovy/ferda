@@ -309,6 +309,9 @@
 			</Property>
 		</Properties>
 		<ModulesAskingForCreationSeq>
+      <ModulesAskingForCreation>
+        <Name>AllColumnsConjunctionHeuristic</Name>
+      </ModulesAskingForCreation>
 			<ModulesAskingForCreation>
 				<Name>DerivedColumn</Name>
 			</ModulesAskingForCreation>

@@ -61,6 +61,32 @@ module Ferda {
 
 		/**
 		 *
+		 * Each box module has list of connections to other
+		 * box modules connected to his sockets. The
+		 * connection to other box module which is being created
+		 * is represented by this structure.
+		 *
+		 **/
+		struct ModulesCreatedConnection {
+
+			/**
+			 *
+			 * Name (identifier) of the box module`s socket, to which is other box module conected.
+			 *
+			 **/
+			string socketName;
+
+			/**
+			 *
+			 * Other box module, which is connected to the socket.
+			 *
+			 **/
+			string boxModuleCreatedId;
+		};
+		sequence<ModulesCreatedConnection> ModulesCreatedConnectionSeq;
+
+		/**
+		 *
 		 * Used in ModuleAskingForCreation for setting some
 		 * values in some properties during creating new box module.
 		 *
@@ -468,11 +494,26 @@ module Ferda {
 
 			/**
 			 *
+			 * This string will be used to match connections when created.
+			 *
+			 **/
+			StringOpt newBoxModuleId;
+
+			/**
+			 *
 			 * This is a sequence of connections, which will be created to
 			 * newly created box module.
 			 *
 			 **/
 			ModulesConnectionSeq modulesConnection;
+
+			/**
+			 *
+			 * This is a sequence of connections, which will be created to
+			 * newly created box module to other new created box module.
+			 *
+			 **/
+			ModulesCreatedConnectionSeq modulesCreatedConnection;
 
 			/**
 			 *
