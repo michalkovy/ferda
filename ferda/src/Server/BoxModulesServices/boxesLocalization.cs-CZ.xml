@@ -12111,6 +12111,11 @@
         <Label>Autor</Label>
         <Hint>Zde uveď autora dokumentu</Hint>
       </Socket>
+      <Socket>
+        <Name>SaveFrequencies</Name>
+        <Label>Ukládat frekvence</Label>
+        <Hint>Mají se do PMML zapsat frekvence kategorií?</Hint>
+      </Socket>
     </Sockets>
     <ModulesAskingForCreationSeq>
       <ModulesAskingForCreation>

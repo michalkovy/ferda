@@ -21867,6 +21867,15 @@
 				</SocketTypes>
 				<MoreThanOne>false</MoreThanOne>
 			</Socket>
+      <Socket>
+        <Name>SaveFrequencies</Name>
+        <SocketTypes>
+          <BoxType>
+            <FunctionIceId>::Ferda::Modules::BoolTInterface</FunctionIceId>
+          </BoxType>
+        </SocketTypes>
+        <MoreThanOne>false</MoreThanOne>
+      </Socket>
 			<Socket>
 				<Name>4FTTask</Name>
 				<SocketTypes>
@@ -21892,6 +21901,13 @@
 				<ReadOnly>false</ReadOnly>
 				<Default>unknown</Default>
 			</Property>
+      <Property>
+        <Name>SaveFrequencies</Name>
+        <TypeClassIceId>::Ferda::Modules::BoolT</TypeClassIceId>
+        <Visible>true</Visible>
+        <ReadOnly>false</ReadOnly>
+        <Default>true</Default>
+      </Property>
 		</Properties>
     <ModulesAskingForCreationSeq>
       <ModulesAskingForCreation>

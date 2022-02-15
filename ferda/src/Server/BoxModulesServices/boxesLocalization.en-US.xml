@@ -12128,6 +12128,11 @@
 				<Label>Author</Label>
 				<Hint>Fill author of the document here</Hint>
 			</Socket>
+      <Socket>
+        <Name>SaveFrequencies</Name>
+        <Label>Save frequencies</Label>
+        <Hint>Should frequencies of categories be saved to the PMML file?</Hint>
+      </Socket>
 		</Sockets>
     <ModulesAskingForCreationSeq>
       <ModulesAskingForCreation>

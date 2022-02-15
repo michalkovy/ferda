@@ -90,7 +90,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
                                     categorizationAFC.newBoxModuleIdentifier = Categorization.EquifrequencyIntervals.BoxInfo.typeIdentifier;
                                     var propSetting2 = new PropertySetting();
                                     propSetting2.propertyName = Categorization.Public.SockCountOfCategories;
-                                    propSetting2.value = new LongTI(8);
+                                    propSetting2.value = new LongTI(7);
                                     categorizationAFC.propertySetting = new PropertySetting[] { propSetting, propSetting2 };
 
                                 }
