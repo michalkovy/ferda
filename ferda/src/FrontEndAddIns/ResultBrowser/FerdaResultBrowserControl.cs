@@ -328,31 +328,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
 
             HypothesesListView.ColumnWidthChanged += new ColumnWidthChangedEventHandler(HypothesesListView_ColumnWidthChanged);
 
-            for (int i = 0; i < marks.Length; i++)
-            {
-                if (marks[i].Selected)
-                {
-                    ColumnHeader markHeader = new ColumnHeader();
-                    markHeader.Text = marks[i].ColumnName;
-                    markHeader.Width = marks[i].width;
-                    markHeader.Tag = "c" + i.ToString();
-                    this.HypothesesListView.Columns.Add(markHeader);
-                }
-            }
-
-            for (int i = 0; i < quantifiers.Length; i++)
-            {
-                if (quantifiers[i].Selected)
-                {
-                    ColumnHeader quantifierHeader = new ColumnHeader();
-                    quantifierHeader.Text = quantifiers[i].QuantifierLabel +
-                        "(" + quantifiers[i].QuantifierUserLabel + ")";
-                    quantifierHeader.Width = quantifiers[i].width;
-                    quantifierHeader.Tag = "q" + i.ToString();
-                    this.HypothesesListView.Columns.Add(quantifierHeader);
-                }
-            }
-            int j = AddAllHypothesesToListView();
+            int j = UpdateHypothesesList();
             this.LabelCount.Text = "(" + j + "/" + hypothesesCount + ")";
         }
 
@@ -1003,9 +979,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
         /// <summary>
         /// Re-displaying listview with new settings for columns display
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ButtonSubmitColumnChange_Click(object sender, EventArgs e)
+        private int UpdateHypothesesList()
         {
             ChangeColumnCheck();
             ChangeQuantifierCheck();
@@ -1038,9 +1012,20 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
                     this.HypothesesListView.Columns.Add(quantifierHeader);
                 }
             }
-            AddAllHypothesesToListView();
+            var items = AddAllHypothesesToListView();
             HypothesesListView.ColumnClick += new ColumnClickEventHandler(ClickOnColumn);
             HypothesesListView.ListViewItemSorter = columnSorter;
+            return items;
+        }
+
+        /// <summary>
+        /// Re-displaying listview with new settings for columns display
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonSubmitColumnChange_Click(object sender, EventArgs e)
+        {
+            UpdateHypothesesList();
         }
 
         void HypothesesListView_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
