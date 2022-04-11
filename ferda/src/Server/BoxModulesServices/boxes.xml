@@ -5388,7 +5388,7 @@
 				<CategoryName>Settings</CategoryName>
 				<Visible>true</Visible>
 				<ReadOnly>false</ReadOnly>
-				<Default>0,8</Default>
+				<Default>0.8</Default>
 				<NumericalRestrictions>
 					<Restriction>
 						<Floating>0</Floating>

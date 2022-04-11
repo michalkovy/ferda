@@ -1107,22 +1107,14 @@ namespace Ferda.Modules.Boxes
                     case "::Ferda::Modules::FloatT":
                         if (!String.IsNullOrEmpty(boxProperty.Default))
                         {
-                            return new FloatTI(Convert.ToSingle(
-                                                   boxProperty.Default.Replace(".",
-                                                                               CultureInfo.CurrentCulture.NumberFormat.
-                                                                                   NumberDecimalSeparator)
-                                                   ));
+                            return new FloatTI(Convert.ToSingle(boxProperty.Default, CultureInfo.InvariantCulture));
                         }
                         else
                             return new FloatTI(0);
                     case "::Ferda::Modules::DoubleT":
                         if (!String.IsNullOrEmpty(boxProperty.Default))
                         {
-                            return new DoubleTI(Convert.ToDouble(
-                                                    boxProperty.Default.Replace(".",
-                                                                                CultureInfo.CurrentCulture.NumberFormat.
-                                                                                    NumberDecimalSeparator)
-                                                    ));
+                            return new DoubleTI(Convert.ToDouble(boxProperty.Default, CultureInfo.InvariantCulture));
                         }
                         else
                             return new DoubleTI(0);
