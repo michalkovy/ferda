@@ -222,7 +222,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             //Condition)
             foreach (MarkEnum mark in enums)
             {
-                this.CHLMarks.Items.Add(mark.ToString(), false);
+                this.CHLMarks.Items.Add(mark.ToString(), true);
                 UsedMark usedColumn = new UsedMark();
                 usedColumn.id = i;
                 usedColumn.MarkType = mark;
@@ -248,7 +248,7 @@ namespace Ferda.FrontEnd.AddIns.ResultBrowser
             quantifiers = new UsedQuantifier[labels.Length];
             for (int i = 0; i < labels.Length; i++)
             {
-                this.CHLQuantifiers.Items.Add(userLabels[i], false);
+                this.CHLQuantifiers.Items.Add(userLabels[i], true);
                 UsedQuantifier usedQuantifier = new UsedQuantifier();
                 usedQuantifier.id = i;
                 usedQuantifier.QuantifierLabel = labels[i];
