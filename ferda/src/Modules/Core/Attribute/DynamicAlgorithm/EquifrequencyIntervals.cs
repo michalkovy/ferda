@@ -130,7 +130,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
                 data,
                 new interval(0, data.Length), // at the beginning of recursion there is one interval 
                 requestedNumberOfIntervals,
-                (float) data.Sum(d => d.Frequency) / (float) requestedNumberOfIntervals,
+                data.Sum(d => d.Frequency),
                 cache,
                 new resultOption()
                 );
@@ -162,7 +162,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
         }
 
         private static resultOption findSplit<T>(ValueFrequencyPair<T>[] data, interval bounds,
-                                                 int requestedNumberOfIntervals, float optimum, resultCache cache, resultOption previousResult)
+                                                 int requestedNumberOfIntervals, int frequencySum, resultCache cache, resultOption previousResult)
         {
 #if PERFCOUNTERS
             recursionCount++;
@@ -171,6 +171,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
 #if SCOREGRAPH
             bool topLevel = (bounds.Left == 0) && (bounds.Right == data.Length);
 #endif
+            var optimum = (float) frequencySum / (float) requestedNumberOfIntervals;
 
             // check if there is enough split points
             Debug.Assert(bounds.Right - bounds.Left >= requestedNumberOfIntervals);
@@ -266,6 +267,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
             // start testing these split points (spreading to left and right)
             int leftSplit = bestSplit;
             int rightSplit = bestSplit + 1;
+            var leftSumRightSplit = leftSum + data[leftSplit].Frequency;
             bool leftStop = false; // there's always at least one solution
             bool rightStop = (rightSplit > bounds.Right - (requestedNumberOfIntervals - leftIntervals));
                 // go right only if there is another possible split point
@@ -281,10 +283,10 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
                 {
                     // find solution for left and right part
                     leftTmpResult =
-                        findSplit<T>(data, new interval(bounds.Left, leftSplit), leftIntervals, optimum, cache, leftTmpResult);
+                        findSplit<T>(data, new interval(bounds.Left, leftSplit), leftIntervals, leftSum, cache, leftTmpResult);
                     rightTmpResult =
                         findSplit<T>(data, new interval(leftSplit, bounds.Right),
-                                     requestedNumberOfIntervals - leftIntervals, optimum, cache, rightTmpResult);
+                                     requestedNumberOfIntervals - leftIntervals, frequencySum - leftSum, cache, rightTmpResult);
 
                     // sum the costs of partial results
                     float sum = leftTmpResult.Cost + rightTmpResult.Cost;
@@ -355,6 +357,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
                     {
                         // shift the left split to the next position
                         leftSplit--;
+                        leftSum -= data[leftSplit].Frequency;
                     }
                 }
 
@@ -362,10 +365,10 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
                 {
                     // find solution for left and right part
                     leftTmpResultR =
-                        findSplit<T>(data, new interval(bounds.Left, rightSplit), leftIntervals, optimum, cache, leftTmpResultR);
+                        findSplit<T>(data, new interval(bounds.Left, rightSplit), leftIntervals, leftSumRightSplit, cache, leftTmpResultR);
                     rightTmpResultR =
                         findSplit<T>(data, new interval(rightSplit, bounds.Right),
-                                     requestedNumberOfIntervals - leftIntervals, optimum, cache, rightTmpResultR);
+                                     requestedNumberOfIntervals - leftIntervals, frequencySum - leftSumRightSplit, cache, rightTmpResultR);
 
                     // sum the costs of partial results
                     float sum = leftTmpResultR.Cost + rightTmpResultR.Cost;
@@ -424,6 +427,7 @@ namespace Ferda.Guha.Attribute.DynamicAlgorithm
                     else
                     {
                         // shift the right split to the next position
+                        leftSumRightSplit += data[rightSplit].Frequency;
                         rightSplit++;
                     }
                 }
