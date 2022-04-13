@@ -140,6 +140,7 @@ namespace Ferda.Guha.Data
                         ColumnStatistics result = new ColumnStatistics();
 
                         using DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
+                        command.CommandTimeout = 0;
 
                         string columnQuotedIdentifier;
                         string dataTableQuotedIdentifier;
@@ -182,7 +183,7 @@ namespace Ferda.Guha.Data
                                 command.CommandText =
                                     "SELECT DISTINCT " + columnQuotedIdentifier + " FROM " 
                                     + dataTableQuotedIdentifier + (whereQuotedIdentifier == "1" ? "" : " WHERE " + whereQuotedIdentifier);
-
+                                
                                 using DbDataAdapter dataAdapter = GenericDataTable.GenericDatabase.CreateDbDataAdapter();
                                 dataAdapter.SelectCommand = command;
                                 DataSet dataSet = new DataSet();
@@ -578,6 +579,7 @@ namespace Ferda.Guha.Data
             + GenericDataTable.GenericDatabase.QuoteQueryIdentifier(masterTableIdColumn);
 
             using DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
+            command.CommandTimeout = 0;
 
             command.CommandText =
                 String.Format("SELECT DISTINCT {0} FROM {1} WHERE {2}", columnQuotedIdentifier, dataTableQuotedIdentifier, whereQuotedIdentifier);
@@ -835,7 +837,7 @@ namespace Ferda.Guha.Data
                 + where
                 + " GROUP BY " + columnQuotedIdentifier
                 + " ORDER BY " + columnQuotedIdentifier;
-
+            command.CommandTimeout = 0;
             using DbDataAdapter dataAdapter = GenericDataTable.GenericDatabase.CreateDbDataAdapter();
             dataAdapter.SelectCommand = command;
 
@@ -907,6 +909,7 @@ namespace Ferda.Guha.Data
              
 
             using DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
+            command.CommandTimeout = 0;
             command.CommandText =
                 "SELECT " + columnQuotedIdentifier
                 + " FROM " + tableName
@@ -958,6 +961,7 @@ namespace Ferda.Guha.Data
             }
             //select count(Loans1.loan_id) from Loans left join Loans1 on Loans.loan_id = Loans1.loan_id group by Loans.loan_id
             using DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
+            command.CommandTimeout = 0;
             command.CommandText =
                 "SELECT COUNT(" + _detailTableName + "." 
                 + _masterTableIdQuoted + ") FROM "
@@ -1042,7 +1046,7 @@ namespace Ferda.Guha.Data
             }
 
             using DbCommand command = GenericDataTable.GenericDatabase.CreateDbCommand();
-
+            command.CommandTimeout = 0;
             command.CommandText =
                 "SELECT " + columnQuotedIdentifier
                 + " FROM " + dataTableQuotedIdentifier
