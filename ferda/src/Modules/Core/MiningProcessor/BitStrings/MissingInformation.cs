@@ -143,9 +143,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="itemToMeasure">The item to measure.</param>
         /// <returns>Size of a bit string</returns>
-        public override int GetSize(IBitString itemToMeasure)
+        public override ulong GetSize(IBitString itemToMeasure)
         {
-            return itemToMeasure.Length;
+            return (ulong) itemToMeasure.Length;
         }
 		
         /// <summary>

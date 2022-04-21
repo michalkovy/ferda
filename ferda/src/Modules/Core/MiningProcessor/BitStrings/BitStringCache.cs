@@ -61,7 +61,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         // size is in BitString units i.e. for strings of
         // bits its in bits, for strings of floats (fuzzy bit strings)
         // it is in floats
-        private const int cacheDefaultSize = 700000000;
+        private const ulong cacheDefaultSize = 137438953472; // ~16GB
 
         /// <summary>
         /// Dictionary of bit string generators that are present in the bit string.
@@ -90,7 +90,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <summary>
         /// Initializes an empty cache. Cache has a default size 1MB.
         /// </summary>
-        private BitStringCache(int maxItems)
+        private BitStringCache(ulong maxItems)
             : base(maxItems)
         {
             _missingInformationBitStringsIdsCache = new MissingInformationBitStringsIdsCache(this);
@@ -273,9 +273,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="itemToMeasure">Bit string to be measured</param>
         /// <returns>Size of a bitstring</returns>
-        public override int GetSize(IBitString itemToMeasure)
+        public override ulong GetSize(IBitString itemToMeasure)
         {
-            return itemToMeasure.Length;
+            return (ulong) itemToMeasure.Length;
         }
     }
 }

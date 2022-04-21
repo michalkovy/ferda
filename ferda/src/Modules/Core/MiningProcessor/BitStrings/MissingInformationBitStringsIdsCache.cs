@@ -95,7 +95,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="itemToMeasure">The item to measure.</param>
         /// <returns>Size of the item.</returns>
-        public override int GetSize(string itemToMeasure)
+        public override ulong GetSize(string itemToMeasure)
         {
             return 1;
         }

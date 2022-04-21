@@ -44,12 +44,12 @@ namespace Ferda.Modules.Helpers.Caching
         where ValueT : class
         where KeyT : IEquatable<KeyT>
     {
-        private int _maxSize = 50;
+        private ulong _maxSize = 50;
         /// <summary>
         /// Gets or sets the maximal size of the cache.
         /// </summary>
         /// <value>The maximal size of the cache.</value>
-        public int MaxSize
+        public ulong MaxSize
         {
             get { return _maxSize; }
             set
@@ -64,12 +64,12 @@ namespace Ferda.Modules.Helpers.Caching
             }
         }
 
-        private int _actSize = 0;
+        private ulong _actSize = 0;
         /// <summary>
         /// Gets the actual size of the cache.
         /// </summary>
         /// <value>The actual size of the cache.</value>
-        public int ActSize
+        public ulong ActSize
         {
             get { return _actSize; }
         }
@@ -105,11 +105,11 @@ namespace Ferda.Modules.Helpers.Caching
         /// allowed in the list.
         /// </summary>
         /// <param name="maxItems">Maximum number of items allowed</param>
-        public MostRecentlyUsed(int maxItems)
+        public MostRecentlyUsed(ulong maxItems)
         {
             _maxSize = maxItems;
             _list = new LinkedList<KeyT>();
-            _cache = new Dictionary<KeyT, ValueT>(_maxSize);
+            _cache = new Dictionary<KeyT, ValueT>();
         }
 
         /// <summary>
@@ -125,12 +125,12 @@ namespace Ferda.Modules.Helpers.Caching
         /// </summary>
         /// <param name="itemToMeasure">The item to measure.</param>
         /// <returns></returns>
-        public virtual int GetSize(ValueT itemToMeasure)
+        public virtual ulong GetSize(ValueT itemToMeasure)
         {
             return 1;
         }
 
-        private void shrinkCache(int newSize)
+        private void shrinkCache(ulong newSize)
         {
             while (_actSize > newSize && _list.Count > 0)
             {
@@ -181,7 +181,7 @@ namespace Ferda.Modules.Helpers.Caching
                     else
                     {
                         ValueT newValue = GetValue(key);
-                        int newValueSize = GetSize(newValue);
+                        ulong newValueSize = GetSize(newValue);
 
                         shrinkCache(_maxSize - newValueSize);
 

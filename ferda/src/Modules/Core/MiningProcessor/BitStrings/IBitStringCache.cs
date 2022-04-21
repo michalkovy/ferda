@@ -40,12 +40,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <summary>
         /// Gets or the actual cache size.
         /// </summary>
-        int ActSize { get; }
+        ulong ActSize { get; }
 
         /// <summary>
         /// Gets or sets the maximum cache size.
         /// </summary>
-        int MaxSize { get; set; }
+        ulong MaxSize { get; set; }
 
         /// <summary>
         /// Allows to check whether the cache contains some concrete bit string (identified by guid)
