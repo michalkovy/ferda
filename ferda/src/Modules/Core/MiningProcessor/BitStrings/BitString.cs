@@ -972,10 +972,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     while (aPt < stopPt)
                     {
                         temp = (*aPt++) & (*bPt++);
-                        sum += *(lookup + (int)(temp & _16bits));
-                        sum += *(lookup + (int)((temp >> 16) & _16bits));
-                        sum += *(lookup + (int)((temp >> 32) & _16bits));
-                        sum += *(lookup + (int)(temp >> 48));
+                        sum += BitOperations.PopCount(temp);
                     }
                 }
             }
@@ -1029,16 +1026,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         temp1 = *aPt++;
                         temp2 = *bPt++;
                         temp2 &= temp1;
-                        sum1 += *(lookup + (int)(temp2 & _16bits));
-                        sum1 += *(lookup + (int)((temp2 >> 16) & _16bits));
-                        sum1 += *(lookup + (int)((temp2 >> 32) & _16bits));
-                        sum1 += *(lookup + (int)(temp2 >> 48));
+                        sum1 += BitOperations.PopCount(temp2);
                         temp2 = *cPt++;
                         temp2 &= temp1;
-                        sum2 += *(lookup + (int)(temp2 & _16bits));
-                        sum2 += *(lookup + (int)((temp2 >> 16) & _16bits));
-                        sum2 += *(lookup + (int)((temp2 >> 32) & _16bits));
-                        sum2 += *(lookup + (int)(temp2 >> 48));
+                        sum2 += BitOperations.PopCount(temp2);
                     }
                 }
             }
@@ -1111,22 +1102,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         ulong ad = al & dl;
                         ulong bc = bl & cl;
                         ulong bd = bl & dl;
-                        sum1 += *(lookup + (int)(ac & _16bits));
-                        sum1 += *(lookup + (int)((ac >> 16) & _16bits));
-                        sum1 += *(lookup + (int)((ac >> 32) & _16bits));
-                        sum1 += *(lookup + (int)(ac >> 48));
-                        sum2 += *(lookup + (int)(bc & _16bits));
-                        sum2 += *(lookup + (int)((bc >> 16) & _16bits));
-                        sum2 += *(lookup + (int)((bc >> 32) & _16bits));
-                        sum2 += *(lookup + (int)(bc >> 48));
-                        sum3 += *(lookup + (int)(ad & _16bits));
-                        sum3 += *(lookup + (int)((ad >> 16) & _16bits));
-                        sum3 += *(lookup + (int)((ad >> 32) & _16bits));
-                        sum3 += *(lookup + (int)(ad >> 48));
-                        sum4 += *(lookup + (int)(bd & _16bits));
-                        sum4 += *(lookup + (int)((bd >> 16) & _16bits));
-                        sum4 += *(lookup + (int)((bd >> 32) & _16bits));
-                        sum4 += *(lookup + (int)(bd >> 48));
+                        sum1 += BitOperations.PopCount(ac);
+                        sum2 += BitOperations.PopCount(bc);
+                        sum3 += BitOperations.PopCount(ad);
+                        sum4 += BitOperations.PopCount(bd);
                     }
                 }
             }
