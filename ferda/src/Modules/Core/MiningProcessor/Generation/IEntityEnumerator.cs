@@ -45,7 +45,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
     /// missing information can not get to output!
     /// </para>
     /// </summary>
-    public interface IEntityEnumerator : IEnumerable<IBitString>
+    public interface IEntityEnumerator : IA­syncEnumerable<IBitString>
     {
         /// <summary>
         /// Total number of bit strings in this enumerator

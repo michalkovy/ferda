@@ -1319,10 +1319,10 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.OntologyDerivedAttr
         /// <returns>True iff there is a next bit string in the output
         /// <paramref name="bitString"/></returns>
         /// <param name="current__">ICE stuff</param>
-        public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
+        public override Task<BitStringGenerator_GetNextBitStringResult> GetNextBitStringAsync(int skipFirstN, Current current__)
         {
-            bitString = new BitStringIceWithCategoryId();
-            return false;
+            var bitString = new BitStringIceWithCategoryId();
+            return Task.FromResult(new BitStringGenerator_GetNextBitStringResult(false, bitString));
         }
 
         /// <summary>

@@ -106,34 +106,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// Retrieves the entity enumerator
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public abstract IEnumerator<IBitString> GetBitStringEnumerator();
+        public abstract IAsyncEnumerator<IBitString> GetBitStringEnumerator();
 
-        #region IEnumerable<IBitString> Members
+        #region IAsyncEnumerable<IBitString> Members
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
-        /// <returns>
-        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"></see>
-        /// that can be used to iterate through the collection.
-        /// </returns>
-        public IEnumerator<IBitString> GetEnumerator()
-        {
-            return GetBitStringEnumerator();
-        }
-
-        #endregion
-
-        #region IEnumerable Members
-
-        /// <summary>
-        /// Returns an enumerator that iterates through a collection.
-        /// </summary>
-        /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"></see> object
-        /// that can be used to iterate through the collection.
-        /// </returns>
-        IEnumerator IEnumerable.GetEnumerator()
+        public IAsyncEnumerator<IBitString> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             return GetBitStringEnumerator();
         }
@@ -461,7 +441,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <summary>
         /// Stack of bit string enumerators used in generation
         /// </summary>
-        private Stack<IEnumerator<IBitString>> enumeratorsStack = new Stack<IEnumerator<IBitString>>();
+        private Stack<IAsyncEnumerator<IBitString>> enumeratorsStack = new Stack<IAsyncEnumerator<IBitString>>();
 
         /// <summary>
         /// Stack of bit strings used in generation
@@ -621,10 +601,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
             }
         }
 
-        private bool moveNextInTopEntity()
+        private async Task<bool> moveNextInTopEntity()
         {
-            IEnumerator<IBitString> enumerator = enumeratorsStack.Peek();
-            if (enumerator.MoveNext())
+            IAsyncEnumerator<IBitString> enumerator = enumeratorsStack.Peek();
+            if (await enumerator.MoveNextAsync())
             {
                 if (bitStringStack.Count > 0)
                     bitStringStack.Pop();
@@ -676,11 +656,11 @@ namespace Ferda.Guha.MiningProcessor.Generation
             return false;
         }
 
-        private void getEntity(int index)
+        private async Task getEntity(int index)
         {
-            IEnumerator<IBitString> enumerator = _sourceEntities[index].GetEnumerator();
+            var enumerator = _sourceEntities[index].GetAsyncEnumerator();
 
-            bool succeds = enumerator.MoveNext();
+            bool succeds = await enumerator.MoveNextAsync();
             Debug.Assert(succeds);
             enumeratorsStack.Push(enumerator);
             Debug.Assert(enumerator.Current != null);
@@ -694,7 +674,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <param name="afterRemove">If this operation is done after the
         /// removal of entity enumerator.</param>
         /// <returns>Iff the operand length can be prolonged.</returns>
-        private bool prolong(bool afterRemove)
+        private async Task<bool> prolong(bool afterRemove)
         {
             //the bit string could not be prolonged any more
             if (bitStringStack.Count == _effectiveMaxLength) // not after remove
@@ -734,7 +714,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             if (newIndex >= _sourceEntities.Count)
                 return false;
             
-            getEntity(newIndex);
+            await getEntity(newIndex);
             return true;
         }
 
@@ -762,7 +742,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <c>ferda/docsrc/draft/multiOperandGenerationAutomaton.svg</c>.
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        public override async IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
             if (_effectiveMinLength == 0)
                 yield return EmptyBitString.GetInstance();
@@ -775,7 +755,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             enumeratorsStack.Clear();
             bitStringStack.Clear();
             lengthIndexStack.Clear();
-            getEntity(0);
+            await getEntity(0);
 
             returnCurrent:
             if (returnCurrent(out result))
@@ -783,7 +763,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
             //
             prolong:
-            if (prolong(afterRemove))
+            if (await prolong(afterRemove))
             {
                 afterRemove = false;
                 goto returnCurrent;
@@ -795,12 +775,12 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     goto finish;
                 }
                 afterRemove = false;
-                if (moveNextInTopEntity())
+                if (await moveNextInTopEntity())
                 {
                     goto returnCurrent;
                 }
             }
-            while (moveNextInTopEntity())
+            while (await moveNextInTopEntity())
             {
                 if (returnCurrent(out result))
                     yield return result;

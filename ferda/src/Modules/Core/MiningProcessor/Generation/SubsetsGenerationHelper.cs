@@ -39,7 +39,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         public long operation(long previous, long current)
         {
-            return previous*current;
+            return previous * current;
         }
 
         public long operation(long current)
@@ -151,7 +151,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         #region IEnumerable<M> Members
 
         public IEnumerator<M> GetEnumerator()
-            //public override IEnumerator<IBitString> GetBitStringEnumerator()
+        //public override IEnumerator<IBitString> GetBitStringEnumerator()
         {
             M result;
             bool afterRemove;
@@ -163,9 +163,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
             sI.Clear();
             getEntity(0);
 
-            #endregion
+        #endregion
 
-            returnCurrent:
+        returnCurrent:
             if (returnCurrent(out result))
             {
                 if (_instance.skipOptimize(result))
@@ -173,7 +173,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     yield return result;
                 }
             }
-            prolong:
+        prolong:
             if (prolong(afterRemove))
             {
                 afterRemove = false;

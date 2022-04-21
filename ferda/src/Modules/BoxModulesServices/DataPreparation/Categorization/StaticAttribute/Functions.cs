@@ -313,7 +313,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         /// <returns>True iff there is a next bit string in the output
         /// <paramref name="bitString"/></returns>
         /// <param name="current__">ICE stuff</param>
-        public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
+        public override Task<BitStringGenerator_GetNextBitStringResult> GetNextBitStringAsync(int skipFirstN, Current current__)
         {
             throw new Exception("The method or operation is not implemented.");
         }

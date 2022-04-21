@@ -184,7 +184,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Algoritm for tracing the relevant questions and verifying them against
         /// the quantifier. The algoritm computes valid hypotheses.
         /// </summary>
-        public override void Trace()
+        public override async Task Trace()
         {
             if (!ProgressSetValue(-1, "Begining of attributes trace."))
                 return;
@@ -211,9 +211,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 foreach (CategorialAttributeTrace columnTrace in _columnAttribute)
                 {
                     bSCT = BitStringsArrayAnd.Operation(rowTrace.BitStrings, columnTrace.BitStrings);
-                    foreach (IBitString cS in _condition)
+                    await foreach (IBitString cS in _condition)
                     {
-                        foreach (IBitString fS in _firstSet)
+                        await foreach (IBitString fS in _firstSet)
                         {
                             #region SD first set contingency table
                             fSF = fS.And(cS);
@@ -232,7 +232,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                             double[] sDFirstSetValues = evaluator.SDFirstSetValues(contingencyTable1);
 
-                            foreach (IBitString sS in _secondSet)
+                            await foreach (IBitString sS in _secondSet)
                             {
                                 #region SD second set contingency table
                                 switch (TaskParams.sdWorkingWithSecondSetMode)
@@ -307,7 +307,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <remarks>
         /// The algortihm is not implemented for the CF procedure.
         /// </remarks>
-        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, Ferda.Modules.GuidStruct attributeGuid, int skipFirstN)
+        public override IAsyncEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, Ferda.Modules.GuidStruct attributeGuid, int skipFirstN)
         {
             throw new Exception("The method or operation is not implemented.");
         }

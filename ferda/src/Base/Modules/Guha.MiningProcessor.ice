@@ -125,6 +125,7 @@ module Ferda {
 						throws Ferda::Modules::BoxRuntimeError;
 						
 				     //da dalsi bitstring
+					 ["amd"]
 					 bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString)
 						throws Ferda::Modules::BoxRuntimeError;
 						
@@ -339,6 +340,7 @@ module Ferda {
                           bool individualNodesBranching;	      
                     };
 
+				["amd"]
 				interface MiningProcessorFunctions
 				{
 					// returned string is serialized Ferda.Guha.MiningProcessor.SerializableResult
@@ -359,7 +361,7 @@ module Ferda {
 						out string resultInfo
 						)
 						throws Ferda::Modules::BoxRuntimeError;
-						
+					
 					BitStringIceWithCategoryId GetNextBitString()
 						throws Ferda::Modules::BoxRuntimeError;
 						

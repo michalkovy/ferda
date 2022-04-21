@@ -45,9 +45,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// Retrieves the entity enumerator. Returns negations of original bit strings
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        public override async IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
-            foreach (IBitString bitString in _entity)
+            await foreach (IBitString bitString in _entity)
             {
                 yield return bitString.Not();
             }
@@ -128,9 +128,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// and new bit strings that are negation of original bit strings.
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        public override async IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
-            foreach (IBitString bitString in _entity)
+            await foreach (IBitString bitString in _entity)
             {
                 SkipSetting skipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
                 if (skipSetting == null)

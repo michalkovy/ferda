@@ -51,7 +51,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <see cref="T:Ferda.Guha.MiningProcessor.Generation.IEntityEnumerator"/>).
         /// </summary>
         /// <param name="attribute">Boolean attributes</param>
-        void ComputeAllObjectsCount(IEntityEnumerator attribute);
+        Task ComputeAllObjectsCount(IEntityEnumerator attribute);
     }
 
     /// <summary>
@@ -106,7 +106,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Algoritm for tracing the relevant questions and verifying them against
         /// the quantifier. The algoritm computes valid hypotheses.
         /// </summary>
-        public abstract void Trace();
+        public abstract Task Trace();
 
         /// <summary>
         /// Algoritm for computing all the relevant questions and veryfiing them
@@ -128,7 +128,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="skipFirstN">Skip first N steps of the computation</param>
         /// <returns>A key/value pair: the key is identification of the virtual hypothesis attribute,
         /// the value is bit string corresponding to this attribute.</returns>
-        public abstract IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, GuidStruct attributeGuid, int skipFirstN);
+        public abstract IAsyncEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, GuidStruct attributeGuid, int skipFirstN);
 
         /// <summary>
         /// Prepares traces (entity enumerators) for a given miner
@@ -673,7 +673,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// an entity enumerator
         /// </summary>
         /// <param name="attribute">The entity enumerator</param>
-        public void ComputeAllObjectsCount(IEntityEnumerator attribute)
+        public async Task ComputeAllObjectsCount(IEntityEnumerator attribute)
         {
             if (_allObjectsCount > 0)
                 return;
@@ -683,7 +683,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             //puvodni verze
             if (!(attribute is EmptyTrace))
             {
-                foreach (IBitString s in attribute)
+                await foreach (IBitString s in attribute)
                 {
                     _allObjectsCount = s.Length;
                     return;

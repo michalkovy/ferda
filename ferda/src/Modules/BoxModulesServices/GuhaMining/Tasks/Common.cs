@@ -999,7 +999,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         /// <param name="skipFirstN">Skipping of the first N verifications</param>
         /// <param name="_current">ICE stuff</param>
         /// <returns>Iterator of bit strings</returns>
-        public static IEnumerable<BitStringIceWithCategoryId> RunTaskNoResult(
+        public static async IAsyncEnumerable<BitStringIceWithCategoryId> RunTaskNoResultAsync(
             BoxModuleI boxModule, ITask taskFunctions,
             TaskTypeEnum taskType, ResultTypeEnum resultType,
             int[] countVector, GuidStruct attributeGuid, MiningProcessorFunctions miningFunctions,
@@ -1048,9 +1048,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                 secondSetWorking
                 );
 
-            string statistics;
-            string result =
-                miningProcessor.Run(
+            var runResult =
+                await miningProcessor.RunAsync(
                     boxModule.MyProxy,
                     GetBooleanAttributes(boxModule, taskFunctions),
                     GetCategorialAttributes(boxModule, taskFunctions),
@@ -1060,13 +1059,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                     boxModule.Output,
                     attributeGuid,
                     countVector,
-                    out statistics,
                     _current
                     );
 
             while (true)
             {
-                BitStringIceWithCategoryId tmpString = miningProcessor.GetNextBitString(_current);
+                BitStringIceWithCategoryId tmpString = await miningProcessor.GetNextBitStringAsync(_current);
                 if (tmpString != null)
                 {
                     yield return tmpString;

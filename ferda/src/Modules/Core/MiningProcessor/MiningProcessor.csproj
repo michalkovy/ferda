@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Interactive.Async" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Base\Base.csproj" />
     <ProjectReference Include="..\..\BoxInterfaces\BoxInterfaces.csproj" />
     <ProjectReference Include="..\..\Helpers\Helpers.csproj" />

@@ -58,23 +58,12 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// Gets the enumerator. Always returns an empty bit string
         /// </summary>
         /// <returns>Empty bit string</returns>
-        public IEnumerator<IBitString> GetEnumerator()
+        public async IAsyncEnumerator<IBitString> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             yield return EmptyBitString.GetInstance();
         }
 
         #endregion
-
-        #region IEnumerable Members
-
-        /// <summary>
-        /// Gets the enumerator
-        /// </summary>
-        /// <returns>The enumerator</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
 
         /// <summary>
         /// Set of used attributes by enumerator
@@ -91,7 +80,5 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             get { return new Set<string>(); }
         }
-
-        #endregion
     }
 }

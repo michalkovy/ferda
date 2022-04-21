@@ -186,7 +186,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Algoritm for tracing the relevant questions and verifying them against
         /// the quantifier. The algoritm computes valid hypotheses.
         /// </summary>
-        public override void Trace()
+        public override async Task Trace()
         {
             if (!ProgressSetValue(-1, "Begining of attributes trace."))
                 return;
@@ -205,12 +205,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
             ContingencyTableHelper contingencyTable1;
             ContingencyTableHelper contingencyTable2;
 
-            foreach (IBitString pS in _succedent)
+            await foreach (IBitString pS in _succedent)
             {
                 if (pS is EmptyBitString)
                     continue;
                 GetNegation(pS, out nS);
-                foreach (IBitString pA in _antecedent)
+                await foreach (IBitString pA in _antecedent)
                 {
                     GetNegation(pA, out nA);
 
@@ -220,9 +220,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     fourFT.nSpA = nS.And(pA);
                     fourFT.nSnA = nS.And(nA);
 
-                    foreach (IBitString pC in _condition)
+                    await foreach (IBitString pC in _condition)
                     {
-                        foreach (IBitString fS in _firstSet)
+                        await foreach(IBitString fS in _firstSet)
                         {
                             #region SD first set contingency table
                             fSF = fS.And(pC);
@@ -242,7 +242,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                             double[] sDFirstSetValues = evaluator.SDFirstSetValues(contingencyTable1);
 
-                            foreach (IBitString sS in _secondSet)
+                            await foreach(IBitString sS in _secondSet)
                             {
                                 #region SD second set contingency table
                                 switch (TaskParams.sdWorkingWithSecondSetMode)
@@ -308,7 +308,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="skipFirstN">Skip first N steps of the computation</param>
         /// <returns>A key/value pair: the key is identification of the virtual hypothesis attribute,
         /// the value is bit string corresponding to this attribute.</returns>
-        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, Ferda.Modules.GuidStruct attributeGuid, int skipFirstN)
+        public override async IAsyncEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, Ferda.Modules.GuidStruct attributeGuid, int skipFirstN)
         {
             if (skipFirstN >= this.TaskParams.maxSizeOfResult)
             {
@@ -335,12 +335,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
             ContingencyTableHelper contingencyTable1;
             ContingencyTableHelper contingencyTable2;
 
-            foreach (IBitString pS in _succedent)
+            await foreach (IBitString pS in _succedent)
             {
                 if (pS is EmptyBitString)
                     continue;
                 GetNegation(pS, out nS);
-                foreach (IBitString pA in _antecedent)
+                await foreach (IBitString pA in _antecedent)
                 {
                     GetNegation(pA, out nA);
 
@@ -350,9 +350,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     fourFT.nSpA = nS.And(pA);
                     fourFT.nSnA = nS.And(nA);
 
-                    foreach (IBitString pC in _condition)
+                    await foreach (IBitString pC in _condition)
                     {
-                        foreach (IBitString fS in _firstSet)
+                        await foreach (IBitString fS in _firstSet)
                         {
                             if (MustStop())
                             {
@@ -402,7 +402,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                                 double[] sDFirstSetValues
                                     = evaluator.SDFirstSetValues(contingencyTable1);
 
-                                foreach (IBitString sS in _secondSet)
+                                await foreach (IBitString sS in _secondSet)
                                 {
                                     #region SD second set contingency table
                                     switch (TaskParams.sdWorkingWithSecondSetMode)

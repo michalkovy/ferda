@@ -166,7 +166,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Algoritm for tracing the relevant questions and verifying them against
         /// the quantifier. The algoritm computes valid hypotheses.
         /// </summary>
-        public override void Trace()
+        public override async Task Trace()
         {
             if (!ProgressSetValue(-1, "Begining of attributes trace."))
                 return;
@@ -188,7 +188,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 {
                     bSCT = BitStringsArrayAnd.Operation(rowTrace.BitStrings, columnTrace.BitStrings);
 
-                    foreach (IBitString cS in _condition)
+                    await foreach (IBitString cS in _condition)
                     {
                         if (cS is IEmptyBitString)
                             cT = BitStringsArraySums.Sum(bSCT);
@@ -245,7 +245,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <remarks>
         /// The algortihm is not implemented for the CF procedure.
         /// </remarks>
-        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, Ferda.Modules.GuidStruct attributeGuid, int skipFirstN)
+        public override IAsyncEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] CountVector, Ferda.Modules.GuidStruct attributeGuid, int skipFirstN)
         {
             throw new Exception("The method or operation is not implemented.");
         }

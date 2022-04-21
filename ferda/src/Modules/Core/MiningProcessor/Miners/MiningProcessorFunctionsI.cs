@@ -53,7 +53,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Boolean attribute entity enumerators
         /// </summary>
-        private IEnumerator<KeyValuePair<string, BitStringIce>> _booleanTraceEnumerator = null;
+        private IAsyncEnumerator<KeyValuePair<string, BitStringIce>> _booleanTraceEnumerator = null;
         
         /// <summary>
         /// Proxy of the progress task
@@ -113,9 +113,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// </summary>
         /// <param name="current__">Ice stuff</param>
         /// <returns>Bit string</returns>
-        public override BitStringIceWithCategoryId GetNextBitString(Current current__)
+        public override async Task<BitStringIceWithCategoryId> GetNextBitStringAsync(Current current__)
         {
-            if (_booleanTraceEnumerator.MoveNext())
+            if (await _booleanTraceEnumerator.MoveNextAsync())
             {
                 BitStringIceWithCategoryId _tmpTuple = new BitStringIceWithCategoryId();
                 _tmpTuple.categoryId = _booleanTraceEnumerator.Current.Key;
@@ -159,7 +159,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <returns>Serialized result of the task in form
         /// <see cref="Ferda.Guha.MiningProcessor.Results.SerializableResult"/> is returned.
         /// </returns>
-        public override string Run(
+        public override async Task<MiningProcessorFunctions_RunResult> RunAsync(
             BoxModulePrx boxModule,
             BooleanAttribute[] booleanAttributes,
             CategorialAttribute[] categorialAttributes,
@@ -169,7 +169,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
             OutputPrx output,
             GuidStruct attributeId,
             int[] countVector,
-            out string resultInfo,
             Current current__
             )
         {
@@ -184,6 +183,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             string label = String.Empty;
             string result = String.Empty;
+            string resultInfo = String.Empty;
 
             _current = current__;
 
@@ -291,7 +291,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 switch (taskParams.resultType)
                 {
                     case ResultTypeEnum.Trace:
-                        miningProcessor.Trace();
+                        await miningProcessor.Trace();
                         miningProcessor.ProgressSetValue(1, "Completing result.");
                         miningProcessor.ResultInfo.OtherInfo = string.Format("BitStringCache.IceCalls: {0}; BitStringCache.IceTicks: {1}; Quantifier.IceCalls: {2}; Quantifier.IceTicks: {3}; All.Ticks: {4}", BitStringCache.IceCalls, BitStringCache.IceTicks, Quantifier.IceCalls, Quantifier.IceTicks, DateTime.Now.Ticks - before);
                         resultInfo = SerializableResultInfo.Serialize(miningProcessor.ResultInfo);
@@ -307,7 +307,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         Ferda.Guha.MiningProcessor.Formulas.AttributeNameInLiteralsProvider.Init(nameProvider);
 
                         _booleanTraceEnumerator = miningProcessor.TraceBoolean(
-                            _countVector, _attributeId, taskParams.skipFirstN).GetEnumerator();
+                            _countVector, _attributeId, taskParams.skipFirstN).GetAsyncEnumerator();
                         break;
 
                     case ResultTypeEnum.TraceReal:
@@ -318,7 +318,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 }
                 // performance ICE
 
-                return result;
+                return new MiningProcessorFunctions_RunResult(result, resultInfo);
             }
             catch (BoxRuntimeError)
             {
@@ -368,10 +368,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// in this parameter</param>
         /// <param name="current__">Ice stuff</param>
         /// <returns>Decision trees serialized to a string</returns>       
-        public override string ETreeRun(BoxModulePrx taskBoxModule, 
+        public override async Task<MiningProcessorFunctions_ETreeRunResult> ETreeRunAsync(BoxModulePrx taskBoxModule, 
             ETreeTaskRunParams taskParams,
             OutputPrx output, 
-            out string resultInfo, Current current__)
+            Current current__)
         {
             ProgressTaskListener progressListener = null;
             string label = String.Empty;
@@ -434,14 +434,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 }
             }
 
-            resultInfo = SerializableResultInfo.Serialize(miningProcessor.ResultInfo);
+            var resultInfo = SerializableResultInfo.Serialize(miningProcessor.ResultInfo);
             string result = DecisionTreeResult.Serialize(miningProcessor.Result);
             if (result.Length > 1023000)
             {
                 throw Modules.Exceptions.BoxRuntimeError(null, "Mining processor - ETree task",
                     "The length of Ice message exceeded. Please try to lower the hypotheses count or to set the quantifiers more strictly.");
             }
-            return result;
+            return new MiningProcessorFunctions_ETreeRunResult(result, resultInfo);
         }
 
         #endregion

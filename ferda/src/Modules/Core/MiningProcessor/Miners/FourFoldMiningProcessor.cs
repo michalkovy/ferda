@@ -317,7 +317,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Algoritm for tracing the relevant questions and verifying them against
         /// the quantifier. The algoritm computes valid hypotheses.
         /// </summary>
-        public override void Trace()
+        public override async Task Trace()
         {
             //code common to trace and trace boolean methods
             InitializeTrace();
@@ -337,7 +337,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             _mineRuns = 0;
             int mineToRun = 0;
-            foreach (IBitString pC in _condition)
+            await foreach (IBitString pC in _condition)
             {
                 //Gets missing value for the condition
                 GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
@@ -345,7 +345,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 //set actual count of objects with respect to condition
                 long actCount = SetActConditionCountOfObjects(pC);
 
-                foreach (IBitString pS in _succedent)
+                await foreach (IBitString pS in _succedent)
                 {
                     if (pS is IEmptyBitString)
                         continue;
@@ -354,7 +354,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     //Fills the nine fold table (FIRST is condition, SECOND is succedent)
                     nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, actCount);
 
-                    foreach (IBitString pA in _antecedent)
+                    await foreach (IBitString pA in _antecedent)
                     {
                         MiningSetting miningSetting =
                             new MiningSetting(pA, pS, pC, nineFT, evaluator, _antecedent.UsedAttributes, 
@@ -408,7 +408,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="skipFirstN">Skip first N steps of the computation</param>
         /// <returns>A key/value pair: the key is identification of the virtual hypothesis attribute,
         /// the value is bit string corresponding to this attribute.</returns>
-        public override IEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, GuidStruct attributeGuid, int skipFirstN)
+        public override async IAsyncEnumerable<KeyValuePair<string, BitStringIce>> TraceBoolean(int[] countVector, GuidStruct attributeGuid, int skipFirstN)
         {
             //initialization of multirelational stuff
             if (skipFirstN >= this.TaskParams.maxSizeOfResult)
@@ -437,7 +437,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             int step = 0;
 
-            foreach (IBitString pC in _condition)
+            await foreach (IBitString pC in _condition)
             {
                 //Gets missing value for the condition
                 GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
@@ -445,7 +445,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 //set actual count of objects with respect to condition
                 SetActConditionCountOfObjects(pC);
 
-                foreach (IBitString pS in _succedent)
+                await foreach (IBitString pS in _succedent)
                 {
                     if (pS is IEmptyBitString)
                         continue;
@@ -454,7 +454,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     //Fills the nine fold table (A is condition, B is succedent)
                     nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, Int32.MinValue);
 
-                    foreach (IBitString pA in _antecedent)
+                    await foreach (IBitString pA in _antecedent)
                     {
                         if (MustStop())
                         {
