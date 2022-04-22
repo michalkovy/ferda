@@ -51,28 +51,39 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public static IBitString GetBitString(BitStringGeneratorPrx bitStringGeneratorPrx, string attributeGuid,
                                               string[] categoriesIds, BitwiseOperation operation)
         {
-            IBitString result = null;
+            IBitString resultUsed = null;
+            IBitString resultTemp = null; // can be used for in place operations
             IBitStringCache cache = BitStringCache.GetInstance(bitStringGeneratorPrx);
             switch (operation)
             {
                 case BitwiseOperation.And:
                     foreach (string var in categoriesIds)
                     {
-                        if (result == null)
-                            result = cache[attributeGuid, var];
+                        if (resultTemp == null)
+                        {
+                            if (resultUsed == null)
+                                resultUsed = cache[attributeGuid, var];
+                            else
+                                resultTemp = resultUsed.And(cache[attributeGuid, var]);
+                        }
                         else
-                            result = result.And(cache[attributeGuid, var]);
+                            resultTemp = resultTemp.AndInPlace(cache[attributeGuid, var]);
                     }
-                    return result;
+                    return resultTemp ?? resultUsed;
                 case BitwiseOperation.Or:
                     foreach (string var in categoriesIds)
                     {
-                        if (result == null)
-                            result = cache[attributeGuid, var];
+                        if (resultTemp == null)
+                        {
+                            if (resultUsed == null)
+                                resultUsed = cache[attributeGuid, var];
+                            else
+                                resultTemp = resultUsed.Or(cache[attributeGuid, var]);
+                        }
                         else
-                            result = result.Or(cache[attributeGuid, var]);
+                            resultTemp = resultTemp.OrInPlace(cache[attributeGuid, var]);
                     }
-                    return result;
+                    return resultTemp ?? resultUsed;
                 default:
                     throw new NotImplementedException();
             }
