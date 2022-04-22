@@ -101,6 +101,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             return source;
         }
 
+        public IBitString AndInPlace(IBitString source)
+        {
+            return source;
+        }
+
         /// <summary>
         /// Performs a NOT operation on the true bit string. This should not
         /// happen.
@@ -116,6 +121,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
         public IBitString Or(IBitString source)
+        {
+            return this;
+        }
+
+        public IBitString OrInPlace(IBitString source)
         {
             return this;
         }

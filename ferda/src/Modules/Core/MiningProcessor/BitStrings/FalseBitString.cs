@@ -97,6 +97,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             return this;
         }
 
+        public IBitString AndInPlace(IBitString source)
+        {
+            return this;
+        }
+
         /// <summary>
         /// Performs the bitwise AND operation on
         /// copy of current BitString against the specified BitString.
@@ -145,6 +150,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
         public IBitString Or(IBitString source)
+        {
+            return source;
+        }
+
+        public IBitString OrInPlace(IBitString source)
         {
             return source;
         }

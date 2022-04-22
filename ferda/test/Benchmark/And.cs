@@ -60,7 +60,9 @@ namespace Ferda.Benchmark
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
-                AndSafeCrisp(tmp, tmp2);
+                ulong[] tmp1 = GC.AllocateUninitializedArray<ulong>(tmp.Length);
+                tmp.CopyTo((Span<ulong>)tmp1);
+                AndSafeCrisp(tmp1, tmp2);
             }
         }
 
@@ -76,7 +78,23 @@ namespace Ferda.Benchmark
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
-                AndUnsafeCrisp(tmp, tmp2);
+                ulong[] tmp1 = GC.AllocateUninitializedArray<ulong>(tmp.Length);
+                tmp.CopyTo((Span<ulong>)tmp1);
+                AndUnsafeCrisp(tmp1, tmp2);
+            }
+        }
+
+        [Benchmark]
+        public static void UnsafeAndNewCrisp()
+        {
+            //don't use static variables in iterations
+            ulong[] tmp = stringUlong;
+            ulong[] tmp2 = stringUlong2;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                ulong[] res = GC.AllocateUninitializedArray<ulong>(tmp.Length);
+                AndUnsafeNewCrisp(tmp, tmp2, res);
             }
         }
 
@@ -88,9 +106,25 @@ namespace Ferda.Benchmark
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
-                AndCrispVector(tmp, tmp2);
+                Vector<ulong>[] tmp1 = GC.AllocateUninitializedArray<Vector<ulong>>(tmp.Length);
+                tmp.CopyTo((Span<Vector<ulong>>)tmp1);
+                AndCrispVector(tmp1, tmp2);
             }
-            
+
+        }
+
+        [Benchmark]
+        public static void CrispVectorNew()
+        {
+            var tmp = stringVectorUlong1;
+            var tmp2 = stringVectorUlong2;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                Vector<ulong>[] res = GC.AllocateUninitializedArray<Vector<ulong>>(tmp.Length);
+                AndCrispNewVector(tmp, tmp2, res);
+            }
+
         }
 
         /// <summary>
@@ -105,7 +139,9 @@ namespace Ferda.Benchmark
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
-                AndSafe4f(tmp, tmp2);
+                Vector4[] tmp1 = GC.AllocateUninitializedArray<Vector4>(tmp.Length);
+                tmp.CopyTo((Span<Vector4>)tmp1);
+                AndSafe4f(tmp1, tmp2);
             }
         }
 
@@ -121,7 +157,9 @@ namespace Ferda.Benchmark
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
-                AndUnsafe4f(tmp, tmp2);
+                Vector4[] tmp1 = GC.AllocateUninitializedArray<Vector4>(tmp.Length);
+                tmp.CopyTo((Span<Vector4>)tmp1);
+                AndUnsafe4f(tmp1, tmp2);
             }
         }
 
@@ -137,7 +175,9 @@ namespace Ferda.Benchmark
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
-                AndSafeFloat(tmp, tmp2);
+                float[] tmp1 = GC.AllocateUninitializedArray<float>(tmp.Length);
+                tmp.CopyTo((Span<float>)tmp1);
+                AndSafeFloat(tmp1, tmp2);
             }
         }
 
@@ -153,7 +193,9 @@ namespace Ferda.Benchmark
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
-                AndUnsafeFloat(tmp, tmp2);
+                float[] tmp1 = GC.AllocateUninitializedArray<float>(tmp.Length);
+                tmp.CopyTo((Span<float>)tmp1);
+                AndUnsafeFloat(tmp1, tmp2);
             }
         }
 
@@ -169,7 +211,9 @@ namespace Ferda.Benchmark
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
-                AndSafeCrispFuzzyFloat(tmp, tmp2);
+                float[] tmp1 = GC.AllocateUninitializedArray<float>(tmp.Length);
+                tmp.CopyTo((Span<float>)tmp1);
+                AndSafeCrispFuzzyFloat(tmp1, tmp2);
             }
         }
 
@@ -186,7 +230,9 @@ namespace Ferda.Benchmark
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
-                AndSafeCrispFuzzyFloat2(tmp, tmp2);
+                float[] tmp1 = GC.AllocateUninitializedArray<float>(tmp.Length);
+                tmp.CopyTo((Span<float>)tmp1);
+                AndSafeCrispFuzzyFloat2(tmp1, tmp2);
             }
         }
 
@@ -203,7 +249,9 @@ namespace Ferda.Benchmark
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
-                AndSafeCrispFuzzyVector41(tmp, tmp2);
+                Vector4[] tmp1 = GC.AllocateUninitializedArray<Vector4>(tmp.Length);
+                tmp.CopyTo((Span<Vector4>)tmp1);
+                AndSafeCrispFuzzyVector41(tmp1, tmp2);
             }
         }
 
@@ -422,8 +470,8 @@ namespace Ferda.Benchmark
         {
             fixed (ulong* destPin = operand1, sourcePin = operand2)
             {
-                ulong* destPtr = destPin, 
-                    sourcePtr = sourcePin, 
+                ulong* destPtr = destPin,
+                    sourcePtr = sourcePin,
                     stopPtr = destPin + operand1.Length;
 
                 while (destPtr < stopPtr)
@@ -435,6 +483,24 @@ namespace Ferda.Benchmark
             return operand1;
         }
 
+        static unsafe ulong[] AndUnsafeNewCrisp(ulong[] operand1, ulong[] operand2, ulong[] result)
+        {
+            fixed (ulong* operand1Pin = operand1, operand2Pin = operand2, resultPin = result)
+            {
+                ulong* resultPtr = resultPin,
+                    operand1Ptr = operand1Pin,
+                    operand2Ptr = operand2Pin,
+                    stopPtr = resultPtr + operand1.Length;
+
+                while (resultPtr < stopPtr)
+                {
+                    *resultPtr++ = *operand1Ptr++ & *operand2Ptr++;
+                }
+            }
+
+            return result;
+        }
+
         static Vector<ulong>[] AndCrispVector(Vector<ulong>[] operand1, Vector<ulong>[] operand2)
         {
             for (int i = 0; i < operand1.Length; i++)
@@ -442,6 +508,15 @@ namespace Ferda.Benchmark
                 operand1[i] &= operand2[i];
             }
             return operand1;
+        }
+
+        static Vector<ulong>[] AndCrispNewVector(Vector<ulong>[] operand1, Vector<ulong>[] operand2, Vector<ulong>[] result)
+        {
+            for (int i = 0; i < operand1.Length; i++)
+            {
+                result[i] = operand1[i] & operand2[i];
+            }
+            return result;
         }
 
         /// <summary>

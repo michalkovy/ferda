@@ -125,11 +125,16 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             
             return andSpecial(source);
         }
-        
+
+        public IBitString AndInPlace(IBitString source)
+        {
+            return And(source);
+        }
+
         #endregion
 
         #region NOT
-        
+
         /// <summary>
         /// Performs a NOT operation on the empty bit string (result is
         /// again an empty bit string.
@@ -184,7 +189,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             
                 return orSpecial(source);
         }
-        
+
+        public IBitString OrInPlace(IBitString source)
+        {
+            return And(source);
+        }
+
         #endregion
 
         /// <summary>

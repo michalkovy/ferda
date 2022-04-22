@@ -259,7 +259,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise AND operation on current BitString against the specified BitString.
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
-        /// <returns>The result of the OR operation</returns>
+        /// <returns>The result of the AND operation</returns>
         public IBitString And(IBitString source)
         {
             if (source is BitString)
@@ -284,6 +284,39 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             else if (source is TrueBitString)
             {
                 return new BitString(this);
+            }
+            else
+                throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Performs the bitwise AND operation on current BitString against the specified BitString. It can modify current and return it or returns the source.
+        /// </summary>
+        /// <param name="source">The second BitString operand.</param>
+        /// <returns>The result of the AND operation based of one of the them</returns>
+        public IBitString AndInPlace(IBitString source)
+        {
+            if (source is BitString)
+            {
+                this.and((BitString)source);
+                this._identifier = FormulaHelper.And(Identifier, source.Identifier);
+                return this;
+            }
+            else if (source is FuzzyBitString)
+            {
+                return source.AndInPlace(this);
+            }
+            else if (source is EmptyBitString)
+            {
+                return this;
+            }
+            else if (source is FalseBitString)
+            {
+                return source;
+            }
+            else if (source is TrueBitString)
+            {
+                return this;
             }
             else
                 throw new NotImplementedException();
@@ -377,6 +410,40 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             else if (source is FalseBitString)
             {
                 return new BitString(this);
+            }
+            else if (source is TrueBitString)
+            {
+                return source;
+            }
+            else
+                throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Performs the bitwise OR operation on current BitString against the specified BitString. It modifies current or returns the source.
+        /// </summary>
+        /// <param name="source">The second BitString operand.</param>
+        /// <returns>The result of the OR operation</returns>
+        public IBitString OrInPlace(IBitString source)
+        {
+            if (source is BitString)
+            {
+                this.or((BitString)source);
+                this._identifier = FormulaHelper.Or(Identifier, source.Identifier);
+                return this;
+            }
+            else if (source is FuzzyBitString)
+            {
+                //fuzzy handling is in fuzzy bit strings
+                return source.OrInPlace(this);
+            }
+            else if (source is EmptyBitString)
+            {
+                return this;
+            }
+            else if (source is FalseBitString)
+            {
+                return this;
             }
             else if (source is TrueBitString)
             {

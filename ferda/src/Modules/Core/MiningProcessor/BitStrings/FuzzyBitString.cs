@@ -242,6 +242,38 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
         }
 
+        public IBitString AndInPlace(IBitString source)
+        {
+            if (source is FuzzyBitString)
+            {
+                this.and((FuzzyBitString)source);
+                this._identifier = FormulaHelper.And(_identifier, source.Identifier);
+                return this;
+            }
+            else if (source is BitString)
+            {
+                this.andNonFuzzy((BitString)source);
+                this._identifier = FormulaHelper.And(_identifier, source.Identifier);
+                return this;
+            }
+            else if (source is EmptyBitString)
+            {
+                return this;
+            }
+            else if (source is FalseBitString)
+            {
+                return source;
+            }
+            else if (source is TrueBitString)
+            {
+                return this;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         /// <summary>
         /// The conjunction of fuzzy and crisp bit string
         /// </summary>
@@ -354,6 +386,36 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             else if (source is FalseBitString)
             {
                 return new FuzzyBitString(this);
+            }
+            else if (source is TrueBitString)
+            {
+                return source;
+            }
+            else
+                throw new NotImplementedException();
+        }
+
+        public IBitString OrInPlace(IBitString source)
+        {
+            if (source is FuzzyBitString)
+            {
+                this.or((FuzzyBitString)source);
+                this._identifier = FormulaHelper.Or(_identifier, source.Identifier);
+                return this;
+            }
+            else if (source is BitString)
+            {
+                this.orNonFuzzy((BitString)source);
+                this._identifier = FormulaHelper.Or(_identifier, source.Identifier);
+                return this;
+            }
+            else if (source is EmptyBitString)
+            {
+                return this;
+            }
+            else if (source is FalseBitString)
+            {
+                return this;
             }
             else if (source is TrueBitString)
             {
