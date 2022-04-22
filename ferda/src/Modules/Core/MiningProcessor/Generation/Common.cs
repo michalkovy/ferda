@@ -175,9 +175,19 @@ namespace Ferda.Guha.MiningProcessor.Generation
         protected IBitString _currentBitString = null;
 
         /// <summary>
+        /// Current processed categories
+        /// </summary>
+        protected HashSet<string> _currentCategories = new HashSet<string>(StringComparer.InvariantCulture);
+
+        /// <summary>
         /// The bit string cache
         /// </summary>
         protected IBitStringCache _cache;
+
+        /// <summary>
+        /// The bit string cache for Coefficient
+        /// </summary>
+        protected BitStringCoefficientCache _cacheCoefficient;
 
         /// <summary>
         /// Actual length of the coefficient
@@ -191,6 +201,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             _currentBitString = null;
             _actualLength = 0;
+            _currentCategories = new HashSet<string>(StringComparer.InvariantCulture);
         }
 
         #endregion
@@ -210,6 +221,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
             _setting = setting;
 
             _cache = BitStringCache.GetInstance(setting.generator);
+
+            _cacheCoefficient = BitStringCoefficientCache.GetInstance();
 #if Testing
             _attributeGuid = Guid;
 #else
@@ -256,21 +269,31 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <param name="categoryName">The new category</param>
         protected void prolongCoefficient(string categoryName)
         {
-            IBitString newBitString = getBitString(categoryName);
-
-            if (_actualLength == 0)
+            _currentCategories.Add(categoryName);
+            var pair = KeyValuePair.Create(_attributeGuid, _currentCategories);
+            if (_cacheCoefficient.TryGetValue(pair, out IBitString bitStringFromCache))
             {
-                Debug.Assert(_currentBitString == null);
-                _currentBitString = newBitString;
+                _currentBitString = bitStringFromCache;
             }
-            //else if (_actualLength == 1)
-            //{
-            //    //_currentBitString = _currentBitString.OrCloned(newBitString);
-            //    _currentBitString = _currentBitString.Or(newBitString);
-            //}
             else
             {
-                _currentBitString = _currentBitString.Or(newBitString);
+                IBitString newBitString = getBitString(categoryName);
+
+                if (_actualLength == 0)
+                {
+                    Debug.Assert(_currentBitString == null);
+                    _currentBitString = newBitString;
+                }
+                //else if (_actualLength == 1)
+                //{
+                //    //_currentBitString = _currentBitString.OrCloned(newBitString);
+                //    _currentBitString = _currentBitString.Or(newBitString);
+                //}
+                else
+                {
+                    _currentBitString = _currentBitString.OrInPlace(newBitString);
+                }
+                _cacheCoefficient.Add(pair, _currentBitString);
             }
             _actualLength++;
         }

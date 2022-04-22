@@ -42,7 +42,6 @@ namespace Ferda.Modules.Helpers.Caching
     /// </summary>
     public abstract class MostRecentlyUsed<KeyT, ValueT> : DictionaryBase
         where ValueT : class
-        where KeyT : IEquatable<KeyT>
     {
         private ulong _maxSize = 50;
         /// <summary>
@@ -113,6 +112,18 @@ namespace Ferda.Modules.Helpers.Caching
         }
 
         /// <summary>
+        /// Construct a most recently used items list with the maximum number of items
+        /// allowed in the list.
+        /// </summary>
+        /// <param name="maxItems">Maximum number of items allowed</param>
+        public MostRecentlyUsed(ulong maxItems, IEqualityComparer<KeyT> comparer)
+        {
+            _maxSize = maxItems;
+            _list = new LinkedList<KeyT>();
+            _cache = new Dictionary<KeyT, ValueT>(comparer);
+        }
+
+        /// <summary>
         /// Retrieves the value from external sources. The value can be then
         /// added to the cache. This is why the method is abstract.
         /// </summary>
@@ -151,7 +162,45 @@ namespace Ferda.Modules.Helpers.Caching
         /// </returns>
         public bool Contains(KeyT key)
         {
-            return _cache.ContainsKey(key);
+            lock (this)
+            {
+                return _cache.ContainsKey(key);
+            }
+        }
+
+        /// <summary>
+        /// Tries to get value from cache without retrieving it externally
+        /// </summary>
+        /// <param name="key">The key</param>
+        /// <param name="value">The value</param>
+        /// <returns>if the key was in cache</returns>
+        public bool TryGetValue(KeyT key, out ValueT value)
+        {
+            lock (this)
+            {
+                return _cache.TryGetValue(key, out value);
+            }
+        }
+
+        /// <summary>
+        /// Adds value to the cache
+        /// </summary>
+        /// <param name="key">the key</param>
+        /// <param name="newValue">the new value</param>
+        public void Add(KeyT key, ValueT newValue)
+        {
+            lock (this)
+            {
+                ulong newValueSize = GetSize(newValue);
+
+                shrinkCache(_maxSize - newValueSize);
+
+                Debug.Assert(_actSize >= 0);
+
+                _actSize += newValueSize;
+                _list.AddFirst(key);
+                _cache.Add(key, newValue);
+            }
         }
 
         /// <summary>
@@ -181,15 +230,7 @@ namespace Ferda.Modules.Helpers.Caching
                     else
                     {
                         ValueT newValue = GetValue(key);
-                        ulong newValueSize = GetSize(newValue);
-
-                        shrinkCache(_maxSize - newValueSize);
-
-                        Debug.Assert(_actSize >= 0);
-
-                        _actSize += newValueSize;
-                        _list.AddFirst(key);
-                        _cache.Add(key, newValue);
+                        Add(key, newValue);
                         return newValue;
                     }
                 }
