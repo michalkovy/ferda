@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrontEndConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ProjectManagerOptions>
-    <StartIceGridLocaly>true</StartIceGridLocaly>
-    <StopIceGridLocaly>true</StopIceGridLocaly>
+    <StartIceGridLocaly>false</StartIceGridLocaly>
+    <StopIceGridLocaly>false</StopIceGridLocaly>
     <IceGridAsService>false</IceGridAsService>
     <IceGridWorkingDirectory>..\..\..\..\Server\bin\Release\net6.0-windows</IceGridWorkingDirectory>
     <IceGridApplicationXmlFilePath>application.xml</IceGridApplicationXmlFilePath>
