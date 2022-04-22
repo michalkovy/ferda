@@ -536,7 +536,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         int _arraySize = (CountVector.Length + _blockSize - 1) / _blockSize;
 
                         long[] _tmpString = new long[_arraySize];
-                        _tmpString.Initialize();
 
                         //here we create virtual attribute name
                         //based on relevant question parameters

@@ -160,7 +160,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (arraySize != bits.Length)
                 throw new ArgumentOutOfRangeException("bits", "The array of bits has bad size (Length).");
 
-            _array = new ulong[arraySize];
+            _array = GC.AllocateUninitializedArray<ulong>(arraySize);
             ReadOnlySpan<ulong> ubits = MemoryMarshal.Cast<long, ulong>(bits);
             ubits.CopyTo(_array);
 #else
@@ -182,9 +182,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             _sum = source._sum;
 
 #if USE64BIT
-            _array = new ulong[source._array.Length];
+            _array = GC.AllocateUninitializedArray<ulong>(source._array.Length);
 #else
-            _array = new uint[source._array.Length];
+            _array = GC.AllocateUninitializedArray<uint>(source._array.Length);
 #endif
 
             copy(source);
@@ -240,9 +240,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             int arraySize = (length + _blockSize - 1) / _blockSize; // rounding up...
 
 #if USE64BIT
-            _array = new ulong[arraySize];
+            _array = GC.AllocateUninitializedArray<ulong>(arraySize);
 #else
-            _array = new uint[arraySize];
+            _array = GC.AllocateUninitializedArray<uint>(arraySize);
 #endif
         }
 
