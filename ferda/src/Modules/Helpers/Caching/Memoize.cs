@@ -4,8 +4,9 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
-namespace System.Linq
+namespace Ferda.Linq
 {
     public static partial class AsyncEnumerableEx
     {
@@ -21,23 +22,23 @@ namespace System.Linq
         /// </returns>
         /// <example>
         /// var rng = Enumerable.Range(0, 10).Do(x => Console.WriteLine(x)).Memoize();
-        /// var e1 = rng.GetEnumerator();
+        /// var e1 = rng.GetAsyncEnumerator();
         /// Assert.IsTrue(e1.MoveNext());    // Prints 0
         /// Assert.AreEqual(0, e1.Current);
         /// Assert.IsTrue(e1.MoveNext());    // Prints 1
         /// Assert.AreEqual(1, e1.Current);
-        /// var e2 = rng.GetEnumerator();
+        /// var e2 = rng.GetAsyncEnumerator();
         /// Assert.IsTrue(e2.MoveNext());    // Doesn't print anything; the side-effect of Do
         /// Assert.AreEqual(0, e2.Current);  // has already taken place during e1's iteration.
         /// Assert.IsTrue(e1.MoveNext());    // Prints 2
         /// Assert.AreEqual(2, e1.Current);
         /// </example>
-        public static IBuffer<TSource> Memoize<TSource>(this IEnumerable<TSource> source)
+        public static IBuffer<TSource> Memoize<TSource>(this IAsyncEnumerable<TSource> source)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
 
-            return new MemoizedBuffer<TSource>(source.GetEnumerator());
+            return new MemoizedBuffer<TSource>(source.GetAsyncEnumerator());
         }
 
         /// <summary>
@@ -54,65 +55,57 @@ namespace System.Linq
         /// Buffer enabling a specified number of enumerators to retrieve all elements from the shared source sequence,
         /// without duplicating source enumeration side-effects.
         /// </returns>
-        public static IBuffer<TSource> Memoize<TSource>(this IEnumerable<TSource> source, int readerCount)
+        public static IBuffer<TSource> Memoize<TSource>(this IAsyncEnumerable<TSource> source, int readerCount)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
             if (readerCount <= 0)
                 throw new ArgumentOutOfRangeException(nameof(readerCount));
 
-            return new MemoizedBuffer<TSource>(source.GetEnumerator(), readerCount);
+            return new MemoizedBuffer<TSource>(source.GetAsyncEnumerator(), readerCount);
         }
 
         private sealed class MemoizedBuffer<T> : IBuffer<T>
         {
-            private readonly object _gate = new object();
+            private readonly AsyncLock _gate = new AsyncLock();
             private readonly IRefCountList<T> _buffer;
-            private readonly IEnumerator<T> _source;
+            private readonly IAsyncEnumerator<T> _source;
 
             private bool _disposed;
-            private Exception? _error;
+            private Exception _error;
             private bool _stopped;
 
-            public MemoizedBuffer(IEnumerator<T> source)
+            public MemoizedBuffer(IAsyncEnumerator<T> source)
                 : this(source, new MaxRefCountList<T>())
             {
             }
 
-            public MemoizedBuffer(IEnumerator<T> source, int readerCount)
+            public MemoizedBuffer(IAsyncEnumerator<T> source, int readerCount)
                 : this(source, new RefCountList<T>(readerCount))
             {
             }
 
-            private MemoizedBuffer(IEnumerator<T> source, IRefCountList<T> buffer)
+            private MemoizedBuffer(IAsyncEnumerator<T> source, IRefCountList<T> buffer)
             {
                 _source = source;
                 _buffer = buffer;
             }
 
-            public IEnumerator<T> GetEnumerator()
+            public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
             {
                 if (_disposed)
                     throw new ObjectDisposedException("");
 
-                return GetEnumerator_();
+                return GetAsyncEnumerator_();
             }
 
-            IEnumerator IEnumerable.GetEnumerator()
+            public async ValueTask DisposeAsync()
             {
-                if (_disposed)
-                    throw new ObjectDisposedException("");
-
-                return GetEnumerator();
-            }
-
-            public void Dispose()
-            {
-                lock (_gate)
+                using (await _gate.LockAsync().ConfigureAwait(false))
                 {
                     if (!_disposed)
                     {
-                        _source.Dispose();
+                        await _source.DisposeAsync().ConfigureAwait(false);
                         _buffer.Clear();
                     }
 
@@ -120,7 +113,7 @@ namespace System.Linq
                 }
             }
 
-            private IEnumerator<T> GetEnumerator_()
+            private async IAsyncEnumerator<T> GetAsyncEnumerator_()
             {
                 var i = 0;
 
@@ -134,7 +127,7 @@ namespace System.Linq
                         var hasValue = default(bool);
                         var current = default(T)!;
 
-                        lock (_gate)
+                        using (await _gate.LockAsync().ConfigureAwait(false))
                         {
                             if (i >= _buffer.Count)
                             {
@@ -142,7 +135,7 @@ namespace System.Linq
                                 {
                                     try
                                     {
-                                        hasValue = _source.MoveNext();
+                                        hasValue = await _source.MoveNextAsync().ConfigureAwait(false);
                                         if (hasValue)
                                             current = _source.Current;
                                     }
@@ -151,7 +144,7 @@ namespace System.Linq
                                         _stopped = true;
                                         _error = ex;
 
-                                        _source.Dispose();
+                                        await _source.DisposeAsync().ConfigureAwait(false);
                                     }
                                 }
 
@@ -281,5 +274,65 @@ namespace System.Linq
         public void Add(T item) => _list.Add(item);
 
         public void Done(int index) { }
+    }
+
+    /// <summary>
+    /// Represents a buffer exposing a shared view over an underlying enumerable sequence.
+    /// </summary>
+    /// <typeparam name="T">Element type.</typeparam>
+    public interface IBuffer<out T> : IAsyncEnumerable<T>, IAsyncDisposable
+    {
+    }
+
+    public sealed class AsyncLock
+    {
+        private readonly object _gate = new object();
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+        private readonly AsyncLocal<int> _recursionCount = new AsyncLocal<int>();
+
+        public ValueTask<Releaser> LockAsync()
+        {
+            var shouldAcquire = false;
+
+            lock (_gate)
+            {
+                if (_recursionCount.Value == 0)
+                {
+                    shouldAcquire = true;
+                    _recursionCount.Value = 1;
+                }
+                else
+                {
+                    _recursionCount.Value++;
+                }
+            }
+
+            if (shouldAcquire)
+            {
+                return new ValueTask<Releaser>(_semaphore.WaitAsync().ContinueWith(_ => new Releaser(this)));
+            }
+
+            return new ValueTask<Releaser>(new Releaser(this));
+        }
+
+        private void Release()
+        {
+            lock (_gate)
+            {
+                if (--_recursionCount.Value == 0)
+                {
+                    _semaphore.Release();
+                }
+            }
+        }
+
+        public struct Releaser : IDisposable
+        {
+            private readonly AsyncLock _parent;
+
+            public Releaser(AsyncLock parent) => _parent = parent;
+
+            public void Dispose() => _parent.Release();
+        }
     }
 }
