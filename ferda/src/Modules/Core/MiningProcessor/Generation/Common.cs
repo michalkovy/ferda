@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Ferda.Guha.MiningProcessor.BitStrings;
 using Ferda.Modules;
+using Ferda.Modules.Helpers.Caching;
 using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Guha.MiningProcessor.Generation
@@ -410,6 +411,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
             _effectiveMaxLength = System.Math.Min(_sourceEntities.Count, _setting.maxLength);
             if (_effectiveMaxLength < _effectiveMinLength)
                 throw Exceptions.MaxLengthIsLessThanMinLengthError();
+
+            _memoizedSourceAsyncEnumerables.AddRange(_sourceEntities.Select(e => e.Memoize()));
         }
 
         #endregion
@@ -464,6 +467,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")] 
         protected List<IEntityEnumerator> _sourceEntities = 
             new List<IEntityEnumerator>();
+
+        protected List<IAsyncEnumerable<IBitString>> _memoizedSourceAsyncEnumerables = new List<IAsyncEnumerable<IBitString>>();
 
         /// <summary>
         /// Number of forced operands
@@ -658,7 +663,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         private async Task getEntity(int index)
         {
-            var enumerator = _sourceEntities[index].GetAsyncEnumerator();
+            var enumerator = _memoizedSourceAsyncEnumerables[index].GetAsyncEnumerator();
 
             bool succeds = await enumerator.MoveNextAsync();
             Debug.Assert(succeds);
