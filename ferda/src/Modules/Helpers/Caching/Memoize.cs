@@ -41,25 +41,6 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Memoizes the source sequence within a selector function where each enumerator can get access to all of the
-        /// sequence's elements without causing multiple enumerations over the source.
-        /// </summary>
-        /// <typeparam name="TSource">Source sequence element type.</typeparam>
-        /// <typeparam name="TResult">Result sequence element type.</typeparam>
-        /// <param name="source">Source sequence.</param>
-        /// <param name="selector">Selector function with memoized access to the source sequence for each enumerator.</param>
-        /// <returns>Sequence resulting from applying the selector function to the memoized view over the source sequence.</returns>
-        public static IEnumerable<TResult> Memoize<TSource, TResult>(this IEnumerable<TSource> source, Func<IEnumerable<TSource>, IEnumerable<TResult>> selector)
-        {
-            if (source == null)
-                throw new ArgumentNullException(nameof(source));
-            if (selector == null)
-                throw new ArgumentNullException(nameof(selector));
-
-            return Create(() => selector(source.Memoize()).GetEnumerator());
-        }
-
-        /// <summary>
         /// Creates a buffer with a view over the source sequence, causing a specified number of enumerators to obtain access
         /// to all of the sequence's elements without causing multiple enumerations over the source.
         /// </summary>
@@ -81,34 +62,6 @@ namespace System.Linq
                 throw new ArgumentOutOfRangeException(nameof(readerCount));
 
             return new MemoizedBuffer<TSource>(source.GetEnumerator(), readerCount);
-        }
-
-        /// <summary>
-        /// Memoizes the source sequence within a selector function where a specified number of enumerators can get access to
-        /// all of the sequence's elements without causing multiple enumerations over the source.
-        /// </summary>
-        /// <typeparam name="TSource">Source sequence element type.</typeparam>
-        /// <typeparam name="TResult">Result sequence element type.</typeparam>
-        /// <param name="source">Source sequence.</param>
-        /// <param name="readerCount">
-        /// Number of enumerators that can access the underlying buffer. Once every enumerator has
-        /// obtained an element from the buffer, the element is removed from the buffer.
-        /// </param>
-        /// <param name="selector">
-        /// Selector function with memoized access to the source sequence for a specified number of
-        /// enumerators.
-        /// </param>
-        /// <returns>Sequence resulting from applying the selector function to the memoized view over the source sequence.</returns>
-        public static IEnumerable<TResult> Memoize<TSource, TResult>(this IEnumerable<TSource> source, int readerCount, Func<IEnumerable<TSource>, IEnumerable<TResult>> selector)
-        {
-            if (source == null)
-                throw new ArgumentNullException(nameof(source));
-            if (readerCount <= 0)
-                throw new ArgumentOutOfRangeException(nameof(readerCount));
-            if (selector == null)
-                throw new ArgumentNullException(nameof(selector));
-
-            return Create(() => selector(source.Memoize(readerCount)).GetEnumerator());
         }
 
         private sealed class MemoizedBuffer<T> : IBuffer<T>
@@ -236,5 +189,97 @@ namespace System.Linq
                 }
             }
         }
+    }
+
+    internal interface IRefCountList<T>
+    {
+        void Clear();
+
+        int Count { get; }
+
+        T this[int i] { get; }
+
+        void Add(T item);
+
+        void Done(int index);
+    }
+
+    internal sealed class RefCountList<T> : IRefCountList<T>
+    {
+        private readonly IDictionary<int, RefCount> _list;
+
+        public RefCountList(int readerCount)
+        {
+            ReaderCount = readerCount;
+            _list = new Dictionary<int, RefCount>();
+        }
+
+        public int ReaderCount { get; set; }
+
+        public void Clear() => _list.Clear();
+
+        public int Count { get; private set; }
+
+        public T this[int i]
+        {
+            get
+            {
+                if (!_list.TryGetValue(i, out var res))
+                    throw new InvalidOperationException("Element no longer available in the buffer.");
+
+                var val = res.Value;
+
+                if (--res.Count == 0)
+                {
+                    _list.Remove(i);
+                }
+
+                return val;
+            }
+        }
+
+        public void Add(T item)
+        {
+            _list[Count] = new RefCount(item, ReaderCount);
+
+            Count++;
+        }
+
+        public void Done(int index)
+        {
+            for (var i = index; i < Count; i++)
+            {
+                _ = this[i];
+            }
+
+            ReaderCount--;
+        }
+
+        private sealed class RefCount
+        {
+            public RefCount(T value, int count)
+            {
+                Value = value;
+                Count = count;
+            }
+
+            public int Count { get; set; }
+            public T Value { get; }
+        }
+    }
+
+    internal sealed class MaxRefCountList<T> : IRefCountList<T>
+    {
+        private readonly IList<T> _list = new List<T>();
+
+        public void Clear() => _list.Clear();
+
+        public int Count => _list.Count;
+
+        public T this[int i] => _list[i];
+
+        public void Add(T item) => _list.Add(item);
+
+        public void Done(int index) { }
     }
 }
