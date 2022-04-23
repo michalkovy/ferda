@@ -234,7 +234,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             booleanAttributes, categorialAttributes, quantifiers, taskFuncPrx, taskParams, progressListener,
             progressBarPrx)
         {
-            afterConstruct();
+            afterConstructAsync().Wait(); //TODO: get rid of Wait
         }
 
         #endregion
@@ -298,38 +298,33 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Prepares traces (entity enumerators) for a given miner
         /// </summary>
-        protected override void prepareAttributeTraces()
+        protected override Task prepareAttributeTracesAsync()
         {
             if (!ProgressSetValue(-1, "Preparing Succedent trace"))
-                return;
+                return Task.CompletedTask;
             _succedent = CreateBooleanAttributeTrace(MarkEnum.Succedent, _booleanAttributes, false, this);
 			
             if (!ProgressSetValue(-1, "Preparing Antecedent trace"))
-                return;
+                return Task.CompletedTask;
             _antecedent = CreateBooleanAttributeTrace(MarkEnum.Antecedent, _booleanAttributes, true, this);
 			
             if (!ProgressSetValue(-1, "Preparing Condition trace"))
-                return;
+                return Task.CompletedTask;
             _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, _booleanAttributes, true, this);
+            return Task.CompletedTask;
         }
 
         /// <summary>
         /// Algoritm for tracing the relevant questions and verifying them against
         /// the quantifier. The algoritm computes valid hypotheses.
         /// </summary>
-        public override async Task Trace()
+        public override async Task TraceAsync()
         {
             //code common to trace and trace boolean methods
             InitializeTrace();
             IEvaluator evaluator = CreateEvaluator(TaskParams.evaluationType, false);
 
             MissingInformation missingInformation = MissingInformation.GetInstance();
-            //missing succedent
-            IBitString xS;
-            //negative succedent
-            IBitString nS;
-            //missing condition
-            IBitString xC;
             nineFoldTableOfBitStrings nineFT;
 
             //MiningSettingCollectionWithMiningThreads<MiningSetting> miningThreads = new MiningSettingCollectionWithMiningThreads<FourFoldMiningProcessor.MiningSetting>(mine, finished);
@@ -340,7 +335,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             await foreach (IBitString pC in _condition)
             {
                 //Gets missing value for the condition
-                GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
+                var xC = await GetMissingsAsync(pC, _condition.UsedAttributes, missingInformation).ConfigureAwait(false);
 
                 //set actual count of objects with respect to condition
                 long actCount = SetActConditionCountOfObjects(pC);
@@ -349,7 +344,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 {
                     if (pS is IEmptyBitString)
                         continue;
-                    GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
+                    var (xS, nS) = await GetNegationAndMissingsAsync(pS, _succedent.UsedAttributes, missingInformation).ConfigureAwait(false);
 
                     //Fills the nine fold table (FIRST is condition, SECOND is succedent)
                     nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, actCount);
@@ -423,16 +418,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
             IEvaluator evaluator = CreateEvaluator(TaskParams.evaluationType, true);
 
             MissingInformation missingInformation = MissingInformation.GetInstance();
-            //missing succedent
-            IBitString xS;
-            //negative succedent
-            IBitString nS;
-            //missing antecedent
-            IBitString xA;
-            //negative antecedent
-            IBitString nA;
-            //missing condition
-            IBitString xC;
             nineFoldTableOfBitStrings nineFT;
 
             int step = 0;
@@ -440,7 +425,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             await foreach (IBitString pC in _condition)
             {
                 //Gets missing value for the condition
-                GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
+                var xC = await GetMissingsAsync(pC, _condition.UsedAttributes, missingInformation).ConfigureAwait(false);
 
                 //set actual count of objects with respect to condition
                 SetActConditionCountOfObjects(pC);
@@ -449,7 +434,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 {
                     if (pS is IEmptyBitString)
                         continue;
-                    GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
+                    var (xS, nS) = await GetNegationAndMissingsAsync(pS, _succedent.UsedAttributes, missingInformation).ConfigureAwait(false);
 
                     //Fills the nine fold table (A is condition, B is succedent)
                     nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, Int32.MinValue);
@@ -475,7 +460,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             }
                         }
                         step++;
-                        GetNegationAndMissings(pA, out xA, out nA, _antecedent.UsedAttributes, missingInformation);
+                        var (xA, nA) = await GetNegationAndMissingsAsync(pA, _antecedent.UsedAttributes, missingInformation).ConfigureAwait(false);
 
                         //cycle through countvector-based masks
                         for (int i = 0; i < CountVector.Length; i++)
@@ -619,7 +604,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Executes one verification.
         /// </summary>
         /// <param name="ob">Mining settings</param>
-        private void mine(Object ob)
+        private async Task mine(Object ob)
 		{
 			MiningSetting miningSetting = ob as MiningSetting;
 			IBitString pA = miningSetting.PA;
@@ -632,8 +617,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             int allObjectsCount = miningSetting.AllObjectsCount;
 			
 			MissingInformation missingInformation = MissingInformation.GetInstance();
-   			IBitString xA;
-			GetMissings(pA, out xA, usedAttributes, missingInformation);
+   			IBitString xA = await GetMissingsAsync(pA, usedAttributes, missingInformation).ConfigureAwait(false);
 
             NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
 

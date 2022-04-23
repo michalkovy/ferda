@@ -244,9 +244,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// </summary>
         /// <param name="categoryName">Name of the desired category</param>
         /// <returns>Bit string representing the category</returns>
-        protected IBitString getBitString(string categoryName)
+        protected Task<IBitString> getBitStringAsync(string categoryName)
         {
-            return _cache[_attributeGuid, categoryName];
+            return _cache.GetValueAsync(_attributeGuid, categoryName);
         }
 
         /// <summary>
@@ -255,9 +255,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// on the existing bit string and new category bit string
         /// </summary>
         /// <param name="categoryName">The new category</param>
-        protected void prolongCoefficient(string categoryName)
+        protected async Task prolongCoefficient(string categoryName)
         {
-            IBitString newBitString = getBitString(categoryName);
+            IBitString newBitString = await getBitStringAsync(categoryName).ConfigureAwait(false);
 
             if (_actualLength == 0)
             {

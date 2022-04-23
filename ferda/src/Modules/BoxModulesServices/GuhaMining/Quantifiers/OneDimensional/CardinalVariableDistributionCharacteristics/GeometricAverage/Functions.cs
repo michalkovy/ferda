@@ -182,7 +182,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneDimensional.CardinalVari
                 delegate
                     {
                         SingleDimensionContingecyTable table = new SingleDimensionContingecyTable(param);
-                        double[] values = Common.GetNumericValues(param);
+                        double[] values = Common.GetNumericValuesAsync(param).Result; //TODO: make sync
                         double pow = 0;
                         for (int c = 0; c < table.NumberOfColumns; c++)
                         {

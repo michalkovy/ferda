@@ -48,7 +48,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <param name="categoriesIds">Which categories are to be taken</param>
         /// <param name="operation">Operation that binds the categories</param>
         /// <returns>Resulting bit string</returns>
-        public static IBitString GetBitString(BitStringGeneratorPrx bitStringGeneratorPrx, string attributeGuid,
+        public static async Task<IBitString> GetBitStringAsync(BitStringGeneratorPrx bitStringGeneratorPrx, string attributeGuid,
                                               string[] categoriesIds, BitwiseOperation operation)
         {
             IBitString resultUsed = null;
@@ -62,12 +62,12 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         if (resultTemp == null)
                         {
                             if (resultUsed == null)
-                                resultUsed = cache[attributeGuid, var];
+                                resultUsed = await cache.GetValueAsync(attributeGuid, var).ConfigureAwait(false);
                             else
-                                resultTemp = resultUsed.And(cache[attributeGuid, var]);
+                                resultTemp = resultUsed.And(await cache.GetValueAsync(attributeGuid, var).ConfigureAwait(false));
                         }
                         else
-                            resultTemp = resultTemp.AndInPlace(cache[attributeGuid, var]);
+                            resultTemp = resultTemp.AndInPlace(await cache.GetValueAsync(attributeGuid, var).ConfigureAwait(false));
                     }
                     return resultTemp ?? resultUsed;
                 case BitwiseOperation.Or:
@@ -76,12 +76,12 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         if (resultTemp == null)
                         {
                             if (resultUsed == null)
-                                resultUsed = cache[attributeGuid, var];
+                                resultUsed = await cache.GetValueAsync(attributeGuid, var).ConfigureAwait(false);
                             else
-                                resultTemp = resultUsed.Or(cache[attributeGuid, var]);
+                                resultTemp = resultUsed.Or(await cache.GetValueAsync(attributeGuid, var).ConfigureAwait(false));
                         }
                         else
-                            resultTemp = resultTemp.OrInPlace(cache[attributeGuid, var]);
+                            resultTemp = resultTemp.OrInPlace(await cache.GetValueAsync(attributeGuid, var).ConfigureAwait(false));
                     }
                     return resultTemp ?? resultUsed;
                 default:
@@ -97,14 +97,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <param name="bitStringGeneratorPrx">Bit string generator</param>
         /// <param name="attributeGuid">Identification of the attribute</param>
         /// <returns>Bits strings for given attribute</returns>
-        public static IBitString[] GetBitStrings(BitStringGeneratorPrx bitStringGeneratorPrx, string attributeGuid)
+        public static async Task<IBitString[]> GetBitStringsAsync(BitStringGeneratorPrx bitStringGeneratorPrx, string attributeGuid)
         {
             IBitStringCache cache = BitStringCache.GetInstance(bitStringGeneratorPrx);
             string[] categoriesIds = cache.GetCategoriesIds(attributeGuid);
             IBitString[] result = new IBitString[categoriesIds.Length];
             for (int i = 0; i < categoriesIds.Length; i++)
             {
-                result[i] = cache[attributeGuid, categoriesIds[i]];
+                result[i] = await cache.GetValueAsync(attributeGuid, categoriesIds[i]).ConfigureAwait(false);
             }
             return result;
         }

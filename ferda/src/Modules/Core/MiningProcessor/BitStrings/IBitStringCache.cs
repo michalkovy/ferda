@@ -64,7 +64,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <value>
         /// Bit string responding to given guid that is stored in cache or obtained from data preprocesor.
         /// </value>
-        IBitString this[BitStringIdentifier bitStringId] { get; }
+        Task<IBitString> GetValueAsync(BitStringIdentifier bitStringId);
 
         /// <summary>
         /// Allows to obtain bit string identified by its guid.
@@ -74,7 +74,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Cache is transparent for any exceptions from data preprocesor.
         /// </summary>
         /// <value>The Bit string with the specified attribute GUID (string) and category ID (i.e. name) (string).</value>
-        IBitString this[string attributeGuid, string categoryId] { get; }
+        Task<IBitString> GetValueAsync(string attributeGuid, string categoryId);
 
         /// <summary>
         /// Gets bit string representing the missing information bits for the 
@@ -82,7 +82,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="attributeGuid">Identification of the attribute</param>
         /// <returns>Bit string of missing information</returns>
-        IBitString GetMissingInformationBitString(string attributeGuid);
+        Task<IBitString> GetMissingInformationBitStringAsync(string attributeGuid);
 
         /// <summary>
         /// Gets categories of a specified attribute

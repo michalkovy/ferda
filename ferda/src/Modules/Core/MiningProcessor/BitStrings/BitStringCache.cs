@@ -158,32 +158,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Second case - bit string is not found in cache, leads to request to data preprocesor. Obtained string is first stored in cache and then returned to the caller.
         /// Cache is transparent for any exceptions from data preprocesor.
         /// </summary>
-        /// <value>
-        /// Bit string responding to given guid that is stored in cache or obtained from data preprocesor.
-        /// </value>
-        public new IBitString this[BitStringIdentifier bitStringId]
+        /// <returns>The Bit string with the specified attribute GUID (string) and category ID (i.e. name) (string).</returns>
+        public Task<IBitString> GetValueAsync(string attributeGuid, string categoryId)
         {
-            get
-            {
-#if Testing
-                return BitStringCacheTest.GetBitString(bitStringId);
-#else
-                return base[bitStringId];
-#endif
-            }
-        }
-
-        /// <summary>
-        /// Allows to obtain bit string identified by its guid.
-        /// Internally distinguish between two possible cases.
-        /// First case - bit string is stored in cache, leads to simple handling. Stored bit string is returned to the caller.
-        /// Second case - bit string is not found in cache, leads to request to data preprocesor. Obtained string is first stored in cache and then returned to the caller.
-        /// Cache is transparent for any exceptions from data preprocesor.
-        /// </summary>
-        /// <value>The Bit string with the specified attribute GUID (string) and category ID (i.e. name) (string).</value>
-        public IBitString this[string attributeGuid, string categoryId]
-        {
-            get { return this[new BitStringIdentifier(attributeGuid, categoryId)]; }
+            return GetValueAsync(new BitStringIdentifier(attributeGuid, categoryId));
         }
 
         /// <summary>
@@ -192,12 +170,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="attributeGuid">Identification of the attribute</param>
         /// <returns>Bit string of missing information</returns>
-        public IBitString GetMissingInformationBitString(string attributeGuid)
+        public async Task<IBitString> GetMissingInformationBitStringAsync(string attributeGuid)
         {
-            string categoryId = _missingInformationBitStringsIdsCache[attributeGuid];
+            string categoryId = await _missingInformationBitStringsIdsCache.GetValueAsync(attributeGuid).ConfigureAwait(false);
             if (categoryId != null)
             {
-                return base[new BitStringIdentifier(attributeGuid, categoryId)];
+                return await base.GetValueAsync(new BitStringIdentifier(attributeGuid, categoryId)).ConfigureAwait(false);
             }
             else
             {
@@ -248,12 +226,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="key">Bit string identifier</param>
         /// <returns></returns>
-        public override IBitString GetValue(BitStringIdentifier key)
+        public override async Task<IBitString> GetValueExternalAsync(BitStringIdentifier key)
         {
             long before = DateTime.Now.Ticks;
             _iceCalls++;
             
-            BitStringIce bs = GetBitStringGeneratorPrx(key.AttributeGuid).GetBitString(key.CategoryId);
+            BitStringIce bs = await GetBitStringGeneratorPrx(key.AttributeGuid).GetBitStringAsync(key.CategoryId).ConfigureAwait(false);
             
             _iceTicks += DateTime.Now.Ticks - before;
             if (bs is CrispBitStringIce)

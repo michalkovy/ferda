@@ -95,7 +95,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 booleanAttributes, categorialAttributes, quantifiers, taskFuncPrx, taskParams, progressListener,
                 progressBarPrx)
         {
-            afterConstruct();
+            afterConstructAsync().Wait(); //TODO: get rid of Wait
         }
 
         #endregion
@@ -159,34 +159,35 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Prepares traces (entity enumerators) for a given miner
         /// </summary>
-        protected override void prepareAttributeTraces()
+        protected override Task prepareAttributeTracesAsync()
         {
             if (!ProgressSetValue(-1, "Preparing Succedent trace"))
-                return;
+                return Task.CompletedTask;
             _succedent = CreateBooleanAttributeTrace(MarkEnum.Succedent, _booleanAttributes, false, this);
 
             if (!ProgressSetValue(-1, "Preparing Antecedent trace"))
-                return;
+                return Task.CompletedTask;
             _antecedent = CreateBooleanAttributeTrace(MarkEnum.Antecedent, _booleanAttributes, true, this);
 
             if (!ProgressSetValue(-1, "Preparing Condition trace"))
-                return;
+                return Task.CompletedTask;
             _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, _booleanAttributes, true, this);
 
             if (!ProgressSetValue(-1, "Preparing First set trace"))
-                return;
+                return Task.CompletedTask;
             _firstSet = CreateBooleanAttributeTrace(MarkEnum.FirstSet, _booleanAttributes, false, this);
 
             if (!ProgressSetValue(-1, "Preparing Second set trace"))
-                return;
+                return Task.CompletedTask;
             _secondSet = CreateBooleanAttributeTrace(MarkEnum.SecondSet, _booleanAttributes, false, this);
+            return Task.CompletedTask;
         }
 
         /// <summary>
         /// Algoritm for tracing the relevant questions and verifying them against
         /// the quantifier. The algoritm computes valid hypotheses.
         /// </summary>
-        public override async Task Trace()
+        public override async Task TraceAsync()
         {
             if (!ProgressSetValue(-1, "Begining of attributes trace."))
                 return;

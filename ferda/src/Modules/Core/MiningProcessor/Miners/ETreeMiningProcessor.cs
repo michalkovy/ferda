@@ -315,7 +315,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// The main procedure for generating hypotheses
         /// </summary>
-        public void Trace()
+        public async Task TraceAsync()
         {
             //initialization of the resultinfo
             resultInfo = new SerializableResultInfo();
@@ -332,7 +332,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return;
             }
             relevantQuestionsCount = CountRelevantQuestions();
-            ComputeAllObjectsCount();
+            await ComputeAllObjectsCountAsync();
 
 
             //Intializing a new LIFO stack and planting a seed tree (no attribute tree)
@@ -350,9 +350,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 processTree = stack.Pop();
                 string ifr = processTree.IfRepresentation;
 
-                stack = Process(processTree, stack);
+                stack = await ProcessAsync(processTree, stack).ConfigureAwait(false);
 
-                if (QualityTree(processTree))
+                if (await QualityTreeAsync(processTree).ConfigureAwait(false))
                 {
                     noOfHypotheses++;
                     PutToOutPut(processTree);
@@ -360,7 +360,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                     if (noOfHypotheses == maxNumberOfHypotheses)
                     {
-                        ResultFinish(relevantQuestionsCount, noOfVerifications,
+                        await ResultFinishAsync(relevantQuestionsCount, noOfVerifications,
                             noOfHypotheses);
                         return;
                     }
@@ -372,13 +372,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
                              noOfHypotheses,
                              stack.Count)))
                 {
-                    ResultFinish(relevantQuestionsCount, noOfVerifications,
-                        noOfHypotheses);
+                    await ResultFinishAsync(relevantQuestionsCount, noOfVerifications,
+                        noOfHypotheses).ConfigureAwait(false);
                     return;
                 }
             }
 
-            ResultFinish(relevantQuestionsCount, noOfVerifications, noOfHypotheses);
+            await ResultFinishAsync(relevantQuestionsCount, noOfVerifications, noOfHypotheses).ConfigureAwait(false);
         }
 
         #region Private methods
@@ -390,7 +390,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="relevantQuestionsCount">Number of relevant questions</param>
         /// <param name="noOfVerifications">Number of verifications carried out</param>
         /// <param name="noOfHypotheses">Number of hypotheses found</param>
-        private void ResultFinish(double relevantQuestionsCount, long noOfVerifications,
+        private async Task ResultFinishAsync(double relevantQuestionsCount, long noOfVerifications,
             long noOfHypotheses)
         {
             resultInfo.EndTime = DateTime.Now;
@@ -411,7 +411,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 ser.IfRepresentation = tree.IfRepresentation;
                 ser.TreeDepth = tree.Depth;
                 ser.ConfusionMatrix = tree.ConfusionMatrix(
-                    targetClassificationAttribute.BitStrings,
+                    await targetClassificationAttribute.GetBitStringsAsync().ConfigureAwait(false),
                     targetClassificationAttribute.CategoriesIds);
 
                 //the nodes
@@ -439,7 +439,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// </summary>
         /// <param name="processTree">The examined tree</param>
         /// <returns>If the tree souhld be put to output</returns>
-        private bool QualityTree(Tree processTree)
+        private async Task<bool> QualityTreeAsync(Tree processTree)
         {
             bool rightLength;
 
@@ -450,7 +450,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
 
             double[][] confusionMatrix = processTree.ConfusionMatrix(
-                targetClassificationAttribute.BitStrings,
+                await targetClassificationAttribute.GetBitStringsAsync().ConfigureAwait(false),
                 targetClassificationAttribute.CategoriesIds);
             
             //if the b and c items of contingency table (TN and FN in confusion
@@ -513,23 +513,23 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="processTree">Tree to be processed</param>
         /// <param name="lifo">Structure holding temporary results</param>
         /// <returns>The stack where new trees were added.</returns>
-        private Stack<Tree> Process(Tree processTree, Stack<Tree> lifo)
+        private async Task<Stack<Tree>> ProcessAsync(Tree processTree, Stack<Tree> lifo)
         {
             List<Node> nodesForBranching;
 
             //classification of the nodes for minimal purity check
             if (processTree.RootNode != null)
             {
-                processTree.InitNodeClassification(
-                    targetClassificationAttribute.BitStrings,
-                    targetClassificationAttribute.CategoriesIds);
+                await processTree.InitNodeClassificationAsync(
+                    await targetClassificationAttribute.GetBitStringsAsync().ConfigureAwait(false),
+                    targetClassificationAttribute.CategoriesIds).ConfigureAwait(false);
             }
 
             //the seed tree is treated differently.
             if (processTree.RootNode == null)
             {
                 CategorialAttributeTrace[] branching =
-                    SelectAttributesForBranching(branchingAttributes, TrueBitString.GetInstance());
+                    await SelectAttributesForBranchingAsync(branchingAttributes, TrueBitString.GetInstance()).ConfigureAwait(false);
                 
                 //at this point, the fifo should always be empty.
                 Debug.Assert(lifo.Count > 0);
@@ -546,11 +546,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 //are treated differently
                 if (processTree.Depth == maximalTreeDepth)
                 {
-                    nodesForBranching = processTree.NodesForBranching(minimalNodeFrequency, maximalTreeDepth);
+                    nodesForBranching = await processTree.NodesForBranchingAsync(minimalNodeFrequency, maximalTreeDepth).ConfigureAwait(false);
                 }
                 else
                 {
-                    nodesForBranching = processTree.NodesForBranching(minimalNodeFrequency, -1);
+                    nodesForBranching = await processTree.NodesForBranchingAsync(minimalNodeFrequency, -1).ConfigureAwait(false);
                 }
             }
             else
@@ -572,7 +572,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 //for each node adding a new tree 
                 foreach (Node node in nodesForBranching)
                 {
-                    lifo = ProlongTree(processTree, node, lifo);
+                    lifo = await ProlongTreeAsync(processTree, node, lifo).ConfigureAwait(false);
                 }
 
                 return lifo;
@@ -580,7 +580,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             else
             {
                 //create one new tree for all nodes that are suitable for branching
-                lifo = AllNodesBranchingTrees(processTree, nodesForBranching, lifo);
+                lifo = await AllNodesBranchingTreesAsync(processTree, nodesForBranching, lifo).ConfigureAwait(false);
                 return lifo;
             }
         }
@@ -594,7 +594,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="nodesForBranching">The suitable nodes for branching</param>
         /// <param name="lifo">Structure holding temporary results</param>
         /// <returns>Prologned tree</returns>
-        private Stack<Tree> AllNodesBranchingTrees(Tree processTree, List<Node> nodesForBranching,
+        private async Task<Stack<Tree>> AllNodesBranchingTreesAsync(Tree processTree, List<Node> nodesForBranching,
             Stack<Tree> lifo)
         {
             //In contrary to branching of each individual nodes, branching of all nodes
@@ -611,15 +611,15 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 Tree result = (Tree)processTree.Clone();
                 //we must initialize the node classification in the newly created
                 //tree in order to get the minimal purity check
-                result.InitNodeClassification(
-                    targetClassificationAttribute.BitStrings,
-                    targetClassificationAttribute.CategoriesIds);
+                await result.InitNodeClassificationAsync(
+                    await targetClassificationAttribute.GetBitStringsAsync().ConfigureAwait(false),
+                    targetClassificationAttribute.CategoriesIds).ConfigureAwait(false);
                 result.Depth = processTree.Depth + 1;
                 List<Node> newNodesForBranching = NewNodesForBranching(result, nodesForBranching);
 
                 foreach (Node node in newNodesForBranching)
                 {
-                    List<string> rightCats = BranchingCategoriesForNode(node);
+                    List<string> rightCats = await BranchingCategoriesForNodeAsync(node).ConfigureAwait(false);
 
                     //no right category
                     if (rightCats == null)
@@ -636,13 +636,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     IBitString newBitString = FalseBitString.GetInstance();
                     foreach (string category in rightCats)
                     {
-                        newBitString = newBitString.Or(node.CategoryBitString(category));
+                        newBitString = newBitString.Or(await node.CategoryBitStringAsync(category).ConfigureAwait(false));
                     }
 
                     //selecting which attributes to branch
                     CategorialAttributeTrace[] brAttributes =
-                        SelectAttributesForBranching(node.UnusedAttributes,
-                        newBitString);
+                        await SelectAttributesForBranchingAsync(node.UnusedAttributes,
+                        newBitString).ConfigureAwait(false);
 
                     if (brAttributes.Length == 0)
                     {
@@ -657,8 +657,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         return lifo;
                     }
 
-                    LeafToNode(rightCats.ToArray(), 
-                        brAttributes[brAttributes.Length - 1 - i], node);
+                    await LeafToNodeAsync(rightCats.ToArray(), 
+                        brAttributes[brAttributes.Length - 1 - i], node).ConfigureAwait(false);
                 }
 
                 if (!noRightCats)
@@ -702,9 +702,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="node">Where to prolong the tree</param>
         /// <param name="lifo">Where to add newly created trees</param>
         /// <returns>The stack is with newly created trees is returned.</returns>
-        private Stack<Tree> ProlongTree(Tree processTree, Node node, Stack<Tree> lifo)
+        private async Task<Stack<Tree>> ProlongTreeAsync(Tree processTree, Node node, Stack<Tree> lifo)
         {
-            List<string> rightCats = BranchingCategoriesForNode(node);
+            List<string> rightCats = await BranchingCategoriesForNodeAsync(node).ConfigureAwait(false);
 
             //no right category
             if (rightCats == null)
@@ -717,19 +717,19 @@ namespace Ferda.Guha.MiningProcessor.Miners
             IBitString newBitString = FalseBitString.GetInstance();
             foreach (string category in rightCats)
             {
-                newBitString = newBitString.Or(node.CategoryBitString(category));
+                newBitString = newBitString.Or(await node.CategoryBitStringAsync(category).ConfigureAwait(false));
             }
 
             //selecting which attributes to branch
             CategorialAttributeTrace[] branchingAttributes =
-                SelectAttributesForBranching(node.UnusedAttributes,
-                newBitString);
+                await SelectAttributesForBranchingAsync(node.UnusedAttributes,
+                newBitString).ConfigureAwait(false);
 
             //creating the individual subtrees
             for (int i = branchingAttributes.Length - 1; i >= 0; i--)
             {
-                Tree t = CreateTree(processTree, node, 
-                    rightCats.ToArray(), branchingAttributes[i]);
+                Tree t = await CreateTreeAsync(processTree, node, 
+                    rightCats.ToArray(), branchingAttributes[i]).ConfigureAwait(false);
                 lifo.Push(t);
             }
 
@@ -745,7 +745,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="node">Node which categories should be determined.</param>
         /// <returns>Null if there is no category suitable for branching,
         /// list of categories for branching otherwise</returns>
-        private List<string> BranchingCategoriesForNode(Node node)
+        private async Task<List<string>> BranchingCategoriesForNodeAsync(Node node)
         {
             //we are creating one subset of categories, that contains all the
             //categories which have higher frequency than minimal node frequency.
@@ -757,7 +757,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 rightCats = new List<string>();
                 foreach (string category in node.SubCategories)
                 {
-                    if (node.CategoryFrequency(category) > minimalNodeFrequency)
+                    if (await node.CategoryFrequencyAsync(category).ConfigureAwait(false) > minimalNodeFrequency)
                     {
                         rightCats.Add(category);
                     }
@@ -767,7 +767,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             {
                 rightCats = new List<string>(node.SubCategories);
             }
-            rightCats = DeleteOneClassificationCategoryOnly(node, rightCats);
+            rightCats = await DeleteOneClassificationCategoryOnlyAsync(node, rightCats);
 
             //the minimal node purity criterion (if needed)
             if (branchingStoppingCriterion == BranchingStoppingCriterionEnum.MinimalLeafPurity
@@ -814,7 +814,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="node">Node where the category is present</param>
         /// <param name="catsForBranching">Categories for branching</param>
         /// <returns>New list with removed categories</returns>
-        private List<string> DeleteOneClassificationCategoryOnly(Node node,
+        private async Task<List<string>> DeleteOneClassificationCategoryOnlyAsync(Node node,
             List<string> catsForBranching)
         {
             List<string> tmp = new List<string>(catsForBranching);
@@ -823,11 +823,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
             {
                 bool hasOneOnly = false;
 
-                for (int i = 0; i < targetClassificationAttribute.BitStrings.Length; i++)
+                for (int i = 0; i < (await targetClassificationAttribute.GetBitStringsAsync().ConfigureAwait(false)).Length; i++)
                 {
-                    long andSum = targetClassificationAttribute.BitStrings[i].And(
-                        node.CategoryBitString(category)).NonZeroBitsCount;
-                    if (andSum == node.CategoryBitString(category).NonZeroBitsCount)
+                    long andSum = (await targetClassificationAttribute.GetBitStringsAsync().ConfigureAwait(false))[i].And(
+                        await node.CategoryBitStringAsync(category).ConfigureAwait(false)).NonZeroBitsCount;
+                    if (andSum == (await node.CategoryBitStringAsync(category).ConfigureAwait(false)).NonZeroBitsCount)
                     {
                         hasOneOnly = true;
                         break;
@@ -854,7 +854,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="categories">Category which is to be replaced by a new leaf.</param>
         /// <param name="attribute">Attribute that will be used for creation of a new leaf</param>
         /// <returns>Newly created tree.</returns>
-        private Tree CreateTree(Tree processTree, Node node, string[] categories, 
+        private async Task<Tree> CreateTreeAsync(Tree processTree, Node node, string[] categories, 
             CategorialAttributeTrace attribute)
         {
             int effLength = (maximalTreeDepth > branchingAttributes.Length) ? 
@@ -877,7 +877,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 throw new Exception("WRONGGGGGGGRRRRR");
             }
 
-            n = LeafToNode(categories, attribute, n);
+            n = await LeafToNodeAsync(categories, attribute, n).ConfigureAwait(false);
             return result;
         }
 
@@ -888,7 +888,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="attribute">Attribute of the new nodes</param>
         /// <param name="n">Leaf that is transfere to node</param>
         /// <returns>New node</returns>
-        private static Node LeafToNode(string[] categories, CategorialAttributeTrace attribute, Node n)
+        private static async Task<Node> LeafToNodeAsync(string[] categories, CategorialAttributeTrace attribute, Node n)
         {
             //it is no longer a leaf
             n.Leaf = false;
@@ -907,7 +907,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             {
                 Node newNode = new Node(true);
                 newNode.Attribute = attribute;
-                newNode.BaseBitString = n.CategoryBitString(category).And(n.BaseBitString);
+                newNode.BaseBitString = (await n.CategoryBitStringAsync(category).ConfigureAwait(false)).And(n.BaseBitString);
                 newNode.Frequency = newNode.BaseBitString.NonZeroBitsCount;
                 newNode.SubCategories = attribute.CategoriesIds;
 
@@ -1051,7 +1051,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// true for some other nodes of the tree.
         /// </param>
         /// <returns>Attributes for branching</returns>
-        private CategorialAttributeTrace[] SelectAttributesForBranching(
+        private async Task<CategorialAttributeTrace[]> SelectAttributesForBranchingAsync(
             CategorialAttributeTrace[] possibleAttributes,
             IBitString baseBitString)
         {
@@ -1068,15 +1068,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
             {
                 return possibleAttributes;
             }
-
-            //The r_{i} array
-            float[] r;
             //The s_{j} array and array of (classificationAttribute AND baseBitString)
             //bit strings
             float[] s;
             IBitString[] sBitStrings;
-            //The a_{i,j} array
-            float[,] a;
             double chiSq = 0;
 
             Dictionary<IdValuePair, CategorialAttributeTrace> dict = 
@@ -1093,11 +1088,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 for (int i = 0; i < s.Length; i++)
                 {
                     sBitStrings[i] = 
-                        targetClassificationAttribute.BitStrings[i].And(baseBitString);
+                        (await targetClassificationAttribute.GetBitStringsAsync().ConfigureAwait(false))[i].And(baseBitString);
                     s[i] = sBitStrings[i].Sum;
                 }
 
-                FillChiSqData(attribute, sBitStrings, baseBitString, out r, out a);
+                var (r, a) = await FillChiSqDataAsync(attribute, sBitStrings, baseBitString).ConfigureAwait(false);
                 chiSq = Math.DecisionTrees.ChiSquared(r, s, a);
                 
                 //constructing a new IdValuePair
@@ -1152,19 +1147,17 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// number of items that are present in given node (determined by the
         /// base bit string) for classification category <c>j</c> and attribute
         /// category <c>i</c></param>
-        private void FillChiSqData(CategorialAttributeTrace attribute,
+        private async Task<(float[] r, float[,] a)> FillChiSqDataAsync(CategorialAttributeTrace attribute,
             IBitString[] classificationBitStrings,
-            IBitString baseBitString,
-            out float[] r,
-            out float[,] a)
+            IBitString baseBitString)
         {
-            r = new float[attribute.NoOfCategories];
-            a = new float[attribute.NoOfCategories, classificationBitStrings.Length];
+            var r = new float[attribute.NoOfCategories];
+            var a = new float[attribute.NoOfCategories, classificationBitStrings.Length];
 
             for (int i = 0; i < r.Length; i++)
             {
                 IBitString reducedAttrBS =
-                    attribute.BitStrings[i].And(baseBitString);
+                    (await attribute.GetBitStringsAsync().ConfigureAwait(false))[i].And(baseBitString);
                 r[i] = reducedAttrBS.Sum;
             }
 
@@ -1172,20 +1165,21 @@ namespace Ferda.Guha.MiningProcessor.Miners
             {
                 for (int j = 0; j < classificationBitStrings.Length; j++)
                 {
-                    a[i, j] = attribute.BitStrings[i].And(classificationBitStrings[j]).Sum;
+                    a[i, j] = (await attribute.GetBitStringsAsync().ConfigureAwait(false))[i].And(classificationBitStrings[j]).Sum;
                 }
             }
+            return (r, a);
         }
 
         /// <summary>
         /// Computes the count of all objects in the data matrix
         /// </summary>
-        private void ComputeAllObjectsCount()
+        private async Task ComputeAllObjectsCountAsync()
         {
             if (allObjectsCount > 0)
                 return;
 
-            foreach (IBitString s in targetClassificationAttribute.BitStrings)
+            foreach (IBitString s in (await targetClassificationAttribute.GetBitStringsAsync().ConfigureAwait(false)))
             {
                 allObjectsCount = s.Length;
                 return;
