@@ -331,7 +331,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             //System.Threading.ThreadPool threadPool = new System.Threading.ThreadPool();
 
             _mineRuns = 0;
-            int mineToRun = 0;
+            ulong mineToRun = 0;
             await foreach (IBitString pC in _condition)
             {
                 //Gets missing value for the condition
@@ -359,11 +359,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         mineToRun++;
                         if (_useThreads)
                         {
-                            var task = Task.Run(() => mine(miningSetting));
+                            var task = Task.Run(() => mineAsync(miningSetting));
                         }
                         else
                         {
-                            mine(miningSetting);
+                            await mineAsync(miningSetting);
                         }
                         if (finished())
                             goto finish;
@@ -604,7 +604,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Executes one verification.
         /// </summary>
         /// <param name="ob">Mining settings</param>
-        private async Task mine(Object ob)
+        private async Task mineAsync(Object ob)
 		{
 			MiningSetting miningSetting = ob as MiningSetting;
 			IBitString pA = miningSetting.PA;
@@ -723,7 +723,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 				evaluator.VerifyIsComplete(contingencyTable, hypothesis, setFinished);
 			}
 
-			_mineRuns++;
+            Interlocked.Increment(ref _mineRuns);
 		}
 
         /// <summary>
@@ -851,7 +851,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// How many times did the threads acutally computed contingency
         /// tables
         /// </summary>
-        private int _mineRuns = 0;
+        private ulong _mineRuns = 0;
 
         /// <summary>
         /// Function returns if procedure is fininshed.
