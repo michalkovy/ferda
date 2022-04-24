@@ -929,11 +929,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// of IEmptyBitString or IFalseBitString.
         /// </summary>
         /// <param name="input">The input.</param>
-        /// <param name="missings">The missings.</param>
-        /// <param name="negation">The negation.</param>
-        /// <param name="usedAttributes">The used attributes.</param>
         /// <param name="missingInformation">The missing information IBitString provider.</param>
-        public static async Task<(IBitString missings, IBitString negation)> GetNegationAndMissingsAsync(IBitString input, Set<string> usedAttributes, MissingInformation missingInformation)
+        public static async Task<(IBitString missings, IBitString negation)> GetNegationAndMissingsAsync(IBitString input, MissingInformation missingInformation)
         {
             IBitString missings;
             IBitString negation;
@@ -944,7 +941,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
             else
             {
-                missings = await missingInformation.GetValueAsync(usedAttributes).ConfigureAwait(false);
+                missings = await missingInformation.GetValueAsync(input.Identifier.UsedAttributes).ConfigureAwait(false);
                 Debug.Assert(!(missings is EmptyBitString));
                 if (missings is EmptyBitString)
                     throw new ArgumentException();
@@ -978,10 +975,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// of IFalseBitString.
         /// </summary>
         /// <param name="input">The input.</param>
-        /// <param name="missings">The missings.</param>
-        /// <param name="usedAttributes">The used attributes.</param>
         /// <param name="missingInformation">The missing information IBitString provider.</param>
-        public static async Task<IBitString> GetMissingsAsync(IBitString input, Set<string> usedAttributes, MissingInformation missingInformation)
+        public static async Task<IBitString> GetMissingsAsync(IBitString input, MissingInformation missingInformation)
         {
             IBitString missings;
             if (input is EmptyBitString)
@@ -990,7 +985,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
             else
             {
-                missings = await missingInformation.GetValueAsync(usedAttributes).ConfigureAwait(false);
+                missings = await missingInformation.GetValueAsync(input.Identifier.UsedAttributes).ConfigureAwait(false);
                 Debug.Assert(!(missings is EmptyBitString));
                 if (missings is EmptyBitString)
                     throw new ArgumentException();

@@ -19,6 +19,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+using Ferda.Modules.Helpers.Common;
 using System.Collections.Generic;
 
 namespace Ferda.Guha.MiningProcessor.Formulas
@@ -40,7 +41,9 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         {
             get { return _operands; }
         }
-        
+
+        public override Set<string> UsedAttributes => Set<string>.Join(_operands.Select(o => o.UsedAttributes));
+
         /// <summary>
         /// The static function adds a new operand to a list of operands.
         /// </summary>

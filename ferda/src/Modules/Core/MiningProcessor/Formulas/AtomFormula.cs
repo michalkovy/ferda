@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using Ferda.Guha.MiningProcessor.BitStrings;
+using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Guha.MiningProcessor.Formulas
 {
@@ -44,6 +45,8 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         {
             get { return _bitStringIdentifier; }
         }
+
+        public override Set<string> UsedAttributes => new(_bitStringIdentifier.AttributeGuid);
 
         /// <summary>
         /// Default contructor of the class

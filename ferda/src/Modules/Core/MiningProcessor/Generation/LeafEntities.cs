@@ -98,15 +98,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
             get { return 1; }
         }
 
-        /// <summary>
-        /// Set of used attributes by enumerator. For the fixed set enumerator
-        /// it is the set containing only one attribute.
-        /// </summary>
-        public override Set<string> UsedAttributes
-        {
-            get { return new Set<string>(_attributeGuid); }
-        }
-
         #endregion
 
         /// <summary>
@@ -911,15 +902,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public override long TotalCount
         {
             get { return _totalCount; }
-        }
-
-        /// <summary>
-        /// Set of used attributes by enumerator. For the fixed set enumerator
-        /// it is the set containing only one virtual attribute
-        /// </summary>
-        public override Set<string> UsedAttributes
-        {
-            get { return new Set<string>(_attributeGuid); }
         }
 
         #endregion

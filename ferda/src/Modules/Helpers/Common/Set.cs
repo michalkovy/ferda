@@ -214,7 +214,7 @@ namespace Ferda.Modules.Helpers.Common
         /// </summary>
         /// <param name="ops">The sets.</param>
         /// <returns></returns>
-        public static Set<T> Join(Set<T>[] ops)
+        public static Set<T> Join(IEnumerable<Set<T>> ops)
         {
             Set<T> result = new Set<T>();
             if (ops != null)
