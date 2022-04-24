@@ -310,55 +310,39 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
             //MiningSettingCollectionWithMiningThreads<MiningSetting> miningThreads = new MiningSettingCollectionWithMiningThreads<FourFoldMiningProcessor.MiningSetting>(mine, finished);
             //System.Threading.ThreadPool threadPool = new System.Threading.ThreadPool();
-
-            _mineRuns = 0;
-            ulong mineToRun = 0;
-            await foreach (IBitString pC in _condition)
+            var options = new ParallelOptions()
             {
+                CancellationToken = cts.Token
+            };
+
+            await Parallel.ForEachAsync(_condition, options, async (pC, ctC) => {
                 //Gets missing value for the condition
                 var xC = await GetMissingsAsync(pC, missingInformation).ConfigureAwait(false);
 
                 //set actual count of objects with respect to condition
                 long actCount = SetActConditionCountOfObjects(pC);
 
-                await foreach (IBitString pS in _succedent)
-                {
+                await Parallel.ForEachAsync(_succedent, options, async (pS, ctS) => {
                     if (pS is IEmptyBitString)
-                        continue;
-                    var (xS, nS) = await GetNegationAndMissingsAsync(pS, missingInformation).ConfigureAwait(false);
-
-                    //Fills the nine fold table (FIRST is condition, SECOND is succedent)
-                    nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, actCount);
-
-                    await foreach (IBitString pA in _antecedent)
+                    { }
+                    else
                     {
-                        MiningSetting miningSetting =
-                            new MiningSetting(pA, pS, pC, nineFT, evaluator, 
-                            (int)_result.AllObjectsCount);
+                        var (xS, nS) = await GetNegationAndMissingsAsync(pS, missingInformation).ConfigureAwait(false);
 
-                        //miningThreads.AddSetting(miningSetting);
-                        mineToRun++;
-                        if (_useThreads)
+                        //Fills the nine fold table (FIRST is condition, SECOND is succedent)
+                        nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, actCount);
+
+                        await Parallel.ForEachAsync(_antecedent, options, async (pA, ct) =>
                         {
-                            var task = Task.Run(() => mineAsync(miningSetting));
-                        }
-                        else
-                        {
-                            await mineAsync(miningSetting);
-                        }
-                        if (finished())
-                            goto finish;
+                            MiningSetting miningSetting =
+                                new MiningSetting(pA, pS, pC, nineFT, evaluator,
+                                (int)_result.AllObjectsCount);
+
+                            await mineAsync(miningSetting, ct);
+                        });
                     }
-                }
-            }
-
-            //waiting for all the threads still computing to 
-            //finish
-            while (mineToRun != _mineRuns && (!finished()))
-            {
-                System.Threading.Thread.Sleep(50);
-            }
-        finish:
+                });
+            });
             evaluator.Flush();
             resultFinish();
             //miningThreads.Finish();
@@ -488,11 +472,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             //VerifyIsComplete means no buffer is left.
                             //If not all relevant questions have been
                             //generated and verified, will stop yielding bitstrings
-                            if (!finished())
+                            if (!cts.Token.IsCancellationRequested)
                             {
                                 evaluator.VerifyIsComplete(contingencyTable, new Hypothesis(), setFinished);
                             }
-                            if (finished())
+                            if (cts.Token.IsCancellationRequested)
                                 break;
                         }
 
@@ -585,7 +569,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Executes one verification.
         /// </summary>
         /// <param name="ob">Mining settings</param>
-        private async Task mineAsync(Object ob)
+        private async Task mineAsync(Object ob, CancellationToken ct)
 		{
 			MiningSetting miningSetting = ob as MiningSetting;
 			IBitString pA = miningSetting.PA;
@@ -698,12 +682,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
 			//h.NumericValuesAttributeGuid = contingencyTable.NumericValuesAttributeGuid;
 
-			if (!finished())
+			if (!ct.IsCancellationRequested)
 			{
 				evaluator.VerifyIsComplete(contingencyTable, hypothesis, setFinished);
 			}
-
-            Interlocked.Increment(ref _mineRuns);
 		}
 
         /// <summary>
@@ -815,10 +797,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
         #region Thread handling
 
-        /// <summary>
-        /// If threads of this miner are finished
-        /// </summary>
-        private bool finishThreads = false;
+        private CancellationTokenSource cts = new CancellationTokenSource();
 
         /// <summary>
         /// If more than one thread should be used
@@ -828,35 +807,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
         private static readonly bool _useThreads = true;
 
         /// <summary>
-        /// How many times did the threads acutally computed contingency
-        /// tables
-        /// </summary>
-        private ulong _mineRuns = 0;
-
-        /// <summary>
-        /// Function returns if procedure is fininshed.
-        /// Thread safe.
-        /// </summary>
-        /// <returns>If the computing of the procedure is finished</returns>
-        private bool finished()
-        {
-            lock (this)
-            {
-                return finishThreads;
-            }
-        }
-
-        /// <summary>
         /// Wait callback delegate to the thread pool. Writes the finishing
         /// information. Thread safe.
         /// </summary>
         /// <param name="o">An object</param>
         private void setFinished(object o)
         {
-            lock (this)
-            {
-                finishThreads = true;
-            }
+            cts.Cancel();
         }
 
         #endregion
