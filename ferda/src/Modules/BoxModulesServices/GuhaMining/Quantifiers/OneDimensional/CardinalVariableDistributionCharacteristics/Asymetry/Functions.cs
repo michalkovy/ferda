@@ -186,7 +186,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneDimensional.CardinalVari
                 delegate
                     {
                         SingleDimensionContingecyTable table = new SingleDimensionContingecyTable(param);
-                        double[] values = Common.GetNumericValues(param);
+                        double[] values = Common.GetNumericValuesAsync(param).Result; //TODO make this async
                         double varianceTmp = 0;
                         double result = 0;
                         double arithmeticAverage = AritmeticAverage.Functions.ComputeAritmeticAverage(table, values);

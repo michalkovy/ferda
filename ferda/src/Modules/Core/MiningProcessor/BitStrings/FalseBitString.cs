@@ -39,11 +39,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         private static readonly FalseBitString _instance = new FalseBitString();
 
         /// <summary>
-        /// Object used for thread-safe access to the bit string cache
-        /// </summary>
-        private static readonly object padlock = new object();
-
-        /// <summary>
         /// Explicit static constructor to tell C# compiler
         /// not to mark type as beforefieldinit
         /// </summary>
@@ -57,10 +52,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <returns>Instance of the false bit string</returns>
         public static FalseBitString GetInstance()
         {
-            lock (padlock)
-            {
-                return _instance;
-            }
+            return _instance;
         }
 
         #endregion

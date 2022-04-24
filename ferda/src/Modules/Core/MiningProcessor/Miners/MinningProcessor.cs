@@ -44,14 +44,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Computes all objects from list of categorial attributes
         /// </summary>
         /// <param name="attributes">Categorial attributes</param>
-        void ComputeAllObjectsCount(CategorialAttributeTrace[] attributes);
+        Task ComputeAllObjectsCountAsync(CategorialAttributeTrace[] attributes);
         /// <summary>
         /// Computes all objects from list of Boolean attributes
         /// (represented by 
         /// <see cref="T:Ferda.Guha.MiningProcessor.Generation.IEntityEnumerator"/>).
         /// </summary>
         /// <param name="attribute">Boolean attributes</param>
-        Task ComputeAllObjectsCount(IEntityEnumerator attribute);
+        Task ComputeAllObjectsCountAsync(IEntityEnumerator attribute);
     }
 
     /// <summary>
@@ -106,7 +106,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Algoritm for tracing the relevant questions and verifying them against
         /// the quantifier. The algoritm computes valid hypotheses.
         /// </summary>
-        public abstract Task Trace();
+        public abstract Task TraceAsync();
 
         /// <summary>
         /// Algoritm for computing all the relevant questions and veryfiing them
@@ -133,7 +133,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Prepares traces (entity enumerators) for a given miner
         /// </summary>
-        protected abstract void prepareAttributeTraces();
+        protected abstract Task prepareAttributeTracesAsync();
 
         #endregion
 
@@ -629,9 +629,9 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Validation done after construction.
         /// </summary>
-        protected void afterConstruct()
+        protected async Task afterConstructAsync()
         {
-            prepareAttributeTraces();
+            await prepareAttributeTracesAsync().ConfigureAwait(false);
             ProgressSetValue(-1, "Validating quantifiers and attributes.");
             TestOfQuantifiersXAttributes();
         }
@@ -650,7 +650,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// categorial attribute
         /// </summary>
         /// <param name="attributes">The categorial attribute</param>
-        public void ComputeAllObjectsCount(CategorialAttributeTrace[] attributes)
+        public async Task ComputeAllObjectsCountAsync(CategorialAttributeTrace[] attributes)
         {
             if (_allObjectsCount > 0)
                 return;
@@ -658,12 +658,12 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 return;
             foreach (CategorialAttributeTrace trace in attributes)
             {
-                if (trace.BitStrings.Length == 0)
+                if ((await trace.GetBitStringsAsync().ConfigureAwait(false)).Length == 0)
                 {
                     Debug.Assert(false);
                     continue;
                 }
-                _allObjectsCount = trace.BitStrings[0].Length;
+                _allObjectsCount = (await trace.GetBitStringsAsync().ConfigureAwait(false))[0].Length;
                 return;
             }
         }
@@ -673,7 +673,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// an entity enumerator
         /// </summary>
         /// <param name="attribute">The entity enumerator</param>
-        public async Task ComputeAllObjectsCount(IEntityEnumerator attribute)
+        public async Task ComputeAllObjectsCountAsync(IEntityEnumerator attribute)
         {
             if (_allObjectsCount > 0)
                 return;
@@ -849,14 +849,14 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <param name="miningProcessorBase">The mining processor base (because of static
         /// functions)</param>
         /// <returns>Categorial attribute trace</returns>
-        public static CategorialAttributeTrace[] CreateCategorialAttributeTrace(MarkEnum semantic,
+        public static async Task<CategorialAttributeTrace[]> CreateCategorialAttributeTraceAsync(MarkEnum semantic,
                                                                                 CategorialAttribute[] categorialAttributes,
                                                                                 bool allowEmptyCategorialCedent,
                                                                                 MiningProcessorBase miningProcessorBase)
         {
             CategorialAttributeTrace[] result =
                 CreateCategorialAttributeTrace(semantic, categorialAttributes, allowEmptyCategorialCedent);
-            miningProcessorBase.ComputeAllObjectsCount(result);
+            await miningProcessorBase.ComputeAllObjectsCountAsync(result).ConfigureAwait(false);
             return result;
         }
 
@@ -929,13 +929,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// of IEmptyBitString or IFalseBitString.
         /// </summary>
         /// <param name="input">The input.</param>
-        /// <param name="missings">The missings.</param>
-        /// <param name="negation">The negation.</param>
-        /// <param name="usedAttributes">The used attributes.</param>
         /// <param name="missingInformation">The missing information IBitString provider.</param>
-        public static void GetNegationAndMissings(IBitString input, out IBitString missings, out IBitString negation,
-                                                  Set<string> usedAttributes, MissingInformation missingInformation)
+        public static async Task<(IBitString missings, IBitString negation)> GetNegationAndMissingsAsync(IBitString input, MissingInformation missingInformation)
         {
+            IBitString missings;
+            IBitString negation;
             if (input is EmptyBitString)
             {
                 missings = FalseBitString.GetInstance();
@@ -943,7 +941,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             }
             else
             {
-                missings = missingInformation[usedAttributes];
+                missings = await missingInformation.GetValueAsync(input.Identifier.UsedAttributes).ConfigureAwait(false);
                 Debug.Assert(!(missings is EmptyBitString));
                 if (missings is EmptyBitString)
                     throw new ArgumentException();
@@ -953,6 +951,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 else
                     negation = input.Or(missings).Not();
             }
+            return (missings, negation);
         }
 
         /// <summary>
@@ -976,23 +975,22 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// of IFalseBitString.
         /// </summary>
         /// <param name="input">The input.</param>
-        /// <param name="missings">The missings.</param>
-        /// <param name="usedAttributes">The used attributes.</param>
         /// <param name="missingInformation">The missing information IBitString provider.</param>
-        public static void GetMissings(IBitString input, out IBitString missings,
-                                       Set<string> usedAttributes, MissingInformation missingInformation)
+        public static async Task<IBitString> GetMissingsAsync(IBitString input, MissingInformation missingInformation)
         {
+            IBitString missings;
             if (input is EmptyBitString)
             {
                 missings = FalseBitString.GetInstance();
             }
             else
             {
-                missings = missingInformation[usedAttributes];
+                missings = await missingInformation.GetValueAsync(input.Identifier.UsedAttributes).ConfigureAwait(false);
                 Debug.Assert(!(missings is EmptyBitString));
                 if (missings is EmptyBitString)
                     throw new ArgumentException();
             }
+            return missings;
         }
 
         #endregion

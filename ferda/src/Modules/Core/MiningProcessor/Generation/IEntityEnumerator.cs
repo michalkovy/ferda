@@ -52,10 +52,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// </summary>
         long TotalCount { get;}
         /// <summary>
-        /// Set of used attributes by enumerator
-        /// </summary>
-        Set<string> UsedAttributes { get; }
-        /// <summary>
         /// Cedent type of the enumerator
         /// </summary>
         MarkEnum CedentType { get;}

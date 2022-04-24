@@ -181,7 +181,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneDimensional.CardinalVari
                 delegate
                     {
                         SingleDimensionContingecyTable table = new SingleDimensionContingecyTable(param);
-                        double[] values = Common.GetNumericValues(param);
+                        double[] values = Common.GetNumericValuesAsync(param).Result; //TODO: make sync
                         return Math.Sqrt(Variance.Functions.ComputeVariance(table, values));
                     },
                 _boxModule.StringIceIdentity

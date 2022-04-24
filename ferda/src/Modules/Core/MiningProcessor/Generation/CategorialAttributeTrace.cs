@@ -132,16 +132,13 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// represents bit string of a category of the attribute. There
         /// is a simple cache implemented for optimizing Ice layer calls.
         /// </summary>
-        public IBitString[] BitStrings
+        public async Task<IBitString[]> GetBitStringsAsync()
         {
-            get
+            if (_bitStrings == null)
             {
-                if (_bitStrings == null)
-                {
-                    _bitStrings = Helpers.GetBitStrings(_generator, _identifier.AttributeGuid);
-                }
-                return _bitStrings;
+                _bitStrings = await Helpers.GetBitStringsAsync(_generator, _identifier.AttributeGuid).ConfigureAwait(false);
             }
+            return _bitStrings;
         }
 
         /// <summary>
@@ -184,10 +181,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// </summary>
         /// <param name="categoryId">Identification of the category</param>
         /// <returns>Bit string of the category</returns>
-        public IBitString CategoryBitString(string categoryId)
+        public async Task<IBitString> CategoryBitStringAsync(string categoryId)
         {
             IBitStringCache cache = BitStringCache.GetInstance(_generator);
-            return cache[Identifier.AttributeGuid, categoryId];
+            return await cache.GetValueAsync(Identifier.AttributeGuid, categoryId).ConfigureAwait(false);
         }
 
         /// <summary>

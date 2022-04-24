@@ -291,7 +291,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 switch (taskParams.resultType)
                 {
                     case ResultTypeEnum.Trace:
-                        await miningProcessor.Trace();
+                        await miningProcessor.TraceAsync().ConfigureAwait(false);
                         miningProcessor.ProgressSetValue(1, "Completing result.");
                         miningProcessor.ResultInfo.OtherInfo = string.Format("BitStringCache.IceCalls: {0}; BitStringCache.IceTicks: {1}; Quantifier.IceCalls: {2}; Quantifier.IceTicks: {3}; All.Ticks: {4}", BitStringCache.IceCalls, BitStringCache.IceTicks, Quantifier.IceCalls, Quantifier.IceTicks, DateTime.Now.Ticks - before);
                         resultInfo = SerializableResultInfo.Serialize(miningProcessor.ResultInfo);
@@ -406,7 +406,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 AttributeNameProviderPrx nameProvider =
                     AttributeNameProviderPrxHelper.checkedCast(taskBoxModule.getFunctions());
                 Ferda.Guha.MiningProcessor.Formulas.AttributeNameInLiteralsProvider.Init(nameProvider);
-                miningProcessor.Trace();
+                await miningProcessor.TraceAsync().ConfigureAwait(false);
             }
             catch (BoxRuntimeError)
             {

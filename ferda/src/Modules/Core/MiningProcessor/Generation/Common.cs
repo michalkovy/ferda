@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Ferda.Guha.MiningProcessor.BitStrings;
 using Ferda.Modules;
+using Ferda.Modules.Helpers.Caching;
 using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Guha.MiningProcessor.Generation
@@ -127,11 +128,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// </summary>
         public abstract long TotalCount { get; }
 
-        /// <summary>
-        /// Set of used attributes by enumerator
-        /// </summary>
-        public abstract Set<string> UsedAttributes { get; }
-
         #endregion
     }
 
@@ -225,27 +221,15 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         #endregion
 
-        #region IEntityEnumerator members
-
-        /// <summary>
-        /// Set of used attributes by enumerator
-        /// </summary>
-        public override Set<string> UsedAttributes
-        {
-            get { return new Set<string>(_attributeGuid); }
-        }
-
-        #endregion
-
         /// <summary>
         /// Gets bit string of a speciffied category (attribute is
         /// contained in the coefficient setting)
         /// </summary>
         /// <param name="categoryName">Name of the desired category</param>
         /// <returns>Bit string representing the category</returns>
-        protected IBitString getBitString(string categoryName)
+        protected Task<IBitString> getBitStringAsync(string categoryName)
         {
-            return _cache[_attributeGuid, categoryName];
+            return _cache.GetValueAsync(_attributeGuid, categoryName);
         }
 
         /// <summary>
@@ -254,9 +238,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// on the existing bit string and new category bit string
         /// </summary>
         /// <param name="categoryName">The new category</param>
-        protected void prolongCoefficient(string categoryName)
+        protected async Task prolongCoefficient(string categoryName)
         {
-            IBitString newBitString = getBitString(categoryName);
+            IBitString newBitString = await getBitStringAsync(categoryName).ConfigureAwait(false);
 
             if (_actualLength == 0)
             {
@@ -308,18 +292,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             _setting = setting;
             _entity = Factory.Create(_setting.operand, this, cedentType);
-        }
-
-        #endregion
-
-        #region IEntityEnumerator members
-
-        /// <summary>
-        /// Set of used attributes by enumerator
-        /// </summary>
-        public override Set<string> UsedAttributes
-        {
-            get { return _entity.UsedAttributes; }
         }
 
         #endregion
@@ -410,6 +382,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
             _effectiveMaxLength = System.Math.Min(_sourceEntities.Count, _setting.maxLength);
             if (_effectiveMaxLength < _effectiveMinLength)
                 throw Exceptions.MaxLengthIsLessThanMinLengthError();
+
+            _memoizedSourceAsyncEnumerables.AddRange(_sourceEntities.Select(e => e.Memoize()));
         }
 
         #endregion
@@ -464,6 +438,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")] 
         protected List<IEntityEnumerator> _sourceEntities = 
             new List<IEntityEnumerator>();
+
+        protected List<IAsyncEnumerable<IBitString>> _memoizedSourceAsyncEnumerables = new List<IAsyncEnumerable<IBitString>>();
 
         /// <summary>
         /// Number of forced operands
@@ -532,30 +508,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 }
 
                 return _totalCount;
-            }
-        }
-
-        /// <summary>
-        /// Set of used attributes by enumerator
-        /// </summary>
-        public override Set<string> UsedAttributes
-        {
-            get
-            {
-                if (enumeratorsStack.Count == 0)
-                    return new Set<string>();
-                else
-                {
-                    Set<string> result = null;
-                    foreach (int enumeratorIndex in lengthIndexStack)
-                    {
-                        if (result == null)
-                            result = _sourceEntities[enumeratorIndex].UsedAttributes;
-                        else
-                            result.AddRange(_sourceEntities[enumeratorIndex].UsedAttributes);
-                    }
-                    return result;
-                }
             }
         }
 
@@ -658,7 +610,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         private async Task getEntity(int index)
         {
-            var enumerator = _sourceEntities[index].GetAsyncEnumerator();
+            var enumerator = _memoizedSourceAsyncEnumerables[index].GetAsyncEnumerator();
 
             bool succeds = await enumerator.MoveNextAsync();
             Debug.Assert(succeds);

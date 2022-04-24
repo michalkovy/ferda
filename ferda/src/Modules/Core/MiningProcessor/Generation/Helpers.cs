@@ -48,31 +48,42 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <param name="categoriesIds">Which categories are to be taken</param>
         /// <param name="operation">Operation that binds the categories</param>
         /// <returns>Resulting bit string</returns>
-        public static IBitString GetBitString(BitStringGeneratorPrx bitStringGeneratorPrx, string attributeGuid,
+        public static async Task<IBitString> GetBitStringAsync(BitStringGeneratorPrx bitStringGeneratorPrx, string attributeGuid,
                                               string[] categoriesIds, BitwiseOperation operation)
         {
-            IBitString result = null;
+            IBitString resultUsed = null;
+            IBitString resultTemp = null; // can be used for in place operations
             IBitStringCache cache = BitStringCache.GetInstance(bitStringGeneratorPrx);
             switch (operation)
             {
                 case BitwiseOperation.And:
                     foreach (string var in categoriesIds)
                     {
-                        if (result == null)
-                            result = cache[attributeGuid, var];
+                        if (resultTemp == null)
+                        {
+                            if (resultUsed == null)
+                                resultUsed = await cache.GetValueAsync(attributeGuid, var).ConfigureAwait(false);
+                            else
+                                resultTemp = resultUsed.And(await cache.GetValueAsync(attributeGuid, var).ConfigureAwait(false));
+                        }
                         else
-                            result = result.And(cache[attributeGuid, var]);
+                            resultTemp = resultTemp.AndInPlace(await cache.GetValueAsync(attributeGuid, var).ConfigureAwait(false));
                     }
-                    return result;
+                    return resultTemp ?? resultUsed;
                 case BitwiseOperation.Or:
                     foreach (string var in categoriesIds)
                     {
-                        if (result == null)
-                            result = cache[attributeGuid, var];
+                        if (resultTemp == null)
+                        {
+                            if (resultUsed == null)
+                                resultUsed = await cache.GetValueAsync(attributeGuid, var).ConfigureAwait(false);
+                            else
+                                resultTemp = resultUsed.Or(await cache.GetValueAsync(attributeGuid, var).ConfigureAwait(false));
+                        }
                         else
-                            result = result.Or(cache[attributeGuid, var]);
+                            resultTemp = resultTemp.OrInPlace(await cache.GetValueAsync(attributeGuid, var).ConfigureAwait(false));
                     }
-                    return result;
+                    return resultTemp ?? resultUsed;
                 default:
                     throw new NotImplementedException();
             }
@@ -86,14 +97,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <param name="bitStringGeneratorPrx">Bit string generator</param>
         /// <param name="attributeGuid">Identification of the attribute</param>
         /// <returns>Bits strings for given attribute</returns>
-        public static IBitString[] GetBitStrings(BitStringGeneratorPrx bitStringGeneratorPrx, string attributeGuid)
+        public static async Task<IBitString[]> GetBitStringsAsync(BitStringGeneratorPrx bitStringGeneratorPrx, string attributeGuid)
         {
             IBitStringCache cache = BitStringCache.GetInstance(bitStringGeneratorPrx);
             string[] categoriesIds = cache.GetCategoriesIds(attributeGuid);
             IBitString[] result = new IBitString[categoriesIds.Length];
             for (int i = 0; i < categoriesIds.Length; i++)
             {
-                result[i] = cache[attributeGuid, categoriesIds[i]];
+                result[i] = await cache.GetValueAsync(attributeGuid, categoriesIds[i]).ConfigureAwait(false);
             }
             return result;
         }
