@@ -315,36 +315,46 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 CancellationToken = cts.Token
             };
 
-            await Parallel.ForEachAsync(_condition, options, async (pC, ctC) => {
-                //Gets missing value for the condition
-                var xC = await GetMissingsAsync(pC, missingInformation).ConfigureAwait(false);
+            try
+            {
+                await Parallel.ForEachAsync(_condition, options, async (pC, ctC) =>
+                {
+                    //Gets missing value for the condition
+                    var xC = await GetMissingsAsync(pC, missingInformation).ConfigureAwait(false);
 
-                //set actual count of objects with respect to condition
-                long actCount = SetActConditionCountOfObjects(pC);
+                    //set actual count of objects with respect to condition
+                    long actCount = SetActConditionCountOfObjects(pC);
 
-                await Parallel.ForEachAsync(_succedent, options, async (pS, ctS) => {
-                    if (pS is IEmptyBitString)
-                    { }
-                    else
+                    await Parallel.ForEachAsync(_succedent, options, async (pS, ctS) =>
                     {
-                        var (xS, nS) = await GetNegationAndMissingsAsync(pS, missingInformation).ConfigureAwait(false);
-
-                        //Fills the nine fold table (FIRST is condition, SECOND is succedent)
-                        nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, actCount);
-
-                        await Parallel.ForEachAsync(_antecedent, options, async (pA, ct) =>
+                        if (pS is IEmptyBitString)
+                        { }
+                        else
                         {
-                            MiningSetting miningSetting =
-                                new MiningSetting(pA, pS, pC, nineFT, evaluator,
-                                (int)_result.AllObjectsCount);
+                            var (xS, nS) = await GetNegationAndMissingsAsync(pS, missingInformation).ConfigureAwait(false);
 
-                            await mineAsync(miningSetting, ct);
-                        });
-                    }
+                            //Fills the nine fold table (FIRST is condition, SECOND is succedent)
+                            nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, actCount);
+
+                            await Parallel.ForEachAsync(_antecedent, options, async (pA, ct) =>
+                            {
+                                MiningSetting miningSetting =
+                                    new MiningSetting(pA, pS, pC, nineFT, evaluator,
+                                    (int)_result.AllObjectsCount);
+
+                                await mineAsync(miningSetting, ct);
+                            });
+                        }
+                    });
                 });
-            });
+            }
+            catch (OperationCanceledException)
+            {
+
+            }
             evaluator.Flush();
             resultFinish();
+            cts.Dispose();
             //miningThreads.Finish();
         }
 
@@ -541,6 +551,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     }
                 }
             }
+            cts.Dispose();
         }
 
         #endregion
@@ -719,6 +730,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// </summary>
         private void InitializeTrace()
         {
+            cts = new CancellationTokenSource();
             if (!ProgressSetValue(-1, "Beginning of attributes trace."))
                 return;
             resultInit();
@@ -796,8 +808,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
         #endregion
 
         #region Thread handling
-
-        private CancellationTokenSource cts = new CancellationTokenSource();
+        private CancellationTokenSource cts;
+        private CancellationToken ct;
 
         /// <summary>
         /// If more than one thread should be used
