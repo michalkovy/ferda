@@ -412,21 +412,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// </summary>
         private long _totalCount = -1;
 
-        ///// <summary>
-        ///// Stack of bit string enumerators used in generation
-        ///// </summary>
-        //private Stack<IAsyncEnumerator<IBitString>> enumeratorsStack = new Stack<IAsyncEnumerator<IBitString>>();
-
-        ///// <summary>
-        ///// Stack of bit strings used in generation
-        ///// </summary>
-        //private Stack<IBitString> bitStringStack = new Stack<IBitString>();
-
-        ///// <summary>
-        ///// Stack of lengths of operand set
-        ///// </summary>
-        //private Stack<int> lengthIndexStack = new Stack<int>();
-
         #endregion
 
         #region Protected fields
@@ -545,7 +530,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
             if (bitStringStack.Count > 0)
             {
                 IBitString previous = bitStringStack.Peek();
-                bitStringStack.Push(operation(previous, adding));
+                SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+                bitStringStack.Push(operation(previous, adding, parentSkipSetting != null));
             }
             else
             {
@@ -758,7 +744,8 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// </summary>
         /// <param name="operand1">First operand</param>
         /// <param name="operand2">Second operand</param>
+        /// <param name="precomputeSum">should sum be precomputed during operation</param>
         /// <returns>Resulting bit string</returns>
-        protected abstract IBitString operation(IBitString operand1, IBitString operand2);
+        protected abstract IBitString operation(IBitString operand1, IBitString operand2, bool precomputeSum);
     }
 }

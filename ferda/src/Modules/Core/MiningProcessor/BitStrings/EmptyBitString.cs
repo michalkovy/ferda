@@ -107,7 +107,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise AND operation on current BitString against the specified BitString.
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
-        public IBitString And(IBitString source)
+        public IBitString And(IBitString source, bool precomputeSum = false)
         {
             BitString bs = source as BitString;
             if (bs != null)
@@ -171,7 +171,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise OR operation on current BitString against the specified BitString.
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
-        public IBitString Or(IBitString source)
+        public IBitString Or(IBitString source, bool precomputeSum = false)
         {
             BitString bs = source as BitString;
             if (bs != null)
