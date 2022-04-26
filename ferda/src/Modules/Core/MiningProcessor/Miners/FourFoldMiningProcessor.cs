@@ -306,7 +306,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
             IEvaluator evaluator = CreateEvaluator(TaskParams.evaluationType, false);
 
             MissingInformation missingInformation = MissingInformation.GetInstance();
-            nineFoldTableOfBitStrings nineFT;
 
             //MiningSettingCollectionWithMiningThreads<MiningSetting> miningThreads = new MiningSettingCollectionWithMiningThreads<FourFoldMiningProcessor.MiningSetting>(mine, finished);
             //System.Threading.ThreadPool threadPool = new System.Threading.ThreadPool();
@@ -334,7 +333,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             var (xS, nS) = await GetNegationAndMissingsAsync(pS, missingInformation).ConfigureAwait(false);
 
                             //Fills the nine fold table (FIRST is condition, SECOND is succedent)
-                            nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, actCount);
+                            var nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, actCount);
 
                             await Parallel.ForEachAsync(_antecedent, options, async (pA, ct) =>
                             {
