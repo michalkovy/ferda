@@ -469,27 +469,30 @@ namespace Ferda.Guha.MiningProcessor.Generation
         {
             get
             {
-                if (_totalCount >= 0)
-                    return _totalCount;
-
-                _totalCount = 0;
-
-                // initialize
-                int count = _sourceEntities.Count;
-                List<long> totalCounts = new List<long>(_sourceEntities.Count);
-                foreach (IEntityEnumerator entity in _sourceEntities)
+                lock (this)
                 {
-                    totalCounts.Add(entity.TotalCount);
-                }
+                    if (_totalCount >= 0)
+                        return _totalCount;
 
-                Subsets<long, long> subsets = 
-                    new Subsets<long, long>(_effectiveMinLength, 
-                    _effectiveMaxLength, count,
-                    new LongMultiplicationArraySubsetsInstance(totalCounts.ToArray())
-                    );
-                foreach (long l in subsets)
-                {
-                    _totalCount += l;
+                    _totalCount = 0;
+
+                    // initialize
+                    int count = _sourceEntities.Count;
+                    List<long> totalCounts = new List<long>(_sourceEntities.Count);
+                    foreach (IEntityEnumerator entity in _sourceEntities)
+                    {
+                        totalCounts.Add(entity.TotalCount);
+                    }
+
+                    Subsets<long, long> subsets =
+                        new Subsets<long, long>(_effectiveMinLength,
+                        _effectiveMaxLength, count,
+                        new LongMultiplicationArraySubsetsInstance(totalCounts.ToArray())
+                        );
+                    foreach (long l in subsets)
+                    {
+                        _totalCount += l;
+                    }
                 }
 
                 return _totalCount;
