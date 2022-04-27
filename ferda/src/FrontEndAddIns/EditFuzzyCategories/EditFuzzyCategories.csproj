@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable></Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Ferda.FrontEnd.AddIns.$(MSBuildProjectName)</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Modules\Core\Attribute\Attribute.csproj" />
+    <ProjectReference Include="..\..\Modules\Core\Data\Data.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TeeChart.Lite">
+      <HintPath>..\..\..\lib\TeeChart.Lite.dll</HintPath>
+    </Reference>
+    <Reference Include="TeeChart.Lite.Languages">
+      <HintPath>..\..\..\lib\TeeChart.Lite.Languages.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

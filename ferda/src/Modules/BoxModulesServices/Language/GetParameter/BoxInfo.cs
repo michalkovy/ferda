@@ -40,10 +40,12 @@ namespace Ferda.Modules.Boxes.Language.GetParameter
 				}
 				else
 				{
-					PropertyValue propertyValue = mainBoxModulePrx.getProperty(parameterName);
-					return (propertyValue != null) ? boxModule.Adapter.addWithUUID(propertyValue) : null;
-				}
-			}
+                    return null;
+                    // TODO: this was original but Ice stopped supporting Classes to implement interface, what did it break?
+                    //PropertyValue propertyValue = mainBoxModulePrx.getProperty(parameterName);
+                    //return (propertyValue != null) ? boxModule.Adapter.addWithUUID(propertyValue) : null;
+                }
+            }
 			catch
 			{
 				return null;

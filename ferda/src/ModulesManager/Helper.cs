@@ -30,17 +30,17 @@ namespace Ferda {
 		/// </summary>
 		public class Helper : IAppPrefs, IIceHelper, IIcePrefs
 		{
-			public Helper(Ice.ObjectAdapter adapter, string[] localePrefs, ModulesManager manager)
+			public Helper(Ice.ObjectAdapter adapter, string[] localePrefs, ModulesManager manager, Current __current)
 			{
 				this.adapter = adapter;
 				this.localePrefs = localePrefs;
-				Debug.WriteLine("Creating BoxModuleIceFactories...");
+				Trace.WriteLine("Creating BoxModuleIceFactories...");
 				this.boxModuleIceFactories = new BoxModuleIceFactories( this );
-				Debug.WriteLine("Creating ManagersEngine...");
-				this.managersEngineI = new ManagersEngineI(adapter,this, manager);
+				Trace.WriteLine("Creating ManagersEngine...");
+				this.managersEngineI = new ManagersEngineI(adapter,this, manager, __current);
 				this.managersEnginePrx = ManagersEnginePrxHelper.uncheckedCast(
 					adapter.addWithUUID(managersEngineI));
-				Debug.WriteLine("Creating NetworkArchive...");
+				Trace.WriteLine("Creating NetworkArchive...");
 				this.networkArchive = new NetworkArchive(adapter, manager);
 			}
 			

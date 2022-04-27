@@ -361,9 +361,9 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// </summary>
         /// <param name="category">Category</param>
         /// <returns>Category bit string</returns>
-        public IBitString CategoryBitString(string category)
+        public async Task<IBitString> CategoryBitStringAsync(string category)
         {
-            IBitString categoryOnlyBitString = attribute.CategoryBitString(category);
+            IBitString categoryOnlyBitString = await attribute.CategoryBitStringAsync(category).ConfigureAwait(false);
             return baseBitString.And(categoryOnlyBitString);
         }
 
@@ -434,9 +434,9 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// </summary>
         /// <param name="category">Category name</param>
         /// <returns>Category frequency</returns>
-        public long CategoryFrequency(string category)
+        public async Task<long> CategoryFrequencyAsync(string category)
         {
-            return CategoryBitString(category).NonZeroBitsCount;
+            return (await CategoryBitStringAsync(category)).NonZeroBitsCount;
         }
 
         /// <summary>
@@ -508,7 +508,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// attribute</param>
         /// <param name="classificationCategories">Categories names of the
         /// classification attribute.</param>
-        public void InitNodeClassification(IBitString[] classificationBitStrings,
+        public async Task InitNodeClassificationAsync(IBitString[] classificationBitStrings,
             string[] classificationCategories)
         {
             //if (classifiedCategories != null)
@@ -528,7 +528,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
                 //it is a difference between membership degree 0.1 and 0.9
                 float max = -1;
                 int index = -1;
-                IBitString categoryBitString = CategoryBitString(category);
+                IBitString categoryBitString = await CategoryBitStringAsync(category).ConfigureAwait(false);
 
                 for (int i = 0; i < classificationCategories.Length; i++)
                 {
@@ -559,8 +559,8 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
             {
                 foreach (Node n in subNodes.Values)
                 {
-                    n.InitNodeClassification(classificationBitStrings,
-                        classificationCategories);
+                    await n.InitNodeClassificationAsync(classificationBitStrings,
+                        classificationCategories).ConfigureAwait(false);
                 }
             }
         }

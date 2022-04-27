@@ -43,7 +43,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
@@ -207,8 +208,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.EachValueOneCategor
 
             // try to invoke methods
             object dummy = Public.GetColumnFunctionsPrx(true,boxModule);
-            dummy = Func.GetAttributeId();
-            dummy = Func.GetAttributeNames();
+            dummy = Func.GetAttributeId(null);
+            dummy = Func.GetAttributeNames(null);
             dummy = Func.GetAttribute(true);
             dummy = Func.GetCategoriesNames(true);
             dummy = Func.GetCategoriesAndFrequencies(true);

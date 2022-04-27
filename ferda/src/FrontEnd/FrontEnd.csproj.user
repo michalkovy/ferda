@@ -1,24 +1,67 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <LastOpenVersion>8.0.50215</LastOpenVersion>
-    <PublishUrlHistory>http://localhost/FrontEnd/</PublishUrlHistory>
-    <InstallUrlHistory>
-    </InstallUrlHistory>
-    <SupportUrlHistory>
-    </SupportUrlHistory>
-    <UpdateUrlHistory>
-    </UpdateUrlHistory>
-    <BootstrapperUrlHistory>
-    </BootstrapperUrlHistory>
-    <ApplicationRevision>0</ApplicationRevision>
-    <FallbackCulture>en-US</FallbackCulture>
-    <VerifyUploadedFiles>true</VerifyUploadedFiles>
-    <ProjectView>ProjectFiles</ProjectView>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <StartWorkingDirectory>C:\Make\Projekt\svn\ferda\bin\FrontEnd\</StartWorkingDirectory>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartWorkingDirectory>D:\Marthin\skola\diplomova_prace\ferda\debug\</StartWorkingDirectory>
-  </PropertyGroup>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="Archive\FerdaArchive.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="BoxExceptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ContextHelp\FerdaContextHelp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Desktop\FerdaDesktop.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Desktop\RenameDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FerdaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FerdaPrescreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FerdaToolBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Menu\AboutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Menu\FerdaMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Menu\FerdaPreferencesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="NetworkArchive\FerdaNetworkArchive.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="NewBox\NewBoxControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="NewBox\NewBoxTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="ProgressBar\BoxProgressBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="ProgressBar\ProgressBarsManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Property\FerdaPropertyGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Property\StringComboAddingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserNote\FerdaUserNote.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="FerdaPrescreen.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

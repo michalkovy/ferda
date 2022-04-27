@@ -207,7 +207,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.DoubleImplicationa
         /// <returns>If the settings satisfies the quantifier</returns>
         public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Current current__)
         {
-            value = ComputeValue(param);
+            value = ComputeValue(param, current__);
             return Guha.Math.Common.Compare(Relation, value, Treshold);
         }
 
@@ -220,7 +220,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.DoubleImplicationa
         /// </param>
         /// <param name="current__">Ice stuff</param>
         /// <returns>The value of the quantifier</returns>
-        public override double ComputeValue(QuantifierEvaluateSetting param, Current current__)
+        public override double ComputeValue(QuantifierEvaluateSetting param, Current current__ = null)
         {
             return ExceptionsHandler.TryCatchMethodThrow<double>(
                 delegate

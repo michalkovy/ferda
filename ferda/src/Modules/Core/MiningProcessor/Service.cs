@@ -44,8 +44,8 @@ namespace Ferda.Guha.MiningProcessor
             _adapter = communicator.createObjectAdapter(name + "Adapter");
             _adapter.add(new MiningProcessorFunctionsI(),
                          Util.stringToIdentity("Ferda.Guha.MiningProcessor.MiningProcessorFunctions"));
-            ObjectFactory factory = new ObjectFactory();
-            ObjectFactory.addFactoryToCommunicator(communicator, factory);
+            
+            MiningValueFactory.addFactoryToCommunicator(communicator);
             _adapter.activate();
         }
 

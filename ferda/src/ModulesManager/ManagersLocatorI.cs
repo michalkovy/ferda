@@ -45,17 +45,17 @@ namespace Ferda {
             /// </summary>
             /// <param name="adapter">An Ice object adapter</param>
             /// <param name="helper">Helper class</param>
-			public ManagersLocatorI(Ice.ObjectAdapter adapter, Helper helper)
+			public ManagersLocatorI(Ice.ObjectAdapter adapter, Helper helper, Current __current)
 			{
 				this.adapter = adapter;
 				this.helper = helper;
-				this.Refresh();
+				this.Refresh(__current);
 			}
 			
             /// <summary>
             /// If there is new connection to IceGrid, it is needed to do this refresh
             /// </summary>
-			public void Refresh()
+			public void Refresh(Current __current)
 			{
 				Debug.WriteLine("Starting Refresh in ManagersLocatorI...");
 				Debug.WriteLine("Getting communicator...");
@@ -77,7 +77,7 @@ namespace Ferda {
 					}
 					query = IceGrid.QueryPrxHelper.checkedCast(objectQuery);
 					Debug.WriteLine("Getting BoxModuleFactoryCreators...");
-					creators = this.findAllObjectsWithType("::Ferda::Modules::BoxModuleFactoryCreator");
+					creators = this.findAllObjectsWithType("::Ferda::Modules::BoxModuleFactoryCreator",__current);
 					size = creators.Length;
 					if(size == 0)
 					{
@@ -89,7 +89,7 @@ namespace Ferda {
 					throw new LocatorNotFoundException();
 				List<ObjectPrx> boxCreators = new List<ObjectPrx>();
 				foreach(ObjectPrx creator in creators) boxCreators.Add(creator);
-				creators = this.findAllObjectsWithType("::Ferda::Modules::PropertyBoxModuleFactoryCreator");
+				creators = this.findAllObjectsWithType("::Ferda::Modules::PropertyBoxModuleFactoryCreator", __current);
 				foreach(ObjectPrx creator in creators)
 				{
 					if(!boxCreators.Contains(creator))
@@ -138,20 +138,20 @@ namespace Ferda {
 						creator.getIdentifier(), creator);
 					}
 				}
-                refreshModules();
+                refreshModules(__current);
 				Debug.WriteLine("Refresh in ManagersLocatorI ended");
 			}
 
             /// <summary>
             /// Refresh information about available modules
             /// </summary>
-            private void refreshModules()
+            private void refreshModules(Current __current)
             {
                 Debug.WriteLine("Adding SettingModules...");
                 List<ObjectPrx> settingModules = new List<ObjectPrx>();
-                ObjectPrx[] settingModulesArray = this.findAllObjectsWithType("::Ferda::Modules::SettingModule");
+                ObjectPrx[] settingModulesArray = this.findAllObjectsWithType("::Ferda::Modules::SettingModule", __current);
                 foreach (ObjectPrx settingModule in settingModulesArray) settingModules.Add(settingModule);
-                settingModulesArray = this.findAllObjectsWithType("::Ferda::Modules::SettingModuleWithStringAbility");
+                settingModulesArray = this.findAllObjectsWithType("::Ferda::Modules::SettingModuleWithStringAbility", __current);
                 foreach (ObjectPrx settingModule in settingModulesArray)
                 {
                     if (!settingModules.Contains(settingModule))
@@ -169,7 +169,7 @@ namespace Ferda {
 
                 Debug.WriteLine("Adding ModulesForInteraction...");
                 modulesForInteractionByBoxType.Clear();
-                ObjectPrx[] modulesForInteraction = this.findAllObjectsWithType("::Ferda::Modules::ModuleForInteraction");
+                ObjectPrx[] modulesForInteraction = this.findAllObjectsWithType("::Ferda::Modules::ModuleForInteraction", __current);
                 foreach (ObjectPrx moduleForInteractionUntyped in modulesForInteraction)
                 {
                     ModuleForInteractionPrx moduleForInteraction =
@@ -376,7 +376,7 @@ namespace Ferda {
             /// <param name="type">A string</param>
             /// <param name="__current">An Ice.Current</param>
             public override ObjectPrx findObjectByType(String type, Current __current) {
-				ObjectPrx[] objectPrxArray = this.findAllObjectsWithType(type);
+				ObjectPrx[] objectPrxArray = this.findAllObjectsWithType(type, __current);
 				if(objectPrxArray.Length==0)
 				{
 					return null;
@@ -391,7 +391,7 @@ namespace Ferda {
             /// Adds ice object proxies (modules) to information about available modules
             /// </summary>
             /// <param name="objectPrxies">A list of ice object proxies</param>
-			public void AddIceObjectProxies(List<ObjectPrx> objectPrxies)
+			public void AddIceObjectProxies(List<ObjectPrx> objectPrxies, Current __current)
 			{
 				foreach(ObjectPrx objectPrx in objectPrxies)
 				{
@@ -414,11 +414,11 @@ namespace Ferda {
 					}
 				}
                 if (additionalProxiesIceIds.ContainsKey("::Ferda::Modules::BoxModuleFactoryCreator"))
-                    this.Refresh();
+                    this.Refresh(__current);
                 else
                     if (additionalProxiesIceIds.ContainsKey("::Ferda::Modules::ModuleForInteraction")
                         || additionalProxiesIceIds.ContainsKey("::Ferda::Modules::SettingModule"))
-                        refreshModules();
+                        refreshModules(__current);
 			}
 			
 			private IceGrid.QueryPrx query;

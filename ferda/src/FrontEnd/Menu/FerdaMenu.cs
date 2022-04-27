@@ -1071,7 +1071,7 @@ namespace Ferda.FrontEnd.Menu
                     ActionExceptionCatcher catcher =
                         new ActionExceptionCatcher(projectManager, ResManager, 
                         selector, propertiesDisplayer);
-					box.RunAction_async(catcher, info.name);
+                    box.RunActionOnBackground(info.name, catcher);
                     break;
                 }
             }

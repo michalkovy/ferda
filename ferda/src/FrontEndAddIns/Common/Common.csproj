@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable></Nullable>
+    <AssemblyName>AddIns$(MSBuildProjectName)</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Base\Base.csproj" />
+    <ProjectReference Include="..\..\FrontEndAddInHelper\FrontEndAddInHelper.csproj" />
+    <ProjectReference Include="..\..\Modules\BoxInterfaces\BoxInterfaces.csproj" />
+  </ItemGroup>
+
+</Project>

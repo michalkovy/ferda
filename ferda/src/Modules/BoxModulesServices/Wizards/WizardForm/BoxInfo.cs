@@ -61,7 +61,8 @@ namespace Ferda.Modules.Boxes.Wizards.WizardForm
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>

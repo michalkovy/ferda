@@ -402,7 +402,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         private string ChangeAttribute2ColumnNames(string serializedResult)
         {
             BoxModulePrx[] attrBoxPrxs = _boxModule.GetConnections(SockBranchingAttributes);
-            GuidAttributeNamePair[] pairs = GetAttributeNames();
+            GuidAttributeNamePair[] pairs = GetAttributeNames(null);
             //the conversion dictionary, key is attribute name,
             //value is select expression
             Dictionary<string, string> conversion = new Dictionary<string,string>();

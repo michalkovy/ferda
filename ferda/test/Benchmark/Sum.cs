@@ -19,7 +19,7 @@
 //
 
 using System;
-using Mono.Simd;
+using System.Numerics;
 //using Mono.Math;
 
 namespace Ferda.Benchmark
@@ -31,11 +31,11 @@ namespace Ferda.Benchmark
         static double sumFloatResult; // This is what we'll check in float version
 
         //static BigInteger[] stringBigInteger = new BigInteger[lengthUlongString];
-        static Vector2ul[] stringVector2ul = new Vector2ul[LengthVector2ulString];
+        static Vector<ulong>[] stringVectorUl = new Vector<ulong>[LengthVectorUlString];
 
-        private static int LengthVector2ulString
+        private static int LengthVectorUlString
         {
-            get { return lengthUlongString / 2; }
+            get { return lengthUlongString / Vector<ulong>.Count; }
         }
 
         #endregion
@@ -60,13 +60,13 @@ namespace Ferda.Benchmark
             {
                 stringFloat[i] = (float)r.NextDouble();
             }
-            for (int i = 0; i < LengthVector2ulString; i++)
+            for (int i = 0; i < LengthVectorUlString; i++)
             {
-                stringVector2ul[i] = new Vector2ul(stringUlong[i * 2], stringUlong[i * 2 + 1]);
+                stringVectorUl[i] = new Vector<ulong>(stringUlong, i * Vector<ulong>.Count);
             }
-            for (int i = 0; i < LengthVector4fString; i++)
+            for (int i = 0; i < LengthVector4String; i++)
             {
-                stringVector4f[i] = new Vector4f(stringFloat[i * 4], stringFloat[i * 4 + 1], stringFloat[i * 4 + 2], stringFloat[i * 4 + 3]);
+                stringVector4[i] = new Vector4(stringFloat[i * 4], stringFloat[i * 4 + 1], stringFloat[i * 4 + 2], stringFloat[i * 4 + 3]);
             }
 
         }
@@ -140,15 +140,29 @@ namespace Ferda.Benchmark
         }
 
         [Benchmark]
-        public static void BoolQuickVector2ul()
+        public static void BoolVectorPopCnt()
         {
             //don't use static variables in iterations
-            Vector2ul[] array = stringVector2ul;
+            Vector<ulong>[] vec = stringVectorUl;
             int count = iterations;
             ulong result = 0;
             for (int i = 0; i < count; i++)
             {
-                result = QuickVectorSum(array);
+                result = VectorSum(vec);
+            }
+            sumBitResult = result;
+        }
+
+        [Benchmark]
+        public static void BoolQuickVectorUl()
+        {
+            //don't use static variables in iterations
+            Vector<ulong>[] array = stringVectorUl;
+            int count = iterations;
+            ulong result = 0;
+            for (int i = 0; i < count; i++)
+            {
+                result = QuickUnsafeVector2uSum(array);
             }
             sumBitResult = result;
         }
@@ -168,10 +182,10 @@ namespace Ferda.Benchmark
         }
 
         [Benchmark]
-        public static void FuzzyVector4f()
+        public static void FuzzyVector4()
         {
             //don't use static variables in iterations
-            Vector4f[] array = stringVector4f;
+            Vector4[] array = stringVector4;
             int count = iterations;
             double result = 0;
             for (int i = 0; i < count; i++)
@@ -182,10 +196,10 @@ namespace Ferda.Benchmark
         }
 
         [Benchmark]
-        public static void FuzzyVector4fSafe()
+        public static void FuzzyVector4Safe()
         {
             //don't use static variables in iterations
-            Vector4f[] array = stringVector4f;
+            Vector4[] array = stringVector4;
             int count = iterations;
             double result = 0;
             for (int i = 0; i < count; i++)
@@ -222,10 +236,10 @@ namespace Ferda.Benchmark
         const ulong hff = 0xffffffffffffffff; //binary: all ones
         const ulong h01 = 0x0101010101010101; //the sum of 256 to the power of 0,1,2,3...
 
-        private static Vector2ul M1 = new Vector2ul(0x5555555555555555, 0x5555555555555555);
-        private static Vector2ul M2 = new Vector2ul(0x3333333333333333, 0x3333333333333333);
-        private static Vector2ul M4 = new Vector2ul(0x0f0f0f0f0f0f0f0f, 0x0f0f0f0f0f0f0f0f);
-        private static Vector4ui H01 = new Vector4ui(0x01010101, 0x01010101, 0x01010101, 0x01010101);
+        //private static Vector<ulong> M1 = new Vector<ulong>(new ulong[] { 0x5555555555555555, 0x5555555555555555 });
+        //private static Vector<ulong> M2 = new Vector<ulong>(new ulong[] { 0x3333333333333333, 0x3333333333333333 });
+        //private static Vector<ulong> M4 = new Vector<ulong>(new ulong[] { 0x0f0f0f0f0f0f0f0f, 0x0f0f0f0f0f0f0f0f });
+        //private static Vector<uint> H01 = new Vector<uint>(new uint[] { 0x01010101, 0x01010101, 0x01010101, 0x01010101 });
 
         static unsafe float FloatSum(float[] r)
         {
@@ -243,13 +257,13 @@ namespace Ferda.Benchmark
             return result;
         }
 
-        static unsafe float FloatSumVector(Vector4f[] r)
+        static unsafe float FloatSumVector(Vector4[] r)
         {
-            Vector4f result = new Vector4f(0, 0, 0, 0);
+            Vector4 result = new Vector4(0, 0, 0, 0);
 
-            fixed (Vector4f* arrayPtr = r)
+            fixed (Vector4* arrayPtr = r)
             {
-                Vector4f* currentPtr = arrayPtr, stopPtr = arrayPtr + r.Length;
+                Vector4* currentPtr = arrayPtr, stopPtr = arrayPtr + r.Length;
                 while (currentPtr < stopPtr)
                 {
                     result += *currentPtr++;
@@ -259,9 +273,9 @@ namespace Ferda.Benchmark
             return result.X + result.Y + result.Z + result.W;
         }
 
-        static float FloatSumVectorSafe(Vector4f[] r)
+        static float FloatSumVectorSafe(Vector4[] r)
         {
-            Vector4f result = new Vector4f(0, 0, 0, 0);
+            Vector4 result = new Vector4(0, 0, 0, 0);
 
             for (int i = 0; i < r.Length - 1; i++)
             {
@@ -326,26 +340,55 @@ namespace Ferda.Benchmark
             return result;
         }
 
-        static unsafe uint QuickVectorSum(Vector2ul[] r)
+        static unsafe ulong QuickUnsafeVector2uSum(Vector<ulong>[] r)
         {
-            Vector2ul M1 = Sum.M1;
-            Vector2ul M2 = Sum.M2;
-            Vector2ul M4 = Sum.M4;
-            Vector4ui H01 = Sum.H01;
-            Vector4ui result = new Vector4ui(0, 0, 0, 0);
-            fixed (Vector2ul* ur = r)
+            ulong result = 0;
+            Span<ulong> stringVectorTmp = stackalloc ulong[Vector<ulong>.Count];
+            fixed (Vector<ulong>* ur = r)
             {
-                Vector2ul* a = ur, kon = ur + r.Length;
+                Vector<ulong>* a = ur, kon = ur + r.Length;
                 while (a < kon)
                 {
-                    Vector2ul x = *a++;
-                    x -= (x >> 1) & M1;             //put count of each 2 bits into those 2 bits
-                    x = (x & M2) + ((x >> 2) & M2); //put count of each 4 bits into those 4 bits 
-                    x = (x + (x >> 4)) & M4;        //put count of each 8 bits into those 8 bits
-                    result += ((((Vector4ui)x) * H01) >> 24);	//returns left 8 bits of x + (x<<8) + (x<<16) + (x<<24) + ... */
+                    Vector<ulong> x = *a++;
+                    x.CopyTo(stringVectorTmp);
+                    foreach (ulong q in stringVectorTmp)
+                        result += (ulong)BitOperations.PopCount(q);
                 }
             }
-            return result.X + result.Y + result.W + result.Z;
+            return result;
+            //Vector<ulong> M1 = Sum.M1;
+            //Vector<ulong> M2 = Sum.M2;
+            //Vector<ulong> M4 = Sum.M4;
+            //Vector<uint> H01 = Sum.H01;
+            //Vector<uint> result = new Vector<uint>(new uint[] { 0, 0, 0, 0 });
+            //fixed (Vector<ulong>* ur = r)
+            //{
+            //    Vector<ulong>* a = ur, kon = ur + r.Length;
+            //    while (a < kon)
+            //    {
+            //        Vector<ulong> x = *a++;
+            //        x -= (x >> 1) & M1;             //put count of each 2 bits into those 2 bits
+            //        x = (x & M2) + ((x >> 2) & M2); //put count of each 4 bits into those 4 bits 
+            //        x = (x + (x >> 4)) & M4;        //put count of each 8 bits into those 8 bits
+            //        result += ((((Vector<uint>)x) * H01) >> 24);	//returns left 8 bits of x + (x<<8) + (x<<16) + (x<<24) + ... */
+            //    }
+            //}
+            //return result.X + result.Y + result.W + result.Z;
+        }
+
+        static ulong VectorSum(Vector<ulong>[] vectorArray)
+        {
+            ulong result = 0;
+            Span<ulong> stringVectorTmp = stackalloc ulong[Vector<ulong>.Count];
+            foreach (Vector<ulong> v in vectorArray)
+            {
+                v.CopyTo(stringVectorTmp);
+                foreach (ulong x in stringVectorTmp)
+                {
+                    result += (ulong)BitOperations.PopCount(x);
+                }
+            }
+            return result;
         }
 
         static byte[] _bitcounts = new byte[65536];

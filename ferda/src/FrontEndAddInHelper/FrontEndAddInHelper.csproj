@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable></Nullable>
+    <AssemblyName>Ferda$(MSBuildProjectName)</AssemblyName>
+    <SignAssembly>True</SignAssembly>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyOriginatorKeyFile>FerdaFrontEndAddInHelper.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="zeroc.ice.net" Version="3.7.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectBase\ProjectBase.csproj" />
+    <ProjectReference Include="..\ProjectManager\ProjectManager.csproj" />
+  </ItemGroup>
+
+</Project>

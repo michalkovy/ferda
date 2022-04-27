@@ -1,0 +1,601 @@
+<?xml version="1.0"?>
+<project name="Ferda FrontEnd AddIns" default="build" basedir="."
+	xmlns="http://nant.sf.net/release/0.86/nant.xsd" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://nant.sf.net/release/0.86/nant.xsd ../../../lib/nant.xsd">
+	<target name="buildmain">
+		<csc target="library" output="${path::combine(build.dir,'FrontEndAddInHelper.dll')}" debug="${debug}" optimize="${optimize}" keyfile="FerdaFrontEndAddInHelper.snk">
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Windows.Forms.dll"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaProjectManager.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
+			</references>
+			<sources>
+				<include name="IOwnerOfAddIn.cs"/>
+				<include name="IAddInMain.cs"/>
+				<include name="AbstractMain.cs"/>
+				<include name="IFerdaPropertiesDisplayer.cs"/>
+			</sources>
+		</csc>
+	</target>
+	<target name="buildaddins">
+		<if test="${framework::get-target-framework()=='mono-2.0'}">
+			<property name="defines" value="MONO"/>
+		</if>
+		<if test="${framework::get-target-framework()!='mono-2.0'}">
+			<property name="defines" value=""/>
+		</if>
+
+			<mkdir dir="${addInsBuild.dir}/Common"/>
+
+    <csc target="library" output="${path::combine(build.dir,'AddInsCommon.dll')}" debug="${debug}" optimize="${optimize}">
+    	<references>
+    		<include name="System.dll"/>
+    		<include name="System.Data.dll"/>
+    		<include name="System.Windows.Forms.dll"/>
+    		<include name="System.Collections.dll"/>
+    		<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaLMTasksBoxes.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+    		<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+    		<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+    	</references>
+    	<resources prefix="Ferda.FrontEnd.AddIns.Common">
+    		<include name="Common/**.resx"/>
+    		<exclude name="Common/ResultBrowser.resx"/>
+    	</resources>    	
+      <sources>
+        <include name="Common/**.cs"/>
+        <include name="Common/ListView/**.cs"/>
+        <exclude name="Common/bin/**.*"/>
+        <exclude name="Common/obj/**.*"/>
+      </sources>
+    </csc>
+
+		<csc target="library" output="${path::combine(addInsBuild.dir,'ResultBrowser.dll')}" debug="${debug}" optimize="${optimize}">
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll"/>
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaMiningProcessor.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+				<include name="${path::combine(lib.dir,'TeeChart.Lite.dll')}"/>
+				<include name="${path::combine(lib.dir,'TeeChart.Lite.Languages.dll')}"/>
+			</references>
+			<resources prefix="Ferda.FrontEnd.AddIns.ResultBrowser">
+				<include name="ResultBrowser/**.resx"/>
+				<exclude name="ResultBrowser/ResultBrowser.resx"/>
+			</resources>
+			<sources>
+				<include name="ResultBrowser/**.cs"/>
+				<include name="ResultBrowser/MyIce/**.cs"/>
+				<include name="ResultBrowser/NonGUIClasses/**.cs"/>
+				<exclude name="ResultBrowser/bin/**.*"/>
+				<exclude name="ResultBrowser/obj/**.*"/>
+			</sources>			
+		</csc>
+
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="ResultBrowser/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
+
+
+		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'ExplainTable.dll')}" debug="${debug}" optimize="${optimize}">
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll"/>
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+			</references>			
+			<resources prefix="Ferda.FrontEnd.AddIns.ExplainTable">
+				<include name="ExplainTable/**.resx"/>
+				<exclude name="ExplainTable/ExplainTable.resx"/>
+			</resources>
+			<sources>
+				<include name="ExplainTable/**.cs"/>
+				<include name="ExplainTable/MyIce/**.cs"/>
+				<include name="ExplainTable/NonGUIClasses/**.cs"/>
+				<exclude name="ExplainTable/bin/**.*"/>
+				<exclude name="ExplainTable/obj/**.*"/>
+			</sources>			
+		</csc>
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="ExplainTable/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
+   
+		<csc target="library" output="${path::combine(addInsBuild.dir,'DatabaseInfo.dll')}" debug="${debug}" optimize="${optimize}">
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="System.Drawing.dll" />
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+			</references>
+			<resources prefix="Ferda.FrontEnd.AddIns.DataBaseInfo">
+				<include name="DatabaseInfo/**.resx"/>
+				<exclude name="DatabaseInfo/DatabaseInfo.resx"/>
+			</resources>
+			<sources>
+				<include name="DatabaseInfo/**.cs"/>
+				<include name="DatabaseInfo/MyIce/**.cs"/>
+				<include name="DatabaseInfo/NonGUIClasses/**.cs"/>
+				<exclude name="DatabaseInfo/bin/**.*"/>
+				<exclude name="DatabaseInfo/obj/**.*"/>
+			</sources>
+			
+		</csc>
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="DatabaseInfo/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
+    
+		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'FrequencyDisplayer.dll')}" debug="${debug}" optimize="${optimize}">
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="System.Drawing.dll" />
+				<include name="System.Xml.dll" />
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+				<include name="${path::combine(lib.dir,'TeeChart.Lite.dll')}"/>
+				<include name="${path::combine(lib.dir,'TeeChart.Lite.Languages.dll')}"/>
+			</references>
+			<resources prefix="Ferda.FrontEnd.AddIns.FrequencyDisplayer">
+				<include name="FrequencyDisplayer/**.resx"/>
+				<exclude name="FrequencyDisplayer/FrequencyDisplayer.resx"/>
+			</resources>
+			<sources>
+				<include name="FrequencyDisplayer/**.cs"/>
+				<include name="FrequencyDisplayer/MyIce/**.cs"/>
+				<exclude name="FrequencyDisplayer/bin/**.*"/>
+				<exclude name="FrequencyDisplayer/obj/**.*"/>
+			</sources>
+		</csc>
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="FrequencyDisplayer/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
+    		
+		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'EditCategories.dll')}" debug="${debug}" optimize="${optimize}">
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaAttribute.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+			</references>			
+			<resources prefix="Ferda.FrontEnd.AddIns.EditCategories">
+				<include name="EditCategories/**.resx"/>
+				<exclude name="EditCategories/EditCategories.resx"/>
+			</resources>
+			<sources>
+				<include name="EditCategories/**.cs"/>
+				<include name="EditCategories/MyIce/**.cs"/>
+				<!--	<include name="EditCategories/NoGUIClasses/**.cs"/>-->
+				<include name="EditCategories/EditExisting/**.cs"/>
+				<include name="EditCategories/CreateNewCategory/**.cs"/>
+				<exclude name="EditCategories/bin/**.*"/>
+				<exclude name="EditCategories/obj/**.*"/>
+			</sources>
+		</csc>
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="EditCategories/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
+
+		<csc target="library" output="${path::combine(addInsBuild.dir,'ODBCConnectionString.dll')}" debug="${debug}" optimize="${optimize}">
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+			</references>
+			<resources prefix="Ferda.FrontEnd.AddIns.ODBCConnectionString">
+				<include name="ODBCConnectionString/**.resx"/>
+				<exclude name="ODBCConnectionString/ConnectionString.resx"/>
+			</resources>
+			<sources>
+				<include name="ODBCConnectionString/**.cs"/>
+				<include name="ODBCConnectionString/Ice/**.cs"/>
+				<exclude name="ODBCConnectionString/bin/**.*"/>
+				<exclude name="ODBCConnectionString/obj/**.*"/>
+			</sources>
+		</csc>
+    		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="ODBCConnectionString/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
+
+		<csc target="library" output="${path::combine(addInsBuild.dir,'ShowTable.dll')}" debug="${debug}" optimize="${optimize}">
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+			</references>
+			<resources prefix="Ferda.FrontEnd.AddIns.ShowTable">
+				<include name="ShowTable/**.resx"/>
+				<exclude name="ShowTable/ShowTable.resx"/>
+			</resources>
+			<sources>
+				<include name="ShowTable/**.cs"/>
+				<include name="ShowTable/MyIce/**.cs"/>
+				<exclude name="ShowTable/bin/**.*"/>
+				<exclude name="ShowTable/obj/**.*"/>
+			</sources>
+		</csc>
+    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		 <fileset basedir="ShowTable/Help">
+     		   <include name="*.*" /> 
+     		</fileset>
+    </copy>
+
+	<csc target="library" output="${path::combine(addInsBuild.dir,'MultiSelectStrings.dll')}" debug="${debug}" optimize="${optimize}">
+		<references>
+			<include name="System.dll"/>
+			<include name="System.Data.dll"/>
+			<include name="System.Drawing.dll" />
+			<include name="System.Windows.Forms.dll"/>
+			<include name="System.Collections.dll"/>
+			<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+			<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+			<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+			<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+			<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+			<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+			<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+		</references>
+		<resources prefix="Ferda.FrontEnd.AddIns.MultiSelectStrings">
+			<include name="MultiSelectStrings/**.resx"/>
+			<exclude name="MultiSelectStrings/MultiSelectStrings.resx"/>
+		</resources>
+      <sources>
+        <include name="MultiSelectStrings/**.cs"/>
+        <include name="MultiSelectStrings/MyIce/**.cs"/>
+        <exclude name="MultiSelectStrings/bin/**.*"/>
+        <exclude name="MultiSelectStrings/obj/**.*"/>
+      </sources>
+    </csc>
+    
+		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'FormEditor.dll')}" debug="${debug}" optimize="${optimize}">
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+			</references>
+			<resources prefix="Ferda.FrontEnd.AddIns.FormEditor">
+				<include name="FormEditor/**.resx"/>
+				<exclude name="FormEditor/FormEdito.resx"/>
+			</resources>
+			<sources>
+				<include name="FormEditor/**.cs"/>
+				<include name="FormEditor/MyIce/**.cs"/>
+				<exclude name="FormEditor/bin/**.*"/>
+				<exclude name="FormEditor/obj/**.*"/>
+			</sources>
+		</csc>
+    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		 <fileset basedir="FormEditor/Help">
+     		   <include name="*.*" /> 
+     		</fileset>
+    </copy>
+
+
+		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'RegEditor.dll')}" debug="${debug}" optimize="${optimize}">
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll" />
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+			</references>
+			<resources prefix="Ferda.FrontEnd.AddIns.RegEditor">
+				<include name="RegEditor/**.resx"/>
+				<exclude name="RegEditor/RegEditor.resx"/>
+			</resources>
+			<sources>
+				<include name="RegEditor/**.cs"/>
+				<include name="RegEditor/MyIce/**.cs"/>
+				<exclude name="RegEditor/bin/**.*"/>
+				<exclude name="RegEditor/obj/**.*"/>
+			</sources>
+		</csc>
+	    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+	    		 <fileset basedir="RegEditor/Help">
+	     		   <include name="*.*" /> 
+	     		</fileset>
+	    </copy>
+
+ 		<csc target="library" output="${path::combine(addInsBuild.dir,'FormGenerator.dll')}" debug="${debug}" optimize="${optimize}">
+ 			<references>
+ 				<include name="System.dll"/>
+ 				<include name="System.Data.dll"/>
+ 				<include name="System.Drawing.dll" />
+ 				<include name="System.Windows.Forms.dll"/>
+ 				<include name="System.Collections.dll"/>
+ 				<include name="System.Drawing.dll" />
+ 				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
+ 				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+ 				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+ 				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+ 				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+ 				<include name="${path::combine(build.dir,'FerdaProjectManager.dll')}"/>
+ 				<include name="${path::combine(build.dir,'FerdaModulesManager.dll')}"/>
+ 				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+ 			</references>
+ 			<resources prefix="Ferda.FrontEnd.AddIns.FormGenerator">
+ 				<include name="FormGenerator/**.resx"/>
+ 				<exclude name="FormGenerator/FormGenerator.resx"/>
+ 			</resources>
+			<sources>
+				<include name="FormGenerator/**.cs"/>
+				<include name="FormGenerator/MyIce/**.cs"/>
+			  <exclude name="FormGenerator/bin/**.*"/>
+				<exclude name="FormGenerator/obj/**.*"/>
+			</sources>
+		</csc>
+
+    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+      <fileset basedir="MultiSelectStrings/Help">
+        <include name="*.*" />
+      </fileset>
+    </copy>
+    
+    
+    <csc target="library" output="${path::combine(addInsBuild.dir,'SetOntologyPath.dll')}" debug="${debug}" optimize="${optimize}">
+    	<references>
+    		<include name="System.dll"/>
+    		<include name="System.Data.dll"/>
+    		<include name="System.Drawing.dll" />
+    		<include name="System.Windows.Forms.dll"/>
+    		<include name="System.Collections.dll"/>
+    		<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+    		<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+    		<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+    		<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+    	</references>
+    	<resources prefix="Ferda.FrontEnd.AddIns.SetOntologyPath">
+    		<include name="SetOntologyPath/**.resx"/>
+    		<exclude name="SetOntologyPath/SetOntologyPath.resx"/>
+    	</resources>
+			<sources>
+				<include name="SetOntologyPath/**.cs"/>
+				<include name="SetOntologyPath/MyIce/**.cs"/>
+				<exclude name="SetOntologyPath/bin/**.*"/>
+				<exclude name="SetOntologyPath/obj/**.*"/>
+			</sources>
+		</csc>
+    
+    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+      <fileset basedir="SetOntologyPath/Help">
+        <include name="*.*" />
+      </fileset>
+    </copy>
+    
+    <csc target="library" output="${path::combine(addInsBuild.dir,'SetOntologyMapping.dll')}" debug="${debug}" optimize="${optimize}">
+    	<references>
+    		<include name="System.dll"/>
+    		<include name="System.Data.dll"/>
+    		<include name="System.Drawing.dll" />
+    		<include name="System.Windows.Forms.dll"/>
+    		<include name="System.Collections.dll"/>
+    		<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+    		<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+    		<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaMiningProcessor.dll')}"/>
+    		<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+    	</references>
+    	<resources prefix="Ferda.FrontEnd.AddIns.SetOntologyMapping">
+    		<include name="SetOntologyMapping/**.resx"/>
+    		<exclude name="SetOntologyMapping/SetOntologyMapping.resx"/>
+    	</resources>
+			<sources>
+				<include name="SetOntologyMapping/**.cs"/>
+				<include name="SetOntologyMapping/MyIce/**.cs"/>
+				<exclude name="SetOntologyMapping/bin/**.*"/>
+				<exclude name="SetOntologyMapping/obj/**.*"/>
+			</sources>
+		</csc>
+
+    <copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+      <fileset basedir="SetOntologyMapping/Help">
+        <include name="*.*" />
+      </fileset>
+    </copy>    
+		
+		<csc target="library" define="${defines}" output="${path::combine(addInsBuild.dir,'ShowMapping.dll')}" debug="${debug}" optimize="${optimize}">
+			<references>
+				<include name="System.dll"/>
+				<include name="System.Data.dll"/>
+				<include name="System.Drawing.dll"/>
+				<include name="System.Windows.Forms.dll"/>
+				<include name="System.Collections.dll"/>
+				<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+				<include name="${path::combine(build.dir,'AddInsCommon.dll')}"/>
+				<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+				<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+				<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+			</references>
+			<resources prefix="Ferda.FrontEnd.AddIns.ShowMapping">
+				<include name="ShowMapping/**.resx"/>
+				<exclude name="ShowMapping/ShowMapping.resx"/>
+			</resources>
+			<sources>
+				<include name="ShowMapping/**.cs"/>
+				<include name="ShowMapping/MyIce/**.cs"/>
+				<exclude name="ShowMapping/bin/**.*"/>
+				<exclude name="ShowMapping/obj/**.*"/>
+			</sources>
+		</csc>
+		
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+    		  <fileset basedir="ShowMapping/Help">
+     		   <include name="*.*" /> 
+     		 </fileset>
+    		</copy>
+    		
+    <csc target="library" output="${path::combine(addInsBuild.dir,'SetPrimaryKeys.dll')}" debug="${debug}" optimize="${optimize}">
+    	<references>
+    		<include name="System.dll"/>
+    		<include name="System.Data.dll"/>
+    		<include name="System.Drawing.dll" />
+    		<include name="System.Windows.Forms.dll"/>
+    		<include name="System.Collections.dll"/>
+    		<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+    		<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+    		<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+    		<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+    	</references>
+    	<resources prefix="Ferda.FrontEnd.AddIns.SetPrimaryKeys">
+    		<include name="SetPrimaryKeys/**.resx"/>
+    		<exclude name="SetPrimaryKeys/SetPrimaryKeys.resx"/>
+    	</resources>
+      <sources>
+        <include name="SetPrimaryKeys/**.cs"/>
+        <include name="SetPrimaryKeys/MyIce/**.cs"/>
+        <exclude name="SetPrimaryKeys/bin/**.*"/>
+        <exclude name="SetPrimaryKeys/obj/**.*"/>
+      </sources>
+    </csc>
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+			<fileset basedir="SetPrimaryKeys/Help">
+				<include name="*.*" /> 
+			</fileset>
+		</copy>
+		
+    
+    <csc target="library" output="${path::combine(addInsBuild.dir,'EditFuzzyCategories.dll')}" debug="${debug}" optimize="${optimize}">
+    	<references>
+    		<include name="System.dll"/>
+    		<include name="System.Data.dll"/>
+    		<include name="System.Drawing.dll" />
+    		<include name="System.Windows.Forms.dll"/>
+    		<include name="System.Collections.dll"/>
+    		<include name="System.Reflection.dll"/>
+    		<include name="${path::combine(build.dir,'FerdaFrontEnd.exe')}"/>
+    		<include name="${path::combine(build.dir,'FerdaAttribute.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaData.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaBase.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaHelpers.dll')}"/>
+    		<include name="${path::combine(build.dir,'FrontEndAddInHelper.dll')}"/>
+    		<include name="${path::combine(build.dir,'FerdaBoxInterfaces.dll')}"/>
+    		<include name="${path::combine(lib.dir,'Ice.dll')}"/>
+    		<include name="${path::combine(lib.dir,'TeeChart.Lite.dll')}"/>    		
+    	</references>
+    	<resources prefix="Ferda.FrontEnd.AddIns.EditFuzzyCategories">
+    		<include name="EditFuzzyCategories/**.resx"/>
+    		<exclude name="EditFuzzyCategories/EditFuzzyCategories.resx"/>    		
+    	</resources>
+		<sources>
+			<include name="EditFuzzyCategories/**.cs"/>
+			<include name="EditFuzzyCategories/MyIce/**.cs"/>
+			<exclude name="EditFuzzyCategories/bin/**.*"/>
+			<exclude name="EditFuzzyCategories/obj/**.*"/>
+		</sources>
+    </csc>
+    
+		<copy todir="${path::combine(addInsBuild.dir, 'Help')}">
+			<fileset basedir="EditFuzzyCategories/Help">
+				<include name="*.*" /> 
+			</fileset>
+		</copy>
+		
+	</target>
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset basedir="${addInsBuild.dir}">
+				<include name="StringSeqSettingModule.dll"/>
+			</fileset>
+		</delete>
+	</target>
+</project>

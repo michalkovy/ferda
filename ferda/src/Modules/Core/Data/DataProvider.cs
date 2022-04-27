@@ -69,11 +69,14 @@ namespace Ferda.Guha.Data
         {
             switch (providerInvariantName)
             {
+                case SqlClientInvariantName:
+                    prefix = "[";
+                    suffix = "]";
+                    return;
                 case OdbcInvariantName:
                 case OleDbInvariantName:
                 case OracleClientInvariantName:
-                case SqlClientInvariantName:
-		case MonoSqliteInvariantName:
+		        case MonoSqliteInvariantName:
                     prefix = "`";
                     suffix = "`";
                     return;
@@ -103,7 +106,7 @@ namespace Ferda.Guha.Data
         /// <summary>
         /// Provider invariant name for MS SQL Server.
         /// </summary>
-        public const string SqlClientInvariantName = "System.Data.SqlClient";
+        public const string SqlClientInvariantName = "Microsoft.Data.SqlClient";
         
 	    /// <summary>
         /// Provider invariant name for SQLite in Mono.

@@ -1993,7 +1993,7 @@ namespace Ferda.FrontEnd.Desktop
         protected void FerdaDesktop_ContextMenu(object sender, MouseEventArgs e)
         {
             //must null the old context menu in order to display the menustrip.
-            ContextMenu = null;
+            ContextMenuStrip = null;
 
             //a new context menu
             ContextMenuStrip cMenu;
@@ -2380,7 +2380,7 @@ namespace Ferda.FrontEnd.Desktop
                 {
                     ActionExceptionCatcher catcher =
                         new ActionExceptionCatcher(projectManager, ResManager, this, PropertiesDisplayer);
-					box.RunAction_async(catcher, info.name);
+                    box.RunActionOnBackground(info.name, catcher);
                     break;
                 }
             }

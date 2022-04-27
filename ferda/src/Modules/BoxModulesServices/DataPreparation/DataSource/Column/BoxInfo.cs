@@ -63,7 +63,8 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Column
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>

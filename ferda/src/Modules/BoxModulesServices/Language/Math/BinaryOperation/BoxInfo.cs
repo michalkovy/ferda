@@ -12,13 +12,14 @@ namespace Ferda.Modules.Boxes.Language.Math.BinaryOperation
 		public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
 		{
 	 	   Functions result = new Functions();
-	 	   iceObject = result;
+	 	   iceObject = new DoubleTInterfaceTie_(result);
 	 	   functions = result;
 	    }
 
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var t = new DoubleTInterfaceTie_(new Functions());
+            return t.ice_ids();
         }
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)
@@ -81,7 +82,8 @@ namespace Ferda.Modules.Boxes.Language.Math.BinaryOperation
 
         public override string[] GetFunctionsIceIds(BoxModuleI boxModule)
         {
-            return Ferda.Modules.DoubleT.ids__;
+            var t = new DoubleTInterfaceTie_(new Functions());
+            return t.ice_ids();
         }
     }
 }

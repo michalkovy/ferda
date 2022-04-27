@@ -65,6 +65,9 @@ namespace Ferda.Guha.MiningProcessor.Results
         /// </summary>
         public DateTime EndTime;
 
+        private static XmlSerializer _serializer = new XmlSerializer(typeof(SerializableResultInfo), typeof(SerializableResultInfo).GetNestedTypes());
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="T:SerializableResultInfo"/> class.
         /// </summary>
@@ -81,13 +84,12 @@ namespace Ferda.Guha.MiningProcessor.Results
         {
             if (input == null)
                 return null;
-            XmlSerializer serializer = new XmlSerializer(typeof(SerializableResultInfo));
             StringBuilder sb = new StringBuilder();
             using (
             StringWriter writer = new StringWriter(sb)
             )
             {
-                serializer.Serialize(writer, input);
+                _serializer.Serialize(writer, input);
                 return sb.ToString();
             }
         }
@@ -105,8 +107,7 @@ namespace Ferda.Guha.MiningProcessor.Results
             StringReader reader = new StringReader(input)
             )
             {
-                XmlSerializer deserealizer = new XmlSerializer(typeof(SerializableResultInfo));
-                object deserealized = deserealizer.Deserialize(reader);
+                object deserealized = _serializer.Deserialize(reader);
                 return (SerializableResultInfo)deserealized;
             }
         }

@@ -1,0 +1,25 @@
+{
+  "profiles": {
+    "Server": {
+      "commandName": "Project"
+    },
+    "IceGrid": {
+      "commandName": "Executable",
+      "executablePath": "icegridnode.exe",
+      "commandLineArgs": "--Ice.Config=config --IceGrid.Registry.LMDB.Path=registry --IceGrid.Node.Data=node --deploy .\\application.xml",
+      "nativeDebugging": true
+    },
+    "IceBoxDebug": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\micha\\Source\\Repos\\ferda\\ferda\\src\\Server\\bin\\Debug\\net6.0-windows\\iceboxnet.exe",
+      "commandLineArgs": "--Ice.Config=./node/servers/0/config/config",
+      "workingDirectory": "C:\\Users\\micha\\Source\\Repos\\ferda\\ferda\\src\\Server\\bin\\Debug\\net6.0-windows\\"
+    },
+    "IceBoxRelease": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\micha\\Source\\Repos\\ferda\\ferda\\src\\Server\\bin\\Release\\net6.0-windows\\iceboxnet.exe",
+      "commandLineArgs": "--Ice.Config=./node/servers/0/config/config",
+      "workingDirectory": "C:\\Users\\micha\\Source\\Repos\\ferda\\ferda\\src\\Server\\bin\\Release\\net6.0-windows\\"
+    }
+  }
+}

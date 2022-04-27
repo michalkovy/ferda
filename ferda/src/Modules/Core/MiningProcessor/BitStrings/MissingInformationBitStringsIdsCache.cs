@@ -71,7 +71,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <param name="key">The key represents identification of an attribute</param>
         /// <returns>String representing missing information category in the
         /// attribute.</returns>
-        public override string GetValue(string key)
+        public override async Task<string> GetValueExternalAsync(string key)
         {
             BitStringGeneratorPrx proxy =
                 _bitStringCache.GetBitStringGeneratorPrx(key);
@@ -79,7 +79,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (proxy != null)
             {
                 string[] missingInformationCategoryId =
-                    _bitStringCache.GetBitStringGeneratorPrx(key).GetMissingInformationCategoryId();
+                    await _bitStringCache.GetBitStringGeneratorPrx(key).GetMissingInformationCategoryIdAsync().ConfigureAwait(false);
                 if (missingInformationCategoryId.Length == 1)
                 {
                     return missingInformationCategoryId[0];
@@ -95,7 +95,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="itemToMeasure">The item to measure.</param>
         /// <returns>Size of the item.</returns>
-        public override int GetSize(string itemToMeasure)
+        public override ulong GetSize(string itemToMeasure)
         {
             return 1;
         }

@@ -39,9 +39,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <returns>Proper entity enumerator</returns>
         public static IEntityEnumerator Create(IEntitySetting setting, ISkipOptimalization skipOptimalization, MarkEnum cedentType)
         {
-            if (setting.ice_isA("::Ferda::Guha::MiningProcessor::CoefficientFixedSetSetting"))
+            if (setting is CoefficientFixedSetSettingI)
                 return new FixedSet((CoefficientFixedSetSettingI) setting, skipOptimalization, cedentType);
-            else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::CoefficientSetting"))
+            else if (setting is CoefficientSettingI)
             {
                 CoefficientSettingI coefSetting = (CoefficientSettingI) setting;
                 switch (coefSetting.coefficientType)
@@ -62,19 +62,19 @@ namespace Ferda.Guha.MiningProcessor.Generation
                         return new SubsetsOneOne(coefSetting, skipOptimalization, cedentType);
                 }
             }
-            else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::NegationSetting"))
+            else if (setting is NegationSettingI)
             {
                 return new Negation((NegationSettingI)setting, skipOptimalization, cedentType);
             }
-            else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::BothSignsSetting"))
+            else if (setting is BothSignsSettingI)
             {
                 return new BothSigns((BothSignsSettingI)setting, skipOptimalization, cedentType);
             }
-            else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::DisjunctionSetting"))
+            else if (setting is DisjunctionSettingI)
             {
                 return new Disjunction((DisjunctionSettingI)setting, skipOptimalization, cedentType);
             }
-            else if (setting.ice_isA("::Ferda::Guha::MiningProcessor::ConjunctionSetting"))
+            else if (setting is ConjunctionSettingI)
             {
                 return new Conjunction((ConjunctionSettingI)setting, skipOptimalization, cedentType);
             }

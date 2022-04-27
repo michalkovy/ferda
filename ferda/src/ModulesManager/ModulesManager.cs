@@ -39,39 +39,36 @@ namespace Ferda {
 			/// <param name="localePrefs">A string[] representing locales with descending importance</param>
 			protected void InitAdapterAndHelper(string[] args, string[] localePrefs)
 			{
-                Debug.WriteLine("Loading config and creating communicator...");
+                Trace.WriteLine("Loading config and creating communicator...");
 				//Ice.Properties properties = Ice.Util.createProperties();
 				//properties.load("config");
                 string[] newargs = new string[args.Length + 1];
                 newargs[0] = "--Ice.Config=config";
                 args.CopyTo(newargs, 1);
 				communicator = Ice.Util.initialize(ref newargs);
-				Debug.WriteLine("Creating factory for basic property types...");
-				Ferda.Modules.ObjectFactoryForPropertyTypes factory =
-				new Ferda.Modules.ObjectFactoryForPropertyTypes();
-				Debug.WriteLine("Adding that factory to communicator...");
-				Ferda.Modules.ObjectFactoryForPropertyTypes.addFactoryToCommunicator(
-					communicator, factory);
+				Trace.WriteLine("Creating factory for basic property types...");
+				Trace.WriteLine("Adding that factory to communicator...");
+				Ferda.Modules.ObjectFactoryForPropertyTypes.addFactoryToCommunicator(communicator);
 				//Debug.WriteLine("Creating and adding factory for other property types...");
 				//ClassesFactory classesFactory = new ClassesFactory();
 				//ClassesFactory.addFactoryToCommunicator(communicator, classesFactory);
-				Debug.WriteLine("Creating adapter...");
+				Trace.WriteLine("Creating adapter...");
 
                 Ice.ObjectAdapter adapter;
                 try
                 {
                     adapter = communicator.createObjectAdapter("ModulesManager");
                 }
-                catch (Exception e) 
+                catch (Exception) 
                 {
                     adapter = communicator.createObjectAdapter("ModulesManager");
                 }
 
-				Debug.WriteLine("Activating adapter...");
+				Trace.WriteLine("Activating adapter...");
 				adapter.activate();
-				Debug.WriteLine("Creating helper of modules manager...");
-				this.lnkHelper = new Helper(adapter, localePrefs, this);
-				Debug.WriteLine("Making factory refresh thread...");
+				Trace.WriteLine("Creating helper of modules manager...");
+				this.lnkHelper = new Helper(adapter, localePrefs, this, null);
+				Trace.WriteLine("Making factory refresh thread...");
 				refreshThread = new Thread(
 					new ThreadStart(
 						this.lnkHelper.BoxModuleIceFactories.StartFactoriesRefreshing
@@ -85,14 +82,14 @@ namespace Ferda {
 			/// </summary>
 			protected void InitEnd()
 			{
-				Debug.WriteLine("Adding Creators...");
+				Trace.WriteLine("Adding Creators...");
                 creatorPrxs = this.lnkHelper.ManagersEngineI.ManagersLocatorI.BoxModuleFactoryCreatorsByIdentifier;
                 foreach (KeyValuePair<string, Ferda.Modules.BoxModuleFactoryCreatorPrx> val in creatorPrxs)
 				{
-					Debug.WriteLine("Adding " + val.Key);
+					Trace.WriteLine("Adding " + val.Key);
 					boxModuleFactoryCreators[val.Key] = new BoxModuleFactoryCreator(this.lnkHelper,val.Value,this,helpFiles);
 				}
-				Debug.WriteLine("Adding " + groupCreator.Identifier);
+				Trace.WriteLine("Adding " + groupCreator.Identifier);
 				boxModuleFactoryCreators[groupCreator.Identifier] = groupCreator;
 			}
 
@@ -141,12 +138,12 @@ namespace Ferda {
 			/// (IceGrid) are new instances of
 			/// <see cref="T:Ferda.Modules.BoxModuleFactoryCreatorPrx"/>
 			/// </remarks>
-			public void Refresh()
+			public void Refresh(Ice.Current __current)
 			{
-				this.Helper.ManagersEngineI.ManagersLocatorI.Refresh();
+				this.Helper.ManagersEngineI.ManagersLocatorI.Refresh(__current);
 				System.Collections.Specialized.StringCollection usedKeys
 					= new System.Collections.Specialized.StringCollection();
-				Debug.WriteLine("Refreshing Creators...");
+				Trace.WriteLine("Refreshing Creators...");
 				//TODO udelat lepe - co kdyz se zmeni server na kterem bezi moduly?!
                 creatorPrxs = this.lnkHelper.ManagersEngineI.ManagersLocatorI.BoxModuleFactoryCreatorsByIdentifier;
 				foreach(KeyValuePair<string,Ferda.Modules.BoxModuleFactoryCreatorPrx> val in creatorPrxs)
@@ -223,16 +220,26 @@ namespace Ferda {
 			public IBoxModule[] CreateBoxesAskingForCreation(ModulesAskingForCreation info)
 			{
 				List<IBoxModule> result = new List<IBoxModule>();
+				var namedModules = new Dictionary<string, BoxModule>();
 				foreach (ModuleAskingForCreation newModule in info.newModules)
 				{
 					Ferda.ModulesManager.BoxModuleFactoryCreator creator = (BoxModuleFactoryCreator)this.GetBoxModuleFactoryCreator(
 						newModule.newBoxModuleIdentifier);
 					BoxModule box = creator.CreateBoxModule() as BoxModule;
+					if (newModule.newBoxModuleId != null && newModule.newBoxModuleId.Length > 0)
+                    {
+						namedModules[newModule.newBoxModuleId[0]] = box;
+
+					}
 					if (box != null)
 					{
 						foreach (ModulesConnection connection in newModule.modulesConnection)
 						{
 							box.SetConnection(connection.socketName, this.getBoxModuleByProxy(connection.boxModuleParam));
+						}
+						foreach (var connection in newModule.modulesCreatedConnection)
+						{
+							box.SetConnection(connection.socketName, namedModules[connection.boxModuleCreatedId]);
 						}
 						foreach (PropertySetting propertySetting in newModule.propertySetting)
 						{
@@ -360,21 +367,21 @@ namespace Ferda {
             /// <seealso cref="M:Ferda.ModulesManager.ModulesManager.DestroyModulesManagersCommunicator()"/>
             public void DestroyModulesManagersObjects()
             {
-                Debug.WriteLine("Starting destroing...");
+				Trace.WriteLine("Starting destroing...");
                 foreach (Ferda.ModulesManager.IBoxModuleFactoryCreator icreator in boxModuleFactoryCreators.Values)
                 {
                     Ferda.ModulesManager.BoxModuleFactoryCreator creator = icreator as Ferda.ModulesManager.BoxModuleFactoryCreator;
                     if (creator != null)
                     {
-                        Debug.WriteLine("Destroing " + creator.Identifier);
+						Trace.WriteLine("Destroing " + creator.Identifier);
                         creator.DestroyFactoryIfIs();
                     }
                 }
-                Debug.WriteLine("End refreshing...");
+				Trace.WriteLine("End refreshing...");
                 this.lnkHelper.BoxModuleIceFactories.EndFactoriesRefreshing();
-                Debug.WriteLine("Saving help files config...");
+				Trace.WriteLine("Saving help files config...");
                 helpFiles.SaveHelpFilesConfig();
-                Debug.WriteLine("Waiting for refreshing thread...");
+				Trace.WriteLine("Waiting for refreshing thread...");
                 refreshThread.Join();
             }
 
@@ -385,7 +392,7 @@ namespace Ferda {
             /// <seealso cref="M:Ferda.ModulesManager.ModulesManager.DestroyModulesManagersObjects()"/>
             public void DestroyModulesManagersCommunicator()
             {
-                Debug.WriteLine("Destroing communicator...");
+				Trace.WriteLine("Destroing communicator...");
                 if (communicator != null)
                 {
                     try
@@ -426,7 +433,7 @@ namespace Ferda {
 			/// representing some Ice interface with which
 			/// Modules manager will work
 			/// </param>
-            public void AddModuleServices(string[] objectProxies)
+            public void AddModuleServices(string[] objectProxies, Ice.Current __current)
             {
 				List<Ice.ObjectPrx> proxies = new List<Ice.ObjectPrx>();
 				foreach(string objectProxy in objectProxies)
@@ -434,7 +441,7 @@ namespace Ferda {
 					Ice.ObjectPrx objectPrx = communicator.stringToProxy(objectProxy);
 					proxies.Add(objectPrx);
 				}
-				this.lnkHelper.ManagersEngineI.ManagersLocatorI.AddIceObjectProxies(proxies);
+				this.lnkHelper.ManagersEngineI.ManagersLocatorI.AddIceObjectProxies(proxies, __current);
             }
 
             /// <summary>

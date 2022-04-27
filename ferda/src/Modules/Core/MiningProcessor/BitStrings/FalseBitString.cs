@@ -39,11 +39,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         private static readonly FalseBitString _instance = new FalseBitString();
 
         /// <summary>
-        /// Object used for thread-safe access to the bit string cache
-        /// </summary>
-        private static readonly object padlock = new object();
-
-        /// <summary>
         /// Explicit static constructor to tell C# compiler
         /// not to mark type as beforefieldinit
         /// </summary>
@@ -57,10 +52,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <returns>Instance of the false bit string</returns>
         public static FalseBitString GetInstance()
         {
-            lock (padlock)
-            {
-                return _instance;
-            }
+            return _instance;
         }
 
         #endregion
@@ -92,7 +84,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise AND operation on current BitString against the specified BitString.
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
-        public IBitString And(IBitString source)
+        public IBitString And(IBitString source, bool precomputeSum = false)
+        {
+            return this;
+        }
+
+        public IBitString AndInPlace(IBitString source)
         {
             return this;
         }
@@ -144,7 +141,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise OR operation on current BitString against the specified BitString.
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
-        public IBitString Or(IBitString source)
+        public IBitString Or(IBitString source, bool precomputeSum = false)
+        {
+            return source;
+        }
+
+        public IBitString OrInPlace(IBitString source)
         {
             return source;
         }

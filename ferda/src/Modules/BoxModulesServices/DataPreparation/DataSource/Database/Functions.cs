@@ -187,7 +187,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.Database
         public GenericDatabase GetGenericDatabase(bool fallOnError)
         {
             DatabaseConnectionSettingHelper connSetting =
-                new DatabaseConnectionSettingHelper(getDatabaseConnectionSetting());
+                new DatabaseConnectionSettingHelper(getDatabaseConnectionSetting(null));
 
             Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();
             cacheSetting.Add(BoxInfo.typeIdentifier + PropConnectionString, connSetting);

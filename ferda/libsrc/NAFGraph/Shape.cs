@@ -677,7 +677,7 @@ namespace Netron.GraphLib
 
 		#endregion
 
-		public virtual MenuItem[] ShapeMenu()
+		public virtual ToolStripMenuItem[] ShapeMenu()
 		{
 			return null;
 		}

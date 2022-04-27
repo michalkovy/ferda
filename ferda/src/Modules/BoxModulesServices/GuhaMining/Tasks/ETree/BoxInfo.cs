@@ -58,7 +58,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
@@ -165,7 +166,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.ETree
             //of the attribute boxes is empty and this would cause problems to
             //the classification of ETrees)
             Functions Func = (Functions)boxModule.FunctionsIObj;
-            GuidAttributeNamePair[] attrNames = Func.GetAttributeNames();
+            GuidAttributeNamePair[] attrNames = Func.GetAttributeNames(null);
 
             foreach (GuidAttributeNamePair pair in attrNames)
             {

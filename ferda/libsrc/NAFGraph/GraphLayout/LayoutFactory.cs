@@ -15,7 +15,6 @@ namespace Netron.GraphLib
 	{
 
 		#region Fields
-		public delegate void  runableDelegate();
 		public  GraphLayoutAlgorithms GraphLayoutAlgorithm=GraphLayoutAlgorithms.SpringEmbedder;
 		[NonSerialized]  protected IGraphSite mSite;
 		#endregion
@@ -33,13 +32,13 @@ namespace Netron.GraphLib
 			get{return mSite;}
 			set{mSite = value;}
 		}
-		public  runableDelegate GetRunable()
+		public Func<Task> GetRunable(CancellationToken cancellation)
 		{
 			switch (GraphLayoutAlgorithm)
 			{
 				case GraphLayoutAlgorithms.SpringEmbedder:
 					SpringEmbedder emb=new SpringEmbedder(mSite);
-					return new runableDelegate(emb.StartLayout);							
+					return () => emb.StartLayout(cancellation);							
 				default:
 					throw new Exception("Invalid or unknown layout algorithm");					
 			}

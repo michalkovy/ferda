@@ -74,16 +74,16 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers
         /// </summary>
         /// <param name="param">Settings for quantifier evaluation</param>
         /// <returns>Numerical values of a (one dimensional) contingency table</returns>
-        public static double[] GetNumericValues(QuantifierEvaluateSetting param)
+        public static async Task<double[]> GetNumericValuesAsync(QuantifierEvaluateSetting param)
         {
             Guid numericValuesAttributeId = new Guid(param.numericValuesAttributeId.value);
             BitStringGeneratorPrx numericValuesProviderPrx = param.numericValuesProviders;
-            return _numericValuesCache[
+            return await _numericValuesCache.GetValueAsync(
                 new GuidPrxPair<BitStringGeneratorPrx>(
                     numericValuesAttributeId,
                     numericValuesProviderPrx
                     )
-                ];
+                ).ConfigureAwait(false);
         }
         
         /// <summary>
@@ -91,8 +91,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers
         /// <see cref="Ferda.Guha.Math.Quantifiers.QuantifierEvaluateSetting"/>.
         /// </summary>
         /// <param name="param">Setting for quantifier evaluation</param>
+        /// <param name="current">Ice current</param>
         /// <returns>Iff the quantifier is valid over the setting</returns>
-        public delegate bool ComputeDelegate(QuantifierEvaluateSetting param);
+        public delegate bool ComputeDelegate(QuantifierEvaluateSetting param, Ice.Current current);
         
         /// <summary>
         /// Executes a batch computation of quantifiers.
@@ -106,7 +107,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers
             List<bool> result = new List<bool>(param.Length);
             for (int i = 0; i < param.Length; i++)
             {
-                result.Insert(i, compute(param[i]));
+                result.Insert(i, compute(param[i],null));
             }
             return result.ToArray();
         }
@@ -182,9 +183,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers
         /// </summary>
         /// <param name="key">Key</param>
         /// <returns>Value (numerical values)</returns>
-        public override double[] GetValue(GuidPrxPair<BitStringGeneratorPrx> key)
+        public override Task<double[]> GetValueExternalAsync(GuidPrxPair<BitStringGeneratorPrx> key)
         {
-            return key.Prx.GetCategoriesNumericValues();
+            return key.Prx.GetCategoriesNumericValuesAsync();
         }
     }
 }

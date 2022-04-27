@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemDefinitionGroup Label="IceBuilder">
+    <SliceCompile>
+      <IncludeDirectories>.</IncludeDirectories>
+    </SliceCompile>
+  </ItemDefinitionGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable></Nullable>
+    <AssemblyName>FerdaBase</AssemblyName>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>FerdaBase.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="zeroc.ice.net" Version="3.7.7" />
+    <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
+    <Compile Update="generated\ManagersEngine.cs">
+      <SliceCompileSource>ModulesManager\ManagersEngine.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\BasicPropertyTypes.cs">
+      <SliceCompileSource>Modules\BasicPropertyTypes.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\BoxType.cs">
+      <SliceCompileSource>Modules\BoxType.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\BuiltinSequences.cs">
+      <SliceCompileSource>Modules\BuiltinSequences.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\Common.cs">
+      <SliceCompileSource>Modules\Common.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\Exceptions.cs">
+      <SliceCompileSource>Modules\Exceptions.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\Guha.Attribute.cs">
+      <SliceCompileSource>Modules\Guha.Attribute.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\Guha.Data.cs">
+      <SliceCompileSource>Modules\Guha.Data.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\Guha.Math.cs">
+      <SliceCompileSource>Modules\Guha.Math.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\Guha.Math.Quantifiers.cs">
+      <SliceCompileSource>Modules\Guha.Math.Quantifiers.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\Guha.MiningProcessor.cs">
+      <SliceCompileSource>Modules\Guha.MiningProcessor.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\Modules.cs">
+      <SliceCompileSource>Modules\Modules.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\OntologyData.cs">
+      <SliceCompileSource>Modules\OntologyData.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\OtherPropertyTypes.cs">
+      <SliceCompileSource>Modules\OtherPropertyTypes.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\OWLParser.cs">
+      <SliceCompileSource>Modules\OWLParser.ice</SliceCompileSource>
+    </Compile>
+  </ItemGroup>
+
+</Project>

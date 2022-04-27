@@ -53,39 +53,39 @@ namespace Sewebar
         /// <param name="username">User name for authentication</param>
         /// <param name="password">User password for authentication</param>
         /// <returns></returns>
-        public static IDictionary<int, string> ListFiles(
+        public static IDictionary<int, string?> ListFiles(
             string XMLRPCHost,
             string username,
             string password)
         {
-            Dictionary<int, string> result = new Dictionary<int, string>();
+            Dictionary<int, string?> result = new Dictionary<int, string?>();
 
             ISewebar proxy = XmlRpcProxyGen.Create<ISewebar>();
             proxy.Url = XMLRPCHost;
-            XmlRpcStruct[] response = null;
 
             try
             {
-                response = proxy.listFiles(username, password, string.Empty,
+                XmlRpcStruct[] response = proxy.listFiles(username, password, string.Empty,
                     string.Empty);
+                if (response.Length == 0)
+                {
+                    return result;
+                }
+
+                foreach (XmlRpcStruct s in response)
+                {
+                    int id = System.Convert.ToInt32(s["id"]);
+                    string? title = s["title"].ToString();
+                    result.Add(id, title);
+                }
+                return result;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Exception("Nepodařila se autentizace nebo stažení článků ze serveru");
             }
 
-            if (response.Length == 0)
-            {
-                return result;
-            }
-
-            foreach (XmlRpcStruct s in response)
-            {
-                int id = System.Convert.ToInt32(s["id"]);
-                string title = s["title"].ToString();
-                result.Add(id, title);
-            }
-            return result;
+            
         }
     }
 

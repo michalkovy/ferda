@@ -60,7 +60,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Classification.ETreeClassifier
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>

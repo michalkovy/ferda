@@ -60,7 +60,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
@@ -194,8 +195,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.DisjunctionSetting
 
             // try to invoke methods
             IEntitySetting myES = Func.GetEntitySetting(true);
-            object dummy = Func.GetAttributeNames();
-            dummy = Func.GetSourceDataTableId();
+            object dummy = Func.GetAttributeNames(null);
+            dummy = Func.GetSourceDataTableId(null);
 
             List<BooleanAttributeSettingFunctionsPrx> booleanAttributes = Func.GetBooleanAttributeSettingFunctionsPrxs(true);
             if (booleanAttributes != null)

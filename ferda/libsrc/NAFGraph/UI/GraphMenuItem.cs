@@ -6,7 +6,7 @@ namespace Netron.GraphLib.UI
 	/// <mSummary>
 	/// 
 	/// </mSummary>
-	public class GraphMenuItem : MenuItem
+	public class GraphMenuItem : ToolStripMenuItem
 	{
 		protected ShapeSummary mSummary;
 
@@ -24,7 +24,7 @@ namespace Netron.GraphLib.UI
 			this.mSummary = mSummary;
 		}
 
-		public GraphMenuItem(ShapeSummary mSummary, EventHandler handler) : base(mSummary.ShapeName,handler)
+		public GraphMenuItem(ShapeSummary mSummary, EventHandler handler) : base(mSummary.ShapeName, null, handler)
 		{
 			this.mSummary = mSummary;
 		}

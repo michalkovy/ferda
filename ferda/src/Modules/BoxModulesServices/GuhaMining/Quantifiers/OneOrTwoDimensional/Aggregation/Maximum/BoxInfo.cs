@@ -14,7 +14,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneOrTwoDimensional.Aggrega
 
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)

@@ -374,7 +374,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
             DataTableInfo tmp =
                 ExceptionsHandler.GetResult<DataTableInfo>(
                     fallOnError,
-                    prx.getDataTableInfo,
+                    () => prx.getDataTableInfo(null),
                     delegate
                     {
                         return null;
@@ -388,7 +388,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
             DataTableInfo tmp1 =
                 ExceptionsHandler.GetResult<DataTableInfo>(
                     fallOnError,
-                    prx1.getDataTableInfo,
+                    () => prx1.getDataTableInfo(null),
                     delegate
                     {
                         return null;
@@ -557,7 +557,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                         DataTableInfo tmp =
                ExceptionsHandler.GetResult<DataTableInfo>(
                    fallOnError,
-                   prx.getDataTableInfo,
+                   () => prx.getDataTableInfo(null),
                    delegate
                    {
                        return null;
@@ -636,7 +636,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.VirtualColumn
                     DataTableInfo tmp =
                         ExceptionsHandler.GetResult<DataTableInfo>(
                             fallOnError,
-                            prx1.getDataTableInfo,
+                            () => prx1.getDataTableInfo(null),
                             delegate
                             {
                                 return null;

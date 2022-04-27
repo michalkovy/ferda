@@ -216,7 +216,7 @@ namespace Ferda.ProjectManager {
                 waitForStart = true;
 	            process = new Process();
                 process.StartInfo.FileName = System.IO.Path.Combine(icePath, "icegridnode");
-                process.StartInfo.Arguments = "--Ice.Config=config --IceGrid.Registry.Data=registry --IceGrid.Node.Data=node --deploy \"" + iceGridApplicationXmlFilePath + "\"";
+                process.StartInfo.Arguments = "--Ice.Config=config --IceGrid.Registry.LMDB.Path=registry --IceGrid.Node.Data=node --deploy \"" + iceGridApplicationXmlFilePath + "\"";
 	            process.StartInfo.RedirectStandardOutput = true;
 	            process.StartInfo.RedirectStandardError = true;
 							process.StartInfo.RedirectStandardInput = true;
@@ -248,7 +248,7 @@ namespace Ferda.ProjectManager {
 	            processReg.WaitForExit();*/
             }
             Debug.WriteLine("IceGrid started");
-            if(this.modulesManager!=null) this.modulesManager.Refresh();
+            if(this.modulesManager!=null) this.modulesManager.Refresh(null);
         }
 
         /// <summary>

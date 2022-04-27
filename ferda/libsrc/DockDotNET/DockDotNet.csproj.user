@@ -1,58 +1,24 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <LastOpenVersion>8.0.50215</LastOpenVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ReferencePath>
-    </ReferencePath>
-    <CopyProjectDestinationFolder>
-    </CopyProjectDestinationFolder>
-    <CopyProjectUncPath>
-    </CopyProjectUncPath>
-    <CopyProjectOption>0</CopyProjectOption>
-    <ProjectView>ProjectFiles</ProjectView>
-    <ProjectTrust>0</ProjectTrust>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <EnableASPDebugging>false</EnableASPDebugging>
-    <EnableASPXDebugging>false</EnableASPXDebugging>
-    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
-    <EnableSQLServerDebugging>false</EnableSQLServerDebugging>
-    <RemoteDebugEnabled>false</RemoteDebugEnabled>
-    <RemoteDebugMachine>
-    </RemoteDebugMachine>
-    <StartAction>Project</StartAction>
-    <StartArguments>
-    </StartArguments>
-    <StartPage>
-    </StartPage>
-    <StartProgram>
-    </StartProgram>
-    <StartURL>
-    </StartURL>
-    <StartWorkingDirectory>
-    </StartWorkingDirectory>
-    <StartWithIE>true</StartWithIE>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <EnableASPDebugging>false</EnableASPDebugging>
-    <EnableASPXDebugging>false</EnableASPXDebugging>
-    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
-    <EnableSQLServerDebugging>false</EnableSQLServerDebugging>
-    <RemoteDebugEnabled>false</RemoteDebugEnabled>
-    <RemoteDebugMachine>
-    </RemoteDebugMachine>
-    <StartAction>Project</StartAction>
-    <StartArguments>
-    </StartArguments>
-    <StartPage>
-    </StartPage>
-    <StartProgram>
-    </StartProgram>
-    <StartURL>
-    </StartURL>
-    <StartWorkingDirectory>
-    </StartWorkingDirectory>
-    <StartWithIE>true</StartWithIE>
-  </PropertyGroup>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="DockContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="DockManager.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="DockPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="DockWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FlatButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="RenameDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

@@ -12,13 +12,14 @@ namespace Ferda.Modules.Boxes.Language.CommandOutput
 		public override void CreateFunctions(BoxModuleI boxModule, out Object iceObject, out IFunctions functions)
 		{
 	 	   Functions result = new Functions();
-	 	   iceObject = result;
+	 	   iceObject = new StringTInterfaceTie_(result);
 	 	   functions = result;
 	    }
 
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var t = new StringTInterfaceTie_(new Functions());
+            return t.ice_ids();
         }
 
         public override string GetDefaultUserLabel(BoxModuleI boxModule)

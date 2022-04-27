@@ -59,7 +59,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
@@ -184,7 +185,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.Ontology
             switch (actionName)
             {
                 case "LoadOntology":
-                    Func.LoadOntology();
+                    Func.LoadOntology(null);
                     Func.LastReloadRequest = DateTime.Now;
                     break;
                 default:

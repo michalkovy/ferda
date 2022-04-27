@@ -313,7 +313,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
         /// <returns>True iff there is a next bit string in the output
         /// <paramref name="bitString"/></returns>
         /// <param name="current__">ICE stuff</param>
-        public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
+        public override Task<BitStringGenerator_GetNextBitStringResult> GetNextBitStringAsync(int skipFirstN, Current current__)
         {
             throw new Exception("The method or operation is not implemented.");
         }
@@ -703,7 +703,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             ColumnInfo tmp =
                 ExceptionsHandler.GetResult<ColumnInfo>(
                     fallOnError,
-                    prx.getColumnInfo,
+                    () => prx.getColumnInfo(null),
                     delegate
                     {
                         return null;
@@ -720,7 +720,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Categorization.StaticAttribute
             DatabaseConnectionSettingHelper connSetting =
                 new DatabaseConnectionSettingHelper(tmp.dataTable.databaseConnectionSetting);
             //getting the serialized attribute set in the previous boxes
-            string categories = getAttribute();
+            string categories = getAttribute(null);
 
             //creating a new cache entry
             Dictionary<string, IComparable> cacheSetting = new Dictionary<string, IComparable>();

@@ -59,7 +59,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
@@ -189,7 +190,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Sign
 
             // try to invoke methods
             IEntitySetting myES = Func.GetEntitySetting(true);
-            object dummy = Func.GetAttributeNames();
+            object dummy = Func.GetAttributeNames(null);
             
             BooleanAttributeSettingFunctionsPrx booleanAttribute = Func.GetBitStringGeneratorPrx(true);
             if (booleanAttribute != null)

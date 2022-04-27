@@ -25,7 +25,7 @@ namespace Netron.GraphLib
 		protected bool mExpanded = false;
 		protected NListItemCollection mListItems;
 		protected Size expandedSize;
-		protected Timer timer;
+		protected System.Windows.Forms.Timer timer;
 		protected bool yn;
 		protected bool mEditing = false;
 		#endregion
@@ -75,7 +75,7 @@ namespace Netron.GraphLib
 		public NTextBox(Shape shape) : base(shape)
 		{
 			mListItems = new NListItemCollection();
-			timer = new Timer();
+			timer = new System.Windows.Forms.Timer();
 			timer.Interval = 600;
 			timer.Tick+=new EventHandler(timer_Tick);
 			
@@ -86,7 +86,7 @@ namespace Netron.GraphLib
 			this.mWidth = width;
 			this.mHeight = height;
 			mListItems = new NListItemCollection();
-			timer = new Timer();
+			timer = new System.Windows.Forms.Timer();
 			timer.Interval = 600;
 			timer.Tick+=new EventHandler(timer_Tick);
 			

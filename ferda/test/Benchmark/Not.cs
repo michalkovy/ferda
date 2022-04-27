@@ -17,7 +17,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 using System;
-using Mono.Simd;
+using System.Numerics;
 
 namespace Ferda.Benchmark
 {
@@ -74,14 +74,27 @@ namespace Ferda.Benchmark
             }
         }
 
-        /// <summary>
-        /// Not benchmark with fuzzy bit strings, Vector4f + safe (managed)
-        /// </summary>
         [Benchmark]
-        public static void SafeNotFuzzyVector4f()
+        public static void SafeNotCrispVector()
         {
             //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
+            var tmp = stringVectorUlong1;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                NotSafeCrispVector(tmp);
+            }
+            
+        }
+
+        /// <summary>
+        /// Not benchmark with fuzzy bit strings, Vector4 + safe (managed)
+        /// </summary>
+        [Benchmark]
+        public static void SafeNotFuzzyVector4()
+        {
+            //don't use static variables in iterations
+            Vector4[] tmp = stringVector4;
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
@@ -109,10 +122,10 @@ namespace Ferda.Benchmark
         /// + arithmetic in 1 operation
         /// </summary>
         [Benchmark]
-        public static void UnsafeNotFuzzyVector4f1Operation()
+        public static void UnsafeNotFuzzyVector41Operation()
         {
             //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
+            Vector4[] tmp = stringVector4;
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
@@ -125,10 +138,10 @@ namespace Ferda.Benchmark
         /// + arithmetic in 2 operations
         /// </summary>
         [Benchmark]
-        public static void UnsafeNotFuzzyVector4f2Operation()
+        public static void UnsafeNotFuzzyVector42Operation()
         {
             //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
+            Vector4[] tmp = stringVector4;
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
@@ -188,15 +201,24 @@ namespace Ferda.Benchmark
             return source;
         }
 
+        static Vector<ulong>[] NotSafeCrispVector(Vector<ulong>[] source)
+        {
+            for (int i = 0; i < source.Length; i++)
+            {
+                source[i] = ~source[i];
+            }
+            return source;
+        }
+
         /// <summary>
         /// The save (managed) implementation of the Lukasiewicz negation 
-        /// N(x) = 1 - x for Vector4f
+        /// N(x) = 1 - x for Vector4
         /// </summary>
         /// <param name="source">Bit string to be negated</param>
         /// <returns>Negated bit string</returns>
-        static Vector4f[] NotSafe4f(Vector4f[] source)
+        static Vector4[] NotSafe4f(Vector4[] source)
         {
-            Vector4f tmp = new Vector4f(1f, 1f, 1f, 1f);
+            Vector4 tmp = new Vector4(1f, 1f, 1f, 1f);
             for (int i = 0; i < source.Length; i++)
             {
                 source[i] = tmp - source[i];
@@ -222,18 +244,18 @@ namespace Ferda.Benchmark
 
         /// <summary>
         /// The unsafe (unmanaged) implementation of the Lukasiewicz negation 
-        /// N(x) = 1 - x for array of Vector4f.
+        /// N(x) = 1 - x for array of Vector4.
         /// The method does aritmetic in one operation.
         /// </summary>
         /// <param name="source">Bit string to be negated</param>
         /// <returns>Negated bit string</returns>
-        static unsafe Vector4f[] NotUnsafe4f1(Vector4f[] source)
+        static unsafe Vector4[] NotUnsafe4f1(Vector4[] source)
         {
-            Vector4f tmp = new Vector4f(1f, 1f, 1f, 1f);
+            Vector4 tmp = new Vector4(1f, 1f, 1f, 1f);
 
-            fixed (Vector4f* arrayPtr = source)
+            fixed (Vector4* arrayPtr = source)
             {
-                Vector4f* currentPtr = arrayPtr, stopPtr = arrayPtr + source.Length;
+                Vector4* currentPtr = arrayPtr, stopPtr = arrayPtr + source.Length;
                 while (currentPtr < stopPtr)
                 {
                     *currentPtr = tmp - *currentPtr;
@@ -246,20 +268,20 @@ namespace Ferda.Benchmark
 
         /// <summary>
         /// The unsafe (unmanaged) implementation of the Lukasiewicz negation 
-        /// N(x) = 1 - x for array of Vector4f.
+        /// N(x) = 1 - x for array of Vector4.
         /// The method does arithmetic in two operations:
         /// X -= source and X += 1(vector)
         /// </summary>
         /// <param name="source">Bit string to be negated</param>
         /// <returns>Negated bit string</returns>
-        static unsafe Vector4f[] NotUnsafe4f2(Vector4f[] source)
+        static unsafe Vector4[] NotUnsafe4f2(Vector4[] source)
         {
-            Vector4f pos1f = new Vector4f(1f, 1f, 1f, 1f);
-            Vector4f neg1f = new Vector4f(-1f, -1f, -1f, -1f);
+            Vector4 pos1f = new Vector4(1f, 1f, 1f, 1f);
+            Vector4 neg1f = new Vector4(-1f, -1f, -1f, -1f);
 
-            fixed (Vector4f* arrayPtr = source)
+            fixed (Vector4* arrayPtr = source)
             {
-                Vector4f* currentPtr = arrayPtr, stopPtr = arrayPtr + source.Length;
+                Vector4* currentPtr = arrayPtr, stopPtr = arrayPtr + source.Length;
                 while (currentPtr < stopPtr)
                 {
                     *currentPtr -= pos1f;

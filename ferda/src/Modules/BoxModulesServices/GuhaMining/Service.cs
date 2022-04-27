@@ -1,6 +1,6 @@
 //#define CONSOLE_APPLICATION_FOR_SERVICE_STATARTUP_DEBUGGING
 using Ice;
-using ObjectFactory=Ferda.Guha.MiningProcessor.ObjectFactory;
+using ObjectFactory=Ferda.Guha.MiningProcessor.MiningValueFactory;
 
 namespace Ferda.Modules.Boxes.GuhaMining
 {
@@ -138,7 +138,7 @@ namespace Ferda.Modules.Boxes.GuhaMining
         public override void AddCustomFactoriesToComunicator(Communicator communicator)
         {
             ObjectFactory factory = new ObjectFactory();
-            ObjectFactory.addFactoryToCommunicator(communicator, factory);
+            ObjectFactory.addFactoryToCommunicator(communicator);
         }
 
 

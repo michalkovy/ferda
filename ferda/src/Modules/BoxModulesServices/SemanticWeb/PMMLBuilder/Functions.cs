@@ -100,6 +100,17 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         }
 
         /// <summary>
+        /// Should be frequencies of categories saved to the PMML file?
+        /// </summary>
+        public bool SaveFrequencies
+        {
+            get
+            {
+                return boxModule.GetPropertyBool(SockSaveFrequencies);
+            }
+        }
+
+        /// <summary>
         /// Gets an integer n=unique  identifier (for construction
         /// of Boolean attributes for PMML)
         /// </summary>
@@ -133,6 +144,11 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
         /// Name of the socket determining the author of the PMML report
         /// </summary>
         public const string SockAuthor = "Author";
+
+        /// <summary>
+        /// Name of the socket determining if frequencies are saved to PPML file
+        /// </summary>
+        public const string SockSaveFrequencies = "SaveFrequencies";
 
         #endregion
 
@@ -474,12 +490,15 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                     {
                         xmlWriter.WriteStartElement("DiscretizeBin");
                         xmlWriter.WriteAttributeString("binValue", category.Name);
-                        xmlWriter.WriteStartElement("Extension");
-                        xmlWriter.WriteAttributeString("name", "Frequency");
-                        xmlWriter.WriteAttributeString("value", 
-                            GetFrequencyFromCategory(generator, category.Name));
-                        xmlWriter.WriteAttributeString("extender", category.Name);
-                        xmlWriter.WriteEndElement(); //Extension
+                        if (this.SaveFrequencies)
+                        {
+                            xmlWriter.WriteStartElement("Extension");
+                            xmlWriter.WriteAttributeString("name", "Frequency");
+                            xmlWriter.WriteAttributeString("value",
+                                GetFrequencyFromCategory(generator, category.Name));
+                            xmlWriter.WriteAttributeString("extender", category.Name);
+                            xmlWriter.WriteEndElement(); //Extension
+                        }
                         for (int i = 0; i < category.Intervals.Count; i++)
                         {
                             xmlWriter.WriteStartElement("Interval");
@@ -524,14 +543,17 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                     xmlWriter.WriteAttributeString("field", columnName);
                     xmlWriter.WriteEndElement(); //FieldColumnPair
                     xmlWriter.WriteStartElement("InlineTable");
-                    foreach (Category<IComparable> category in attr.Values)
+                    if (this.SaveFrequencies)
                     {
-                        xmlWriter.WriteStartElement("Extension");
-                        xmlWriter.WriteAttributeString("name", "Frequency");
-                        xmlWriter.WriteAttributeString("value",
-                            GetFrequencyFromCategory(generator, category.Name));
-                        xmlWriter.WriteAttributeString("extender", category.Name);
-                        xmlWriter.WriteEndElement(); //Extension
+                        foreach (Category<IComparable> category in attr.Values)
+                        {
+                            xmlWriter.WriteStartElement("Extension");
+                            xmlWriter.WriteAttributeString("name", "Frequency");
+                            xmlWriter.WriteAttributeString("value",
+                                GetFrequencyFromCategory(generator, category.Name));
+                            xmlWriter.WriteAttributeString("extender", category.Name);
+                            xmlWriter.WriteEndElement(); //Extension
+                        }
                     }
                     foreach (Category<IComparable> category in attr.Values)
                     {
@@ -587,16 +609,19 @@ namespace Ferda.Modules.Boxes.SemanticWeb.PMMLBuilder
                 xmlWriter.WriteAttributeString("dataType", 
                     DBDataTypeToPMMLDataType(vaf.dataType));
 
-                foreach (ValueFrequencyPair pair in vaf.data)
+                if (this.SaveFrequencies)
                 {
-                    xmlWriter.WriteStartElement("Value");
-                    xmlWriter.WriteAttributeString("value", pair.value);
-                    xmlWriter.WriteStartElement("Extension");
-                    xmlWriter.WriteAttributeString("name", "Frequency");
-                    xmlWriter.WriteAttributeString("value", pair.frequency.ToString());
-                    xmlWriter.WriteAttributeString("extender", pair.value);
-                    xmlWriter.WriteEndElement();//Extension
-                    xmlWriter.WriteEndElement();//Value
+                    foreach (ValueFrequencyPair pair in vaf.data)
+                    {
+                        xmlWriter.WriteStartElement("Value");
+                        xmlWriter.WriteAttributeString("value", pair.value);
+                        xmlWriter.WriteStartElement("Extension");
+                        xmlWriter.WriteAttributeString("name", "Frequency");
+                        xmlWriter.WriteAttributeString("value", pair.frequency.ToString());
+                        xmlWriter.WriteAttributeString("extender", pair.value);
+                        xmlWriter.WriteEndElement();//Extension
+                        xmlWriter.WriteEndElement();//Value
+                    }
                 }
 
                 xmlWriter.WriteEndElement();//DataField

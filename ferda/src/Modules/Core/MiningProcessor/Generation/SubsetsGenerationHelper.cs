@@ -39,7 +39,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         public long operation(long previous, long current)
         {
-            return previous*current;
+            return previous * current;
         }
 
         public long operation(long current)
@@ -70,6 +70,15 @@ namespace Ferda.Guha.MiningProcessor.Generation
         M operation(M previous, T current);
         M operation(T current);
         T getItem(int index);
+        M getDefaultInit();
+        bool skipOptimize(M current);
+    }
+
+    public interface SubsetsInstanceAsync<T, M>
+    {
+        M operation(M previous, T current);
+        M operation(T current);
+        Task<T> getItemAsync(int index);
         M getDefaultInit();
         bool skipOptimize(M current);
     }
@@ -151,7 +160,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         #region IEnumerable<M> Members
 
         public IEnumerator<M> GetEnumerator()
-            //public override IEnumerator<IBitString> GetBitStringEnumerator()
+        //public override IEnumerator<IBitString> GetBitStringEnumerator()
         {
             M result;
             bool afterRemove;
@@ -163,9 +172,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
             sI.Clear();
             getEntity(0);
 
-            #endregion
+        #endregion
 
-            returnCurrent:
+        returnCurrent:
             if (returnCurrent(out result))
             {
                 if (_instance.skipOptimize(result))
@@ -173,7 +182,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                     yield return result;
                 }
             }
-            prolong:
+        prolong:
             if (prolong(afterRemove))
             {
                 afterRemove = false;
@@ -193,6 +202,120 @@ namespace Ferda.Guha.MiningProcessor.Generation
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        #endregion
+    }
+
+    public class SubsetsAsync<T, M> : IAsyncEnumerable<M>
+    {
+        private int _effectiveMinLength;
+        private int _effectiveMaxLength;
+        private int _itemsCount;
+        private SubsetsInstanceAsync<T, M> _instance;
+
+        public SubsetsAsync(int effectiveMinLength, int effectiveMaxLength, int itemsCount, SubsetsInstanceAsync<T, M> instance)
+        {
+            _effectiveMinLength = effectiveMinLength;
+            _effectiveMaxLength = effectiveMaxLength;
+            _itemsCount = itemsCount;
+            _instance = instance;
+        }
+
+        private Stack<M> sB = new Stack<M>();
+        private Stack<int> sI = new Stack<int>();
+
+        private void sBPush(T adding)
+        {
+            if (sB.Count > 0)
+            {
+                M previous = sB.Peek();
+                sB.Push(_instance.operation(previous, adding));
+            }
+            else
+            {
+                sB.Push(_instance.operation(adding));
+            }
+        }
+
+        private bool returnCurrent(out M result)
+        {
+            Debug.Assert(sB.Count <= _effectiveMaxLength);
+            if (sB.Count >= _effectiveMinLength)
+            {
+                result = sB.Peek();
+                return true;
+            }
+            result = _instance.getDefaultInit();
+            return false;
+        }
+
+        private async Task getEntityAsync(int index)
+        {
+            sBPush(await _instance.getItemAsync(index).ConfigureAwait(false));
+            sI.Push(index);
+        }
+
+        private async Task<bool> prolongAsync(bool afterRemove)
+        {
+            if (sB.Count == _effectiveMaxLength) // not after remove
+                return false;
+            int newIndex;
+            if (afterRemove)
+                newIndex = sI.Pop() + 1;
+            else
+                newIndex = sI.Peek() + 1;
+            if (newIndex >= _itemsCount)
+                return false;
+            await getEntityAsync(newIndex).ConfigureAwait(false);
+            return true;
+        }
+
+        private bool removeLastItem()
+        {
+            if (sB.Count > 0)
+            {
+                sB.Pop();
+                return true;
+            }
+            return false;
+        }
+
+        #region IAsyncEnumerable<M> Members
+
+        public async IAsyncEnumerator<M> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            M result;
+            bool afterRemove;
+            afterRemove = false;
+
+            #region initialize
+
+            sB.Clear();
+            sI.Clear();
+            await getEntityAsync(0).ConfigureAwait(false);
+
+            #endregion
+
+            returnCurrent:
+            if (returnCurrent(out result))
+            {
+                if (_instance.skipOptimize(result))
+                {
+                    yield return result;
+                }
+            }
+            prolong:
+            if (await prolongAsync(afterRemove).ConfigureAwait(false))
+            {
+                afterRemove = false;
+                goto returnCurrent;
+            }
+            if (removeLastItem())
+            {
+                afterRemove = true;
+                goto prolong;
+            }
         }
 
         #endregion

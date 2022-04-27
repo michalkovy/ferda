@@ -67,7 +67,8 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
@@ -214,7 +215,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                         
                         if (Func.Mapping != null)
                         {
-                            string[] tmpMappedPairs = Func.Mapping.Split(new string[] { Func.getMappingSeparatorOuter() }, StringSplitOptions.RemoveEmptyEntries);
+                            string[] tmpMappedPairs = Func.Mapping.Split(new string[] { Func.getMappingSeparatorOuter(null) }, StringSplitOptions.RemoveEmptyEntries);
 
                             if (tmpMappedPairs.Length > 0)
                             {
@@ -227,7 +228,7 @@ namespace Ferda.Modules.Boxes.OntologyRelated.OntologyMapping
                                 foreach (string tmpMappedPair in tmpMappedPairs)
                                 {
                                     // parsing the mapped pair (triple) - DataTableName, Column name, ontology Entity name
-                                    string[] DataTable_Column_OntEnt = tmpMappedPair.Split(new string[] { Func.getMappingSeparatorInner() }, StringSplitOptions.RemoveEmptyEntries);
+                                    string[] DataTable_Column_OntEnt = tmpMappedPair.Split(new string[] { Func.getMappingSeparatorInner(null) }, StringSplitOptions.RemoveEmptyEntries);
                                     ModulesAskingForCreation newMAFC = new ModulesAskingForCreation();
                                     newMAFC.label = moduleAFC.label.Replace("@Name", DataTable_Column_OntEnt[2] + "(" + DataTable_Column_OntEnt[0] + "." + DataTable_Column_OntEnt[1] + ")");
                                     newMAFC.hint = moduleAFC.hint.Replace("@Name", DataTable_Column_OntEnt[2] + "(" + DataTable_Column_OntEnt[0] + "." + DataTable_Column_OntEnt[1] + ")");

@@ -47,13 +47,13 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <param name="operand1">First operand</param>
         /// <param name="operand2">Second operand</param>
         /// <returns>Conjunction of two bit strings</returns>
-        protected override IBitString operation(IBitString operand1, IBitString operand2)
+        protected override IBitString operation(IBitString operand1, IBitString operand2, bool precomputeSum)
         {
             if (operand1 == null)
                 throw new ArgumentNullException("operand1");
             if (operand2 == null)
                 throw new ArgumentNullException("operand2");
-            return operand1.And(operand2);
+            return operand1.And(operand2, precomputeSum);
         }
 
         /// <summary>
@@ -111,13 +111,13 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <param name="operand1">First operand</param>
         /// <param name="operand2">Second operand</param>
         /// <returns>Disjunction of two bit strings</returns>
-        protected override IBitString operation(IBitString operand1, IBitString operand2)
+        protected override IBitString operation(IBitString operand1, IBitString operand2, bool precomputeSum)
         {
             if (operand1 == null)
                 throw new ArgumentNullException("operand1");
             if (operand2 == null)
                 throw new ArgumentNullException("operand2");
-            return operand1.Or(operand2);
+            return operand1.Or(operand2, precomputeSum);
         }
 
         /// <summary>

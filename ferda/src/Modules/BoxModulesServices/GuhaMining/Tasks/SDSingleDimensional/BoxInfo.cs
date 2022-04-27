@@ -56,7 +56,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDSingleDimensional
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
@@ -158,7 +159,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks.SDSingleDimensional
             // all used attributes are from the same data table
 
             Functions Func = (Functions) boxModule.FunctionsIObj;
-            Func.GetSourceDataTableId();
+            Func.GetSourceDataTableId(null);
         }
 
         #region Type Identifier

@@ -875,7 +875,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         /// <returns>Bit string generator provider</returns>
         public static BitStringGeneratorProviderPrx GetBitStringGeneratorProviderPrx(BoxModuleI boxModule)
         {
-            return BitStringGeneratorProviderPrxHelper.checkedCast(boxModule.getFunctions());
+            return BitStringGeneratorProviderPrxHelper.checkedCast(boxModule.getFunctions(null));
         }
 
         /// <summary>
@@ -999,7 +999,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
         /// <param name="skipFirstN">Skipping of the first N verifications</param>
         /// <param name="_current">ICE stuff</param>
         /// <returns>Iterator of bit strings</returns>
-        public static IEnumerable<BitStringIceWithCategoryId> RunTaskNoResult(
+        public static async IAsyncEnumerable<BitStringIceWithCategoryId> RunTaskNoResultAsync(
             BoxModuleI boxModule, ITask taskFunctions,
             TaskTypeEnum taskType, ResultTypeEnum resultType,
             int[] countVector, GuidStruct attributeGuid, MiningProcessorFunctions miningFunctions,
@@ -1048,45 +1048,23 @@ namespace Ferda.Modules.Boxes.GuhaMining.Tasks
                 secondSetWorking
                 );
 
-            string statistics;
-            string result;
-            if (_current == null)
-            {
-                result =
-        miningProcessor.Run(
-            boxModule.MyProxy,
-            GetBooleanAttributes(boxModule, taskFunctions),
-            GetCategorialAttributes(boxModule, taskFunctions),
-            GetQuantifierBaseFunctions(boxModule, true).ToArray(),
-            taskRunParams,
-            bsProvider,
-            boxModule.Output,
-            attributeGuid,
-            countVector,
-            out statistics
-            );
-            }
-            else
-            {
-                result =
-        miningProcessor.Run(
-            boxModule.MyProxy,
-            GetBooleanAttributes(boxModule, taskFunctions),
-            GetCategorialAttributes(boxModule, taskFunctions),
-            GetQuantifierBaseFunctions(boxModule, true).ToArray(),
-            taskRunParams,
-            bsProvider,
-            boxModule.Output,
-            attributeGuid,
-            countVector,
-            out statistics,
-            _current
-            );
-            }
+            var runResult =
+                await miningProcessor.RunAsync(
+                    boxModule.MyProxy,
+                    GetBooleanAttributes(boxModule, taskFunctions),
+                    GetCategorialAttributes(boxModule, taskFunctions),
+                    GetQuantifierBaseFunctions(boxModule, true).ToArray(),
+                    taskRunParams,
+                    bsProvider,
+                    boxModule.Output,
+                    attributeGuid,
+                    countVector,
+                    _current
+                    );
 
             while (true)
             {
-                BitStringIceWithCategoryId tmpString = miningProcessor.GetNextBitString();
+                BitStringIceWithCategoryId tmpString = await miningProcessor.GetNextBitStringAsync(_current);
                 if (tmpString != null)
                 {
                     yield return tmpString;

@@ -250,7 +250,7 @@ namespace Ferda.FrontEnd.Archive
         /// </summary>
         public void SetContextMenu()
         {
-            this.ContextMenu = null;
+            this.ContextMenuStrip = null;
 
             ContextMenuStrip cMenu = new ContextMenuStrip();
 
@@ -525,7 +525,7 @@ namespace Ferda.FrontEnd.Archive
                     ActionExceptionCatcher catcher =
                         new ActionExceptionCatcher(projectManager, ParentTreeView.ResManager, 
                         parentTreeView, parentTreeView.PropertiesDisplayer);
-					box.RunAction_async(catcher, info.name);
+					box.RunActionOnBackground(info.name, catcher);
                     break;
                 }
             }

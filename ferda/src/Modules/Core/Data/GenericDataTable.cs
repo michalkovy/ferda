@@ -67,7 +67,7 @@ namespace Ferda.Guha.Data
                 if (_explain.recordsCount < 0)
                 {
                     //prepare command for "SELECT COUNT(1) FROM ..." query
-                    DbCommand command = GenericDatabase.CreateDbCommand();
+                    using DbCommand command = GenericDatabase.CreateDbCommand();
                     command.CommandText = "SELECT COUNT(1) FROM " + GenericDatabase.QuoteQueryIdentifier(_explain.name);
                     _explain.recordsCount = Convert.ToInt64(command.ExecuteScalar());
                 }
@@ -144,12 +144,12 @@ namespace Ferda.Guha.Data
             string subQuery = getQuotedColumnsNames(uniqueColumns);
 
             //create SQL query " ... GROUP BY PkColumns HAVING COUNT(1) > 1"
-            DbCommand myCommand = GenericDatabase.CreateDbCommand();
+            using DbCommand myCommand = GenericDatabase.CreateDbCommand();
             myCommand.CommandText = "SELECT " + subQuery + " FROM " +
                                     GenericDatabase.QuoteQueryIdentifier(_explain.name) + " GROUP BY " + subQuery +
                                     " HAVING COUNT(1) > 1";
 
-            DbDataAdapter myDataAdapter = GenericDatabase.CreateDbDataAdapter();
+            using DbDataAdapter myDataAdapter = GenericDatabase.CreateDbDataAdapter();
             myDataAdapter.SelectCommand = myCommand;
             DataSet myDataSet = new DataSet();
 
@@ -222,11 +222,11 @@ namespace Ferda.Guha.Data
             try
             {
                 //building the command
-                DbCommand command = GenericDatabase.CreateDbCommand();
+                using DbCommand command = GenericDatabase.CreateDbCommand();
                 command.CommandText = "SELECT * FROM " +
                     GenericDatabase.QuoteQueryIdentifier(Explain.name);
 
-                DbDataAdapter dataAdapter = GenericDatabase.CreateDbDataAdapter();
+                using DbDataAdapter dataAdapter = GenericDatabase.CreateDbDataAdapter();
                 dataAdapter.SelectCommand = command;
                 DataSet dataSet = new DataSet();
                 dataAdapter.Fill(dataSet);
@@ -266,9 +266,8 @@ namespace Ferda.Guha.Data
                     // schema = GenericDatabase.GetSchema("COLUMNS", new string[4] { null, null, _explain.name, null });
 
                     // second (used) way
-                    DbCommand command = GenericDatabase.CreateDbCommand();
-                    command.CommandText = "SELECT * FROM " + GenericDatabase.QuoteQueryIdentifier(_explain.name) +
-                                          " WHERE 0";
+                    using DbCommand command = GenericDatabase.CreateDbCommand();
+                    command.CommandText = "SELECT * FROM " + GenericDatabase.QuoteQueryIdentifier(_explain.name); // + " WHERE 0";
                     try
                     {
                         schema = command.ExecuteReader(CommandBehavior.SchemaOnly).GetSchemaTable();
@@ -344,7 +343,7 @@ namespace Ferda.Guha.Data
                         resultItem.numericPrecision = Convert.IsDBNull(row["NumericPrecision"]) ? 0 : Convert.ToInt32(row["NumericPrecision"]);
                         resultItem.numericScale = Convert.IsDBNull(row["NumericScale"]) ? 0 : Convert.ToInt32(row["NumericScale"]);
                         resultItem.isUnique = Convert.ToBoolean(row["IsUnique"]);
-                        resultItem.isKey = Convert.ToBoolean(row["IsKey"]);
+                        resultItem.isKey = Convert.IsDBNull(row["IsKey"]) ? false : Convert.ToBoolean(row["IsKey"]);
                         //BaseServerName
                         //BaseCatalogName
                         //BaseColumnName
@@ -527,7 +526,7 @@ namespace Ferda.Guha.Data
         {
             try
             {
-                DbCommand command = GenericDatabase.CreateDbCommand();
+                using DbCommand command = GenericDatabase.CreateDbCommand();
                 // TODO possibly security attacs here
                 command.CommandText = "SELECT " + columnSelectExpression + " FROM " +
                                       GenericDatabase.QuoteQueryIdentifier(_explain.name) + " WHERE 0";
@@ -558,7 +557,7 @@ namespace Ferda.Guha.Data
         {
             try
             {
-                DbCommand command = GenericDatabase.CreateDbCommand();
+                using DbCommand command = GenericDatabase.CreateDbCommand();
                 // TODO possibly security attacs here
                 command.CommandText = 
                     "SELECT " + 

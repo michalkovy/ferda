@@ -27,6 +27,7 @@ using Ferda.Guha.Math;
 using Ferda.Guha.MiningProcessor.BitStrings;
 using Ferda.Guha.MiningProcessor.Formulas;
 using Ferda.Modules.Helpers.Common;
+using System.Linq;
 
 namespace Ferda.Guha.MiningProcessor.Generation
 {
@@ -66,9 +67,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// is also applied. 
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        public override async IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
-            IBitString result = Helpers.GetBitString(
+            IBitString result = await Helpers.GetBitStringAsync(
                 _setting.generator,
                 _attributeGuid,
                 _setting.categoriesIds,
@@ -95,15 +96,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public override long TotalCount
         {
             get { return 1; }
-        }
-
-        /// <summary>
-        /// Set of used attributes by enumerator. For the fixed set enumerator
-        /// it is the set containing only one attribute.
-        /// </summary>
-        public override Set<string> UsedAttributes
-        {
-            get { return new Set<string>(_attributeGuid); }
         }
 
         #endregion
@@ -153,14 +145,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// bit strings representing the left cuts
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        public override async IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
             bool returned = false; //flag indicating if some bit string was returned
 
             if (_effectiveMinLength <= _categoriesNames.Length)
                 for (int i = 0; true; i++)
                 {
-                    prolongCoefficient(_categoriesNames[i]);
+                    await prolongCoefficient(_categoriesNames[i]).ConfigureAwait(false);
                     if (_actualLength < _effectiveMinLength)
                         continue;
 
@@ -247,14 +239,14 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// bit strings representing the right cuts
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        public override async IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
             bool returned = false; //flag indicating if some bit string was returned
 
             if (_effectiveMinLength <= _categoriesNames.Length)
                 for (int i = _categoriesNames.Length - 1; true; i--)
                 {
-                    prolongCoefficient(_categoriesNames[i]);
+                    await prolongCoefficient(_categoriesNames[i]).ConfigureAwait(false);
                     if (_actualLength < _effectiveMinLength)
                         continue;
 
@@ -342,7 +334,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// then the right cuts.
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        public override async IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
             // split to left cuts and right cuts
 
@@ -350,7 +342,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             if (_effectiveMinLength <= _categoriesNames.Length)
                 for (int i = 0; true; i++)
                 {
-                    prolongCoefficient(_categoriesNames[i]);
+                    await prolongCoefficient(_categoriesNames[i]).ConfigureAwait(false);
                     if (_actualLength < _effectiveMinLength)
                         continue;
 
@@ -380,7 +372,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 {
                     if (i < 0)
                         break;
-                    prolongCoefficient(_categoriesNames[i]);
+                    await prolongCoefficient(_categoriesNames[i]).ConfigureAwait(false);
                     if (_actualLength > _effectiveMaxLength
                         || _actualLength == _categoriesNames.Length)
                         break;
@@ -467,7 +459,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// with minimal length and then prolongs them. 
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        public override async IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
             int start = 0;
         restart:
@@ -475,7 +467,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 && start < _categoriesNames.Length)
                 for (int i = start; true; i++)
                 {
-                    prolongCoefficient(_categoriesNames[i]);
+                    await prolongCoefficient(_categoriesNames[i]).ConfigureAwait(false);
                     if (_actualLength < _effectiveMinLength)
                         continue;
 
@@ -569,7 +561,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// with minimal length and then prolongs them. 
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        public override async IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
             int start = -1;
         restart:
@@ -577,7 +569,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
             if (start < _categoriesNames.Length)
                 for (int i = start; true; i++)
                 {
-                    prolongCoefficient(_categoriesNames[i % _categoriesNames.Length]);
+                    await prolongCoefficient(_categoriesNames[i % _categoriesNames.Length]).ConfigureAwait(false);
                     if (_actualLength < _effectiveMinLength)
                         continue;
                     if (_actualLength == _categoriesNames.Length && start > 0)
@@ -654,7 +646,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
     /// <summary>
     /// Subsets coefficients entity enumerator
     /// </summary>
-    public class Subsets : EntityEnumerableCoefficient, SubsetsInstance<IBitString, IBitString>
+    public class Subsets : EntityEnumerableCoefficient, SubsetsInstanceAsync<IBitString, IBitString>
     {
         /// <summary>
         /// Default constructor of the class
@@ -676,12 +668,12 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// to compute the subsets.
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        public override IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
-            Subsets<IBitString, IBitString> enumerator =
-                new Subsets<IBitString, IBitString>(_effectiveMinLength, _effectiveMaxLength, _categoriesNames.Length,
+            SubsetsAsync<IBitString, IBitString> enumerator =
+                new SubsetsAsync<IBitString, IBitString>(_effectiveMinLength, _effectiveMaxLength, _categoriesNames.Length,
                                                     this);
-            return enumerator.GetEnumerator();
+            return enumerator.GetAsyncEnumerator();
         }
 
         #region IEntityEnumerator members
@@ -737,9 +729,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
             return current;
         }
 
-        public IBitString getItem(int index)
+        public Task<IBitString> getItemAsync(int index)
         {
-            return getBitString(_categoriesNames[index]);
+            return getBitStringAsync(_categoriesNames[index]);
         }
 
         public IBitString getDefaultInit()
@@ -835,7 +827,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// and then it 
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public override IEnumerator<IBitString> GetBitStringEnumerator()
+        public override async IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
             int currentBitString = 0;
             while (true)
@@ -855,15 +847,15 @@ namespace Ferda.Guha.MiningProcessor.Generation
                 }
                 else
                 {
-                    BitStringIceWithCategoryId tempString = null;
-                    if (_setting.generator.GetNextBitString(bufferedCount, out tempString))
+                    var nextStringResult = await _setting.generator.GetNextBitStringAsync(bufferedCount);
+                    if (nextStringResult.returnValue)
                     {
-                        if (tempString != null)
+                        if (nextStringResult.bitString != null)
                         {
-                            CrispBitStringIce crisp = tempString.bitString as CrispBitStringIce;
+                            CrispBitStringIce crisp = nextStringResult.bitString.bitString as CrispBitStringIce;
                             IBitString result = new BitString(
                                 new BitStringIdentifier(
-                                _attributeGuid, tempString.categoryId),
+                                _attributeGuid, nextStringResult.bitString.categoryId),
                                 crisp.length,
                                 crisp.value);
 
@@ -882,7 +874,7 @@ namespace Ferda.Guha.MiningProcessor.Generation
                                 throw new ArgumentNullException("bitStringBuffer is null");
                             }
 
-                            if (_bufferInstance.AddBitString(tempString))
+                            if (_bufferInstance.AddBitString(nextStringResult.bitString))
                             {
                                 bufferedCount++;
                             }
@@ -910,15 +902,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
         public override long TotalCount
         {
             get { return _totalCount; }
-        }
-
-        /// <summary>
-        /// Set of used attributes by enumerator. For the fixed set enumerator
-        /// it is the set containing only one virtual attribute
-        /// </summary>
-        public override Set<string> UsedAttributes
-        {
-            get { return new Set<string>(_attributeGuid); }
         }
 
         #endregion

@@ -47,15 +47,31 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise AND operation on current BitString against the specified BitString.
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
+        /// <param name="precomputeSum">Should sum be precomputed during the operation</param>
         /// <returns>Result of the AND operation</returns>
-        IBitString And(IBitString source);
+        IBitString And(IBitString source, bool precomputeSum = false);
+
+        /// <summary>
+        /// Performs the bitwise AND operation on current BitString against the specified BitString. It can change current instance.
+        /// </summary>
+        /// <param name="source">The second BitString operand.</param>
+        /// <returns>Result of the AND operation</returns>
+        IBitString AndInPlace(IBitString source);
 
         /// <summary>
         /// Performs the bitwise OR operation on current BitString against the specified BitString.
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
+        /// <param name="precomputeSum">Should sum be precomputed during the operation</param>
         /// <returns>Result of the OR operation</returns>
-        IBitString Or(IBitString source);
+        IBitString Or(IBitString source, bool precomputeSum = false);
+
+        /// <summary>
+        /// Performs the bitwise OR operation on current BitString against the specified BitString. It can change current instance.
+        /// </summary>
+        /// <param name="source">The second BitString operand.</param>
+        /// <returns>Result of the OR operation</returns>
+        IBitString OrInPlace(IBitString source);
 
         /// <summary>
         /// Performs the bitwise NOT on current BitString.

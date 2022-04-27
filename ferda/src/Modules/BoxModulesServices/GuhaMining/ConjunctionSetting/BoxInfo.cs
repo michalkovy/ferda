@@ -31,7 +31,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
     /// <summary>
     /// Class that provides info about boxes of the ConjunctionSetting box
     /// </summary>
-    internal class BoxInfo : Boxes.BoxInfo
+    public class BoxInfo : Boxes.BoxInfo
     {
         /// <summary>
         /// Functions creates an object of <see cref="T:Ferda.Modules.IFunctions">IFuntions</see>
@@ -60,7 +60,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
         /// </example>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
@@ -194,8 +195,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.ConjunctionSetting
 
             // try to invoke methods
             IEntitySetting myES = Func.GetEntitySetting(true);
-            object dummy = Func.GetAttributeNames();
-            dummy = Func.GetSourceDataTableId();
+            object dummy = Func.GetAttributeNames(null);
+            dummy = Func.GetSourceDataTableId(null);
 
             List<BooleanAttributeSettingFunctionsPrx> booleanAttributes = Func.GetBooleanAttributeSettingFunctionsPrxs(true);
             if (booleanAttributes != null)

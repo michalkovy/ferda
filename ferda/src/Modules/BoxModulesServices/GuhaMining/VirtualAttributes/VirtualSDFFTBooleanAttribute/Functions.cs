@@ -17,17 +17,17 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
 {
     internal class MiningFunctions : MiningProcessorFunctionsDisp_
     {
-        public override BitStringIceWithCategoryId GetNextBitString(Current current__)
+        public override Task<BitStringIceWithCategoryId> GetNextBitStringAsync(Current current__)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public override string Run(BoxModulePrx taskBoxModule, BooleanAttribute[] booleanAttributes, CategorialAttribute[] categorialAttributes, Ferda.Guha.Math.Quantifiers.QuantifierBaseFunctionsPrx[] quantifiers, TaskRunParams taskParams, BitStringGeneratorProviderPrx bitStringGenerator, Ferda.ModulesManager.OutputPrx output, GuidStruct attributeId, int[] countVector, out string resultInfo, Current current__)
+        public override Task<MiningProcessorFunctions_RunResult> RunAsync(BoxModulePrx taskBoxModule, BooleanAttribute[] booleanAttributes, CategorialAttribute[] categorialAttributes, Ferda.Guha.Math.Quantifiers.QuantifierBaseFunctionsPrx[] quantifiers, TaskRunParams taskParams, BitStringGeneratorProviderPrx bitStringGenerator, Ferda.ModulesManager.OutputPrx output, GuidStruct attributeId, int[] countVector, Current current__)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public override string ETreeRun(BoxModulePrx taskBoxModule, ETreeTaskRunParams taskParams, ModulesManager.OutputPrx output, out string resultInfo, Current current__)
+        public override Task<MiningProcessorFunctions_ETreeRunResult> ETreeRunAsync(BoxModulePrx taskBoxModule, ETreeTaskRunParams taskParams, ModulesManager.OutputPrx output, Current current__)
         {
             throw new Exception("The method or operation is not implemented.");
         }
@@ -78,7 +78,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         }
 
         private bool _minerInitialized = false;
-        private IEnumerator<BitStringIceWithCategoryId> _bitStringEnumerator;
+        private IAsyncEnumerator<BitStringIceWithCategoryId> _bitStringEnumerator;
         private int[] _countVector = null;
         private int _skipFirstN = -1;
         private int bitStringsYielded = 0;
@@ -86,18 +86,18 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         /// <summary>
         /// Enumerator for bitstrings yielded by virtual attribute
         /// </summary>
-        private IEnumerator<BitStringIceWithCategoryId> BitStringEnumerator
+        private IAsyncEnumerator<BitStringIceWithCategoryId> BitStringEnumerator
         {
             get
             {
                 if (!_minerInitialized)
                 {
-                    _bitStringEnumerator = Common.RunTaskNoResult(
+                    _bitStringEnumerator = Common.RunTaskNoResultAsync(
                         _boxModule, this,
                         TaskTypeEnum.SDFourFold,
                         ResultTypeEnum.TraceBoolean,
                         CountVector,
-                        Guid, miningFunctions, _skipFirstN, _current).GetEnumerator();
+                        Guid, miningFunctions, _skipFirstN, _current).GetAsyncEnumerator();
 
                     _minerInitialized = true;
                     return _bitStringEnumerator;
@@ -244,11 +244,11 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         /// <summary>
         /// Method which fills the bitstring buffer
         /// </summary>
-        private void FillBitStringBuffer()
+        private async Task FillBitStringBufferAsync()
         {
             for (int i = 0; i < _bufferSize; i++)
             {
-                if (BitStringEnumerator.MoveNext())
+                if (await BitStringEnumerator.MoveNextAsync())
                 {
                     _buffer.Enqueue(BitStringEnumerator.Current);
                     _bufferFlag = i;
@@ -264,12 +264,12 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         /// Method which returns bitstring from buffer
         /// </summary>
         /// <returns></returns>
-        private BitStringIceWithCategoryId GetNextBitStringFromBuffer()
+        private async Task<BitStringIceWithCategoryId> GetNextBitStringFromBufferAsync()
         {
             
             if ((!_bufferInitialized) || (_bufferFlag == 0))
             {
-                FillBitStringBuffer();
+                await FillBitStringBufferAsync();
                 if (_bufferFlag == 0)
                     return null;
                 _bufferInitialized = true;
@@ -304,7 +304,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         {
             if (attributeId.value == Guid.value)
             {
-                return BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions());
+                return BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions(current__));
             }
             return null;
         }
@@ -318,7 +318,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         public override BitStringGeneratorPrx[] GetBitStringGenerators(Current current__)
         {
             BitStringGeneratorPrx[] result = new BitStringGeneratorPrx[1];
-            result[0] = BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions());
+            result[0] = BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions(current__));
             return result;
         }
 
@@ -337,7 +337,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
                         new CoefficientSettingI();
                     result.id = Guid;
                     result.importance = Importance;
-                    result.generator = BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions());
+                    result.generator = BitStringGeneratorPrxHelper.checkedCast(_boxModule.getFunctions(null));
                     result.maxLength = 1;
                     result.minLength = 1;
                     result.coefficientType = CoefficientTypeEnum.SubsetsOneOne;
@@ -400,24 +400,25 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         /// <param name="bitString">Returned bitstring</param>
         /// <param name="current__"></param>
         /// <returns>True if more bitstrings can be returned</returns>
-        public override bool GetNextBitString(int skipFirstN, out BitStringIceWithCategoryId bitString, Current current__)
+        public override async Task<BitStringGenerator_GetNextBitStringResult> GetNextBitStringAsync(int skipFirstN, Current current__)
         {
+            BitStringIceWithCategoryId bitString;
             if (bitStringsYielded < MaxNumberOfHypotheses)
             {
                 _skipFirstN = skipFirstN;
 
                 _current = current__;
                 bitString =
-                    GetNextBitStringFromBuffer();
+                    await GetNextBitStringFromBufferAsync();
                 if (bitString == null)
                 {
                     bitString = new
                         BitStringIceWithCategoryId();
                     _minerInitialized = false;
                     bitStringsYielded = 0;
-                    return false;
+                    return new BitStringGenerator_GetNextBitStringResult(false, bitString);
                 }
-                return true;
+                return new BitStringGenerator_GetNextBitStringResult(true, bitString);
             }
             else
             {
@@ -425,7 +426,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
                         BitStringIceWithCategoryId();
                 _minerInitialized = false;
                 bitStringsYielded = 0;
-                return false;
+                return new BitStringGenerator_GetNextBitStringResult(false, bitString);
             }
         }
 

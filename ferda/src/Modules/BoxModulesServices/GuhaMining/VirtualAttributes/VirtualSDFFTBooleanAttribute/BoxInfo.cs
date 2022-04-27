@@ -48,7 +48,8 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         /// <returns></returns>
         public override string[] GetBoxModuleFunctionsIceIds()
         {
-            return Functions.ids__;
+            var f = new Functions();
+            return f.ice_ids();
         }
 
         /// <summary>
@@ -191,7 +192,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.VirtualAttributes.VirtualSDFFTBooleanAt
         public override void Validate(BoxModuleI boxModule)
         {
             Functions Func = (Functions)boxModule.FunctionsIObj;
-            object dummy = Func.GetSourceDataTableId();
+            object dummy = Func.GetSourceDataTableId(null);
 
             dummy =
                 Ferda.Modules.Boxes.GuhaMining.Tasks.Common.GetBooleanAttributes(boxModule, Func);

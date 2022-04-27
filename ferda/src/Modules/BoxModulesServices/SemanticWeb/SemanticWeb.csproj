@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable></Nullable>
+    <AssemblyOriginatorKeyFile>Ferda$(MSBuildProjectName)Boxes.snk</AssemblyOriginatorKeyFile>
+    <AssemblyName>Ferda$(MSBuildProjectName)Boxes</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\libsrc\Sewebar\Sewebar.csproj" />
+    <ProjectReference Include="..\..\BoxInterfaces\BoxInterfaces.csproj" />
+    <ProjectReference Include="..\..\Core\Attribute\Attribute.csproj" />
+    <ProjectReference Include="..\..\Core\MiningProcessor\MiningProcessor.csproj" />
+    <ProjectReference Include="..\..\ServerBase\ServerBase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="PMMLBuilder\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SEWEBARPublisher\boxIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

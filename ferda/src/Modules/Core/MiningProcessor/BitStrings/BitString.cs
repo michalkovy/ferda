@@ -21,7 +21,6 @@
 
 //#define Testing
 
-#define USE64BIT
 #define LOOKUP8
 #define LOOKUP16
 #define UNSAFE
@@ -32,6 +31,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Text;
 using Ferda.Guha.MiningProcessor.Formulas;
 
@@ -106,7 +107,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             set { _lengthVector = value; }
         }
 
-#if USE64BIT
         private const int _blockSize = 64;
         private const ulong _zero = 0ul;
         private const ulong _one = 1ul;
@@ -114,15 +114,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         private const ulong _16bits = 0x000000000000FFFFul;
         private const ulong _allOnes = 0xFFFFFFFFFFFFFFFFul;
         private ulong[] _array;
-#else
-        const int _blockSize = 32;
-        const uint _zero = 0u;
-        const uint _one = 1u;
-        const uint _8bits = 0x000000FFu;
-        const uint _16bits = 0x0000FFFFu;
-        const uint _allOnes = 0xFFFFFFFFu;
-        private uint [] _array;
-#endif
 
         #endregion
 
@@ -144,7 +135,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <param name="length">Length of the bit string</param>
         /// <param name="bits">Array of longs, where each bit is means one bit
         /// of the bit string (64 bits in one long)</param>
-        public unsafe BitString(BitStringIdentifier identifier, int length, long[] bits)
+        public unsafe BitString(BitStringIdentifier identifier, int length, ReadOnlySpan<long> bits)
             : this(new AtomFormula(identifier))
         {
             if (length <= 0)
@@ -154,21 +145,12 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
             int arraySize = (length + _blockSize - 1) / _blockSize; // rounding up...
 
-#if USE64BIT
             if (arraySize != bits.Length)
                 throw new ArgumentOutOfRangeException("bits", "The array of bits has bad size (Length).");
 
-            _array = new ulong[arraySize];
-            for (int i = 0; i < bits.Length; i++)
-            {
-                unchecked
-                {
-                    _array[i] = (ulong)bits[i];
-                }
-            }
-#else
-            throw new NotImplementedException();
-#endif
+            _array = GC.AllocateUninitializedArray<ulong>(arraySize);
+            ReadOnlySpan<ulong> ubits = MemoryMarshal.Cast<long, ulong>(bits);
+            ubits.CopyTo(_array);
         }
 
         /// <summary>
@@ -184,17 +166,9 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             _size = source._size;   
             _sum = source._sum;
 
-#if USE64BIT
-            _array = new ulong[source._array.Length];
-#else
-            _array = new uint[source._array.Length];
-#endif
+            _array = GC.AllocateUninitializedArray<ulong>(source._array.Length);
 
-#if UNSAFE
-            copyUnsafe(source);
-#else
-            copySafe(source);
-#endif
+            copy(source);
         }
 
 #if Testing
@@ -246,45 +220,13 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             _sum = 0;
             int arraySize = (length + _blockSize - 1) / _blockSize; // rounding up...
 
-#if USE64BIT
-            _array = new ulong[arraySize];
-#else
-            _array = new uint[arraySize];
-#endif
+            _array = GC.AllocateUninitializedArray<ulong>(arraySize);
         }
 
-#if UNSAFE
-        private unsafe void copyUnsafe(BitString source)
+        private void copy(BitString source)
         {
-#if USE64BIT
-            fixed (ulong* destPin = _array, sourcePin = source._array)
-            {
-                ulong* destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
-                while (destPtr < stopPtr)
-                {
-                    *destPtr++ = *sourcePtr++;
-                }
-            }
-#else
-            fixed (uint *destPin = _array, sourcePin = source._array)
-            {
-                uint *destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
-                while (destPtr < stopPtr)
-                {
-                    *destPtr++ = *sourcePtr++;
-                }
-            }
-#endif
+            source._array.CopyTo((Span<ulong>) _array);
         }
-#else
-        private void copySafe(BitString source)
-        {
-            for (int i = 0; i < _array.Length; i++)
-            {
-                _array[i] = source._array[i];
-            }
-        }
-#endif
 
         #endregion
 
@@ -294,13 +236,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise AND operation on current BitString against the specified BitString.
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
-        /// <returns>The result of the OR operation</returns>
-        public IBitString And(IBitString source)
+        /// <param name="precomputeSum">Should sum be precomputed during the operation</param>
+        /// <returns>The result of the AND operation</returns>
+        public IBitString And(IBitString source, bool precomputeSum = false)
         {
             if (source is BitString)
             {
                 BitString result = new BitString(this);
-                result.and((BitString)source);
+                result.and((BitString)source, precomputeSum);
                 result._identifier = FormulaHelper.And(Identifier, source.Identifier);
                 return result;
             }
@@ -324,7 +267,40 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 throw new NotImplementedException();
         }
 
-        protected void and(BitString source)
+        /// <summary>
+        /// Performs the bitwise AND operation on current BitString against the specified BitString. It can modify current and return it or returns the source.
+        /// </summary>
+        /// <param name="source">The second BitString operand.</param>
+        /// <returns>The result of the AND operation based of one of the them</returns>
+        public IBitString AndInPlace(IBitString source)
+        {
+            if (source is BitString)
+            {
+                this.and((BitString)source);
+                this._identifier = FormulaHelper.And(Identifier, source.Identifier);
+                return this;
+            }
+            else if (source is FuzzyBitString)
+            {
+                return source.AndInPlace(this);
+            }
+            else if (source is EmptyBitString)
+            {
+                return this;
+            }
+            else if (source is FalseBitString)
+            {
+                return source;
+            }
+            else if (source is TrueBitString)
+            {
+                return this;
+            }
+            else
+                throw new NotImplementedException();
+        }
+
+        protected void and(BitString source, bool precomputeSum = false)
         {
             if (_size == 0)
                 throw new InvalidOperationException("BitString was not initialized (use create method first).");
@@ -340,19 +316,19 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 (_size % _blockSize == 0) || ((source._array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                 "The bit string contains non-zero bits in the last block behind the allowed length.");
 
-#if UNSAFE
-            andUnsafe(source);
-#else
-            andSafe(source);
-#endif
-
-            _sum = -1;
+            if (precomputeSum)
+            {
+                andUnsafeWithSumPopCnt(source);
+            }
+            else
+            {
+                andUnsafe(source);
+                _sum = -1;
+            }
         }
 
-#if UNSAFE
         private unsafe void andUnsafe(BitString source)
         {
-#if USE64BIT
             fixed (ulong* destPin = _array, sourcePin = source._array)
             {
                 ulong* destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
@@ -361,26 +337,24 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     *destPtr++ &= *sourcePtr++;
                 }
             }
-#else
-            fixed (uint *destPin = _array, sourcePin = source._array)
+        }
+
+        private unsafe void andUnsafeWithSumPopCnt(BitString source)
+        {
+            _sum = 0;
+            unchecked
             {
-                uint *destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
-                while (destPtr < stopPtr)
+                fixed (ulong* destPin = _array, sourcePin = source._array)
                 {
-                    *destPtr++ &= *sourcePtr++;
+                    ulong* destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
+                    while (destPtr < stopPtr)
+                    {
+                        *destPtr &= *sourcePtr++;
+                        _sum += BitOperations.PopCount(*destPtr++);
+                    }
                 }
             }
-#endif
         }
-#else
-        private void andSafe(BitString source)
-        {
-            for (int i = 0; i < _array.Length; i++)
-            {
-                _array[i] &= source._array[i];
-            }
-        }
-#endif
 
         #endregion
 
@@ -390,13 +364,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise OR operation on current BitString against the specified BitString.
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
+        /// <param name="precomputeSum">Should sum be precomputed during the operation</param>
         /// <returns>The result of the OR operation</returns>
-        public IBitString Or(IBitString source)
+        public IBitString Or(IBitString source, bool precomputeSum = false)
         {
             if (source is BitString)
             {
                 BitString result = new BitString(this);
-                result.or((BitString)source);
+                result.or((BitString)source, precomputeSum);
                 result._identifier = FormulaHelper.Or(Identifier, source.Identifier);
                 return result;
             }
@@ -421,7 +396,41 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 throw new NotImplementedException();
         }
 
-        protected void or(BitString source)
+        /// <summary>
+        /// Performs the bitwise OR operation on current BitString against the specified BitString. It modifies current or returns the source.
+        /// </summary>
+        /// <param name="source">The second BitString operand.</param>
+        /// <returns>The result of the OR operation</returns>
+        public IBitString OrInPlace(IBitString source)
+        {
+            if (source is BitString)
+            {
+                this.or((BitString)source);
+                this._identifier = FormulaHelper.Or(Identifier, source.Identifier);
+                return this;
+            }
+            else if (source is FuzzyBitString)
+            {
+                //fuzzy handling is in fuzzy bit strings
+                return source.OrInPlace(this);
+            }
+            else if (source is EmptyBitString)
+            {
+                return this;
+            }
+            else if (source is FalseBitString)
+            {
+                return this;
+            }
+            else if (source is TrueBitString)
+            {
+                return source;
+            }
+            else
+                throw new NotImplementedException();
+        }
+
+        protected void or(BitString source, bool precomputeSum = false)
         {
             if (_size == 0)
                 throw new InvalidOperationException("BitString was not initialized (use create method first).");
@@ -437,19 +446,19 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 (_size % _blockSize == 0) || ((source._array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                 "The bit string contains non-zero bits in the last block behind the allowed length.");
 
-#if UNSAFE
-            orUnsafe(source);
-#else
-            orSafe(source);
-#endif
-
-            _sum = -1;
+            if (precomputeSum)
+            {
+                orUnsafeWithSumPopCnt(source);
+            }
+            else
+            {
+                orUnsafe(source);
+                _sum = -1;
+            }
         }
 
-#if UNSAFE
         private unsafe void orUnsafe(BitString source)
         {
-#if USE64BIT
             fixed (ulong* destPin = _array, sourcePin = source._array)
             {
                 ulong* destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
@@ -458,26 +467,24 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     *destPtr++ |= *sourcePtr++;
                 }
             }
-#else
-            fixed (uint *destPin = _array, sourcePin = source._array)
+        }
+
+        private unsafe void orUnsafeWithSumPopCnt(BitString source)
+        {
+            _sum = 0;
+            unchecked
             {
-                uint *destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
-                while (destPtr < stopPtr)
+                fixed (ulong* destPin = _array, sourcePin = source._array)
                 {
-                    *destPtr++ |= *sourcePtr++;
+                    ulong* destPtr = destPin, sourcePtr = sourcePin, stopPtr = destPin + _array.Length;
+                    while (destPtr < stopPtr)
+                    {
+                        *destPtr |= *sourcePtr++;
+                        _sum += BitOperations.PopCount(*destPtr++);
+                    }
                 }
             }
-#endif
         }
-#else
-        private void orSafe(BitString source)
-        {
-            for (int i = 0; i < _array.Length; i++)
-            {
-                _array[i] |= source._array[i];
-            }
-        }
-#endif
 
         #endregion
 
@@ -503,20 +510,14 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 (_size % _blockSize == 0) || ((_array[_array.Length - 1] & (_allOnes << _size % _blockSize)) == 0),
                 "The bit string contains non-zero bits in the last block behind the allowed length.");
 
-#if UNSAFE
             notUnsafe();
-#else
-            notSafe();
-#endif
 
             if (_sum >= 0)
                 _sum = _size - _sum;
         }
 
-#if UNSAFE
         private unsafe void notUnsafe()
         {
-#if USE64BIT
             fixed (ulong* pin = _array)
             {
                 ulong* ptr = pin, stop = pin + _array.Length;
@@ -530,35 +531,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     *(ptr - 1) &= _allOnes >> (_blockSize - _size % _blockSize);
                 }
             }
-#else
-            fixed (uint *pin = _array)
-            {
-                uint *ptr = pin, stop = pin + _array.Length;
-                while (ptr < stop)
-                {
-                    *ptr = ~ (*ptr);
-                    ptr++;
-                }
-                if (_size % _blockSize > 0)
-                {
-                    *(ptr - 1) &= _allOnes >> (_blockSize - _size % _blockSize);
-                }
-            }
-#endif
         }
-#else
-        private void notSafe()
-        {
-            for (int i = 0; i < _array.Length; i++)
-            {
-                _array[i] = ~_array[i];
-            }
-            if (_size % _blockSize > 0)
-            {
-                _array[_array.Length - 1] &= _allOnes >> (_blockSize - _size % _blockSize);
-            }
-        }
-#endif
 
         #endregion
 
@@ -604,11 +577,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 
                     // compute the sum using the best available method
                     // (looping, folding, 8-bit lookup, 16-bit lookup or sparse sum)
-#if UNSAFE
-                    sumLookup16Unsafe();
-#else
-                    sumLookup16Safe();
-#endif
+                    sumPopCnt();
                 }
 
                 Debug.Assert(_sum >= 0, "The sum must be non-negative.");
@@ -623,25 +592,16 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
         }
 
-#if UNSAFE
         private unsafe void sumLoopUnsafe()
         {
             _sum = 0;
 
             unchecked
             {
-#if USE64BIT
                 fixed (ulong* arrayPtr = _array)
                 {
                     ulong current;
                     ulong* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length - 1;
-#else
-                fixed (uint *arrayPtr = _array)
-                {
-                    uint current;
-                    uint *currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length - 1;
-#endif
-
 
                     while (currentPtr < stopPtr)
                     {
@@ -665,58 +625,16 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 }
             }
         }
-#else
-        private void sumLoopSafe()
-        {
-#if USE64BIT
-            ulong current;
-#else
-            uint current;
-#endif
 
-            _sum = 0;
-            int i;
-            unchecked
-            {
-                // compute all but the last block
-                for (i = 0; i < _array.Length - 1; i++)
-                {
-                    current = _array[i];
-                    for (int j = _blockSize - 1; j > 0; j--)
-                    {
-                        _sum += (int)(current & _one);
-                        current >>= 1;
-                    }
-                    _sum += (int)current;
-                }
-                // add the last block
-                current = _array[i];
-                for (int j = (_size - 1) % _blockSize; j > 0; j--)
-                {
-                    _sum += (int)(current & _one);
-                    current >>= 1;
-                }
-                _sum += (int)(current & _one);
-            }
-        }
-#endif
-
-#if UNSAFE
         private unsafe void sumFoldUnsafe()
         {
             _sum = 0;
 
             unchecked
             {
-#if USE64BIT
                 fixed (ulong* arrayPtr = _array)
                 {
                     ulong* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
-#else
-                fixed (uint *arrayPtr = _array)
-                {
-                    uint *currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
-#endif
 
                     while (currentPtr < stopPtr)
                     {
@@ -725,21 +643,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 }
             }
         }
-#else
-        private void sumFoldSafe()
-        {
-            _sum = 0;
-            unchecked
-            {
-                for (int i = 0; i < _array.Length; i++)
-                {
-                    _sum += sumFoldBlock(_array[i]);
-                }
-            }
-        }
-#endif
 
-#if USE64BIT
         private static int sumFoldBlock(ulong block)
         {
             block = (block & 0x5555555555555555ul) + ((block >> 1) & 0x5555555555555555ul);
@@ -749,16 +653,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             block = (block & 0x0000FFFF0000FFFFul) + ((block >> 16) & 0x0000FFFF0000FFFFul);
             return (int)((block & 0x00000000FFFFFFFFul) + (block >> 32));
         }
-#else
-        private static int SumFoldBlock(uint block)
-        {
-            block = (block & 0x55555555u) + ((block >> 1) & 0x55555555u);
-            block = (block & 0x33333333u) + ((block >> 2) & 0x33333333u);
-            block = (block & 0x0F0F0F0Fu) + ((block >> 4) & 0x0F0F0F0Fu);
-            block = (block & 0x00FF00FFu) + ((block >> 8) & 0x00FF00FFu);
-            return (int) ((block & 0x0000FFFFu) + (block >> 16));
-        }
-#endif
 
 #if LOOKUP8
         private void sumLookup8Safe()
@@ -768,7 +662,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             {
                 for (int i = 0; i < _array.Length; i++)
                 {
-#if USE64BIT
                     ulong current = _array[i];
                     _sum += _lookup8[(int)(current & _8bits)];
                     _sum += _lookup8[(int)((current >> 8) & _8bits)];
@@ -778,24 +671,15 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     _sum += _lookup8[(int)((current >> 40) & _8bits)];
                     _sum += _lookup8[(int)((current >> 48) & _8bits)];
                     _sum += _lookup8[(int)(current >> 56)];
-#else
-                    uint current = _array[i];
-                    _sum += _lookup8[(int) (current & _8bits)];
-                    _sum += _lookup8[(int) ((current >> 8) & _8bits)];
-                    _sum += _lookup8[(int) ((current >> 16) & _8bits)];
-                    _sum += _lookup8[(int) (current >> 24)];
-#endif
                 }
             }
         }
 
-#if UNSAFE
         private unsafe void sumLookup8Unsafe()
         {
             _sum = 0;
             unchecked
             {
-#if USE64BIT
                 fixed (ulong* arrayPtr = _array)
                 {
                     fixed (Byte* lookup = _lookup8)
@@ -816,27 +700,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         }
                     }
                 }
-#else
-                fixed (uint *arrayPtr = _array)
-                {
-                    fixed (Byte *lookup = _lookup8)
-                    {
-                        uint *currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
-                        while (currentPtr < stopPtr)
-                        {
-                            uint current = *currentPtr++;
-
-                            _sum += *(lookup + (int) (current & _8bits));
-                            _sum += *(lookup + (int) ((current >> 8) & _8bits));
-                            _sum += *(lookup + (int) ((current >> 16) & _8bits));
-                            _sum += *(lookup + (int) (current >> 24));
-                        }
-                    }
-                }
-#endif
             }
         }
-#endif
 #endif
 
 #if LOOKUP16
@@ -847,28 +712,20 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             {
                 for (int i = 0; i < _array.Length; i++)
                 {
-#if USE64BIT
                     ulong current = _array[i];
                     _sum += _lookup16[(int)(current & _16bits)];
                     _sum += _lookup16[(int)((current >> 16) & _16bits)];
                     _sum += _lookup16[(int)((current >> 32) & _16bits)];
                     _sum += _lookup16[(int)(current >> 48)];
-#else
-                    uint current = _array[i];
-                    _sum += _lookup16[(int) (current & _16bits)];
-                    _sum += _lookup16[(int) (current >> 16)];
-#endif
                 }
             }
         }
 
-#if UNSAFE
         private unsafe void sumLookup16Unsafe()
         {
             _sum = 0;
             unchecked
             {
-#if USE64BIT
                 fixed (ulong* arrayPtr = _array)
                 {
                     fixed (Byte* lookup = _lookup16)
@@ -885,25 +742,8 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         }
                     }
                 }
-#else
-                fixed (uint *arrayPtr = _array)
-                {
-                    fixed (Byte *lookup = _lookup16)
-                    {
-                        uint *currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
-                        while (currentPtr < stopPtr)
-                        {
-                            uint current = *currentPtr++;
-
-                            _sum += *(lookup + (int) (current & _16bits));
-                            _sum += *(lookup + (int) (current >> 16));
-                        }
-                    }
-                }
-#endif
             }
         }
-#endif
 #endif
 
         private void sumSparseSafe()
@@ -913,11 +753,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             {
                 for (int i = 0; i < _array.Length; i++)
                 {
-#if USE64BIT
                     ulong current = _array[i];
-#else
-                    uint current = _array[i];
-#endif
 
                     while (current > 0)
                     {
@@ -928,27 +764,17 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             }
         }
 
-#if UNSAFE
         private unsafe void sumSparseUnsafe()
         {
             _sum = 0;
             unchecked
             {
-#if USE64BIT
                 fixed (ulong* arrayPtr = _array)
                 {
                     ulong* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
                     while (currentPtr < stopPtr)
                     {
                         ulong current = *currentPtr++;
-#else
-                fixed (uint *arrayPtr = _array)
-                {
-                    uint *currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
-                    while (currentPtr < stopPtr)
-                    {
-                        uint current = *currentPtr++;
-#endif
 
                         while (current > 0)
                         {
@@ -959,8 +785,23 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 }
             }
         }
-#endif
 
+        private unsafe void sumPopCnt()
+        {
+            _sum = 0;
+            unchecked
+            {
+                fixed (ulong* arrayPtr = _array)
+                {
+                    ulong* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
+                    while (currentPtr < stopPtr)
+                    {
+                        ulong current = *currentPtr++;
+                        _sum += BitOperations.PopCount(current);
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// sum = (a AND b).Sum
@@ -995,10 +836,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     while (aPt < stopPt)
                     {
                         temp = (*aPt++) & (*bPt++);
-                        sum += *(lookup + (int)(temp & _16bits));
-                        sum += *(lookup + (int)((temp >> 16) & _16bits));
-                        sum += *(lookup + (int)((temp >> 32) & _16bits));
-                        sum += *(lookup + (int)(temp >> 48));
+                        sum += BitOperations.PopCount(temp);
                     }
                 }
             }
@@ -1052,16 +890,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         temp1 = *aPt++;
                         temp2 = *bPt++;
                         temp2 &= temp1;
-                        sum1 += *(lookup + (int)(temp2 & _16bits));
-                        sum1 += *(lookup + (int)((temp2 >> 16) & _16bits));
-                        sum1 += *(lookup + (int)((temp2 >> 32) & _16bits));
-                        sum1 += *(lookup + (int)(temp2 >> 48));
+                        sum1 += BitOperations.PopCount(temp2);
                         temp2 = *cPt++;
                         temp2 &= temp1;
-                        sum2 += *(lookup + (int)(temp2 & _16bits));
-                        sum2 += *(lookup + (int)((temp2 >> 16) & _16bits));
-                        sum2 += *(lookup + (int)((temp2 >> 32) & _16bits));
-                        sum2 += *(lookup + (int)(temp2 >> 48));
+                        sum2 += BitOperations.PopCount(temp2);
                     }
                 }
             }
@@ -1134,28 +966,16 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                         ulong ad = al & dl;
                         ulong bc = bl & cl;
                         ulong bd = bl & dl;
-                        sum1 += *(lookup + (int)(ac & _16bits));
-                        sum1 += *(lookup + (int)((ac >> 16) & _16bits));
-                        sum1 += *(lookup + (int)((ac >> 32) & _16bits));
-                        sum1 += *(lookup + (int)(ac >> 48));
-                        sum2 += *(lookup + (int)(bc & _16bits));
-                        sum2 += *(lookup + (int)((bc >> 16) & _16bits));
-                        sum2 += *(lookup + (int)((bc >> 32) & _16bits));
-                        sum2 += *(lookup + (int)(bc >> 48));
-                        sum3 += *(lookup + (int)(ad & _16bits));
-                        sum3 += *(lookup + (int)((ad >> 16) & _16bits));
-                        sum3 += *(lookup + (int)((ad >> 32) & _16bits));
-                        sum3 += *(lookup + (int)(ad >> 48));
-                        sum4 += *(lookup + (int)(bd & _16bits));
-                        sum4 += *(lookup + (int)((bd >> 16) & _16bits));
-                        sum4 += *(lookup + (int)((bd >> 32) & _16bits));
-                        sum4 += *(lookup + (int)(bd >> 48));
+                        sum1 += BitOperations.PopCount(ac);
+                        sum2 += BitOperations.PopCount(bc);
+                        sum3 += BitOperations.PopCount(ad);
+                        sum4 += BitOperations.PopCount(bd);
                     }
                 }
             }
 
-            /* ukazka pouziti Mono.Simd
-	     * nicmene myslim si, ze bychom meli retizky predelat z ulong[] na Vector2ul[] a pak by to nize bylo komplikovanejsi
+            /* ukazka pouziti System.Numerics
+	     * nicmene myslim si, ze bychom meli retizky predelat z ulong[] na Vector<ulong>[] a pak by to nize bylo komplikovanejsi
             Vector4i sum = new Vector4i(0, 0, 0, 0);
             fixed (ulong* aP = ap, bP = bp, cP = cp, dP = dp)
             {
@@ -1165,10 +985,10 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                     ulong temp1, temp2, temp3;
                     while (aPt < stopPt)
                     {
-		        Vector2ul ab = new Vector2ul(*aPt++, *bPt++);
-			Vector2ul cd = new Vector2ul(*cPt++, *dPt++);
+		        Vector<ulong> ab = new Vector<ulong>(*aPt++, *bPt++);
+			Vector<ulong> cd = new Vector<ulong>(*cPt++, *dPt++);
 			Vector8us aAcbAd = (Vector8us)(ab & cd);
-			Vector8us aAdbAc = (Vector8us)(ab & (Vector2ul)Vector4i.Suffle((Vector4i)cd,ShuffleSel.XFromZ | ShuffleSel.YFromW | ShuffleSel.ZFromX | ShuffleSel.WFromY));
+			Vector8us aAdbAc = (Vector8us)(ab & (Vector<ulong>)Vector4i.Suffle((Vector4i)cd,ShuffleSel.XFromZ | ShuffleSel.YFromW | ShuffleSel.ZFromX | ShuffleSel.WFromY));
 			sum += new Vector4i(*(lookup + (int)aAcbAd.V0), *(lookup + (int)aAdbAc.V4), *(lookup + (int)aAdbAc.V0), *(lookup + (int)aAcbAd.V4));
 			sum += new Vector4i(*(lookup + (int)aAcbAd.V1), *(lookup + (int)aAdbAc.V5), *(lookup + (int)aAdbAc.V1), *(lookup + (int)aAcbAd.V5));
 			sum += new Vector4i(*(lookup + (int)aAcbAd.V2), *(lookup + (int)aAdbAc.V6), *(lookup + (int)aAdbAc.V2), *(lookup + (int)aAcbAd.V6));
@@ -1298,19 +1118,11 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 #if UNSAFE
         private unsafe void fillUnsafe(bool value)
         {
-#if USE64BIT
             fixed (ulong* arrayPtr = _array)
-#else
-            fixed (uint *arrayPtr = _array)
-#endif
             {
                 if (value)
                 {
-#if USE64BIT
                     ulong* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length - 1;
-#else
-                    uint *currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length - 1;
-#endif
                     while (currentPtr < stopPtr)
                     {
                         *currentPtr++ = _allOnes;
@@ -1320,11 +1132,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 }
                 else
                 {
-#if USE64BIT
                     ulong* currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
-#else
-                    uint *currentPtr = arrayPtr, stopPtr = arrayPtr + _array.Length;
-#endif
                     while (currentPtr < stopPtr)
                     {
                         *currentPtr++ = 0;
@@ -1510,11 +1318,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
 		{
 			get
 			{
-#if USE64BIT
 				return _array;
-#else
-				throw new NotImplementedException();
-#endif
 			}
 		}
     }

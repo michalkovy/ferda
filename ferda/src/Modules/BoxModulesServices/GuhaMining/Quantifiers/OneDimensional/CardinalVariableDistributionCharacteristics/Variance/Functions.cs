@@ -165,23 +165,23 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.OneDimensional.CardinalVari
 
         public override bool Compute(QuantifierEvaluateSetting param, Current current__)
         {
-            double value = ComputeValue(param);
+            double value = ComputeValue(param, current__);
             return Guha.Math.Common.Compare(Relation, value, Treshold);
         }
 
         public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Current current__)
         {
-            value = ComputeValue(param);
+            value = ComputeValue(param, current__);
             return Guha.Math.Common.Compare(Relation, value, Treshold);
         }
 
-        public override double ComputeValue(QuantifierEvaluateSetting param, Current current__)
+        public override double ComputeValue(QuantifierEvaluateSetting param, Current current__ = null)
         {
             return ExceptionsHandler.TryCatchMethodThrow<double>(
                 delegate
                     {
                         SingleDimensionContingecyTable table = new SingleDimensionContingecyTable(param);
-                        double[] values = Common.GetNumericValues(param);
+                        double[] values = Common.GetNumericValuesAsync(param).Result; //TODO: make sync
                         return ComputeVariance(table, values);
                     },
                 _boxModule.StringIceIdentity

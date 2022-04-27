@@ -1,0 +1,15 @@
+
+   HOW TO ADD FRONTEND ADDIN
+
+1. How has result look like
+In bin folder in project directory there is AddIns folder. In this folder are FrontEnd AddIns. Every AddIn is .NET library with extension ".dll". If the name of library is <name>.dll then in library must be class Ferda.FrontEnd.AddIns.<name>.Main which implements interface Ferda.FrontEnd.AddIns.IAddInMain (or extends something what implements that interface - for example Ferda.FrontEnd.AddIns.AbstractMain) which you can find in library FrontEndAddInHelper.dll.
+
+2. What can AddIn use for interaction with FrontEnd
+It can use Ferda.FrontEnd.AddIns.IOwnerOfAddIn interface which receives your Ferda.FrontEnd.AddIns.IAddInMain implementation to OwnerOfAddIn property.
+
+3. Creation of AddIn inside Ferda sources (for Ferda code maintainers)
+	1) create new directory in src/FrontEnd/AddIns which has the same name as name of your AddIn - <name>
+	2) add in this directory class Ferda.FrontEnd.AddIns.<name>.Main which extends Ferda.FrontEnd.AddIns.AbstractMain
+	3) implement abstract properties from AbstractMain class in your main
+	4) implement your AddIn
+	5) add to src/FrontEnd/AddIns/default.build procedure of building your AddIn. It has to create library <name>.dll in bin/AddIns

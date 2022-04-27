@@ -209,9 +209,9 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulc
         /// </param>
         /// <param name="current__">Ice stuff</param>
         /// <returns>If the settings satisfies the quantifier</returns>
-        public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Current current__)
+        public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Current current__ = null)
         {
-            value = ComputeValue(param);
+            value = ComputeValue(param, current__);
             return Guha.Math.Common.Compare(Relation, value, Treshold);
         }
 
@@ -224,7 +224,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.FourFold.AntiFProperty.Kulc
         /// </param>
         /// <param name="current__">Ice stuff</param>
         /// <returns>The value of the quantifier</returns>
-        public override double ComputeValue(QuantifierEvaluateSetting param, Current current__)
+        public override double ComputeValue(QuantifierEvaluateSetting param, Current current__ = null)
         {
             return ExceptionsHandler.TryCatchMethodThrow<double>(
                 delegate

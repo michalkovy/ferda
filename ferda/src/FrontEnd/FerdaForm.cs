@@ -748,7 +748,7 @@ using Ferda.ModulesManager;
 			System.Collections.Specialized.StringCollection proxies
 				= new System.Collections.Specialized.StringCollection();
 
-			foreach(string file in System.IO.Directory.GetFiles("AddIns"))
+			foreach(string file in System.IO.Directory.GetFiles("."))
 			{
 				if(System.IO.Path.GetExtension(file) == ".dll")
 				{
@@ -762,20 +762,24 @@ using Ferda.ModulesManager;
 
                     IAddInMain addInMain = (IAddInMain)asembly.CreateInstance(path);
 
-                    //adding the properties displayer if it is a addin capable of
-                    //displaying properties
-                    if (addInMain is Properties.IPropertyProvider)
+                    if (addInMain != null)
                     {
-                        Properties.IPropertyProvider prov = addInMain as
-                            Properties.IPropertyProvider;
 
-                        prov.Displayer = displayer;
+                        //adding the properties displayer if it is a addin capable of
+                        //displaying properties
+                        if (addInMain is Properties.IPropertyProvider)
+                        {
+                            Properties.IPropertyProvider prov = addInMain as
+                                Properties.IPropertyProvider;
+
+                            prov.Displayer = displayer;
+                        }
+
+                        addInMain.OwnerOfAddIn = ownerOfAddIn;
+                        addInMain.ObjectAdapter = objectAdapter;
+                        proxies.AddRange(addInMain.ObjectProxiesToAdd);
+                        addIns.Add(addInMain);
                     }
-
-					addInMain.OwnerOfAddIn = ownerOfAddIn;
-					addInMain.ObjectAdapter = objectAdapter;
-					proxies.AddRange(addInMain.ObjectProxiesToAdd);
-					addIns.Add(addInMain);
 				}
 			}
 			int count = proxies.Count;
@@ -784,10 +788,13 @@ using Ferda.ModulesManager;
 			{
 				proxies.CopyTo(newServices, 0);
 			}
-			modulesManager.AddModuleServices(newServices);
+			modulesManager.AddModuleServices(newServices, null);
         }
 
         #endregion
+
+        // To customize application configuration such as set high DPI settings or default font,
+        // see https://aka.ms/applicationconfiguration.
 
         /// <summary>
         /// The main entry point for the application.
@@ -796,14 +803,19 @@ using Ferda.ModulesManager;
         static void Main(string [] args)
         {
             //debugging information
-            Debug.Listeners.Clear();
+            Trace.Listeners.Clear();
             TextWriterTraceListener t = new TextWriterTraceListener("log.txt");
-            Debug.Listeners.Add(t);
-            Debug.AutoFlush = true;
-            Debug.WriteLine("THE FILE CONTAINS LOG INFORMATION ABOUT FERDA RUN");
+            Trace.Listeners.Add(t);
+            Trace.AutoFlush = true;
+            Trace.WriteLine("THE FILE CONTAINS LOG INFORMATION ABOUT FERDA RUN");
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+
 
         	prescreen = new FerdaPrescreen();
-
+            
             prescreen.Show();
             prescreen.Refresh();
 
@@ -820,14 +832,14 @@ using Ferda.ModulesManager;
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            Debug.WriteLine("FRONTEND - Ice config file loaded.");
+            Trace.WriteLine("FRONTEND - Ice config file loaded.");
             //loading the form
             FerdaForm form = new FerdaForm();
             form.SetupResources(iceConfig);
             
             //switching to the "bin" directory
             string previousDir = FrontEndCommon.SwitchToBinDirectory();
-            Debug.WriteLine("FRONTEND - Switched to binary directiory.");
+            Trace.WriteLine("FRONTEND - Switched to binary directiory.");
 
             prescreen.DisplayText(form.ResManager.GetString("LoadingProjectManager"));
             //loading the project manager
@@ -837,7 +849,7 @@ using Ferda.ModulesManager;
 				args,
 				iceConfig.ProjectManagerOptions,
 				output);
-            Debug.WriteLine("FRONTEND - ProjectManager loaded.");
+            Trace.WriteLine("FRONTEND - ProjectManager loaded.");
 
             //setting the form for the project manager
 		    form.RightAfterConstructor(pm, prescreen);
@@ -846,8 +858,8 @@ using Ferda.ModulesManager;
             prescreen.DisplayText(form.ResManager.GetString("LoadingAddIns"));
             //loading the add ins
 			loadAddIns(form, pm.ModulesManager.Helper.ObjectAdapter, pm.ModulesManager, form.propertyGrid);
-			pm.ModulesManager.AddModuleServices(iceConfig.FrontEndIceObjects);
-            Debug.WriteLine("FRONTEND - AddIns loaded.");
+			pm.ModulesManager.AddModuleServices(iceConfig.FrontEndIceObjects, null);
+            Trace.WriteLine("FRONTEND - AddIns loaded.");
 
             //switching to the directory from where it was executed
             FrontEndCommon.SwitchToPreviousDirectory(previousDir);

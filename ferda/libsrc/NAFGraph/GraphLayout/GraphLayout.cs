@@ -29,7 +29,7 @@ namespace Netron.GraphLib
 		/// <summary>
 		/// Gets or sets the mSite to which the layout belongs
 		/// </summary>
-	public IGraphSite Site
+		public IGraphSite Site
 		{
 			get{return mSite;}
 			set
@@ -57,9 +57,9 @@ namespace Netron.GraphLib
 
 
 
-		public virtual void StartLayout()
+		public virtual Task StartLayout(CancellationToken cancellation)
 		{
-			
+			return Task.CompletedTask;
 		}
 
 		public virtual void StopLayout()

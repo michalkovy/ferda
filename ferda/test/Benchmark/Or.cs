@@ -18,7 +18,7 @@
 
 using System;
 using System.Collections.Generic;
-using Mono.Simd;
+using System.Numerics;
 
 namespace Ferda.Benchmark
 {
@@ -81,15 +81,27 @@ namespace Ferda.Benchmark
             }
         }
 
+        [Benchmark]
+        public static void SafeOrCrispVector()
+        {
+            var tmp = stringVectorUlong1;
+            var tmp2 = stringVectorUlong2;
+            int count = iterations;
+            for (int i = 0; i < count; i++)
+            {
+                OrCrispVector(tmp, tmp2);
+            }
+        }
+
         /// <summary>
-        /// The Vector4f OR benchmark - safe
+        /// The Vector4 OR benchmark - safe
         /// </summary>
         [Benchmark]
-        public static void SafeOrFuzzyVector4f()
+        public static void SafeOrFuzzyVector4()
         {
             //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
-            Vector4f[] tmp2 = stringVector4f2;
+            Vector4[] tmp = stringVector4;
+            Vector4[] tmp2 = stringVector42;
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
@@ -98,14 +110,14 @@ namespace Ferda.Benchmark
         }
 
         /// <summary>
-        /// The Vector4f OR benchmark - unsafe
+        /// The Vector4 OR benchmark - unsafe
         /// </summary>
         [Benchmark]
-        public static void UnsafeOrFuzzyVector4f()
+        public static void UnsafeOrFuzzyVector4()
         {
             //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
-            Vector4f[] tmp2 = stringVector4f2;
+            Vector4[] tmp = stringVector4;
+            Vector4[] tmp2 = stringVector42;
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
@@ -179,207 +191,207 @@ namespace Ferda.Benchmark
         }
 
         /// <summary>
-        /// The Vector4f OR benchmark for fuzzy and crisp bit strings - safe, 
+        /// The Vector4 OR benchmark for fuzzy and crisp bit strings - safe, 
         /// naive version
         /// </summary>
         [Benchmark]
-        public static void SafeOrCrispFuzzyVector4fNaive()
+        public static void SafeOrCrispFuzzyVector4Naive()
         {
             //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
+            Vector4[] tmp = stringVector4;
             ulong[] tmp2 = stringUlong;
             int count = iterations;
             for (int i = 0; i < count; i++)
             {
-                OrSafeCrispFuzzyVector4f1(tmp, tmp2);
+                OrSafeCrispFuzzyVector41(tmp, tmp2);
             }
         }
 
-        /// <summary>
-        /// The Vector4f OR benchmark for fuzzy and crisp bit strings - safe,
-        /// precomputed version
-        /// </summary>
-        [Benchmark]
-        public static void SafeOrCrispFuzzyVector4fPrecomputed()
-        {
-            //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                OrSafeCrispFuzzyVector4f2(tmp, tmp2);
-            }
-        }
+        ///// <summary>
+        ///// The Vector4 OR benchmark for fuzzy and crisp bit strings - safe,
+        ///// precomputed version
+        ///// </summary>
+        //[Benchmark]
+        //public static void SafeOrCrispFuzzyVector4Precomputed()
+        //{
+        //    //don't use static variables in iterations
+        //    Vector4[] tmp = stringVector4;
+        //    ulong[] tmp2 = stringUlong;
+        //    int count = iterations;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        OrSafeCrispFuzzyVector42(tmp, tmp2);
+        //    }
+        //}
 
-        /// <summary>
-        /// The Vector4f OR benchmark for fuzzy and crisp bit strings - safe,
-        /// precomputed version with shifts in creation of Vector4f
-        /// </summary>
-        [Benchmark]
-        public static void SafeOrCrispFuzzyVector4fPrecomputedShift()
-        {
-            //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                OrSafeCrispFuzzyVector4f3(tmp, tmp2);
-            }
-        }
+        ///// <summary>
+        ///// The Vector4 OR benchmark for fuzzy and crisp bit strings - safe,
+        ///// precomputed version with shifts in creation of Vector4
+        ///// </summary>
+        //[Benchmark]
+        //public static void SafeOrCrispFuzzyVector4PrecomputedShift()
+        //{
+        //    //don't use static variables in iterations
+        //    Vector4[] tmp = stringVector4;
+        //    ulong[] tmp2 = stringUlong;
+        //    int count = iterations;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        OrSafeCrispFuzzyVector43(tmp, tmp2);
+        //    }
+        //}
 
-        /// <summary>
-        /// The Vector4f OR benchmark for fuzzy and crisp bit strings - safe,
-        /// precomputed version with shifts in creation of Vector4f without
-        /// static variables
-        /// </summary>
-        [Benchmark]
-        public static void SafeOrCrispFuzzyVector4fPrecomputedShiftNoStatic()
-        {
-            //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                OrSafeCrispFuzzyVector4f3NoStatic(tmp, tmp2);
-            }
-        }
+        ///// <summary>
+        ///// The Vector4 OR benchmark for fuzzy and crisp bit strings - safe,
+        ///// precomputed version with shifts in creation of Vector4 without
+        ///// static variables
+        ///// </summary>
+        //[Benchmark]
+        //public static void SafeOrCrispFuzzyVector4PrecomputedShiftNoStatic()
+        //{
+        //    //don't use static variables in iterations
+        //    Vector4[] tmp = stringVector4;
+        //    ulong[] tmp2 = stringUlong;
+        //    int count = iterations;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        OrSafeCrispFuzzyVector43NoStatic(tmp, tmp2);
+        //    }
+        //}
 
-        /// <summary>
-        /// The Vector4f OR benchmark for fuzzy and crisp bit strings - safe,
-        /// precomputed version with shifts in creation of Vector4f without
-        /// alocations of new Vector4f's
-        /// </summary>
-        [Benchmark]
-        public static void SafeOrCrispFuzzyVector4fPrecomputedShiftNoAllocation()
-        {
-            //don't use static variables in iterations
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                OrSafeCrispFuzzyVector4f3NoAllocation(tmp, tmp2);
-            }
-        }
+        ///// <summary>
+        ///// The Vector4 OR benchmark for fuzzy and crisp bit strings - safe,
+        ///// precomputed version with shifts in creation of Vector4 without
+        ///// alocations of new Vector4's
+        ///// </summary>
+        //[Benchmark]
+        //public static void SafeOrCrispFuzzyVector4PrecomputedShiftNoAllocation()
+        //{
+        //    //don't use static variables in iterations
+        //    Vector4[] tmp = stringVector4;
+        //    ulong[] tmp2 = stringUlong;
+        //    int count = iterations;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        OrSafeCrispFuzzyVector43NoAllocation(tmp, tmp2);
+        //    }
+        //}
 
-        /// <summary>
-        /// The Vector4f OR benchmark for fuzzy and crisp bit strings - unsafe,
-        /// precomputed version
-        /// </summary>
-        [Benchmark]
-        public static void UnsafeOrCrispFuzzyVector4fPrecomputed()
-        {
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                OrUnsafeCrispFuzzyVector4f2(tmp, tmp2);
-            }
-        }
+        ///// <summary>
+        ///// The Vector4 OR benchmark for fuzzy and crisp bit strings - unsafe,
+        ///// precomputed version
+        ///// </summary>
+        //[Benchmark]
+        //public static void UnsafeOrCrispFuzzyVector4Precomputed()
+        //{
+        //    Vector4[] tmp = stringVector4;
+        //    ulong[] tmp2 = stringUlong;
+        //    int count = iterations;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        OrUnsafeCrispFuzzyVector42(tmp, tmp2);
+        //    }
+        //}
 
-        /// <summary>
-        /// The Vector4f OR benchmark for fuzzy and crisp bit strings - unsafe,
-        /// precomputed version without allocation of new memory in the cycles
-        /// </summary>
-        [Benchmark]
-        public static void UnsafeOrCrispFuzzyVector4fPrecomputedNoAllocation()
-        {
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                OrUnsafeCrispFuzzyVector4f2NoAllocation(tmp, tmp2);
-            }
-        }
+        ///// <summary>
+        ///// The Vector4 OR benchmark for fuzzy and crisp bit strings - unsafe,
+        ///// precomputed version without allocation of new memory in the cycles
+        ///// </summary>
+        //[Benchmark]
+        //public static void UnsafeOrCrispFuzzyVector4PrecomputedNoAllocation()
+        //{
+        //    Vector4[] tmp = stringVector4;
+        //    ulong[] tmp2 = stringUlong;
+        //    int count = iterations;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        OrUnsafeCrispFuzzyVector42NoAllocation(tmp, tmp2);
+        //    }
+        //}
 
-        /// <summary>
-        /// The Vector4f OR benchmark for fuzzy and crisp bit strings - unsafe,
-        /// precomputed version without static variables, without allocation of new memory
-        /// in the cycles
-        /// </summary>
-        [Benchmark]
-        public static void UnsafeOrCrispFuzzyVector4fPrecomputedNoStaticNoAllocation()
-        {
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                OrUnsafeCrispFuzzyVector4f2NoAllocationNoStatic(tmp, tmp2);
-            }
-        }
+        ///// <summary>
+        ///// The Vector4 OR benchmark for fuzzy and crisp bit strings - unsafe,
+        ///// precomputed version without static variables, without allocation of new memory
+        ///// in the cycles
+        ///// </summary>
+        //[Benchmark]
+        //public static void UnsafeOrCrispFuzzyVector4PrecomputedNoStaticNoAllocation()
+        //{
+        //    Vector4[] tmp = stringVector4;
+        //    ulong[] tmp2 = stringUlong;
+        //    int count = iterations;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        OrUnsafeCrispFuzzyVector42NoAllocationNoStatic(tmp, tmp2);
+        //    }
+        //}
 
-        /// <summary>
-        /// The Vector4f OR benchmark for fuzzy and crisp bit strings - unsafe,
-        /// precomputed version with shifts in creation of Vector4f
-        /// </summary>
-        [Benchmark]
-        public static void UnsafeOrCrispFuzzyVector4fPrecomputedShift()
-        {
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                OrUnsafeCrispFuzzyVector4f3(tmp, tmp2);
-            }
-        }
+        ///// <summary>
+        ///// The Vector4 OR benchmark for fuzzy and crisp bit strings - unsafe,
+        ///// precomputed version with shifts in creation of Vector4
+        ///// </summary>
+        //[Benchmark]
+        //public static void UnsafeOrCrispFuzzyVector4PrecomputedShift()
+        //{
+        //    Vector4[] tmp = stringVector4;
+        //    ulong[] tmp2 = stringUlong;
+        //    int count = iterations;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        OrUnsafeCrispFuzzyVector43(tmp, tmp2);
+        //    }
+        //}
 
-        /// <summary>
-        /// The Vector4f OR benchmark for fuzzy and crisp bit strings - unsafe,
-        /// precomputed version with shifts in creation of Vector4f, 
-        /// no static variables
-        /// </summary>
-        [Benchmark]
-        public static void UnsafeOrCrispFuzzyVector4fPrecomputedShiftNoStatic()
-        {
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                OrUnsafeCrispFuzzyVector4f3NoStatic(tmp, tmp2);
-            }
-        }
+        ///// <summary>
+        ///// The Vector4 OR benchmark for fuzzy and crisp bit strings - unsafe,
+        ///// precomputed version with shifts in creation of Vector4, 
+        ///// no static variables
+        ///// </summary>
+        //[Benchmark]
+        //public static void UnsafeOrCrispFuzzyVector4PrecomputedShiftNoStatic()
+        //{
+        //    Vector4[] tmp = stringVector4;
+        //    ulong[] tmp2 = stringUlong;
+        //    int count = iterations;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        OrUnsafeCrispFuzzyVector43NoStatic(tmp, tmp2);
+        //    }
+        //}
 
-        /// <summary>
-        /// The Vector4f OR benchmark for fuzzy and crisp bit strings - unsafe,
-        /// precomputed version with shifts in creation of Vector4f, 
-        /// no allocation of new memory in cycles
-        /// </summary>
-        [Benchmark]
-        public static void UnsafeOrCrispFuzzyVector4fPrecomputedShiftNoAllocation()
-        {
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                OrUnsafeCrispFuzzyVector4f3NoAllocation(tmp, tmp2);
-            }
-        }
+        ///// <summary>
+        ///// The Vector4 OR benchmark for fuzzy and crisp bit strings - unsafe,
+        ///// precomputed version with shifts in creation of Vector4, 
+        ///// no allocation of new memory in cycles
+        ///// </summary>
+        //[Benchmark]
+        //public static void UnsafeOrCrispFuzzyVector4PrecomputedShiftNoAllocation()
+        //{
+        //    Vector4[] tmp = stringVector4;
+        //    ulong[] tmp2 = stringUlong;
+        //    int count = iterations;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        OrUnsafeCrispFuzzyVector43NoAllocation(tmp, tmp2);
+        //    }
+        //}
 
-        /// <summary>
-        /// The Vector4f OR benchmark for fuzzy and crisp bit strings - unsafe,
-        /// precomputed version with shifts in creation of Vector4f, 
-        /// no allocation of new memory in cycles + no static variables
-        /// </summary>
-        [Benchmark]
-        public static void UnsafeOrCrispFuzzyVector4fPrecomputedShiftNoStaticNoAllocation()
-        {
-            Vector4f[] tmp = stringVector4f;
-            ulong[] tmp2 = stringUlong;
-            int count = iterations;
-            for (int i = 0; i < count; i++)
-            {
-                OrUnsafeCrispFuzzyVector4f3NoAllocationNoStatic(tmp, tmp2);
-            }
-        }
+        ///// <summary>
+        ///// The Vector4 OR benchmark for fuzzy and crisp bit strings - unsafe,
+        ///// precomputed version with shifts in creation of Vector4, 
+        ///// no allocation of new memory in cycles + no static variables
+        ///// </summary>
+        //[Benchmark]
+        //public static void UnsafeOrCrispFuzzyVector4PrecomputedShiftNoStaticNoAllocation()
+        //{
+        //    Vector4[] tmp = stringVector4;
+        //    ulong[] tmp2 = stringUlong;
+        //    int count = iterations;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        OrUnsafeCrispFuzzyVector43NoAllocationNoStatic(tmp, tmp2);
+        //    }
+        //}
 
         #endregion
 
@@ -423,13 +435,22 @@ namespace Ferda.Benchmark
             return operand1;
         }
 
+        static Vector<ulong>[] OrCrispVector(Vector<ulong>[] operand1, Vector<ulong>[] operand2)
+        {
+            for (int i = 0; i < operand1.Length; i++)
+            {
+                operand1[i] |= operand2[i];
+            }
+            return operand1;
+        }
+
         /// <summary>
-        /// The safe implementation of the disjunction with Vector4f
+        /// The safe implementation of the disjunction with Vector4
         /// </summary>
         /// <param name="operand1">1. operand</param>
         /// <param name="operand2">2. operand</param>
         /// <returns>Disjunction result</returns>
-        static Vector4f[] OrSafe4f(Vector4f[] operand1, Vector4f[] operand2)
+        static Vector4[] OrSafe4f(Vector4[] operand1, Vector4[] operand2)
         {
             for (int i = 0; i < operand1.Length; i++)
             {
@@ -439,16 +460,16 @@ namespace Ferda.Benchmark
         }
 
         /// <summary>
-        /// The unsafe implementation of the disjunction with Vector4f
+        /// The unsafe implementation of the disjunction with Vector4
         /// </summary>
         /// <param name="operand1">1. operand</param>
         /// <param name="operand2">2. operand</param>
         /// <returns>Disjunction result</returns>
-        static unsafe Vector4f[] OrUnsafe4f(Vector4f[] operand1, Vector4f[] operand2)
+        static unsafe Vector4[] OrUnsafe4f(Vector4[] operand1, Vector4[] operand2)
         {
-            fixed (Vector4f* thisPin = operand1, sourcePin = operand2)
+            fixed (Vector4* thisPin = operand1, sourcePin = operand2)
             {
-                Vector4f* currentPtr = thisPin, sourcePtr = sourcePin,
+                Vector4* currentPtr = thisPin, sourcePtr = sourcePin,
                     stopPtr = thisPin + operand1.Length;
                 while (currentPtr < stopPtr)
                 {
@@ -500,16 +521,16 @@ namespace Ferda.Benchmark
 
         /// <summary>
         /// The safe implementation of disjunction between fuzzy and crisp 
-        /// bit string using Vector4f. Algorithm 1 - naive
+        /// bit string using Vector4. Algorithm 1 - naive
         /// </summary>
         /// <param name="operand1">1. operand (fuzzy)</param>
         /// <param name="operand2">2. operand (crisp)</param>
         /// <returns>Disjunction result (fuzzy)</returns>
-        static Vector4f[] OrSafeCrispFuzzyVector4f1(Vector4f[] operand1, ulong[] operand2)
+        static Vector4[] OrSafeCrispFuzzyVector41(Vector4[] operand1, ulong[] operand2)
         {
             for (int i = 0; i < operand1.Length; i++)
             {
-                Vector4f tmp = new Vector4f(
+                Vector4 tmp = new Vector4(
                     Convert.ToSingle((operand2[4 * i / 64] & (_one << (4 * i % 64))) > 0),
                     Convert.ToSingle((operand2[(4 * i + 1) / 64] & (_one << ((4 * i + 1) % 64))) > 0),
                     Convert.ToSingle((operand2[(4 * i + 2) / 64] & (_one << ((4 * i + 2) % 64))) > 0),
@@ -750,1307 +771,1307 @@ namespace Ferda.Benchmark
             return operand1;
         }
 
-        /// <summary>
-        /// The safe implementation of disjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and float vectors.
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64.
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Disjunction result (fuzzy)</returns>
-        public static Vector4f[] OrSafeCrispFuzzyVector4f2(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF;
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-            int vPtr = 0;
-
-            for (int i = 0; i < operand2.Length; i++)
-            {
-                part = (uint)operand2[i]; //last 8 bits
-                vect = new Vector4ui(part, part, part, part);
-
-                tmpUi = vect & sui1;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf1;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui2;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf2;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui3;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf3;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui4;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf4;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui5;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf5;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui6;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf6;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui7;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf7;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui8;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf8;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-
-                part = (uint)(operand2[i] >> 32);
-                vect = new Vector4ui(part, part, part, part);
-
-                tmpUi = vect & sui1;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf1;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui2;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf2;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui3;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf3;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui4;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf4;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui5;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf5;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui6;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf6;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui7;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf7;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui8;
-                tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf8;
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-            }
-            return operand1;
-        }
-
-        /// <summary>
-        /// The safe implementation of disjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64.
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Disjunction result (fuzzy)</returns>
-        public static Vector4f[] OrSafeCrispFuzzyVector4f3(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF;
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-            int vPtr = 0;
-
-            for (int i = 0; i < operand2.Length; i++)
-            {
-                part = (uint)operand2[i]; //last 8 bits
-                vect = new Vector4ui(part, part, part, part);
-
-                tmpUi = vect & sui1;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui2;
-                tmpF = new Vector4f(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui3;
-                tmpF = new Vector4f(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui4;
-                tmpF = new Vector4f(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui5;
-                tmpF = new Vector4f(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui6;
-                tmpF = new Vector4f(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui7;
-                tmpF = new Vector4f(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui8;
-                tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-
-                part = (uint)(operand2[i] >> 32);
-                vect = new Vector4ui(part, part, part, part);
-
-                tmpUi = vect & sui1;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui2;
-                tmpF = new Vector4f(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui3;
-                tmpF = new Vector4f(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui4;
-                tmpF = new Vector4f(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui5;
-                tmpF = new Vector4f(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui6;
-                tmpF = new Vector4f(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui7;
-                tmpF = new Vector4f(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui8;
-                tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-            }
-            return operand1;
-        }
-
-        /// <summary>
-        /// The safe implementation of disjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64. The algorithm
-        /// doesn't use allocation of new memory in computation of individual Vector4f's,
-        /// it assigns to only one Vector4f previously defined. 
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Disjunction result (fuzzy)</returns>
-        public static Vector4f[] OrSafeCrispFuzzyVector4f3NoAllocation(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF = new Vector4f();
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-            int vPtr = 0;
-
-            for (int i = 0; i < operand2.Length; i++)
-            {
-                part = (uint)operand2[i]; //last 8 bits
-                vect = new Vector4ui(part, part, part, part);
-
-                tmpUi = vect & sui1;
-                tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui2;
-                tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui3;
-                tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui4;
-                tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui5;
-                tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui6;
-                tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui7;
-                tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui8;
-                tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-
-                part = (uint)(operand2[i] >> 32);
-                vect = new Vector4ui(part, part, part, part);
-
-                tmpUi = vect & sui1;
-                tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui2;
-                tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui3;
-                tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui4;
-                tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui5;
-                tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui6;
-                tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui7;
-                tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & sui8;
-                tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-            }
-            return operand1;
-        }
-
-        /// <summary>
-        /// The safe implementation of disjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64. The algorithm
-        /// doesn't use allocation of new memory in computation of individual Vector4f's,
-        /// it assigns to only one Vector4f previously defined + does not use static variables
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Disjunction result (fuzzy)</returns>
-        public static Vector4f[] OrSafeCrispFuzzyVector4f3NoStaticNoAllocation(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF = new Vector4f();
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-            int vPtr = 0;
-
-            Vector4ui ui1 = sui1;
-            Vector4ui ui2 = sui2;
-            Vector4ui ui3 = sui3;
-            Vector4ui ui4 = sui4;
-            Vector4ui ui5 = sui5;
-            Vector4ui ui6 = sui6;
-            Vector4ui ui7 = sui7;
-            Vector4ui ui8 = sui8;
-
-            for (int i = 0; i < operand2.Length; i++)
-            {
-                part = (uint)operand2[i]; //last 8 bits
-                vect = new Vector4ui(part, part, part, part);
-
-                tmpUi = vect & ui1;
-                tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui2;
-                tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui3;
-                tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui4;
-                tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui5;
-                tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui6;
-                tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui7;
-                tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui8;
-                tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-
-                part = (uint)(operand2[i] >> 32);
-                vect = new Vector4ui(part, part, part, part);
-
-                tmpUi = vect & ui1;
-                tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui2;
-                tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui3;
-                tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui4;
-                tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui5;
-                tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui6;
-                tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui7;
-                tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui8;
-                tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-            }
-            return operand1;
-        }
-
-        /// <summary>
-        /// The safe implementation of disjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64. No static variables used
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Disjunction result (fuzzy)</returns>
-        public static Vector4f[] OrSafeCrispFuzzyVector4f3NoStatic(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF;
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-            int vPtr = 0;
-
-            Vector4ui ui1 = sui1;
-            Vector4ui ui2 = sui2;
-            Vector4ui ui3 = sui3;
-            Vector4ui ui4 = sui4;
-            Vector4ui ui5 = sui5;
-            Vector4ui ui6 = sui6;
-            Vector4ui ui7 = sui7;
-            Vector4ui ui8 = sui8;
-
-            for (int i = 0; i < operand2.Length; i++)
-            {
-                part = (uint)operand2[i]; //last 8 bits
-                vect = new Vector4ui(part, part, part, part);
-
-                tmpUi = vect & ui1;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui2;
-                tmpF = new Vector4f(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui3;
-                tmpF = new Vector4f(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui4;
-                tmpF = new Vector4f(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui5;
-                tmpF = new Vector4f(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui6;
-                tmpF = new Vector4f(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui7;
-                tmpF = new Vector4f(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui8;
-                tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-
-                part = (uint)(operand2[i] >> 32);
-                vect = new Vector4ui(part, part, part, part);
-
-                tmpUi = vect & ui1;
-                tmpF = new Vector4f(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui2;
-                tmpF = new Vector4f(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui3;
-                tmpF = new Vector4f(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui4;
-                tmpF = new Vector4f(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui5;
-                tmpF = new Vector4f(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui6;
-                tmpF = new Vector4f(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui7;
-                tmpF = new Vector4f(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-                tmpUi = vect & ui8;
-                tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
-                operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
-                vPtr++;
-            }
-            return operand1;
-        }
-
-        /// <summary>
-        /// The unsafe implementation of disjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and float vectors.
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64.
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Disjunction result (fuzzy)</returns>
-        public unsafe static Vector4f[] OrUnsafeCrispFuzzyVector4f2(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF;
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-
-            fixed (ulong* pinUL = operand2)
-            {
-                fixed (Vector4f* pinV = operand1)
-                {
-                    ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
-                    Vector4f* ptrV = pinV;
-
-                    //the main cycle
-                    while (ptrUL < stopUL)
-                    {
-                        part = (uint)*ptrUL; //last 8 bits
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & sui1;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf1;
-                        *ptrV = tmpF + *ptrV - tmpF* (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui2;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf2;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui3;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf3;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui4;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf4;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui5;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf5;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui6;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf6;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui7;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf7;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui8;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf8;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        part = (uint)(*ptrUL >> 32);
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & sui1;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf1;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui2;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf2;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui3;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf3;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui4;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf4;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui5;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf5;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui6;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf6;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui7;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf7;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui8;
-                        tmpF = (new Vector4f(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf8;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        ptrUL++;
-                    }
-                }
-            }
-            return operand1;
-        }
-
-        /// <summary>
-        /// The unsafe implementation of disjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and float vectors. The algorithm
-        /// doesn't use allocation of new memory in computation of individual Vector4f's,
-        /// it assigns to only one Vector4f previously defined. 
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64.
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Disjunction result (fuzzy)</returns>
-        public unsafe static Vector4f[] OrUnsafeCrispFuzzyVector4f2NoAllocation(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF = new Vector4f();
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-
-            fixed (ulong* pinUL = operand2)
-            {
-                fixed (Vector4f* pinV = operand1)
-                {
-                    ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
-                    Vector4f* ptrV = pinV;
-
-                    //the main cycle
-                    while (ptrUL < stopUL)
-                    {
-                        part = (uint)*ptrUL; //last 8 bits
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & sui1;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf1;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui2;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf2;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui3;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf3;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui4;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf4;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui5;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf5;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui6;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf6;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui7;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf7;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui8;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf8;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        part = (uint)(*ptrUL >> 32);
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & sui1;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf1;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui2;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf2;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui3;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf3;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui4;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf4;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui5;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf5;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui6;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf6;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui7;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf7;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui8;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= sf8;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        ptrUL++;
-                    }
-                }
-            }
-            return operand1;
-        }
-
-        /// <summary>
-        /// The unsafe implementation of disjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and float vectors. The algorithm
-        /// doesn't use allocation of new memory in computation of individual Vector4f's,
-        /// it assigns to only one Vector4f previously defined. No static variables used
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64.
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Disjunction result (fuzzy)</returns>
-        public unsafe static Vector4f[] OrUnsafeCrispFuzzyVector4f2NoAllocationNoStatic(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF = new Vector4f();
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-
-            Vector4ui ui1 = sui1;
-            Vector4ui ui2 = sui2;
-            Vector4ui ui3 = sui3;
-            Vector4ui ui4 = sui4;
-            Vector4ui ui5 = sui5;
-            Vector4ui ui6 = sui6;
-            Vector4ui ui7 = sui7;
-            Vector4ui ui8 = sui8;
-            Vector4f f1 = sf1;
-            Vector4f f2 = sf2;
-            Vector4f f3 = sf3;
-            Vector4f f4 = sf4;
-            Vector4f f5 = sf5;
-            Vector4f f6 = sf6;
-            Vector4f f7 = sf7;
-            Vector4f f8 = sf8;
-
-            fixed (ulong* pinUL = operand2)
-            {
-                fixed (Vector4f* pinV = operand1)
-                {
-                    ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
-                    Vector4f* ptrV = pinV;
-
-                    //the main cycle
-                    while (ptrUL < stopUL)
-                    {
-                        part = (uint)*ptrUL; //last 8 bits
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & ui1;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f1;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui2;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f2;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui3;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f3;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui4;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f4;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui5;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f5;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui6;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f6;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui7;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f7;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui8;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f8;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        part = (uint)(*ptrUL >> 32);
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & ui1;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f1;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui2;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f2;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui3;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f3;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui4;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f4;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui5;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f5;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui6;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f6;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui7;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f7;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui8;
-                        tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
-                        tmpF /= f8;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        ptrUL++;
-                    }
-                }
-            }
-            return operand1;
-        }
-
-        /// <summary>
-        /// The unsafe implementation of disjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64.
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Disjunction result (fuzzy)</returns>
-        public unsafe static Vector4f[] OrUnsafeCrispFuzzyVector4f3(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF;
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-
-            fixed (ulong* pinUL = operand2)
-            {
-                fixed (Vector4f* pinV = operand1)
-                {
-                    ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
-                    Vector4f* ptrV = pinV;
-
-                    //the main cycle
-                    while (ptrUL < stopUL)
-                    {
-                        part = (uint)*ptrUL; //last 8 bits
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & sui1;
-                        tmpF = new Vector4f(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui2;
-                        tmpF = new Vector4f(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui3;
-                        tmpF = new Vector4f(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui4;
-                        tmpF = new Vector4f(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui5;
-                        tmpF = new Vector4f(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui6;
-                        tmpF = new Vector4f(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui7;
-                        tmpF = new Vector4f(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui8;
-                        tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31); ;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        part = (uint)(*ptrUL >> 32);
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & sui1;
-                        tmpF = new Vector4f(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui2;
-                        tmpF = new Vector4f(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui3;
-                        tmpF = new Vector4f(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui4;
-                        tmpF = new Vector4f(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui5;
-                        tmpF = new Vector4f(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui6;
-                        tmpF = new Vector4f(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui7;
-                        tmpF = new Vector4f(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui8;
-                        tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        ptrUL++;
-                    }
-                }
-            }
-            return operand1;
-        }
-
-        /// <summary>
-        /// The unsafe implementation of disjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64. The algorithm
-        /// doesn't use allocation of new memory in computation of individual Vector4f's,
-        /// it assigns to only one Vector4f previously defined. 
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Disjunction result (fuzzy)</returns>
-        public unsafe static Vector4f[] OrUnsafeCrispFuzzyVector4f3NoAllocation(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF = new Vector4f();
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-
-            fixed (ulong* pinUL = operand2)
-            {
-                fixed (Vector4f* pinV = operand1)
-                {
-                    ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
-                    Vector4f* ptrV = pinV;
-
-                    //the main cycle
-                    while (ptrUL < stopUL)
-                    {
-                        part = (uint)*ptrUL; //last 8 bits
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & sui1;
-                        tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui2;
-                        tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui3;
-                        tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui4;
-                        tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui5;
-                        tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui6;
-                        tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui7;
-                        tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui8;
-                        tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        part = (uint)(*ptrUL >> 32);
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & sui1;
-                        tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui2;
-                        tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui3;
-                        tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui4;
-                        tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui5;
-                        tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui6;
-                        tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui7;
-                        tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & sui8;
-                        tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        ptrUL++;
-                    }
-                }
-            }
-            return operand1;
-        }
-
-        /// <summary>
-        /// The unsafe implementation of disjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64. No static variables used
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Disjunction result (fuzzy)</returns>
-        public unsafe static Vector4f[] OrUnsafeCrispFuzzyVector4f3NoStatic(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF;
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-
-            Vector4ui ui1 = sui1;
-            Vector4ui ui2 = sui2;
-            Vector4ui ui3 = sui3;
-            Vector4ui ui4 = sui4;
-            Vector4ui ui5 = sui5;
-            Vector4ui ui6 = sui6;
-            Vector4ui ui7 = sui7;
-            Vector4ui ui8 = sui8;
-
-            fixed (ulong* pinUL = operand2)
-            {
-                fixed (Vector4f* pinV = operand1)
-                {
-                    ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
-                    Vector4f* ptrV = pinV;
-
-                    //the main cycle
-                    while (ptrUL < stopUL)
-                    {
-                        part = (uint)*ptrUL; //last 8 bits
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & ui1;
-                        tmpF = new Vector4f(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui2;
-                        tmpF = new Vector4f(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui3;
-                        tmpF = new Vector4f(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui4;
-                        tmpF = new Vector4f(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui5;
-                        tmpF = new Vector4f(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui6;
-                        tmpF = new Vector4f(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui7;
-                        tmpF = new Vector4f(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui8;
-                        tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31); ;
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        part = (uint)(*ptrUL >> 32);
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & ui1;
-                        tmpF = new Vector4f(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui2;
-                        tmpF = new Vector4f(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui3;
-                        tmpF = new Vector4f(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui4;
-                        tmpF = new Vector4f(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui5;
-                        tmpF = new Vector4f(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui6;
-                        tmpF = new Vector4f(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui7;
-                        tmpF = new Vector4f(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui8;
-                        tmpF = new Vector4f(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        ptrUL++;
-                    }
-                }
-            }
-            return operand1;
-        }
-
-        /// <summary>
-        /// The unsafe implementation of disjunction between fuzy and crisp
-        /// bit strings using Vector4f and precomputed uint and shifting creation of the Vector4f
-        /// The algoritm presumes the number of elements both in ulong and Vector4f
-        /// fields to be a multiple of 64. The algorithm
-        /// doesn't use allocation of new memory in computation of individual Vector4f's,
-        /// it assigns to only one Vector4f previously defined. No static variables used
-        /// </summary>
-        /// <param name="operand1">1. operand (fuzzy)</param>
-        /// <param name="operand2">2. operand (crisp)</param>
-        /// <returns>Disjunction result (fuzzy)</returns>
-        public unsafe static Vector4f[] OrUnsafeCrispFuzzyVector4f3NoAllocationNoStatic(Vector4f[] operand1, ulong[] operand2)
-        {
-            Vector4f tmpF = new Vector4f();
-            Vector4ui tmpUi;
-            Vector4ui vect;
-            uint part;
-
-            Vector4ui ui1 = sui1;
-            Vector4ui ui2 = sui2;
-            Vector4ui ui3 = sui3;
-            Vector4ui ui4 = sui4;
-            Vector4ui ui5 = sui5;
-            Vector4ui ui6 = sui6;
-            Vector4ui ui7 = sui7;
-            Vector4ui ui8 = sui8;
-
-            fixed (ulong* pinUL = operand2)
-            {
-                fixed (Vector4f* pinV = operand1)
-                {
-                    ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
-                    Vector4f* ptrV = pinV;
-
-                    //the main cycle
-                    while (ptrUL < stopUL)
-                    {
-                        part = (uint)*ptrUL; //last 8 bits
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & ui1;
-                        tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui2;
-                        tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui3;
-                        tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui4;
-                        tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui5;
-                        tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui6;
-                        tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui7;
-                        tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui8;
-                        tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        part = (uint)(*ptrUL >> 32);
-                        vect = new Vector4ui(part, part, part, part);
-
-                        tmpUi = vect & ui1;
-                        tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui2;
-                        tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui3;
-                        tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui4;
-                        tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui5;
-                        tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui6;
-                        tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui7;
-                        tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-                        tmpUi = vect & ui8;
-                        tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
-                        *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
-                        ptrV++;
-
-                        ptrUL++;
-                    }
-                }
-            }
-            return operand1;
-        }
+        ///// <summary>
+        ///// The safe implementation of disjunction between fuzy and crisp
+        ///// bit strings using Vector4 and precomputed uint and float vectors.
+        ///// The algoritm presumes the number of elements both in ulong and Vector4
+        ///// fields to be a multiple of 64.
+        ///// </summary>
+        ///// <param name="operand1">1. operand (fuzzy)</param>
+        ///// <param name="operand2">2. operand (crisp)</param>
+        ///// <returns>Disjunction result (fuzzy)</returns>
+        //public static Vector4[] OrSafeCrispFuzzyVector42(Vector4[] operand1, ulong[] operand2)
+        //{
+        //    Vector4 tmpF;
+        //    Vector<uint> tmpUi;
+        //    Vector<uint> vect;
+        //    uint part;
+        //    int vPtr = 0;
+
+        //    for (int i = 0; i < operand2.Length; i++)
+        //    {
+        //        part = (uint)operand2[i]; //last 8 bits
+        //        vect = new Vector<uint>(part, part, part, part);
+
+        //        tmpUi = vect & sui1;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf1;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui2;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf2;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui3;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf3;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui4;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf4;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui5;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf5;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui6;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf6;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui7;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf7;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui8;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf8;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+
+        //        part = (uint)(operand2[i] >> 32);
+        //        vect = new Vector<uint>(part, part, part, part);
+
+        //        tmpUi = vect & sui1;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf1;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui2;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf2;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui3;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf3;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui4;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf4;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui5;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf5;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui6;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf6;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui7;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf7;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui8;
+        //        tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W))/sf8;
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //    }
+        //    return operand1;
+        //}
+
+        ///// <summary>
+        ///// The safe implementation of disjunction between fuzy and crisp
+        ///// bit strings using Vector4 and precomputed uint and shifting creation of the Vector4
+        ///// The algoritm presumes the number of elements both in ulong and Vector4
+        ///// fields to be a multiple of 64.
+        ///// </summary>
+        ///// <param name="operand1">1. operand (fuzzy)</param>
+        ///// <param name="operand2">2. operand (crisp)</param>
+        ///// <returns>Disjunction result (fuzzy)</returns>
+        //public static Vector4[] OrSafeCrispFuzzyVector43(Vector4[] operand1, ulong[] operand2)
+        //{
+        //    Vector4 tmpF;
+        //    Vector<uint> tmpUi;
+        //    Vector<uint> vect;
+        //    uint part;
+        //    int vPtr = 0;
+
+        //    for (int i = 0; i < operand2.Length; i++)
+        //    {
+        //        part = (uint)operand2[i]; //last 8 bits
+        //        vect = new Vector<uint>(part, part, part, part);
+
+        //        tmpUi = vect & sui1;
+        //        tmpF = new Vector4(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui2;
+        //        tmpF = new Vector4(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui3;
+        //        tmpF = new Vector4(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui4;
+        //        tmpF = new Vector4(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui5;
+        //        tmpF = new Vector4(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui6;
+        //        tmpF = new Vector4(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui7;
+        //        tmpF = new Vector4(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui8;
+        //        tmpF = new Vector4(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+
+        //        part = (uint)(operand2[i] >> 32);
+        //        vect = new Vector<uint>(part, part, part, part);
+
+        //        tmpUi = vect & sui1;
+        //        tmpF = new Vector4(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui2;
+        //        tmpF = new Vector4(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui3;
+        //        tmpF = new Vector4(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui4;
+        //        tmpF = new Vector4(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui5;
+        //        tmpF = new Vector4(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui6;
+        //        tmpF = new Vector4(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui7;
+        //        tmpF = new Vector4(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui8;
+        //        tmpF = new Vector4(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //    }
+        //    return operand1;
+        //}
+
+        ///// <summary>
+        ///// The safe implementation of disjunction between fuzy and crisp
+        ///// bit strings using Vector4 and precomputed uint and shifting creation of the Vector4
+        ///// The algoritm presumes the number of elements both in ulong and Vector4
+        ///// fields to be a multiple of 64. The algorithm
+        ///// doesn't use allocation of new memory in computation of individual Vector4's,
+        ///// it assigns to only one Vector4 previously defined. 
+        ///// </summary>
+        ///// <param name="operand1">1. operand (fuzzy)</param>
+        ///// <param name="operand2">2. operand (crisp)</param>
+        ///// <returns>Disjunction result (fuzzy)</returns>
+        //public static Vector4[] OrSafeCrispFuzzyVector43NoAllocation(Vector4[] operand1, ulong[] operand2)
+        //{
+        //    Vector4 tmpF = new Vector4();
+        //    Vector<uint> tmpUi;
+        //    Vector<uint> vect;
+        //    uint part;
+        //    int vPtr = 0;
+
+        //    for (int i = 0; i < operand2.Length; i++)
+        //    {
+        //        part = (uint)operand2[i]; //last 8 bits
+        //        vect = new Vector<uint>(part, part, part, part);
+
+        //        tmpUi = vect & sui1;
+        //        tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui2;
+        //        tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui3;
+        //        tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui4;
+        //        tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui5;
+        //        tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui6;
+        //        tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui7;
+        //        tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui8;
+        //        tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+
+        //        part = (uint)(operand2[i] >> 32);
+        //        vect = new Vector<uint>(part, part, part, part);
+
+        //        tmpUi = vect & sui1;
+        //        tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui2;
+        //        tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui3;
+        //        tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui4;
+        //        tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui5;
+        //        tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui6;
+        //        tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui7;
+        //        tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & sui8;
+        //        tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //    }
+        //    return operand1;
+        //}
+
+        ///// <summary>
+        ///// The safe implementation of disjunction between fuzy and crisp
+        ///// bit strings using Vector4 and precomputed uint and shifting creation of the Vector4
+        ///// The algoritm presumes the number of elements both in ulong and Vector4
+        ///// fields to be a multiple of 64. The algorithm
+        ///// doesn't use allocation of new memory in computation of individual Vector4's,
+        ///// it assigns to only one Vector4 previously defined + does not use static variables
+        ///// </summary>
+        ///// <param name="operand1">1. operand (fuzzy)</param>
+        ///// <param name="operand2">2. operand (crisp)</param>
+        ///// <returns>Disjunction result (fuzzy)</returns>
+        //public static Vector4[] OrSafeCrispFuzzyVector43NoStaticNoAllocation(Vector4[] operand1, ulong[] operand2)
+        //{
+        //    Vector4 tmpF = new Vector4();
+        //    Vector<uint> tmpUi;
+        //    Vector<uint> vect;
+        //    uint part;
+        //    int vPtr = 0;
+
+        //    Vector<uint> ui1 = sui1;
+        //    Vector<uint> ui2 = sui2;
+        //    Vector<uint> ui3 = sui3;
+        //    Vector<uint> ui4 = sui4;
+        //    Vector<uint> ui5 = sui5;
+        //    Vector<uint> ui6 = sui6;
+        //    Vector<uint> ui7 = sui7;
+        //    Vector<uint> ui8 = sui8;
+
+        //    for (int i = 0; i < operand2.Length; i++)
+        //    {
+        //        part = (uint)operand2[i]; //last 8 bits
+        //        vect = new Vector<uint>(part, part, part, part);
+
+        //        tmpUi = vect & ui1;
+        //        tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui2;
+        //        tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui3;
+        //        tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui4;
+        //        tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui5;
+        //        tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui6;
+        //        tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui7;
+        //        tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui8;
+        //        tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+
+        //        part = (uint)(operand2[i] >> 32);
+        //        vect = new Vector<uint>(part, part, part, part);
+
+        //        tmpUi = vect & ui1;
+        //        tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui2;
+        //        tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui3;
+        //        tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui4;
+        //        tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui5;
+        //        tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui6;
+        //        tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui7;
+        //        tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui8;
+        //        tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //    }
+        //    return operand1;
+        //}
+
+        ///// <summary>
+        ///// The safe implementation of disjunction between fuzy and crisp
+        ///// bit strings using Vector4 and precomputed uint and shifting creation of the Vector4
+        ///// The algoritm presumes the number of elements both in ulong and Vector4
+        ///// fields to be a multiple of 64. No static variables used
+        ///// </summary>
+        ///// <param name="operand1">1. operand (fuzzy)</param>
+        ///// <param name="operand2">2. operand (crisp)</param>
+        ///// <returns>Disjunction result (fuzzy)</returns>
+        //public static Vector4[] OrSafeCrispFuzzyVector43NoStatic(Vector4[] operand1, ulong[] operand2)
+        //{
+        //    Vector4 tmpF;
+        //    Vector<uint> tmpUi;
+        //    Vector<uint> vect;
+        //    uint part;
+        //    int vPtr = 0;
+
+        //    Vector<uint> ui1 = sui1;
+        //    Vector<uint> ui2 = sui2;
+        //    Vector<uint> ui3 = sui3;
+        //    Vector<uint> ui4 = sui4;
+        //    Vector<uint> ui5 = sui5;
+        //    Vector<uint> ui6 = sui6;
+        //    Vector<uint> ui7 = sui7;
+        //    Vector<uint> ui8 = sui8;
+
+        //    for (int i = 0; i < operand2.Length; i++)
+        //    {
+        //        part = (uint)operand2[i]; //last 8 bits
+        //        vect = new Vector<uint>(part, part, part, part);
+
+        //        tmpUi = vect & ui1;
+        //        tmpF = new Vector4(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui2;
+        //        tmpF = new Vector4(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui3;
+        //        tmpF = new Vector4(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui4;
+        //        tmpF = new Vector4(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui5;
+        //        tmpF = new Vector4(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui6;
+        //        tmpF = new Vector4(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui7;
+        //        tmpF = new Vector4(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui8;
+        //        tmpF = new Vector4(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+
+        //        part = (uint)(operand2[i] >> 32);
+        //        vect = new Vector<uint>(part, part, part, part);
+
+        //        tmpUi = vect & ui1;
+        //        tmpF = new Vector4(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui2;
+        //        tmpF = new Vector4(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui3;
+        //        tmpF = new Vector4(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui4;
+        //        tmpF = new Vector4(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui5;
+        //        tmpF = new Vector4(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui6;
+        //        tmpF = new Vector4(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui7;
+        //        tmpF = new Vector4(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //        tmpUi = vect & ui8;
+        //        tmpF = new Vector4(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
+        //        operand1[vPtr] = tmpF + operand1[vPtr] - tmpF * operand1[vPtr];
+        //        vPtr++;
+        //    }
+        //    return operand1;
+        //}
+
+        ///// <summary>
+        ///// The unsafe implementation of disjunction between fuzy and crisp
+        ///// bit strings using Vector4 and precomputed uint and float vectors.
+        ///// The algoritm presumes the number of elements both in ulong and Vector4
+        ///// fields to be a multiple of 64.
+        ///// </summary>
+        ///// <param name="operand1">1. operand (fuzzy)</param>
+        ///// <param name="operand2">2. operand (crisp)</param>
+        ///// <returns>Disjunction result (fuzzy)</returns>
+        //public unsafe static Vector4[] OrUnsafeCrispFuzzyVector42(Vector4[] operand1, ulong[] operand2)
+        //{
+        //    Vector4 tmpF;
+        //    Vector<uint> tmpUi;
+        //    Vector<uint> vect;
+        //    uint part;
+
+        //    fixed (ulong* pinUL = operand2)
+        //    {
+        //        fixed (Vector4* pinV = operand1)
+        //        {
+        //            ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
+        //            Vector4* ptrV = pinV;
+
+        //            //the main cycle
+        //            while (ptrUL < stopUL)
+        //            {
+        //                part = (uint)*ptrUL; //last 8 bits
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & sui1;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf1;
+        //                *ptrV = tmpF + *ptrV - tmpF* (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui2;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf2;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui3;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf3;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui4;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf4;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui5;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf5;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui6;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf6;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui7;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf7;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui8;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf8;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                part = (uint)(*ptrUL >> 32);
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & sui1;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf1;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui2;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf2;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui3;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf3;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui4;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf4;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui5;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf5;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui6;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf6;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui7;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf7;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui8;
+        //                tmpF = (new Vector4(tmpUi.X, tmpUi.Y, tmpUi.Z, tmpUi.W)) / sf8;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                ptrUL++;
+        //            }
+        //        }
+        //    }
+        //    return operand1;
+        //}
+
+        ///// <summary>
+        ///// The unsafe implementation of disjunction between fuzy and crisp
+        ///// bit strings using Vector4 and precomputed uint and float vectors. The algorithm
+        ///// doesn't use allocation of new memory in computation of individual Vector4's,
+        ///// it assigns to only one Vector4 previously defined. 
+        ///// The algoritm presumes the number of elements both in ulong and Vector4
+        ///// fields to be a multiple of 64.
+        ///// </summary>
+        ///// <param name="operand1">1. operand (fuzzy)</param>
+        ///// <param name="operand2">2. operand (crisp)</param>
+        ///// <returns>Disjunction result (fuzzy)</returns>
+        //public unsafe static Vector4[] OrUnsafeCrispFuzzyVector42NoAllocation(Vector4[] operand1, ulong[] operand2)
+        //{
+        //    Vector4 tmpF = new Vector4();
+        //    Vector<uint> tmpUi;
+        //    Vector<uint> vect;
+        //    uint part;
+
+        //    fixed (ulong* pinUL = operand2)
+        //    {
+        //        fixed (Vector4* pinV = operand1)
+        //        {
+        //            ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
+        //            Vector4* ptrV = pinV;
+
+        //            //the main cycle
+        //            while (ptrUL < stopUL)
+        //            {
+        //                part = (uint)*ptrUL; //last 8 bits
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & sui1;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf1;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui2;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf2;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui3;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf3;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui4;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf4;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui5;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf5;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui6;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf6;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui7;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf7;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui8;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf8;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                part = (uint)(*ptrUL >> 32);
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & sui1;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf1;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui2;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf2;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui3;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf3;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui4;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf4;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui5;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf5;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui6;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf6;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui7;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf7;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui8;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= sf8;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                ptrUL++;
+        //            }
+        //        }
+        //    }
+        //    return operand1;
+        //}
+
+        ///// <summary>
+        ///// The unsafe implementation of disjunction between fuzy and crisp
+        ///// bit strings using Vector4 and precomputed uint and float vectors. The algorithm
+        ///// doesn't use allocation of new memory in computation of individual Vector4's,
+        ///// it assigns to only one Vector4 previously defined. No static variables used
+        ///// The algoritm presumes the number of elements both in ulong and Vector4
+        ///// fields to be a multiple of 64.
+        ///// </summary>
+        ///// <param name="operand1">1. operand (fuzzy)</param>
+        ///// <param name="operand2">2. operand (crisp)</param>
+        ///// <returns>Disjunction result (fuzzy)</returns>
+        //public unsafe static Vector4[] OrUnsafeCrispFuzzyVector42NoAllocationNoStatic(Vector4[] operand1, ulong[] operand2)
+        //{
+        //    Vector4 tmpF = new Vector4();
+        //    Vector<uint> tmpUi;
+        //    Vector<uint> vect;
+        //    uint part;
+
+        //    Vector<uint> ui1 = sui1;
+        //    Vector<uint> ui2 = sui2;
+        //    Vector<uint> ui3 = sui3;
+        //    Vector<uint> ui4 = sui4;
+        //    Vector<uint> ui5 = sui5;
+        //    Vector<uint> ui6 = sui6;
+        //    Vector<uint> ui7 = sui7;
+        //    Vector<uint> ui8 = sui8;
+        //    Vector4 f1 = sf1;
+        //    Vector4 f2 = sf2;
+        //    Vector4 f3 = sf3;
+        //    Vector4 f4 = sf4;
+        //    Vector4 f5 = sf5;
+        //    Vector4 f6 = sf6;
+        //    Vector4 f7 = sf7;
+        //    Vector4 f8 = sf8;
+
+        //    fixed (ulong* pinUL = operand2)
+        //    {
+        //        fixed (Vector4* pinV = operand1)
+        //        {
+        //            ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
+        //            Vector4* ptrV = pinV;
+
+        //            //the main cycle
+        //            while (ptrUL < stopUL)
+        //            {
+        //                part = (uint)*ptrUL; //last 8 bits
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & ui1;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f1;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui2;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f2;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui3;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f3;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui4;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f4;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui5;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f5;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui6;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f6;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui7;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f7;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui8;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f8;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                part = (uint)(*ptrUL >> 32);
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & ui1;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f1;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui2;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f2;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui3;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f3;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui4;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f4;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui5;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f5;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui6;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f6;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui7;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f7;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui8;
+        //                tmpF.X = tmpUi.X; tmpF.Y = tmpUi.Y; tmpF.Z = tmpUi.Z; tmpF.W = tmpUi.W;
+        //                tmpF /= f8;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                ptrUL++;
+        //            }
+        //        }
+        //    }
+        //    return operand1;
+        //}
+
+        ///// <summary>
+        ///// The unsafe implementation of disjunction between fuzy and crisp
+        ///// bit strings using Vector4 and precomputed uint and shifting creation of the Vector4
+        ///// The algoritm presumes the number of elements both in ulong and Vector4
+        ///// fields to be a multiple of 64.
+        ///// </summary>
+        ///// <param name="operand1">1. operand (fuzzy)</param>
+        ///// <param name="operand2">2. operand (crisp)</param>
+        ///// <returns>Disjunction result (fuzzy)</returns>
+        //public unsafe static Vector4[] OrUnsafeCrispFuzzyVector43(Vector4[] operand1, ulong[] operand2)
+        //{
+        //    Vector4 tmpF;
+        //    Vector<uint> tmpUi;
+        //    Vector<uint> vect;
+        //    uint part;
+
+        //    fixed (ulong* pinUL = operand2)
+        //    {
+        //        fixed (Vector4* pinV = operand1)
+        //        {
+        //            ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
+        //            Vector4* ptrV = pinV;
+
+        //            //the main cycle
+        //            while (ptrUL < stopUL)
+        //            {
+        //                part = (uint)*ptrUL; //last 8 bits
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & sui1;
+        //                tmpF = new Vector4(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui2;
+        //                tmpF = new Vector4(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui3;
+        //                tmpF = new Vector4(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui4;
+        //                tmpF = new Vector4(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui5;
+        //                tmpF = new Vector4(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui6;
+        //                tmpF = new Vector4(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui7;
+        //                tmpF = new Vector4(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui8;
+        //                tmpF = new Vector4(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31); ;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                part = (uint)(*ptrUL >> 32);
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & sui1;
+        //                tmpF = new Vector4(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui2;
+        //                tmpF = new Vector4(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui3;
+        //                tmpF = new Vector4(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui4;
+        //                tmpF = new Vector4(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui5;
+        //                tmpF = new Vector4(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui6;
+        //                tmpF = new Vector4(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui7;
+        //                tmpF = new Vector4(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui8;
+        //                tmpF = new Vector4(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                ptrUL++;
+        //            }
+        //        }
+        //    }
+        //    return operand1;
+        //}
+
+        ///// <summary>
+        ///// The unsafe implementation of disjunction between fuzy and crisp
+        ///// bit strings using Vector4 and precomputed uint and shifting creation of the Vector4
+        ///// The algoritm presumes the number of elements both in ulong and Vector4
+        ///// fields to be a multiple of 64. The algorithm
+        ///// doesn't use allocation of new memory in computation of individual Vector4's,
+        ///// it assigns to only one Vector4 previously defined. 
+        ///// </summary>
+        ///// <param name="operand1">1. operand (fuzzy)</param>
+        ///// <param name="operand2">2. operand (crisp)</param>
+        ///// <returns>Disjunction result (fuzzy)</returns>
+        //public unsafe static Vector4[] OrUnsafeCrispFuzzyVector43NoAllocation(Vector4[] operand1, ulong[] operand2)
+        //{
+        //    Vector4 tmpF = new Vector4();
+        //    Vector<uint> tmpUi;
+        //    Vector<uint> vect;
+        //    uint part;
+
+        //    fixed (ulong* pinUL = operand2)
+        //    {
+        //        fixed (Vector4* pinV = operand1)
+        //        {
+        //            ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
+        //            Vector4* ptrV = pinV;
+
+        //            //the main cycle
+        //            while (ptrUL < stopUL)
+        //            {
+        //                part = (uint)*ptrUL; //last 8 bits
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & sui1;
+        //                tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui2;
+        //                tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui3;
+        //                tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui4;
+        //                tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui5;
+        //                tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui6;
+        //                tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui7;
+        //                tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui8;
+        //                tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                part = (uint)(*ptrUL >> 32);
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & sui1;
+        //                tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui2;
+        //                tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui3;
+        //                tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui4;
+        //                tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui5;
+        //                tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui6;
+        //                tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui7;
+        //                tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & sui8;
+        //                tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                ptrUL++;
+        //            }
+        //        }
+        //    }
+        //    return operand1;
+        //}
+
+        ///// <summary>
+        ///// The unsafe implementation of disjunction between fuzy and crisp
+        ///// bit strings using Vector4 and precomputed uint and shifting creation of the Vector4
+        ///// The algoritm presumes the number of elements both in ulong and Vector4
+        ///// fields to be a multiple of 64. No static variables used
+        ///// </summary>
+        ///// <param name="operand1">1. operand (fuzzy)</param>
+        ///// <param name="operand2">2. operand (crisp)</param>
+        ///// <returns>Disjunction result (fuzzy)</returns>
+        //public unsafe static Vector4[] OrUnsafeCrispFuzzyVector43NoStatic(Vector4[] operand1, ulong[] operand2)
+        //{
+        //    Vector4 tmpF;
+        //    Vector<uint> tmpUi;
+        //    Vector<uint> vect;
+        //    uint part;
+
+        //    Vector<uint> ui1 = sui1;
+        //    Vector<uint> ui2 = sui2;
+        //    Vector<uint> ui3 = sui3;
+        //    Vector<uint> ui4 = sui4;
+        //    Vector<uint> ui5 = sui5;
+        //    Vector<uint> ui6 = sui6;
+        //    Vector<uint> ui7 = sui7;
+        //    Vector<uint> ui8 = sui8;
+
+        //    fixed (ulong* pinUL = operand2)
+        //    {
+        //        fixed (Vector4* pinV = operand1)
+        //        {
+        //            ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
+        //            Vector4* ptrV = pinV;
+
+        //            //the main cycle
+        //            while (ptrUL < stopUL)
+        //            {
+        //                part = (uint)*ptrUL; //last 8 bits
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & ui1;
+        //                tmpF = new Vector4(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui2;
+        //                tmpF = new Vector4(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui3;
+        //                tmpF = new Vector4(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui4;
+        //                tmpF = new Vector4(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui5;
+        //                tmpF = new Vector4(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui6;
+        //                tmpF = new Vector4(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui7;
+        //                tmpF = new Vector4(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui8;
+        //                tmpF = new Vector4(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31); ;
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                part = (uint)(*ptrUL >> 32);
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & ui1;
+        //                tmpF = new Vector4(tmpUi.X, tmpUi.Y >> 1, tmpUi.Z >> 2, tmpUi.W >> 3);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui2;
+        //                tmpF = new Vector4(tmpUi.X >> 4, tmpUi.Y >> 5, tmpUi.Z >> 6, tmpUi.W >> 7);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui3;
+        //                tmpF = new Vector4(tmpUi.X >> 8, tmpUi.Y >> 9, tmpUi.Z >> 10, tmpUi.W >> 11);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui4;
+        //                tmpF = new Vector4(tmpUi.X >> 12, tmpUi.Y >> 13, tmpUi.Z >> 14, tmpUi.W >> 15);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui5;
+        //                tmpF = new Vector4(tmpUi.X >> 16, tmpUi.Y >> 17, tmpUi.Z >> 18, tmpUi.W >> 19);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui6;
+        //                tmpF = new Vector4(tmpUi.X >> 20, tmpUi.Y >> 21, tmpUi.Z >> 22, tmpUi.W >> 23);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui7;
+        //                tmpF = new Vector4(tmpUi.X >> 24, tmpUi.Y >> 25, tmpUi.Z >> 26, tmpUi.W >> 27);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui8;
+        //                tmpF = new Vector4(tmpUi.X >> 28, tmpUi.Y >> 29, tmpUi.Z >> 30, tmpUi.W >> 31);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                ptrUL++;
+        //            }
+        //        }
+        //    }
+        //    return operand1;
+        //}
+
+        ///// <summary>
+        ///// The unsafe implementation of disjunction between fuzy and crisp
+        ///// bit strings using Vector4 and precomputed uint and shifting creation of the Vector4
+        ///// The algoritm presumes the number of elements both in ulong and Vector4
+        ///// fields to be a multiple of 64. The algorithm
+        ///// doesn't use allocation of new memory in computation of individual Vector4's,
+        ///// it assigns to only one Vector4 previously defined. No static variables used
+        ///// </summary>
+        ///// <param name="operand1">1. operand (fuzzy)</param>
+        ///// <param name="operand2">2. operand (crisp)</param>
+        ///// <returns>Disjunction result (fuzzy)</returns>
+        //public unsafe static Vector4[] OrUnsafeCrispFuzzyVector43NoAllocationNoStatic(Vector4[] operand1, ulong[] operand2)
+        //{
+        //    Vector4 tmpF = new Vector4();
+        //    Vector<uint> tmpUi;
+        //    Vector<uint> vect;
+        //    uint part;
+
+        //    Vector<uint> ui1 = sui1;
+        //    Vector<uint> ui2 = sui2;
+        //    Vector<uint> ui3 = sui3;
+        //    Vector<uint> ui4 = sui4;
+        //    Vector<uint> ui5 = sui5;
+        //    Vector<uint> ui6 = sui6;
+        //    Vector<uint> ui7 = sui7;
+        //    Vector<uint> ui8 = sui8;
+
+        //    fixed (ulong* pinUL = operand2)
+        //    {
+        //        fixed (Vector4* pinV = operand1)
+        //        {
+        //            ulong* ptrUL = pinUL, stopUL = pinUL + operand2.Length;
+        //            Vector4* ptrV = pinV;
+
+        //            //the main cycle
+        //            while (ptrUL < stopUL)
+        //            {
+        //                part = (uint)*ptrUL; //last 8 bits
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & ui1;
+        //                tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui2;
+        //                tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui3;
+        //                tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui4;
+        //                tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui5;
+        //                tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui6;
+        //                tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui7;
+        //                tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui8;
+        //                tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                part = (uint)(*ptrUL >> 32);
+        //                vect = new Vector<uint>(part, part, part, part);
+
+        //                tmpUi = vect & ui1;
+        //                tmpF.X = tmpUi.X; tmpF.Y = (tmpUi.Y >> 1); tmpF.Z = (tmpUi.Z >> 2); tmpF.W = (tmpUi.W >> 3);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui2;
+        //                tmpF.X = (tmpUi.X >> 4); tmpF.Y = (tmpUi.Y >> 5); tmpF.Z = (tmpUi.Z >> 6); tmpF.W = (tmpUi.W >> 7);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui3;
+        //                tmpF.X = (tmpUi.X >> 8); tmpF.Y = (tmpUi.Y >> 9); tmpF.Z = (tmpUi.Z >> 10); tmpF.W = (tmpUi.W >> 11);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui4;
+        //                tmpF.X = (tmpUi.X >> 12); tmpF.Y = (tmpUi.Y >> 13); tmpF.Z = (tmpUi.Z >> 14); tmpF.W = (tmpUi.W >> 15);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui5;
+        //                tmpF.X = (tmpUi.X >> 16); tmpF.Y = (tmpUi.Y >> 17); tmpF.Z = (tmpUi.Z >> 18); tmpF.W = (tmpUi.W >> 19);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui6;
+        //                tmpF.X = (tmpUi.X >> 20); tmpF.Y = (tmpUi.Y >> 21); tmpF.Z = (tmpUi.Z >> 22); tmpF.W = (tmpUi.W >> 23);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui7;
+        //                tmpF.X = (tmpUi.X >> 24); tmpF.Y = (tmpUi.Y >> 25); tmpF.Z = (tmpUi.Z >> 26); tmpF.W = (tmpUi.W >> 27);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+        //                tmpUi = vect & ui8;
+        //                tmpF.X = (tmpUi.X >> 28); tmpF.Y = (tmpUi.Y >> 29); tmpF.Z = (tmpUi.Z >> 30); tmpF.W = (tmpUi.W >> 31);
+        //                *ptrV = tmpF + *ptrV - tmpF * (*ptrV);
+        //                ptrV++;
+
+        //                ptrUL++;
+        //            }
+        //        }
+        //    }
+        //    return operand1;
+        //}
 
         #endregion
     }

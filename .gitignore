@@ -1,0 +1,13 @@
+﻿/.vs
+/ferda/bin
+/ferda/src/FrontEnd/*.resources
+/ferda/utils
+/ferda/.vs
+/ferda/**/obj
+/ferda/**/bin
+/ferda/**/generated
+/ferda/.ionide
+/**/*.csproj.user
+/ferda/lib/ice
+/ferda/src/.vs/FrontEnd/v17/.futdcache.v1
+/.ionide

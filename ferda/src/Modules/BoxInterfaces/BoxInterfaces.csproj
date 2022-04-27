@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemDefinitionGroup Label="IceBuilder">
+    <SliceCompile>
+      <IncludeDirectories>..\..\Base;..\..</IncludeDirectories>
+    </SliceCompile>
+  </ItemDefinitionGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Ferda$(MSBuildProjectName)</AssemblyName>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>FerdaBoxInterfaces.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="zeroc.ice.net" Version="3.7.7" />
+    <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
+    <ProjectReference Include="..\..\Base\Base.csproj" />
+    <Compile Update="generated\DataPreparation.cs">
+      <SliceCompileSource>DataPreparation\DataPreparation.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\Language.cs">
+      <SliceCompileSource>Language\Language.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\OntologyMapping.cs">
+      <SliceCompileSource>OntologyRelated\OntologyMapping\OntologyMapping.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\Ontology.cs">
+      <SliceCompileSource>OntologyRelated\Ontology\Ontology.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\BodyMassIndex.cs">
+      <SliceCompileSource>Sample\BodyMassIndex\BodyMassIndex.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\PMMLBuilder.cs">
+      <SliceCompileSource>SemanticWeb\PMMLBuilder\PMMLBuilder.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\SEWEBARPublisher.cs">
+      <SliceCompileSource>SemanticWeb\SEWEBARPublisher\SEWEBARPublisher.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\WizardAction.cs">
+      <SliceCompileSource>Wizards\WizardAction\WizardAction.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\WizardForm.cs">
+      <SliceCompileSource>Wizards\WizardForm\WizardForm.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\WizardGenerated.cs">
+      <SliceCompileSource>Wizards\WizardGenerated\WizardGenerated.ice</SliceCompileSource>
+    </Compile>
+    <Compile Update="generated\Wizard.cs">
+      <SliceCompileSource>Wizards\Wizard\Wizard.ice</SliceCompileSource>
+    </Compile>
+  </ItemGroup>
+
+</Project>

@@ -204,7 +204,7 @@ namespace Ferda.Modules.Boxes.GuhaMining.Quantifiers.TwoDimensional.FunctionalDe
         public override bool Compute(QuantifierEvaluateSetting param, Current current__)
         {
             double value;
-            return ComputeValidValue(param, out value);
+            return ComputeValidValue(param, out value, current__);
         }
 
         public override bool ComputeValidValue(QuantifierEvaluateSetting param, out double value, Current current__)

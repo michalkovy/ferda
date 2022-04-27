@@ -569,7 +569,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.OntologyEnablingColumn
         /// </summary>
         /// <param name="current__">Ice stuff</param>
         /// <returns><string, string[]> value which represents properties of ontology entity which is mapped on this box's column.</returns>
-        public override StrSeqMap getOntologyEntityProperties(Current current__)
+        public override Dictionary<string, string[]> getOntologyEntityProperties(Current current__)
         {
             OntologyMappingFunctionsPrx prx = GetOntologyMappingFunctionsPrx(true);
             if (prx != null)

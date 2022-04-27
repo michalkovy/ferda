@@ -30,7 +30,7 @@ namespace Ferda.FrontEnd
     /// Class that catches the exceptions comming from other layers of the system
     /// and displayes them to the user
     /// </summary>
-    internal class ActionExceptionCatcher : Ferda.Modules.AMI_BoxModule_runAction
+    internal class ActionExceptionCatcher : Ferda.ModulesManager.IBackgroundActionCallback
     {
         #region Fields
 
@@ -82,10 +82,10 @@ namespace Ferda.FrontEnd
         #region Methods
 
         /// <summary>
-        /// Method ice_exception
+        /// Method called on exception
         /// </summary>
         /// <param name="ex">An Ice.Exception</param>
-        public override void ice_exception(Exception ex)
+        public void OnException(System.Exception ex)
         {
             //if (ex is Ferda.Modules.BoxRuntimeError)
             //{...
@@ -114,10 +114,10 @@ namespace Ferda.FrontEnd
         }
 
         /// <summary>
-        /// Method ice_response - refreshes the property grid after the action
+        /// Method called on response - refreshes the property grid after the action
         /// is done
         /// </summary>
-        public override void ice_response()
+        public void OnResponse()
         {
             propertiesDisplayer.AsyncAdapt();
         }

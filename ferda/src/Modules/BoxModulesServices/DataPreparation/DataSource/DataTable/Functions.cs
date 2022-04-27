@@ -127,7 +127,7 @@ namespace Ferda.Modules.Boxes.DataPreparation.Datasource.DataTable
             DatabaseConnectionSetting connSettingTmp =
                 ExceptionsHandler.GetResult<DatabaseConnectionSetting>(
                     fallOnError,
-                    prx.getDatabaseConnectionSetting,
+                    () => prx.getDatabaseConnectionSetting(null),
                     delegate
                         {
                             return null;

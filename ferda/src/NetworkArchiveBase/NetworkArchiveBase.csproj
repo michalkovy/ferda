@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemDefinitionGroup Label="IceBuilder">
+    <SliceCompile>
+      <IncludeDirectories>..\Base</IncludeDirectories>
+    </SliceCompile>
+  </ItemDefinitionGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable></Nullable>
+    <AssemblyName>Ferda$(MSBuildProjectName)</AssemblyName>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>FerdaNetworkArchiveBase.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Base\Base.csproj" />
+    <ProjectReference Include="..\ProjectBase\ProjectBase.csproj" />
+    <Compile Update="generated\Archive.cs">
+      <SliceCompileSource>Archive.ice</SliceCompileSource>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="zeroc.ice.net" Version="3.7.7" />
+	<PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
+  </ItemGroup>
+
+</Project>
