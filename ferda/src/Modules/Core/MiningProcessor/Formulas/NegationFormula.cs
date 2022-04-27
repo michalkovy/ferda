@@ -19,6 +19,8 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+using Ferda.Modules.Helpers.Common;
+
 namespace Ferda.Guha.MiningProcessor.Formulas
 {
     /// <summary>
@@ -38,6 +40,8 @@ namespace Ferda.Guha.MiningProcessor.Formulas
         {
             get { return _operand; }
         }
+
+        public override Set<string> UsedAttributes => _operand.UsedAttributes;
 
         /// <summary>
         /// Default constructor of the class

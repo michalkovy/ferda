@@ -84,7 +84,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 booleanAttributes, categorialAttributes, quantifiers, taskFuncPrx, taskParams, progressListener,
                 progressBarPrx)
         {
-            afterConstruct();
+            afterConstructAsync().Wait(); //TODO: get rid of Wait
         }
 
         #endregion
@@ -150,11 +150,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Prepares traces (entity enumerators) for a given miner
         /// </summary>
-        protected override void prepareAttributeTraces()
+        protected override async Task prepareAttributeTracesAsync()
         {
             if (!ProgressSetValue(-1, "Preparing Attribute trace"))
                 return;
-            _attribute = CreateCategorialAttributeTrace(MarkEnum.Attribute, _categorialAttributes, false, this);
+            _attribute = await CreateCategorialAttributeTraceAsync(MarkEnum.Attribute, _categorialAttributes, false, this).ConfigureAwait(false);
 
             if (!ProgressSetValue(-1, "Preparing Condition trace"))
                 return;
@@ -173,7 +173,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Algoritm for tracing the relevant questions and verifying them against
         /// the quantifier. The algoritm computes valid hypotheses.
         /// </summary>
-        public override async Task Trace()
+        public override async Task TraceAsync()
         {
             if (!ProgressSetValue(-1, "Begining of attributes trace."))
                 return;
@@ -204,10 +204,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
                         
                         cT1 = new double[1][];
                         if (fSF is IEmptyBitString)
-                            cT1[0] = BitStringsArraySums.Sum(trace.BitStrings);
+                            cT1[0] = BitStringsArraySums.Sum(await trace.GetBitStringsAsync().ConfigureAwait(false));
                         else
                             cT1[0] = BitStringsArraySums.Sum(
-                                    BitStringsArrayAnd.Operation(trace.BitStrings, fSF)
+                                    BitStringsArrayAnd.Operation(await trace.GetBitStringsAsync().ConfigureAwait(false), fSF)
                                 );
 
                         contingencyTable1 = new ContingencyTableHelper(
@@ -237,10 +237,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
 
                             cT2 = new double[1][];
                             if (sSF is IEmptyBitString)
-                                cT2[0] = BitStringsArraySums.Sum(trace.BitStrings);
+                                cT2[0] = BitStringsArraySums.Sum(await trace.GetBitStringsAsync().ConfigureAwait(false));
                             else
                                 cT2[0] = BitStringsArraySums.Sum(
-                                        BitStringsArrayAnd.Operation(trace.BitStrings, sSF)
+                                        BitStringsArrayAnd.Operation(await trace.GetBitStringsAsync().ConfigureAwait(false), sSF)
                                     );
 
                             contingencyTable2 = new ContingencyTableHelper(

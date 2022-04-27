@@ -208,7 +208,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
         /// <returns>Result of the AND operation</returns>
-        public IBitString And(IBitString source)
+        public IBitString And(IBitString source, bool precomputeSum = false)
         {
             if (source is FuzzyBitString)
             {
@@ -363,7 +363,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
         /// <returns>Result of the OR operation</returns>
-        public IBitString Or(IBitString source)
+        public IBitString Or(IBitString source, bool precomputeSum = false)
         {
             if (source is FuzzyBitString)
             {

@@ -104,7 +104,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// possible branching.
         /// </param>
         /// <returns>Nodes for branching</returns>
-        public List<Node> NodesForBranching(int minimalNodeFrequency, int maximalTreeDepth)
+        public async Task<List<Node>> NodesForBranchingAsync(int minimalNodeFrequency, int maximalTreeDepth)
         {
             List<Node> nodesWithMoreThanMinimalFrequency = new List<Node>();
 
@@ -121,7 +121,7 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
 
                 foreach (string category in rootNode.SubCategories)
                 {
-                    if (rootNode.CategoryFrequency(category) > minimalNodeFrequency)
+                    if (await rootNode.CategoryFrequencyAsync(category).ConfigureAwait(false) > minimalNodeFrequency)
                     {
                         hasCategories = true;
                         break;
@@ -240,10 +240,10 @@ namespace Ferda.Guha.MiningProcessor.DecisionTrees
         /// attribute</param>
         /// <param name="classificationCategories">Categories names of the
         /// classification attribute.</param>
-        public void InitNodeClassification(IBitString[] classificationBitStrings,
+        public Task InitNodeClassificationAsync(IBitString[] classificationBitStrings,
             string[] classificationCategories)
         {
-            rootNode.InitNodeClassification(classificationBitStrings,
+            return rootNode.InitNodeClassificationAsync(classificationBitStrings,
                 classificationCategories);
         }
 

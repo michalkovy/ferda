@@ -79,7 +79,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// that are stored in the cache. Otherwise it just takes the missing information
         /// bitstrings from the attributes. 
         /// </remarks>
-        public override IBitString GetValue(Set<string> key)
+        public override async Task<IBitString> GetValueExternalAsync(Set<string> key)
         {
             if (key.Count == 0)
                 return FalseBitString.GetInstance();
@@ -106,13 +106,13 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
             if (bestMatch != null)
             {
                 //there is a subset that matched with the key.
-                IBitString last = this[bestMatch];
+                IBitString last = await this.GetValueAsync(bestMatch).ConfigureAwait(false);
                 IBitString newCached = null;
                 foreach (string guid in key)
                 {
                     if (!bestMatch.Contains(guid))
                     {
-                        IBitString newBitString = _bitStringCache.GetMissingInformationBitString(guid);
+                        IBitString newBitString = await _bitStringCache.GetMissingInformationBitStringAsync(guid).ConfigureAwait(false);
                         if (newCached == null)
                             newCached = last.Or(newBitString);
                         else
@@ -127,7 +127,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
                 IBitString newCached = null;
                 foreach (string guid in key)
                 {
-                    IBitString newBitString = _bitStringCache.GetMissingInformationBitString(guid);
+                    IBitString newBitString = await _bitStringCache.GetMissingInformationBitStringAsync(guid).ConfigureAwait(false);
                     if (newCached == null)
                         newCached = newBitString;
                     else

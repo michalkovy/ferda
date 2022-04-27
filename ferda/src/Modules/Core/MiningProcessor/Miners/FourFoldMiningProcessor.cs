@@ -51,8 +51,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			nineFoldTableOfBitStrings nineFT;
             //quantifier evaluator
 			IEvaluator evaluator;
-            //set of used attributes
-            Set<String> usedAttributes;
             //count of all objects that is mined upon
             int allObjectsCount;
 			
@@ -69,14 +67,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
             /// (considering condition)
             /// </param>
             /// <param name="usedAttributes">Set of used attributes</param>
-            public MiningSetting(IBitString pA, IBitString pS, IBitString pC, nineFoldTableOfBitStrings nineFT, IEvaluator evaluator, Set<String> usedAttributes, int allObjectsCount)
+            public MiningSetting(IBitString pA, IBitString pS, IBitString pC, nineFoldTableOfBitStrings nineFT, IEvaluator evaluator, int allObjectsCount)
 			{
 				this.pA = pA;
 				this.pS = pS;
 				this.pC = pC;
 				this.nineFT = nineFT;
 				this.evaluator = evaluator;
-                this.usedAttributes = (new Set<string>()).Join(usedAttributes);
                 this.allObjectsCount = allObjectsCount;
 			}
 			
@@ -151,22 +148,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			}
 
             /// <summary>
-            /// Set of used attributes
-            /// </summary>
-            public Set<String> UsedAttributes
-            {
-                set
-                {
-                    usedAttributes = value;
-                }
-
-                get
-                {
-                    return usedAttributes;
-                }
-            }
-
-            /// <summary>
             /// Count of all objects that is mined upon
             /// (considering condition)
             /// </summary>
@@ -234,7 +215,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             booleanAttributes, categorialAttributes, quantifiers, taskFuncPrx, taskParams, progressListener,
             progressBarPrx)
         {
-            afterConstruct();
+            afterConstructAsync().Wait(); //TODO: get rid of Wait
         }
 
         #endregion
@@ -298,93 +279,81 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// <summary>
         /// Prepares traces (entity enumerators) for a given miner
         /// </summary>
-        protected override void prepareAttributeTraces()
+        protected override Task prepareAttributeTracesAsync()
         {
             if (!ProgressSetValue(-1, "Preparing Succedent trace"))
-                return;
+                return Task.CompletedTask;
             _succedent = CreateBooleanAttributeTrace(MarkEnum.Succedent, _booleanAttributes, false, this);
 			
             if (!ProgressSetValue(-1, "Preparing Antecedent trace"))
-                return;
+                return Task.CompletedTask;
             _antecedent = CreateBooleanAttributeTrace(MarkEnum.Antecedent, _booleanAttributes, true, this);
 			
             if (!ProgressSetValue(-1, "Preparing Condition trace"))
-                return;
+                return Task.CompletedTask;
             _condition = CreateBooleanAttributeTrace(MarkEnum.Condition, _booleanAttributes, true, this);
+            return Task.CompletedTask;
         }
 
         /// <summary>
         /// Algoritm for tracing the relevant questions and verifying them against
         /// the quantifier. The algoritm computes valid hypotheses.
         /// </summary>
-        public override async Task Trace()
+        public override async Task TraceAsync()
         {
             //code common to trace and trace boolean methods
             InitializeTrace();
             IEvaluator evaluator = CreateEvaluator(TaskParams.evaluationType, false);
 
             MissingInformation missingInformation = MissingInformation.GetInstance();
-            //missing succedent
-            IBitString xS;
-            //negative succedent
-            IBitString nS;
-            //missing condition
-            IBitString xC;
-            nineFoldTableOfBitStrings nineFT;
 
             //MiningSettingCollectionWithMiningThreads<MiningSetting> miningThreads = new MiningSettingCollectionWithMiningThreads<FourFoldMiningProcessor.MiningSetting>(mine, finished);
             //System.Threading.ThreadPool threadPool = new System.Threading.ThreadPool();
-
-            _mineRuns = 0;
-            int mineToRun = 0;
-            await foreach (IBitString pC in _condition)
+            var options = new ParallelOptions()
             {
-                //Gets missing value for the condition
-                GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
+                CancellationToken = cts.Token
+            };
 
-                //set actual count of objects with respect to condition
-                long actCount = SetActConditionCountOfObjects(pC);
-
-                await foreach (IBitString pS in _succedent)
+            try
+            {
+                await Parallel.ForEachAsync(_condition, options, async (pC, ctC) =>
                 {
-                    if (pS is IEmptyBitString)
-                        continue;
-                    GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
+                    //Gets missing value for the condition
+                    var xC = await GetMissingsAsync(pC, missingInformation).ConfigureAwait(false);
 
-                    //Fills the nine fold table (FIRST is condition, SECOND is succedent)
-                    nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, actCount);
+                    //set actual count of objects with respect to condition
+                    long actCount = SetActConditionCountOfObjects(pC);
 
-                    await foreach (IBitString pA in _antecedent)
+                    await Parallel.ForEachAsync(_succedent, options, async (pS, ctS) =>
                     {
-                        MiningSetting miningSetting =
-                            new MiningSetting(pA, pS, pC, nineFT, evaluator, _antecedent.UsedAttributes, 
-                            (int)_result.AllObjectsCount);
-
-                        //miningThreads.AddSetting(miningSetting);
-                        mineToRun++;
-                        if (_useThreads)
-                        {
-                            var task = Task.Run(() => mine(miningSetting));
-                        }
+                        if (pS is IEmptyBitString)
+                        { }
                         else
                         {
-                            mine(miningSetting);
-                        }
-                        if (finished())
-                            goto finish;
-                    }
-                }
-            }
+                            var (xS, nS) = await GetNegationAndMissingsAsync(pS, missingInformation).ConfigureAwait(false);
 
-            //waiting for all the threads still computing to 
-            //finish
-            while (mineToRun != _mineRuns && (!finished()))
-            {
-                System.Threading.Thread.Sleep(50);
+                            //Fills the nine fold table (FIRST is condition, SECOND is succedent)
+                            var nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, actCount);
+
+                            await Parallel.ForEachAsync(_antecedent, options, async (pA, ct) =>
+                            {
+                                MiningSetting miningSetting =
+                                    new MiningSetting(pA, pS, pC, nineFT, evaluator,
+                                    (int)_result.AllObjectsCount);
+
+                                await mineAsync(miningSetting, ct);
+                            });
+                        }
+                    });
+                });
             }
-        finish:
+            catch (OperationCanceledException)
+            {
+
+            }
             evaluator.Flush();
             resultFinish();
+            cts.Dispose();
             //miningThreads.Finish();
         }
 
@@ -423,16 +392,6 @@ namespace Ferda.Guha.MiningProcessor.Miners
             IEvaluator evaluator = CreateEvaluator(TaskParams.evaluationType, true);
 
             MissingInformation missingInformation = MissingInformation.GetInstance();
-            //missing succedent
-            IBitString xS;
-            //negative succedent
-            IBitString nS;
-            //missing antecedent
-            IBitString xA;
-            //negative antecedent
-            IBitString nA;
-            //missing condition
-            IBitString xC;
             nineFoldTableOfBitStrings nineFT;
 
             int step = 0;
@@ -440,7 +399,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
             await foreach (IBitString pC in _condition)
             {
                 //Gets missing value for the condition
-                GetMissings(pC, out xC, _condition.UsedAttributes, missingInformation);
+                var xC = await GetMissingsAsync(pC, missingInformation).ConfigureAwait(false);
 
                 //set actual count of objects with respect to condition
                 SetActConditionCountOfObjects(pC);
@@ -449,7 +408,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                 {
                     if (pS is IEmptyBitString)
                         continue;
-                    GetNegationAndMissings(pS, out xS, out nS, _succedent.UsedAttributes, missingInformation);
+                    var (xS, nS) = await GetNegationAndMissingsAsync(pS, missingInformation).ConfigureAwait(false);
 
                     //Fills the nine fold table (A is condition, B is succedent)
                     nineFT = FillNineFoldConditionSuccedent(pS, nS, xS, pC, xC, Int32.MinValue);
@@ -475,7 +434,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             }
                         }
                         step++;
-                        GetNegationAndMissings(pA, out xA, out nA, _antecedent.UsedAttributes, missingInformation);
+                        var (xA, nA) = await GetNegationAndMissingsAsync(pA, missingInformation).ConfigureAwait(false);
 
                         //cycle through countvector-based masks
                         for (int i = 0; i < CountVector.Length; i++)
@@ -522,11 +481,11 @@ namespace Ferda.Guha.MiningProcessor.Miners
                             //VerifyIsComplete means no buffer is left.
                             //If not all relevant questions have been
                             //generated and verified, will stop yielding bitstrings
-                            if (!finished())
+                            if (!cts.Token.IsCancellationRequested)
                             {
                                 evaluator.VerifyIsComplete(contingencyTable, new Hypothesis(), setFinished);
                             }
-                            if (finished())
+                            if (cts.Token.IsCancellationRequested)
                                 break;
                         }
 
@@ -591,6 +550,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
                     }
                 }
             }
+            cts.Dispose();
         }
 
         #endregion
@@ -619,7 +579,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// Executes one verification.
         /// </summary>
         /// <param name="ob">Mining settings</param>
-        private void mine(Object ob)
+        private async Task mineAsync(Object ob, CancellationToken ct)
 		{
 			MiningSetting miningSetting = ob as MiningSetting;
 			IBitString pA = miningSetting.PA;
@@ -628,12 +588,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
             //Nine fold table - FIRST is condition, SECOND is succedent
 			nineFoldTableOfBitStrings nineFT = miningSetting.NineFT;
 			IEvaluator evaluator = miningSetting.Evaluator;
-            Set<String> usedAttributes = miningSetting.UsedAttributes;
             int allObjectsCount = miningSetting.AllObjectsCount;
 			
 			MissingInformation missingInformation = MissingInformation.GetInstance();
-   			IBitString xA;
-			GetMissings(pA, out xA, usedAttributes, missingInformation);
+   			IBitString xA = await GetMissingsAsync(pA, missingInformation).ConfigureAwait(false);
 
             NineFoldContingencyTablePair fft = new NineFoldContingencyTablePair();
 
@@ -734,12 +692,10 @@ namespace Ferda.Guha.MiningProcessor.Miners
 			hypothesis.ContingencyTableA = contingencyTable.ContingencyTable;
 			//h.NumericValuesAttributeGuid = contingencyTable.NumericValuesAttributeGuid;
 
-			if (!finished())
+			if (!ct.IsCancellationRequested)
 			{
 				evaluator.VerifyIsComplete(contingencyTable, hypothesis, setFinished);
 			}
-
-			_mineRuns++;
 		}
 
         /// <summary>
@@ -773,6 +729,7 @@ namespace Ferda.Guha.MiningProcessor.Miners
         /// </summary>
         private void InitializeTrace()
         {
+            cts = new CancellationTokenSource();
             if (!ProgressSetValue(-1, "Beginning of attributes trace."))
                 return;
             resultInit();
@@ -850,11 +807,8 @@ namespace Ferda.Guha.MiningProcessor.Miners
         #endregion
 
         #region Thread handling
-
-        /// <summary>
-        /// If threads of this miner are finished
-        /// </summary>
-        private bool finishThreads = false;
+        private CancellationTokenSource cts;
+        private CancellationToken ct;
 
         /// <summary>
         /// If more than one thread should be used
@@ -864,35 +818,13 @@ namespace Ferda.Guha.MiningProcessor.Miners
         private static readonly bool _useThreads = true;
 
         /// <summary>
-        /// How many times did the threads acutally computed contingency
-        /// tables
-        /// </summary>
-        private int _mineRuns = 0;
-
-        /// <summary>
-        /// Function returns if procedure is fininshed.
-        /// Thread safe.
-        /// </summary>
-        /// <returns>If the computing of the procedure is finished</returns>
-        private bool finished()
-        {
-            lock (this)
-            {
-                return finishThreads;
-            }
-        }
-
-        /// <summary>
         /// Wait callback delegate to the thread pool. Writes the finishing
         /// information. Thread safe.
         /// </summary>
         /// <param name="o">An object</param>
         private void setFinished(object o)
         {
-            lock (this)
-            {
-                finishThreads = true;
-            }
+            cts.Cancel();
         }
 
         #endregion

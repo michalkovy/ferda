@@ -36,10 +36,6 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// The singleton (one) object that can be created
         /// </summary>
         private static readonly EmptyBitString _instance = new EmptyBitString();
-        /// <summary>
-        /// Object used for thread-safe access to the bit string cache
-        /// </summary>
-        private static readonly object padlock = new object();
 
         /// <summary>
         /// Explicit static constructor to tell C# compiler
@@ -55,10 +51,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// <returns>Instance of the empty bit string</returns>
         public static EmptyBitString GetInstance()
         {
-            lock (padlock)
-            {
-                return _instance;
-            }
+            return _instance;
         }
 
         #endregion
@@ -114,7 +107,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise AND operation on current BitString against the specified BitString.
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
-        public IBitString And(IBitString source)
+        public IBitString And(IBitString source, bool precomputeSum = false)
         {
             BitString bs = source as BitString;
             if (bs != null)
@@ -178,7 +171,7 @@ namespace Ferda.Guha.MiningProcessor.BitStrings
         /// Performs the bitwise OR operation on current BitString against the specified BitString.
         /// </summary>
         /// <param name="source">The second BitString operand.</param>
-        public IBitString Or(IBitString source)
+        public IBitString Or(IBitString source, bool precomputeSum = false)
         {
             BitString bs = source as BitString;
             if (bs != null)

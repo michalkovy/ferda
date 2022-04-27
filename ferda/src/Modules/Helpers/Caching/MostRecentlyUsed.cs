@@ -22,6 +22,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Ferda.Modules.Helpers.Common;
 
 namespace Ferda.Modules.Helpers.Caching
 {
@@ -45,6 +46,7 @@ namespace Ferda.Modules.Helpers.Caching
         where KeyT : IEquatable<KeyT>
     {
         private ulong _maxSize = 50;
+        private readonly AsyncLock _gate = new AsyncLock();
         /// <summary>
         /// Gets or sets the maximal size of the cache.
         /// </summary>
@@ -118,7 +120,7 @@ namespace Ferda.Modules.Helpers.Caching
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        public abstract ValueT GetValue(KeyT key);
+        public abstract Task<ValueT> GetValueExternalAsync(KeyT key);
 
         /// <summary>
         /// Gets the size of the value item.
@@ -161,37 +163,34 @@ namespace Ferda.Modules.Helpers.Caching
         /// sources and, retrieves the value. This method adds the value
         /// to the dictionary (which serves as a cache).
         /// </summary>
-        /// <value>Value that is returned.</value>
-        public ValueT this[KeyT key]
+        /// <returns>Value that is returned.</returns>
+        public async Task<ValueT> GetValueAsync(KeyT key)
         {
-            get
+            using (await _gate.LockAsync().ConfigureAwait(false))
             {
-                lock (this)
+                ValueT item;
+                if (_cache.TryGetValue(key, out item))
                 {
-                    ValueT item;
-                    if (_cache.TryGetValue(key, out item))
+                    if (!_list.First.Value.Equals(key))
                     {
-                        if (!_list.First.Value.Equals(key))
-                        {
-                            _list.Remove(key);
-                            _list.AddFirst(key);
-                        }
-                        return item;
-                    }
-                    else
-                    {
-                        ValueT newValue = GetValue(key);
-                        ulong newValueSize = GetSize(newValue);
-
-                        shrinkCache(_maxSize - newValueSize);
-
-                        Debug.Assert(_actSize >= 0);
-
-                        _actSize += newValueSize;
+                        _list.Remove(key);
                         _list.AddFirst(key);
-                        _cache.Add(key, newValue);
-                        return newValue;
                     }
+                    return item;
+                }
+                else
+                {
+                    ValueT newValue = await GetValueExternalAsync(key).ConfigureAwait(false);
+                    ulong newValueSize = GetSize(newValue);
+
+                    shrinkCache(_maxSize - newValueSize);
+
+                    Debug.Assert(_actSize >= 0);
+
+                    _actSize += newValueSize;
+                    _list.AddFirst(key);
+                    _cache.Add(key, newValue);
+                    return newValue;
                 }
             }
         }
