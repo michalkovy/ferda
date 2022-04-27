@@ -527,179 +527,36 @@ namespace Ferda.Guha.MiningProcessor.Generation
         #endregion
 
         #region Private methods
-
-        private void bitStringStackPush(IBitString adding, Stack<IBitString> bitStringStack)
+        private async IAsyncEnumerable<IBitString> ConstructNextLevel(IBitString soFar, IBitString b, SkipSetting parentSkipSetting, IEnumerable<IAsyncEnumerable<IBitString>> enumerables, int depth, int i)
         {
-            if (bitStringStack.Count > 0)
-            {
-                IBitString previous = bitStringStack.Peek();
-                SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
-                bitStringStack.Push(operation(previous, adding, parentSkipSetting != null));
-            }
-            else
-            {
-                bitStringStack.Push(adding);
-            }
-        }
+            var newString = soFar == null ? b : operation(soFar, b, parentSkipSetting != null); //await Task.Run<IBitString>(() => soFar == null ? b : operation(soFar, b, parentSkipSetting != null));
 
-        private async Task<bool> moveNextInTopEntity(Stack<IAsyncEnumerator<IBitString>> enumeratorsStack, Stack<IBitString> bitStringStack)
-        {
-            IAsyncEnumerator<IBitString> enumerator = enumeratorsStack.Peek();
-            if (await enumerator.MoveNextAsync())
+            if (parentSkipSetting == null || Ferda.Guha.Math.Common.Compare(parentSkipSetting.Relation, newString.Sum, parentSkipSetting.Treshold))
             {
-                if (bitStringStack.Count > 0)
-                    bitStringStack.Pop();
-                Debug.Assert(enumerator.Current != null);
-                bitStringStackPush(enumerator.Current, bitStringStack);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// The method returns a current bit string on the stack. The bit
-        /// string needs to be longer then effective minimal length and also
-        /// comply with the base skip setting
-        /// </summary>
-        /// <param name="result">Resulting bit string</param>
-        /// <returns>If there is as suitable bit string on the stack</returns>
-        private bool returnCurrent(Stack<IBitString> bitStringStack, out IBitString result)
-        {
-            // TODO classes of equivalence ... rozmyslet a dodelat
-            Debug.Assert(bitStringStack != null);
-            Debug.Assert(bitStringStack.Count <= _effectiveMaxLength);
-
-            //the number of elements in the bit string stack is of desired length
-            if (bitStringStack.Count >= _effectiveMinLength)
-            {
-                result = bitStringStack.Peek();
-                if (result == null)
+                if (EffectiveMinLength <= depth)
+                    yield return newString;
+                if (depth < EffectiveMaxLength)
                 {
-                    return false;
-                }
-                
-                SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
-
-                //if the base (sum) of the bit string does not correspond to the
-                //base skip setting, false is returned
-                if (parentSkipSetting != null)
-                {
-                    if (!Ferda.Guha.Math.Common.Compare(parentSkipSetting.Relation, 
-                        result.Sum, parentSkipSetting.Treshold))
-                        return false;
-                }
-                return true;
-            }
-            result = null;
-            return false;
-        }
-
-        private async Task getEntity(int index, Stack<IAsyncEnumerator<IBitString>> enumeratorsStack, Stack<IBitString> bitStringStack, Stack<int> lengthIndexStack)
-        {
-            var enumerator = _memoizedSourceAsyncEnumerables[index].GetAsyncEnumerator();
-
-            bool succeds = await enumerator.MoveNextAsync();
-            Debug.Assert(succeds);
-            enumeratorsStack.Push(enumerator);
-            Debug.Assert(enumerator.Current != null);
-            bitStringStackPush(enumerator.Current, bitStringStack);
-            lengthIndexStack.Push(index);
-        }
-
-        /// <summary>
-        /// Prolongs the length of the operands. 
-        /// </summary>
-        /// <param name="afterRemove">If this operation is done after the
-        /// removal of entity enumerator.</param>
-        /// <returns>Iff the operand length can be prolonged.</returns>
-        private async Task<bool> prolong(bool afterRemove, Stack<IAsyncEnumerator<IBitString>> enumeratorsStack, Stack<IBitString> bitStringStack, Stack<int> lengthIndexStack)
-        {
-            //the bit string could not be prolonged any more
-            if (bitStringStack.Count == _effectiveMaxLength) // not after remove
-                return false;
-
-            int newIndex;
-            if (afterRemove)
-            {
-                if (lengthIndexStack.Count == 1)
-                {
-                    // switching first member of conjunction
-                    if (_forcedCount > 0)
+                    await foreach (var item in ReadParallel(enumerables.Skip(i + 1), depth + 1, newString))
                     {
-                        // forced entities are defined
-                        // ! but forced entity can not be removed
-                        // => end iteration
-                        Debug.Assert(bitStringStack.Count == 0); //because after remove && lengthIndexStack.Count == 1
-                        return false;
-                    }
-                    if (lengthIndexStack.Peek() >= _forcedCount + _basicCount - 1)
-                    {
-                        // index of next entity is index of auxiliary entity
-                        // i.e. all following entities are auxiliary
-                        // ! but output can not be created only from auxiliary entities
-                        // => end iteration
-                        Debug.Assert(bitStringStack.Count == 0); //because after remove && lengthIndexStack.Count == 1
-                        return false;
+                        yield return item;
                     }
                 }
-                newIndex = lengthIndexStack.Pop() + 1;
             }
-            else
-            {
-                newIndex = lengthIndexStack.Peek() + 1;
-            }
-
-            if (newIndex >= _sourceEntities.Count)
-                return false;
-            
-            await getEntity(newIndex, enumeratorsStack, bitStringStack, lengthIndexStack);
-            return true;
         }
 
-        /// <summary>
-        /// Removes the top of the bit string stack and the enumerators stack
-        /// </summary>
-        /// <returns>Iff there is anyting left on the stacks</returns>
-        private bool removeLastItem(Stack<IAsyncEnumerator<IBitString>> enumeratorsStack, Stack<IBitString> bitStringStack)
-        {
-            if (enumeratorsStack.Count > 0)
-            {
-                enumeratorsStack.Pop();
-                bitStringStack.Pop();
-                return true;
-            }
-            return false;
-        }
-
-        #endregion
-
-        public IAsyncEnumerable<IBitString> ReadParallel(IEnumerable<IAsyncEnumerable<IBitString>> enumerables, int depth, IBitString soFar)
+        private IAsyncEnumerable<IBitString> ReadParallel(IEnumerable<IAsyncEnumerable<IBitString>> enumerables, int depth, IBitString soFar)
         {
             SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
             var asyncEnums = enumerables
-                //.AsParallel()
-                //.WithDegreeOfParallelism(4)
                 .Select((e, i) =>
-                    e.SelectMany(b =>
-                    {
-                        var newString = soFar == null ? b : operation(soFar, b, parentSkipSetting != null);
-                        if (parentSkipSetting != null)
-                        {
-                            if (!Ferda.Guha.Math.Common.Compare(parentSkipSetting.Relation,
-                                newString.Sum, parentSkipSetting.Treshold))
-                                return AsyncEnumerable.Empty<IBitString>();
-                        }
-                        return (EffectiveMinLength <= depth ? Task.FromResult(newString).ToAsyncEnumerable() : AsyncEnumerable.Empty<IBitString>()).Concat(
-                            depth < EffectiveMaxLength ? ReadParallel(enumerables.Skip(i + 1), depth + 1, newString) : AsyncEnumerable.Empty<IBitString>());
-                    }));
-            if (depth == 1)
+                    e.SelectMany(b => ConstructNextLevel(soFar, b, parentSkipSetting, enumerables, depth, i)));
+            if (EffectiveMaxLength - depth < 3)
                 return System.Linq.AsyncEnumerableEx.Merge(asyncEnums.ToArray()); // array merge is concurrent, IEnumerable isn't
             else
                 return asyncEnums.Merge();
         }
+        #endregion
 
         /// <summary>
         /// Retrieves the entity enumerator. The entity enumerator works on
@@ -708,65 +565,10 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <c>ferda/docsrc/draft/multiOperandGenerationAutomaton.svg</c>.
         /// </summary>
         /// <returns>Entity enumerator</returns>
-        public override async IAsyncEnumerator<IBitString> GetBitStringEnumerator()
+        public override IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
-            //var enumerable = ReadParallel(_memoizedSourceAsyncEnumerables, 1, null);
-            //return enumerable.GetAsyncEnumerator();
-
-            var enumeratorsStack = new Stack<IAsyncEnumerator<IBitString>>();
-            var bitStringStack = new Stack<IBitString>();
-            var lengthIndexStack = new Stack<int>();
-
-            if (_effectiveMinLength == 0)
-                yield return EmptyBitString.GetInstance();
-
-            IBitString result;
-            bool afterRemove;
-            afterRemove = false;
-
-            //Initialization
-            enumeratorsStack.Clear();
-            bitStringStack.Clear();
-            lengthIndexStack.Clear();
-            await getEntity(0, enumeratorsStack, bitStringStack, lengthIndexStack);
-
-            returnCurrent:
-            if (returnCurrent(bitStringStack, out result))
-                yield return result;
-
-            //
-            prolong:
-            if (await prolong(afterRemove, enumeratorsStack, bitStringStack, lengthIndexStack))
-            {
-                afterRemove = false;
-                goto returnCurrent;
-            }
-            else if (afterRemove)
-            {
-                if (bitStringStack.Count == 0)
-                {
-                    goto finish;
-                }
-                afterRemove = false;
-                if (await moveNextInTopEntity(enumeratorsStack, bitStringStack))
-                {
-                    goto returnCurrent;
-                }
-            }
-            while (await moveNextInTopEntity(enumeratorsStack, bitStringStack))
-            {
-                if (returnCurrent(bitStringStack, out result))
-                    yield return result;
-            }
-            if (removeLastItem(enumeratorsStack, bitStringStack))
-            {
-                afterRemove = true;
-                goto prolong;
-            }
-            finish:
-            enumeratorsStack.Clear();
-            bitStringStack.Clear();
-            lengthIndexStack.Clear();
+            var enumerable = ReadParallel(_memoizedSourceAsyncEnumerables, 1, null);
+            return enumerable.GetAsyncEnumerator();
         }
 
         /// <summary>
