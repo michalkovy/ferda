@@ -676,6 +676,31 @@ namespace Ferda.Guha.MiningProcessor.Generation
 
         #endregion
 
+        public IAsyncEnumerable<IBitString> ReadParallel(IEnumerable<IAsyncEnumerable<IBitString>> enumerables, int depth, IBitString soFar)
+        {
+            SkipSetting parentSkipSetting = ParentSkipOptimalization.BaseSkipSetting(CedentType);
+            var asyncEnums = enumerables
+                //.AsParallel()
+                //.WithDegreeOfParallelism(4)
+                .Select((e, i) =>
+                    e.SelectMany(b =>
+                    {
+                        var newString = soFar == null ? b : operation(soFar, b, parentSkipSetting != null);
+                        if (parentSkipSetting != null)
+                        {
+                            if (!Ferda.Guha.Math.Common.Compare(parentSkipSetting.Relation,
+                                newString.Sum, parentSkipSetting.Treshold))
+                                return AsyncEnumerable.Empty<IBitString>();
+                        }
+                        return (EffectiveMinLength <= depth ? Task.FromResult(newString).ToAsyncEnumerable() : AsyncEnumerable.Empty<IBitString>()).Concat(
+                            depth < EffectiveMaxLength ? ReadParallel(enumerables.Skip(i + 1), depth + 1, newString) : AsyncEnumerable.Empty<IBitString>());
+                    }));
+            if (depth == 1)
+                return System.Linq.AsyncEnumerableEx.Merge(asyncEnums.ToArray()); // array merge is concurrent, IEnumerable isn't
+            else
+                return asyncEnums.Merge();
+        }
+
         /// <summary>
         /// Retrieves the entity enumerator. The entity enumerator works on
         /// the basis of rather complicated automaton. The design of the
@@ -685,6 +710,9 @@ namespace Ferda.Guha.MiningProcessor.Generation
         /// <returns>Entity enumerator</returns>
         public override async IAsyncEnumerator<IBitString> GetBitStringEnumerator()
         {
+            //var enumerable = ReadParallel(_memoizedSourceAsyncEnumerables, 1, null);
+            //return enumerable.GetAsyncEnumerator();
+
             var enumeratorsStack = new Stack<IAsyncEnumerator<IBitString>>();
             var bitStringStack = new Stack<IBitString>();
             var lengthIndexStack = new Stack<int>();
@@ -739,7 +767,6 @@ namespace Ferda.Guha.MiningProcessor.Generation
             enumeratorsStack.Clear();
             bitStringStack.Clear();
             lengthIndexStack.Clear();
-            ;
         }
 
         /// <summary>
